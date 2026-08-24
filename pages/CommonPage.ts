@@ -214,7 +214,6 @@ export class CommonPage extends BasePage {
       'Actions Dashboard - 01_13Jan REG': '/project-dashboard/361/Actions/AllActions/All',
       'Global Inc - Actions Dashboard': '/project-dashboard/142/Actions/AllActions/All',
       'Actions Dashboard - QA_Test client3': '/project-dashboard/213/Actions/AllActions/All',
-      'Global Inc- All Updates': '/project-dashboard/142/Updates/AllUpdates/All',
       'ClientPortal_20260209133616 - Actions Dashboard': '/project-dashboard/540/Actions/AllActions/All',
       'Updates Dashboard - ClientPortal_20260212191012': '/project-dashboard/553/Updates/AllUpdates/All',
       'Actions Dashboard - ClientPortal_20260212191012': '/project-dashboard/553/Actions/AllActions/All',

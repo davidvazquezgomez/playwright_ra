@@ -40,7 +40,7 @@ Feature: Dashboard Updates for Portal Admin
 
   @mutable
   Scenario: TC002_01_PortalAdmin_DashboardUpdates - Verify read/unread functionality on the "Unread Updates" tab
-    Given the "Global Inc- All Updates" page is open
+    Given the "Global Inc - Updates Dashboard - All Updates" page is open
     When search for "Increase to Industrial Accident Insurance Contribution Rate" update from the "Global Inc - Updates Dashboard" page
     Then open the first update in the "Global Inc - Updates Dashboard" page
     And the "Increase to Industrial Accident Insurance Contribution Rate" page is displayed

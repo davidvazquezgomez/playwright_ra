@@ -21,7 +21,7 @@ Feature: Dashboard Actions for Client Admin
 
   @readOnly
   Scenario Outline: TC009_02_ClientAdmin_DashboardActions - Verify default column header and sorting
-    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
+    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
     Then verify "<column>" column header is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When click on "<column>" column header in the "01_QA_StageTestPortal - Actions Dashboard" page
     Then verify items are sorted in "ascending" order by "<column>" in the "01_QA_StageTestPortal - Actions Dashboard" page

@@ -21,8 +21,7 @@ Feature: Dashboard Actions for Team Member
 
   @readOnly
   Scenario Outline: TC009_02_TeamMember_DashboardActions - Verify default column header and sorting
-# URL https://stage.regulatoryadvantage.deloitte.com/project-dashboard/415/Actions/AllActions/All
-    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
+    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
     Then verify "<column>" column header is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When click on "<column>" column header in the "01_QA_StageTestPortal - Actions Dashboard" page
     Then verify items are sorted in "ascending" order by "<column>" in the "01_QA_StageTestPortal - Actions Dashboard" page
@@ -43,7 +42,7 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario: TC010_01_TeamMember_DashboardActions - Create new action from the actions dashboard
-    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
+    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
     When press "Add Action" button
     Then the "Add Action" popup is displayed
     And verify "Update;Action;User Assigned;Priority;Status;Deadline Date" are displayed in the "Add Action" popup
@@ -78,7 +77,7 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario: TC010_02_TeamMember_DashboardActions - Verify editing an action
-    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
+    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And double-click "Test_TeamMember_2" option on the Dashboard filter
@@ -99,7 +98,7 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario: TC010_03_TeamMember_DashboardActions - Verify the private action toggle
-    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
+    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And double-click "Test_TeamMember_2" option on the Dashboard filter
@@ -123,7 +122,7 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario: TC010_04_TeamMember_DashboardActions - Verify adding a comment to an action
-    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
+    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And double-click "Test_TeamMember" option on the Dashboard filter
@@ -143,7 +142,7 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario: TC010_05_TeamMember_DashboardActions - Verify uploading an attachment to an action
-    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
+    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And double-click "Test_TeamMember" option on the Dashboard filter
@@ -165,8 +164,9 @@ Feature: Dashboard Actions for Team Member
       | png             | test-data/valid.png    | valid.png    |
       | docx            | test-data/invalid.docx | invalid.docx |
 
+  @mutable
   Scenario Outline: TC010_06_TeamMember_DashboardActions - Upload an attachment with unsupported format
-    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
+    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And double-click "Test_TeamMember" option on the Dashboard filter
@@ -193,7 +193,7 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario: TC011_01_TeamMember_DashboardActions - Verify adding an action from the update details page
-    Given the "Updates Dashboard - 01_QA_StageTestPortal" page is open
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_QA_StageTestPortal" page
     Then verify "22Podcast - BGN to EUR conversion" update is displayed from the "Updates Dashboard - 01_QA_StageTestPortal" page
     When open the first update in the "Updates Dashboard - 01_QA_StageTestPortal" page
