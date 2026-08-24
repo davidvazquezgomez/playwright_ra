@@ -168,7 +168,7 @@ Feature: Dashboard Actions for Team Leader
 
   @mutable
   Scenario: TC011_01_TeamLeader_DashboardActions - Verify adding an action from the update details page
-    Given the "Updates Dashboard - 01_13Jan REG" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_13Jan REG" page
     Then verify "Occupational Illness Trust Fund" update is displayed from the "Updates Dashboard - 01_13Jan REG" page
     When open the first update in the "Updates Dashboard - 01_13Jan REG" page
@@ -198,7 +198,7 @@ Feature: Dashboard Actions for Team Leader
 
   @mutable
   Scenario: TC011_02_TeamLeader_DashboardActions - Verify editing an action from the update details page
-    Given the "Updates Dashboard - 01_13Jan REG" page is open
+    Given the "Updates Dashboard - 01_QA_StageTestPortal" page is open
     When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_13Jan REG" page
     And open the first update in the "Updates Dashboard - 01_13Jan REG" page
     And open the "Update Actions" tab on the selected update
@@ -221,7 +221,7 @@ Feature: Dashboard Actions for Team Leader
 
   @mutable
   Scenario: TC011_03_TeamLeader_DashboardActions - Verify the private action toggle from the update details page
-    Given the "Updates Dashboard - 01_13Jan REG" page is open
+    Given the "Updates Dashboard - 01_QA_StageTestPortal" page is open
     When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_13Jan REG" page
     And open the first update in the "Updates Dashboard - 01_13Jan REG" page
     And open the "Update Actions" tab on the selected update
@@ -251,7 +251,7 @@ Feature: Dashboard Actions for Team Leader
 
   @mutable
   Scenario: TC011_04_TeamLeader_DashboardActions - Verify adding a comment to an action from the update details page
-    Given the "Updates Dashboard - 01_13Jan REG" page is open
+    Given the "Updates Dashboard - 01_QA_StageTestPortal" page is open
     When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_13Jan REG" page
     And open the first update in the "Updates Dashboard - 01_13Jan REG" page
     And open the "Update Actions" tab on the selected update
@@ -270,7 +270,7 @@ Feature: Dashboard Actions for Team Leader
 
   @mutable
   Scenario: TC011_05_TeamLeader_DashboardActions - Verify uploading an attachment to an action from the update details page
-    Given the "Updates Dashboard - 01_13Jan REG" page is open
+    Given the "Updates Dashboard - 01_QA_StageTestPortal" page is open
     When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_13Jan REG" page
     And open the first update in the "Updates Dashboard - 01_13Jan REG" page
     And open the "Update Actions" tab on the selected update
@@ -293,7 +293,7 @@ Feature: Dashboard Actions for Team Leader
 
   @readOnly
   Scenario Outline: TC012_01_TeamLeader_DashboardActions - Verify filtering the 01_13Jan REG - Actions Dashboard by
-    Given the "Actions Dashboard - 01_13Jan REG" page is open
+    Given the "Updates Dashboard - 01_QA_StageTestPortal" page is open
     When press "Filter" button on the Dashboard filter
     Then verify the "<filter>" option is displayed in the Dashboard filter
     When select "<value>" in the "<filter>" filter on the Dashboard filter
@@ -310,7 +310,7 @@ Feature: Dashboard Actions for Team Leader
 
   @readOnly
   Scenario: TC012_02_TeamLeader_DashboardActions - Verify filtering the 01_13Jan REG - Actions Dashboard by deadline range
-    Given the "Actions Dashboard - 01_13Jan REG" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     Then verify the "Deadline Range" option is displayed in the Dashboard filter
     When select "08/07/2026" from the "Start Date" calendar on the Dashboard filter
@@ -321,7 +321,7 @@ Feature: Dashboard Actions for Team Leader
 
   @mutable
   Scenario: TC012_03_TeamLeader_DashboardActions - Verify saving a filter
-    Given the "Actions Dashboard - 01_13Jan REG" page is open
+    Given the "Updates Dashboard - 01_QA_StageTestPortal - All Updates" page is open
     When remove saved filter "Test DashboardAction" if it exists on the Dashboard filter
     When press "Filter" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter
