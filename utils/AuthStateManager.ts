@@ -56,6 +56,7 @@ export async function prewarmAuthStates(browser: Browser): Promise<void> {
       continue;
     }
 
+    console.log(`Prewarming ${authentication.userType} user ${authentication.role}.`);
     await fs.mkdir(path.dirname(statePath), { recursive: true });
     await createAuthState(browser, authentication, statePath);
   }
@@ -218,6 +219,9 @@ async function createAuthState(browser: Browser, authentication: FeatureAuthenti
     await commonPage.dismissCookieConsent();
     await context.storageState({ path: statePath });
   } catch (error) {
+    await loginPage.takeScreenshot(
+      path.join(process.cwd(), 'test-results', 'auth-state', 'prewarm-failure.png'),
+    ).catch(() => undefined);
     throw new Error(
       `Unable to prewarm authentication state for ${authentication.userType} user ${authentication.role}. ` +
       `${error instanceof Error ? error.message : String(error)}`,

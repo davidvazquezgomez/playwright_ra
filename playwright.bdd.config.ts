@@ -46,7 +46,6 @@ const testDir = defineBddConfig({
 export default defineConfig({
   testDir,
   globalSetup: require.resolve('./playwright/authState.setup'),
-  globalTeardown: require.resolve('./playwright/authState.teardown'),
   fullyParallel: process.env.PARALLEL_RUN === 'true',
   timeout: process.env.TEST_TIMEOUT ? Number(process.env.TEST_TIMEOUT) : 300000,
   forbidOnly: !!process.env.CI,
