@@ -21,7 +21,7 @@ Feature: Dashboard Actions for Team Leader
 
   @readOnly
   Scenario Outline: TC009_02_TeamLeader_DashboardActions - Verify default column header and sorting
-    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     Then verify "<column>" column header is displayed in the "01_13Jan REG - Actions Dashboard" page
     When click on "<column>" column header in the "01_13Jan REG - Actions Dashboard" page
     Then verify items are sorted in "ascending" order by "<column>" in the "01_13Jan REG - Actions Dashboard" page
@@ -42,7 +42,7 @@ Feature: Dashboard Actions for Team Leader
 
   @mutable
   Scenario: TC010_01_TeamLeader_DashboardActions - Create new action from the actions dashboard
-    Given the "Actions Dashboard - 01_13Jan REG" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Add Action" button
     Then the "Add Action" popup is displayed
     And verify "Update;Action;User Assigned;Priority;Status;Deadline Date" are displayed in the "Add Action" popup
@@ -169,7 +169,7 @@ Feature: Dashboard Actions for Team Leader
   @mutable
   Scenario: TC011_01_TeamLeader_DashboardActions - Verify adding an action from the update details page
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
-    When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_13Jan REG" page
+    When search for "Occupational Illness Trust Fund" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     Then verify "Occupational Illness Trust Fund" update is displayed from the "Updates Dashboard - 01_13Jan REG" page
     When open the first update in the "Updates Dashboard - 01_13Jan REG" page
     Then the "Update Details" page is displayed from the Updates Dashboard
@@ -198,8 +198,8 @@ Feature: Dashboard Actions for Team Leader
 
   @mutable
   Scenario: TC011_02_TeamLeader_DashboardActions - Verify editing an action from the update details page
-    Given the "Updates Dashboard - 01_QA_StageTestPortal" page is open
-    When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_13Jan REG" page
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When search for "Occupational Illness Trust Fund" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the first update in the "Updates Dashboard - 01_13Jan REG" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
@@ -221,8 +221,8 @@ Feature: Dashboard Actions for Team Leader
 
   @mutable
   Scenario: TC011_03_TeamLeader_DashboardActions - Verify the private action toggle from the update details page
-    Given the "Updates Dashboard - 01_QA_StageTestPortal" page is open
-    When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_13Jan REG" page
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When search for "Occupational Illness Trust Fund" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the first update in the "Updates Dashboard - 01_13Jan REG" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
@@ -251,8 +251,8 @@ Feature: Dashboard Actions for Team Leader
 
   @mutable
   Scenario: TC011_04_TeamLeader_DashboardActions - Verify adding a comment to an action from the update details page
-    Given the "Updates Dashboard - 01_QA_StageTestPortal" page is open
-    When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_13Jan REG" page
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When search for "Occupational Illness Trust Fund" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the first update in the "Updates Dashboard - 01_13Jan REG" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
@@ -270,8 +270,8 @@ Feature: Dashboard Actions for Team Leader
 
   @mutable
   Scenario: TC011_05_TeamLeader_DashboardActions - Verify uploading an attachment to an action from the update details page
-    Given the "Updates Dashboard - 01_QA_StageTestPortal" page is open
-    When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_13Jan REG" page
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When search for "Occupational Illness Trust Fund" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the first update in the "Updates Dashboard - 01_13Jan REG" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
@@ -293,7 +293,7 @@ Feature: Dashboard Actions for Team Leader
 
   @readOnly
   Scenario Outline: TC012_01_TeamLeader_DashboardActions - Verify filtering the 01_13Jan REG - Actions Dashboard by
-    Given the "Updates Dashboard - 01_QA_StageTestPortal" page is open
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When press "Filter" button on the Dashboard filter
     Then verify the "<filter>" option is displayed in the Dashboard filter
     When select "<value>" in the "<filter>" filter on the Dashboard filter
@@ -321,7 +321,7 @@ Feature: Dashboard Actions for Team Leader
 
   @mutable
   Scenario: TC012_03_TeamLeader_DashboardActions - Verify saving a filter
-    Given the "Updates Dashboard - 01_QA_StageTestPortal - All Updates" page is open
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When remove saved filter "Test DashboardAction" if it exists on the Dashboard filter
     When press "Filter" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter

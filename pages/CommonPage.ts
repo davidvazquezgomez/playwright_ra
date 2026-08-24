@@ -132,7 +132,6 @@ export class CommonPage extends BasePage {
    */
   async launchApplication(url: string): Promise<void> {
     await this.loadPage(url);
-    await this._page.pause();
     const [title, bodyText] = await Promise.all([
       this._page.title(),
       this._page.locator('body').innerText(),
@@ -221,7 +220,7 @@ export class CommonPage extends BasePage {
       'Actions Dashboard - ClientPortal_20260212191012': '/project-dashboard/553/Actions/AllActions/All',
       'Updates Dashboard - ClientPortal_20260213081718': '/project-dashboard/553/Updates/AllUpdates/All',
       'Actions Dashboard - ClientPortal_20260213081718': '/project-dashboard/553/Actions/AllActions/All',
-      'Actions Dashboard - 01_QA_StageTestPortal': '/project-dashboard/415/Actions/AllActions/All',
+      '01_QA_StageTestPortal - Actions Dashboard': '/project-dashboard/415/Actions/AllActions/All',
       'User Management - Global Inc': '/user-management/142',
       'User Management - QA_Test client3': '/user-management/213',
       'User Management - ClientPortal_20260213081718': '/user-management/553',

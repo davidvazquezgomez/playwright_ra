@@ -322,9 +322,9 @@ Feature: Dashboard Actions for Team Member
   @mutable
   Scenario Outline: TC011_06_TeamMember_DashboardActions - Upload an attachment with unsupported format from the update details page
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
-    Given the "Updates Dashboard - 01_QA_StageTestPortal - All Updates" page is open
-    When search for "22Podcast - BGN to EUR conversion" update from the "Updates Dashboard - 01_QA_StageTestPortal - All Updates" page
-    And open the first update in the "Updates Dashboard - 01_QA_StageTestPortal - All Updates" page
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When search for "22Podcast - BGN to EUR conversion" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
+    And open the first update in the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
