@@ -49,7 +49,7 @@ export class LoginPage extends BasePage {
 
     // Step 2 — Click Next (remove if single-step login)
     await this.waitForSelectorStatus(this.nextButton, 'visible');
-    await this.waitForElement(this.nextButton);
+    await this.waitForElementToBeEnabled(this.nextButton);
     await this.clickElement(this.nextButton);
 
     // Step 3 — Select account if multiple accounts are present (optional)
@@ -63,6 +63,7 @@ export class LoginPage extends BasePage {
     await passwordField.pressSequentially(password, { delay: 100 });
 
     // Step 5 — Submit
+    await this.waitForElementToBeEnabled(this.nextButton);
     await this.clickElement(this.nextButton);
 
     if (totpSecret) {
