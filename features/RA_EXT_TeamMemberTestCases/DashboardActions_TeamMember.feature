@@ -194,9 +194,9 @@ Feature: Dashboard Actions for Team Member
   @mutable
   Scenario: TC011_01_TeamMember_DashboardActions - Verify adding an action from the update details page
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_QA_StageTestPortal" page
-    Then verify "22Podcast - BGN to EUR conversion" update is displayed from the "Updates Dashboard - 01_QA_StageTestPortal" page
-    When open the first update in the "Updates Dashboard - 01_QA_StageTestPortal" page
+    When search for "Occupational Illness Trust Fund" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
+    Then verify "22Podcast - BGN to EUR conversion" update is displayed from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
+    When open the first update in the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     Then the "Update Details" page is displayed from the Updates Dashboard
     And verify "Update Details;Update Actions" tabs are displayed on the selected update
     When open the "Update Actions" tab on the selected update
@@ -223,15 +223,15 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario: TC011_02_TeamMember_DashboardActions - Verify editing an action from the update details page
-    Given the "Updates Dashboard - 01_13Jan REG" page is open
-    When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_13Jan REG" page
-    And open the first update in the "Updates Dashboard - 01_13Jan REG" page
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When search for "22Podcast - BGN to EUR conversion" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
+    And open the first update in the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
     And click on the first action in the "Update Details" page
     Then the "Update Action" popup is displayed
-    When select "User, TestAP" option in the "User Assigned" field in the "Update Action" popup
+    When select "Alam, Asjad" option in the "User Assigned" field in the "Update Action" popup
     And select "Not Started" option in the "Status" field in the "Update Action" popup
     And select "High" option in the "Priority" field in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
@@ -241,14 +241,14 @@ Feature: Dashboard Actions for Team Member
     And press "Action Status" header on the selected update
     When click on the first action in the "Update Details" page
     Then the "Update Action" popup is displayed
-    And verify "User, TestAP" option is selected in the "User Assigned" field on the "Update Action" popup
+    And verify "Alam, Asjad" option is selected in the "User Assigned" field on the "Update Action" popup
     And verify "Not Started" option is selected in the "Status" field on the "Update Action" popup
 
   @mutable
   Scenario: TC011_03_TeamMember_DashboardActions - Verify the private action toggle from the update details page
-    Given the "Updates Dashboard - 01_13Jan REG" page is open
-    When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_13Jan REG" page
-    And open the first update in the "Updates Dashboard - 01_13Jan REG" page
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When search for "22Podcast - BGN to EUR conversion" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
+    And open the first update in the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
@@ -276,9 +276,9 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario: TC011_04_TeamMember_DashboardActions - Verify adding a comment to an action from the update details page
-    Given the "Updates Dashboard - 01_13Jan REG" page is open
-    When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_13Jan REG" page
-    And open the first update in the "Updates Dashboard - 01_13Jan REG" page
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When search for "22Podcast - BGN to EUR conversion" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
+    And open the first update in the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
@@ -295,30 +295,57 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario: TC011_05_TeamMember_DashboardActions - Verify uploading an attachment to an action from the update details page
-    Given the "Updates Dashboard - 01_13Jan REG" page is open
-    When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_13Jan REG" page
-    And open the first update in the "Updates Dashboard - 01_13Jan REG" page
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When search for "22Podcast - BGN to EUR conversion" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
+    And open the first update in the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
     And click on the first action in the "Update Details" page
     Then the "Update Action" popup is displayed
     When open the "Attachments" tab in the "Update Action" popup
-    # And upload "test-data/valid-attachment.pdf" attachment in the "Update Action" popup
-    # Then verify "valid-attachment.pdf" attachment is displayed in the "Update Action" popup
-    # When upload "test-data/oversized-51mb.pdf" attachment in the "Update Action" popup
-    # Then verify "oversized-51mb.pdf" attachment is not displayed in the "Update Action" popup
-    # When upload "test-data/invalid.exe" attachment in the "Update Action" popup
-    # Then verify "invalid.exe" attachment is not displayed in the "Update Action" popup
-    # When upload "test-data/corrupted.png" attachment in the "Update Action" popup
-    # Then verify "corrupted.png" attachment is not displayed in the "Update Action" popup
-    When select "Complete" option in the "Status" field in the "Update Action" popup
+    When upload "<file path>" attachment in the "Update Action" popup
+    And verify "<name>" attachment is displayed in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
     Then verify "Action updated successfully" toast message is displayed in the "Update Details" page
 
+    Examples:
+      | valid extension | file path              | name         |
+      | pdf             | test-data/valid.pdf    | valid.pdf    |
+      | pdf             | test-data/invalid.pdf  | invalid.pdf  |
+      | xlsx            | test-data/valid.xlsx   | valid.xlsx   |
+      | svg             | test-data/valid.svg    | valid.svg    |
+      | png             | test-data/valid.png    | valid.png    |
+      | docx            | test-data/invalid.docx | invalid.docx |
+
+  @mutable
+  Scenario Outline: TC011_06_TeamMember_DashboardActions - Upload an attachment with unsupported format from the update details page
+    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When search for "22Podcast - BGN to EUR conversion" update from the "Updates Dashboard - 01_QA_StageTestPortal - All Updates" page
+    And open the first update in the "Updates Dashboard - 01_QA_StageTestPortal - All Updates" page
+    And open the "Update Actions" tab on the selected update
+    And press "Action Status" header on the selected update
+    And press "Action Status" header on the selected update
+    And click on the first action in the "Update Details" page
+    Then the "Update Action" popup is displayed
+    When open the "Attachments" tab in the "Update Action" popup
+    When open the "Attachments" tab in the "Update Action" popup
+    When upload "<file path>" attachment in the "Update Action" popup
+    Then a message should get displayed as "<expected message>"
+    And verify "<name>" attachment is not displayed in the "Update Action" popup
+
+    Examples:
+      | invalid extension | file path                  | expected message | name             |
+      | xls               | test-data/valid.xls        |                  | valid.xls        |
+      | jpg               | test-data/invalid.jpg      |                  | invalid.jpg      |
+      | csv               | test-data/invalid.csv      |                  | invalid.csv      |
+      | txt               | test-data/invalid.txt      |                  | invalid.txt      |
+      | xlsx              | test-data/Fichero94MB.xlsx |                  | Fichero94MB.xlsx |
+
   @readOnly
-  Scenario Outline: TC012_01_TeamMember_DashboardActions - Verify filtering the 01_13Jan REG - Actions Dashboard by
-    Given the "Actions Dashboard - 01_13Jan REG" page is open
+  Scenario Outline: TC012_01_TeamMember_DashboardActions - Verify filtering the 01_QA_StageTestPortal - Actions Dashboard by
+    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
     When press "Filter" button on the Dashboard filter
     Then verify the "<filter>" option is displayed in the Dashboard filter
     When select "<value>" in the "<filter>" filter on the Dashboard filter
@@ -334,19 +361,19 @@ Feature: Dashboard Actions for Team Member
       | User Assigned   | Smoke       |
 
   @readOnly
-  Scenario: TC012_02_TeamMember_DashboardActions - Verify filtering the 01_13Jan REG - Actions Dashboard by deadline range
-    Given the "Actions Dashboard - 01_13Jan REG" page is open
+  Scenario: TC012_02_TeamMember_DashboardActions - Verify filtering the 01_QA_StageTestPortal - Actions Dashboard by deadline range
+    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
     When press "Filter" button on the Dashboard filter
     Then verify the "Deadline Range" option is displayed in the Dashboard filter
-    When select "08/07/2026" from the "Start Date" calendar on the Dashboard filter
-    And select "10/07/2026" from the "End Date" calendar on the Dashboard filter
+    When select "20/08/2026" from the "Start Date" calendar on the Dashboard filter
+    And select "26/08/2026" from the "End Date" calendar on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed
     And verify every filtered action has a deadline within the selected range
 
   @mutable
   Scenario: TC012_03_TeamMember_DashboardActions - Verify saving a filter
-    Given the "Actions Dashboard - 01_13Jan REG" page is open
+    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
     When remove saved filter "Test DashboardAction" if it exists on the Dashboard filter
     When press "Filter" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter
@@ -364,7 +391,7 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario: TC012_04_TeamMember_DashboardActions - Verify editing and deleting a saved filter
-    Given the "Actions Dashboard - 01_13Jan REG" page is open
+    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
     When press "Filter" button on the Dashboard filter
     When select "Test DashboardAction" located in the "Saved Filters" section on the Dashboard filter
     And press "Edit" button on the Dashboard filter
@@ -375,7 +402,7 @@ Feature: Dashboard Actions for Team Member
     When append " update" to the saved filter name on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify "Filter updated successfully." toast message is displayed in the "Actions Dashboard" page
-    Given the "Actions Dashboard - 01_13Jan REG" page is open
+    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
     When press "Filter" button on the Dashboard filter
     And double-click "Test DashboardAction update" option on the Dashboard filter
     And press "Edit" button on the Dashboard filter
@@ -385,14 +412,14 @@ Feature: Dashboard Actions for Team Member
 
   @readOnly
   Scenario: TC012_05_TeamMember_DashboardActions - Verify resetting the 01_13Jan REG - Actions Dashboard filters
-    Given the "Actions Dashboard - 01_13Jan REG" page is open
+    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter
     And select "Belgium" in the "Jurisdiction" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed for "Action Priority" with value "Low"
-    And verify filtered actions are displayed for "Jurisdiction" with value "Brazil"
+    And verify filtered actions are displayed for "Jurisdiction" with value "Belgium"
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And press "View results" button on the Dashboard filter
@@ -400,7 +427,7 @@ Feature: Dashboard Actions for Team Member
 
   @readOnly
   Scenario: TC013_TeamMember_DashboardActions - Verify actions dashboard select all filter
-    Given the "Actions Dashboard - 01_13Jan REG" page is open
+    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
     When press "Filter" button on the Dashboard filter
     When expand the "Jurisdiction" filter on the Dashboard filter
     Then verify "Select All" is "unchecked" in the "Jurisdiction" filter on the Dashboard filter
@@ -425,8 +452,8 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario: TC018_TeamMember_DashboardActions - Verify actions dashboard dashboard options Action
-    Given the "Actions Dashboard - 01_13Jan REG" page is open
-    Then verify "Action Status" column header is displayed in the "01_13Jan REG - Actions Dashboard" page
+    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
+    Then verify "Action Status" column header is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When press "Dashboard Options" button on the Dashboard
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify the "Actions Dashboard" tab is selected in the Dashboard Options popup
@@ -437,5 +464,5 @@ Feature: Dashboard Actions for Team Member
     Then verify "Action Status" column is not selected in the Dashboard Options popup
     When press "Save" button in the Dashboard Options popup
     Then verify the "Dashboard Options" popup is closed on the Dashboard
-    And verify "Action Status" column header is not displayed in the "01_13Jan REG - Actions Dashboard" page
+    And verify "Action Status" column header is not displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     And logout from the application

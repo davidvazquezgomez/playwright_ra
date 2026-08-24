@@ -7,7 +7,7 @@ import {
 
 export default async function authStateSetup(): Promise<void> {
   await clearAuthStates();
-  if (!isAuthStateReuseEnabled() || process.argv.includes('--ui')) {
+  if (!isAuthStateReuseEnabled() || process.env.CI !== 'true' || process.argv.includes('--ui')) {
     return;
   }
 

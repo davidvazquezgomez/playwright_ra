@@ -166,7 +166,7 @@ Scenario Outline: Login with different roles
 | `TEST_TIMEOUT`           | `300000` ms                                | Per-test timeout                             |
 | `BDD_MISSING_STEPS_MODE` | `fail-on-run` locally, `fail-on-gen` in CI | Undefined-step handling                      |
 | `RESULTS_GROUP`          | `all`                                      | JUnit result filename group                  |
-| `REUSE_AUTH_STATE`       | disabled                                   | Reuse authentication state when `true`       |
+| `REUSE_AUTH_STATE`       | disabled                                   | Reuse authentication state when `true`; prewarming is enabled only in CI/Azure, never in local CLI or UI runs |
 
 The pipeline also supplies account credentials and artifact settings through environment variables. Keep those values in `.env` locally or in Azure DevOps secret variables.
 

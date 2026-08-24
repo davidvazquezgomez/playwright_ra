@@ -45,6 +45,8 @@ export class ActionsDashboardPage extends BasePage {
     this._page.locator(this.updateActionDialog).locator('app-attachments').getByRole('grid', { name: 'Data table', exact: true });
   private readonly attachmentDocumentNameCell = (fileName: string) =>
     this.attachmentsGrid().locator('td[aria-colindex="1"]').getByText(fileName, { exact: true });
+  private readonly firstAttachmentRow = () =>
+    this.attachmentsGrid().getByRole('row').nth(1);
   private readonly updateSearchResultByTitle = (title: string) =>
     this._page.getByRole('option', { name: title, exact: true }).first();
   private readonly userAssignedDropdown = `${this.addActionDialog} app-people-picker[formcontrolname="userAssigned"] kendo-dropdownlist[role="combobox"]`;
@@ -540,6 +542,15 @@ export class ActionsDashboardPage extends BasePage {
     }
 
     await expect(attachment).toHaveCount(0);
+  }
+
+  /**
+   * Removes the first attachment displayed in the Update Action attachment grid.
+   */
+  async removeFirstAttachment(): Promise<void> {
+    const attachmentRow = this.firstAttachmentRow();
+    await expect(attachmentRow).toBeVisible();
+    await attachmentRow.getByRole('button', { name: 'Remove', exact: true }).click();
   }
 
   /**
