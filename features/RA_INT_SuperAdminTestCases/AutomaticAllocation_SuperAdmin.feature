@@ -70,14 +70,14 @@ Feature: Automatic Allocation of Updates for Super Admin
     Then verify the "Impact Area(s)" checkbox is still selected
     And verify the "Jurisdiction(s)" checkbox is still selected
     And verify "AND" is still selected in the "Operator" field
-    And verify "clientadmin1, satest" value is displayed in the "Update Owner" field
-    And verify "satestclientadmin, satestclientadmin" value is displayed in the "Update Watchlist" field
+    And verify "clientadmin1, satest" is still selected in the "Update Owner" field
+    And verify "satestclientadmin, satestclientadmin" is still selected in the "Update Watchlist" field
     When press "Save" button
-    Then verify the "Allocation created successfully." message appears
+    Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation of Updates" page
     And the "Automatic Allocation of Updates" page is displayed
     And verify the "QaTest" allocation is present in the "Automatic Allocation of Updates" page
     When click on "Remove Allocation" icon from the allocation "QaTest"
-    Then verify the "Confirm Deletion" pop up is displayed
+    Then the "Confirm Deletion" popup is displayed
     And press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
 
@@ -92,9 +92,8 @@ Feature: Automatic Allocation of Updates for Super Admin
     And select the "AND" option in the "Operator" field
     And select the "clientadmin1, satest" option in the "Update Owner" field
     When press "Cancel" button
-    Then verify the "Unsaved Changes" popup is displayed
-    When press "Cancel" button
-    Then verify the "Automatic Allocation Setup" pop up is displayed
+    Then the "Unsaved Changes" popup is displayed
+    When press "Cancel" button on the "Unsaved Changes" popup
     When press "Continue" button
     Then the "Automatic Allocation of Updates" page is displayed
     And verify the "QaTest" allocation is not in the "Automatic Allocation of Updates" page
@@ -110,11 +109,11 @@ Feature: Automatic Allocation of Updates for Super Admin
     And select the "AND" option in the "Operator" field
     And select the "clientadmin1, satest" option in the "Update Owner" field
     When press "Back" button
-    Then verify the "Unsaved Changes" pop up is displayed
+    Then the "Unsaved Changes" popup is displayed
     And the popup message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
     And verify "Continue;Cancel" buttons are displayed on the "Unsaved Changes" popup
     When press "Cancel" button
-    Then verify the "Automatic Allocation Setup" pop up is displayed
+    Then the "Automatic Allocation Setup" popup is displayed
     When press "Continue" button
     Then the "Automatic Allocation of Updates" page is displayed
     And verify the "QaTest" allocation is not in the "Automatic Allocation of Updates" page
@@ -137,14 +136,14 @@ Feature: Automatic Allocation of Updates for Super Admin
     Then verify the "Impact Area(s)" checkbox is still selected
     And verify the "Jurisdiction(s)" checkbox is still selected
     And verify "AND" is still selected in the "Operator" field
-    And verify "clientadmin1, satest" value is displayed in the "Update Owner" field
-    And verify "audit, sonigour" value is displayed in the "Update Watchlist" field
+    And verify "clientadmin1, satest" is still selected in the "Update Owner" field
+    And verify "audit, sonigour" is still selected in the "Update Watchlist" field
     When press "Save" button
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation Setup" page
     And the "Automatic Allocation of Updates" page is displayed
     And verify the "QaTest" allocation is present in the "Automatic Allocation of Updates" page
     When click on "Remove Allocation" icon from the allocation "QaTest"
-    Then verify the "Confirm Deletion" pop up is displayed
+    Then the "Confirm Deletion" popup is displayed
     And press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
 
@@ -164,7 +163,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     And the "Automatic Allocation of Updates" page is displayed
     And verify the "QaTest" allocation is present in the "Automatic Allocation of Updates" page
     When click on "Remove Allocation" icon from the allocation "QaTest"
-    Then verify the "Confirm Deletion" pop up is displayed
+    Then the "Confirm Deletion" popup is displayed
     And press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
 
@@ -198,7 +197,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     And select the "AND" option in the "Operator" field
     And select the "clientadmin1, satest" option in the "Update Owner" field
     And press "Save" button
-    Then verify the "Duplicate automatic allocation detected" pop up is displayed
+    Then the "Duplicate automatic allocation detected" popup is displayed
     And the popup message is "Automatic allocation(s) named 'QaTest' already exists for the same Impact Area(s) and/or Jurisdiction(s).If you continue, the new rule will be created, but matching updates will be allocated according to oldest created rule(s). Do you want to proceed?"
     And verify "Continue;Cancel" buttons are displayed on the "Duplicate automatic allocation detected" popup
     When press "Create anyway" button
@@ -206,10 +205,10 @@ Feature: Automatic Allocation of Updates for Super Admin
     And the "Automatic Allocation of Updates" page is displayed
     And verify the "QaTest" allocation is present in the "Automatic Allocation of Updates" page
     When click on "Remove Allocation" icon from the allocation "QaTest"
-    Then verify the "Confirm Deletion" pop up is displayed
+    Then the "Confirm Deletion" popup is displayed
     And press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
     When click on "Remove Allocation" icon from the allocation "QaTest2"
-    Then verify the "Confirm Deletion" pop up is displayed
+    Then the "Confirm Deletion" popup is displayed
     And press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page

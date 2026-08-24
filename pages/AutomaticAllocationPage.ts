@@ -19,8 +19,12 @@ export class AutomaticAllocationPage extends BasePage {
   };
   private allocationRowByName = (allocationName: string) =>
     `${this.allocationGridRows}:has(td[data-kendo-grid-column-index="0"]:text-is("${allocationName}"))`;
+  private allocationNameCells =
+    `${this.allocationGridRows} td[data-kendo-grid-column-index="0"]`;
   private editAllocationButtonByName = (allocationName: string) =>
     `${this.allocationRowByName(allocationName)} button[title="Edit Allocation"]`;
+  private removeAllocationButtonByName = (allocationName: string) =>
+    `${this.allocationRowByName(allocationName)} button[title="Remove Allocation"]`;
   private allocationRecipientPicker =
     'app-auto-allocation-setup app-people-picker[formcontrolname="allocatedParty"] kendo-dropdownlist';
   private allocationNameInput =
@@ -54,6 +58,16 @@ export class AutomaticAllocationPage extends BasePage {
     `kendo-popup.k-animation-container-shown:visible .k-dropdownlist-popup li[role="option"]:has-text("${emailAddress}")`;
   private setupFieldErrorByText = (message: string) =>
     this._page.locator(`.k-form-error`).filter({ hasText: message });
+  private checkboxByName = (checkboxName: string) =>
+    `role=checkbox[name="${checkboxName}"]`;
+  private readonly selectedValueSelectorByFieldName: Record<string, string> = {
+    Operator:
+      'app-auto-allocation-setup kendo-dropdownlist[formcontrolname="operator"] .k-input-value-text',
+    'Update Owner':
+      'app-auto-allocation-setup app-people-picker[formcontrolname="allocatedParty"] .selected-person-name',
+    'Update Watchlist':
+      'app-auto-allocation-setup app-people-picker[formcontrolname="allocatedWatchList"] .tag-person-name',
+  };
 
   /**
    * Opens the edit form for an automatic allocation.
@@ -76,11 +90,73 @@ export class AutomaticAllocationPage extends BasePage {
   }
 
   /**
+   * Opens the deletion confirmation dialog for an automatic allocation.
+   * @param allocationName Exact name of the allocation to remove.
+   */
+  async removeAllocation(allocationName: string): Promise<void> {
+    await this.ensureKendoGridHasRows(
+      'app-auto-allocation [role="grid"][aria-label="Data table"]',
+      `Automatic Allocation must contain an allocation before "${allocationName}" can be removed.`,
+      'The Automatic Allocation grid was displayed before searching for the requested allocation.',
+    );
+    await this.ensureExpectedBusinessElementIsVisible(
+      this._page.locator(this.removeAllocationButtonByName(allocationName)),
+      `The allocation "${allocationName}" must provide the Remove Allocation action.`,
+      `The Remove Allocation button is displayed for "${allocationName}".`,
+      `The allocation row "${allocationName}" is visible in the Automatic Allocation grid.`,
+    );
+    await this.clickElement(this.removeAllocationButtonByName(allocationName));
+  }
+
+  /**
    * Verifies that the requested Automatic Allocation grid headers are visible.
    * @param fields Semicolon-delimited display names of the expected grid headers.
    */
   async verifyAutomaticAllocationFieldsDisplayed(fields: string): Promise<void> {
     await this.verifyRequestedFieldsDisplayed(fields, this.fieldSelectors);
+  }
+
+  /**
+   * Verifies whether an allocation is displayed in the Automatic Allocation grid.
+   * @param allocationName Exact allocation name to verify in the grid.
+   * @param expectedPresent Whether the allocation is expected to be displayed.
+   */
+  async verifyAllocationIsPresent(allocationName: string, expectedPresent: boolean = true): Promise<void> {
+    const normalizedAllocationName = allocationName.trim();
+    const allocationGrid = this._page.locator('app-auto-allocation [role="grid"][aria-label="Data table"]');
+    const noRecordsRow = allocationGrid.locator('tbody tr.k-grid-norecords');
+
+    await expect(allocationGrid).toBeVisible();
+    if (expectedPresent) {
+      await this.ensureKendoGridHasRows(
+        allocationGrid,
+        `Automatic Allocation must display "${normalizedAllocationName}" after it is created.`,
+        'The Automatic Allocation grid was displayed before reading the allocation names.',
+      );
+    } else {
+      await expect.poll(async () =>
+        (await this._page.locator(this.allocationGridRows).count()) > 0 ||
+        (await noRecordsRow.count()) > 0,
+      ).toBe(true);
+    }
+
+    const displayedAllocationNames = (await this._page.locator(this.allocationNameCells).allTextContents())
+      .map(name => name.trim());
+    const isPresent = displayedAllocationNames.includes(normalizedAllocationName);
+    if (isPresent !== expectedPresent) {
+      this.failWithApplicationError(
+        expectedPresent
+          ? 'A created allocation must be listed in Automatic Allocation of Updates.'
+          : 'A cancelled allocation must not be listed in Automatic Allocation of Updates.',
+        expectedPresent
+          ? `The allocation "${normalizedAllocationName}" is displayed.`
+          : `The allocation "${normalizedAllocationName}" is not displayed.`,
+        expectedPresent
+          ? `The allocation "${normalizedAllocationName}" is not displayed.`
+          : `The allocation "${normalizedAllocationName}" is displayed.`,
+        `Displayed allocation names: ${displayedAllocationNames.join(', ') || '(none)'}.`,
+      );
+    }
   }
 
   /**
@@ -96,7 +172,6 @@ export class AutomaticAllocationPage extends BasePage {
    * @param messages Semicolon-delimited field-error messages.
    */
   async verifyAutomaticAllocationSetupFieldErrors(messages: string): Promise<void> {
-    await this._page.pause();
     const fieldErrorMessages = messages.split(';').map(message => message.trim()).filter(Boolean);
     if (fieldErrorMessages.length === 0) {
       throw new Error('At least one Automatic Allocation Setup field-error message must be provided.');
@@ -113,6 +188,47 @@ export class AutomaticAllocationPage extends BasePage {
    */
   async fillAllocationName(allocationName: string): Promise<void> {
     await this.fillInputText(this.allocationNameInput, allocationName);
+  }
+
+  /**
+   * Verifies that an Automatic Allocation Setup checkbox remains selected.
+   * @param checkboxName Accessible name of the expected selected checkbox.
+   */
+  async verifyCheckboxIsStillSelected(checkboxName: string): Promise<void> {
+    const checkboxSelector = this.checkboxByName(checkboxName);
+    const isSelected = await this.checkIfFieldIsSelected(checkboxSelector);
+
+    if (!isSelected) {
+      this.failWithApplicationError(
+        `The ${checkboxName} Automatic Allocation Setup checkbox must retain its selected state after dismissing unsaved changes.`,
+        `The ${checkboxName} checkbox is selected.`,
+        `The ${checkboxName} checkbox is not selected.`,
+        `The ${checkboxName} checkbox was located and its checked state was read successfully.`,
+      );
+    }
+  }
+
+  /**
+   * Verifies that an Automatic Allocation Setup field retains its selected value.
+   * @param expectedValue Expected visible value of the field.
+   * @param fieldName Business name of the field.
+   */
+  async verifyFieldValueIsStillSelected(expectedValue: string, fieldName: string): Promise<void> {
+    const selectedValueSelector = this.selectedValueSelectorByFieldName[fieldName];
+    if (!selectedValueSelector) {
+      throw new Error(`Automatic Allocation field "${fieldName}" is not supported for selected-value verification.`);
+    }
+
+    const actualValue = (await this.getText(selectedValueSelector)).trim();
+
+    if (actualValue !== expectedValue) {
+      this.failWithApplicationError(
+        `The ${fieldName} Automatic Allocation Setup field must retain its selected value after dismissing unsaved changes.`,
+        `The ${fieldName} field displays "${expectedValue}".`,
+        `The ${fieldName} field displays "${actualValue}".`,
+        `The ${fieldName} selected value was read successfully from the rendered field.`,
+      );
+    }
   }
 
   /**

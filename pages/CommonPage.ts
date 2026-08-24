@@ -311,7 +311,6 @@ export class CommonPage extends BasePage {
    * @param checkboxName Exact visible label of the checkbox.
    */
   async clickCheckbox(checkboxName: string): Promise<void> {
-    await this._page.pause();
     await this.clickElement(this.checkboxLabelByName(checkboxName));
   }
 

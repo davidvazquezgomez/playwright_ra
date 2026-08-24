@@ -72,8 +72,8 @@ Feature: Automatic Allocation of Updates for Portal Admin
     Then verify the "Impact Area(s)" checkbox is still selected
     And verify the "Jurisdiction(s)" checkbox is still selected
     And verify "AND" is still selected in the "Operator" field
-    And verify "test, TesNonDeloitteUser" value is displayed in the "Update Owner" field
-    And verify "UserTest2, TestDeloitte" value is displayed in the "Update Watchlist" field
+    And verify "test, TesNonDeloitteUser" is still selected in the "Update Owner" field
+    And verify "UserTest2, TestDeloitte" is still selected in the "Update Watchlist" field
     When press "Save" button
     Then verify the "Allocation created successfully." message appears
     And the "Automatic Allocation of Updates" page is displayed

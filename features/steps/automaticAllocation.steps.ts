@@ -4,12 +4,36 @@ Then('verify if {string} are displayed on the Automatic Allocation of Updates pa
   await automaticAllocationPage.verifyAutomaticAllocationFieldsDisplayed(fields);
 });
 
+Then('verify the {string} allocation is present in the {string} page', async ({ automaticAllocationPage }, allocationName: string, pageName: string) => {
+  if (pageName !== 'Automatic Allocation of Updates') {
+    throw new Error(`Page "${pageName}" is not supported for Automatic Allocation verification.`);
+  }
+
+  await automaticAllocationPage.verifyAllocationIsPresent(allocationName);
+});
+
+Then('verify the {string} allocation is not in the {string} page', async ({ automaticAllocationPage }, allocationName: string, pageName: string) => {
+  if (pageName !== 'Automatic Allocation of Updates') {
+    throw new Error(`Page "${pageName}" is not supported for Automatic Allocation verification.`);
+  }
+
+  await automaticAllocationPage.verifyAllocationIsPresent(allocationName, false);
+});
+
 Then('verify {string} form fields are displayed in the Automatic Allocation Setup page', async ({ automaticAllocationPage }, fields: string) => {
   await automaticAllocationPage.verifyAutomaticAllocationSetupFieldsDisplayed(fields);
 });
 
 Then('verify {string} field errors are displayed in the Automatic Allocation Setup page', async ({ automaticAllocationPage }, messages: string) => {
   await automaticAllocationPage.verifyAutomaticAllocationSetupFieldErrors(messages);
+});
+
+Then('verify the {string} checkbox is still selected', async ({ automaticAllocationPage }, checkboxName: string) => {
+  await automaticAllocationPage.verifyCheckboxIsStillSelected(checkboxName);
+});
+
+Then('verify {string} is still selected in the {string} field', async ({ automaticAllocationPage }, expectedValue: string, fieldName: string) => {
+  await automaticAllocationPage.verifyFieldValueIsStillSelected(expectedValue, fieldName);
 });
 
 When('fill the "Allocation Name" field with {string}', async ({ automaticAllocationPage }, allocationName: string) => {
@@ -29,6 +53,10 @@ When('select the {string} option in the {string} field', async ({ automaticAlloc
 
 When('click on "Edit Allocation" icon for the {string} allocation', async ({ automaticAllocationPage }, allocationName: string) => {
   await automaticAllocationPage.editAllocation(allocationName);
+});
+
+When('click on "Remove Allocation" icon from the allocation {string}', async ({ automaticAllocationPage }, allocationName: string) => {
+  await automaticAllocationPage.removeAllocation(allocationName);
 });
 
 When('add the user {string} in the {string} field', async ({ automaticAllocationPage }, emailAddress: string, fieldLabel: string) => {
