@@ -1,0 +1,154 @@
+import { expect } from '@playwright/test';
+import { BasePage } from './BasePage';
+
+export class TeamManagementPage extends BasePage {
+  private teamGridRows = '[role="grid"][aria-label="Data table"] tbody tr.k-master-row';
+  private firstTeamEditButton = `${this.teamGridRows}:first-child button[title^="Edit"]`;
+  private addTeamMembersButton = 'button:has(.k-button-text:text-is("Add Team Members"))';
+  private addTeamMembersDialog = 'div[role="dialog"]:has(.k-dialog-title:text-is("Add Team Members"))';
+  private addTeamMemberSearchInput =
+    `${this.addTeamMembersDialog} app-people-picker[formcontrolname="selectedPeople"] input[role="combobox"]`;
+  private addTeamMemberSearchResultByName = (userName: string) =>
+    `.k-animation-container:visible [role="option"]:has-text("${userName}")`;
+  private addUserButton = `${this.addTeamMembersDialog} button[aria-label="Add User"]`;
+  private saveTeamButton = 'button[form="teamForm"]:has(.k-button-text:text-is("Save"))';
+  private teamNameFilter = 'input[aria-label="Team Name Filter"]';
+  private teamLeaderSearchInput = '#teamForm app-people-picker[formcontrolname="teamLeaders"] input[role="combobox"]';
+  private teamLeaderSearchResultByEmail = (emailAddress: string) =>
+    `.k-animation-container:visible [role="option"]:has-text("${emailAddress}")`;
+  private teamLeaderChipByName = (userName: string) =>
+    `#teamForm app-people-picker[formcontrolname="teamLeaders"] .k-chip:has(.tag-person-name:text-is("${userName}"))`;
+  private removeTeamLeaderChipButtonByName = (userName: string) =>
+    `${this.teamLeaderChipByName(userName)} .k-chip-remove-action[aria-label="delete"]`;
+  private teamRowByName = (teamName: string) =>
+    `${this.teamGridRows}:has(td[data-kendo-grid-column-index="0"]:text-is("${teamName}"))`;
+  private teamLeadersCell = 'td[data-kendo-grid-column-index="1"]';
+  private editButtonByTeamName = (teamName: string) =>
+    `${this.teamRowByName(teamName)} button[title^="Edit"]`;
+
+  /**
+   * Opens the editor for the first team displayed in the Team Management grid.
+   */
+  async editFirstTeam(): Promise<void> {
+    await this.ensureKendoGridHasRows(
+      '[role="grid"][aria-label="Data table"]',
+      'Team Management must contain a team before the first team can be edited.',
+      'The Team Management grid was displayed before attempting to edit its first row.',
+    );
+    await this.ensureExpectedBusinessElementIsVisible(
+      this._page.locator(this.firstTeamEditButton),
+      'The first displayed team must provide the Edit action to an authorized user.',
+      'The Edit button is displayed for the first team row.',
+      'At least one Team Management data row is visible.',
+    );
+    await this.clickElement(this.firstTeamEditButton);
+  }
+
+  /**
+   * Opens the Add Team Members dialog from the Create/Edit Team page.
+   */
+  async openAddTeamMembersDialog(): Promise<void> {
+    await this.clickElement(this.addTeamMembersButton);
+  }
+
+  /**
+   * Selects a requested member from the Add Team Members search results.
+   * @param userName User name expected to be available for selection.
+   */
+  async selectTeamMemberToAdd(userName: string): Promise<void> {
+    await this.fillInputText(this.addTeamMemberSearchInput, userName);
+
+    const searchResult = this._page.locator(this.addTeamMemberSearchResultByName(userName));
+    await this.ensureExpectedBusinessElementIsVisible(
+      searchResult,
+      'A requested user must be available when adding a member to a team.',
+      `The user "${userName}" is available in the Add Team Members search results.`,
+      `The Add Team Members dialog was displayed and searched for "${userName}".`,
+    );
+    await searchResult.click();
+  }
+
+  /**
+   * Confirms the selected members in the Add Team Members dialog.
+   */
+  async addSelectedTeamMembers(): Promise<void> {
+    await this.clickElement(this.addUserButton);
+  }
+
+  /**
+   * Saves the current team from the Create/Edit Team form.
+   */
+  async saveTeam(): Promise<void> {
+    await this.clickElement(this.saveTeamButton);
+  }
+
+  /**
+   * Filters Team Management by an exact team name and opens that team's editor.
+   * @param teamName Exact name of the team to edit.
+   */
+  async editTeam(teamName: string): Promise<void> {
+    await this.clearInput(this.teamNameFilter);
+    await this.fillInputText(this.teamNameFilter, teamName);
+    await this.ensureKendoGridHasRows(
+      '[role="grid"][aria-label="Data table"]',
+      `Team Management must contain a team before "${teamName}" can be edited.`,
+      `The Team Management grid was filtered by "${teamName}" before searching for the requested team.`,
+    );
+    await expect(this._page.locator(this.teamRowByName(teamName))).toBeVisible();
+    await this.ensureExpectedBusinessElementIsVisible(
+      this._page.locator(this.editButtonByTeamName(teamName)),
+      `The team "${teamName}" must provide the Edit action.`,
+      `An Edit button is displayed for "${teamName}".`,
+      `The team row "${teamName}" is visible in the Team Management grid.`,
+    );
+    await this.clickElement(this.editButtonByTeamName(teamName));
+  }
+
+  /**
+   * Filters the Team Management grid by a team name.
+   * @param teamName Team name used to filter the grid.
+   */
+  async searchTeamsByName(teamName: string): Promise<void> {
+    await this.clearInput(this.teamNameFilter);
+    await this.fillInputText(this.teamNameFilter, teamName);
+  }
+
+  /**
+   * Verifies that the filtered team's Team Leaders cell does not contain a user.
+   * @param userName Display name that must not appear among the team's leaders.
+   */
+  async verifyUserIsNotAvailableInTeamLeaders(userName: string): Promise<void> {
+    const filteredTeamRows = this._page.locator(this.teamGridRows);
+    await expect(filteredTeamRows).toHaveCount(1);
+
+    const teamLeadersCell = filteredTeamRows.locator(this.teamLeadersCell);
+    try {
+      await expect(teamLeadersCell).not.toContainText(userName);
+    } catch {
+      this.failWithApplicationError(
+        'A removed Team Leader must no longer be displayed for the filtered team.',
+        `Team Leaders that do not contain "${userName}".`,
+        (await teamLeadersCell.textContent())?.trim() ?? '',
+        `The Team Leaders cell was displayed for the filtered team and still contains "${userName}".`,
+      );
+    }
+  }
+
+  /**
+   * Adds a Team Leader to the Create/Edit Team form through the people picker.
+   * @param emailAddress Email address of the Team Leader to add.
+   */
+  async addTeamLeader(emailAddress: string): Promise<void> {
+    await this.fillInputText(this.teamLeaderSearchInput, emailAddress);
+    await this.clickElement(this.teamLeaderSearchResultByEmail(emailAddress));
+  }
+
+  /**
+   * Removes a selected Team Leader from the Create/Edit Team form.
+   * @param userName Display name of the Team Leader to remove.
+   */
+  async removeTeamLeader(userName: string): Promise<void> {
+    await this.clickElement(this.removeTeamLeaderChipButtonByName(userName));
+    await expect(this._page.locator(this.teamLeaderChipByName(userName))).toHaveCount(0);
+  }
+}

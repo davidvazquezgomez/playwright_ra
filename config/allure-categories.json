@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Confirmed application defect",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*APPLICATION DEFECT DETECTED.*"
+  },
+  {
+    "name": "BDD contract - missing step definitions",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*Error: Missing step:.*"
+  },
+  {
+    "name": "Automation implementation - unsupported page or action",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*Error: (Page|Button|Section|Field|Option|Dropdown|.* button|.* field).* (is not recognized|is not supported|is not supported for).*"
+  },
+  {
+    "name": "Authentication state preparation",
+    "matchedStatuses": ["failed", "broken"],
+    "messageRegex": ".*(Timed out waiting for authentication state lock|Unable to determine the source feature|Credentials are missing for).*"
+  },
+  {
+    "name": "Browser lifecycle closed prematurely",
+    "matchedStatuses": ["failed", "broken"],
+    "messageRegex": ".*Target page, context or browser has been closed.*"
+  },
+  {
+    "name": "Locator or UI synchronization",
+    "matchedStatuses": ["failed", "broken"],
+    "messageRegex": ".*(Can't click element|Can't fill element|strict mode violation|element\\(s\\) not found|resolved to hidden|locator\\.waitFor: Timeout|page\\.waitForSelector: Timeout).*"
+  },
+  {
+    "name": "Test timeout",
+    "matchedStatuses": ["broken"],
+    "messageRegex": ".*Test timeout of .* exceeded.*"
+  },
+  {
+    "name": "Business assertion failure",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*(Expected chart|Expected toast message|The message .* is not displayed|Text for element .* is not|expect\\(received\\)\\.toBe).*"
+  }
+]

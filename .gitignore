@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/blob-report/
+
+# Allure
+allure-report/
+allure-results/
+
+# Test artifacts
+/screenshots/*
+!/screenshots/.gitignore
+/videos/*
+!/videos/.gitignore
+/Reports/
+/downloads/
+
+# Build
+dist/
+
+# TypeScript output is not committed; Playwright runs the TypeScript sources directly.
+/playwright.bdd.config.js
+/config/**/*.js
+/features/steps/**/*.js
+/pages/**/*.js
+/playwright/**/*.js
+/utils/**/*.js
+
+# BDD — tests generados por playwright-bdd (se regeneran con bddgen)
+.features-gen/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# IDE
+.idea/
+*.swp
+*.swo

@@ -1,0 +1,46 @@
+{
+  "name": "playwright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc",
+    "bdd:classify": "node scripts/classify-bdd-scenarios.js",
+    "bdd:classify:write": "node scripts/classify-bdd-scenarios.js --write",
+    "bdd:validate-contracts": "node scripts/validate-bdd-contracts.js",
+    "bdd:generate": "npm run bdd:classify && npm run bdd:validate-contracts && npx bddgen --config playwright.bdd.config.ts",
+    "diagnostics:prepare": "node scripts/prepare-diagnostics.js",
+    "test:bdd:diagnostic": "npm run bdd:generate && node scripts/run-bdd-diagnostic.js",
+    "test:bdd:readonly": "npm run bdd:generate && npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @readOnly --workers=4",
+    "test:bdd:mutable": "npm run bdd:generate && npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @mutable --workers=1",
+    "test:bdd": "rimraf allure-results && npm run bdd:generate && npx playwright test --config playwright.bdd.config.ts --project=desktop",
+    "test:bdd:tags": "npm run bdd:generate && npx playwright test --config playwright.bdd.config.ts --grep",
+    "test:bdd:smoke": "npm run bdd:generate && npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @smoke",
+    "test:bdd:regression": "npm run bdd:generate && npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @regression",
+    "test:bdd:ui": "npm run bdd:generate && npx playwright test --config playwright.bdd.config.ts --ui",
+    "test:bdd:ui:watch": "npm run bdd:generate && concurrently --kill-others \"chokidar \\\"features/**/*.feature\\\" -c \\\"npm run bdd:generate\\\"\" \"npx playwright test --config playwright.bdd.config.ts --ui\"",
+    "test:bdd:debug": "npm run bdd:generate && npx playwright test --config playwright.bdd.config.ts --project=desktop --debug",
+    "allure:enhance": "node scripts/allure-bdd-enhance.js",
+    "allure:generate": "node scripts/allure-report.js generate",
+    "allure:open": "node scripts/allure-report.js open",
+    "allure:report": "npm run allure:generate && npm run allure:open"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^24.10.2",
+    "allure-commandline": "^2.36.0",
+    "allure-playwright": "^3.4.3",
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^10.0.4",
+    "playwright-bdd": "^9.2.0",
+    "rimraf": "^6.1.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "otpauth": "^9.5.1"
+  }
+}

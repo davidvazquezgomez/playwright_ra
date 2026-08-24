@@ -1,0 +1,164 @@
+import { expect } from '@playwright/test';
+import { BasePage } from './BasePage';
+
+export class AutomaticAllocationPage extends BasePage {
+  private allocationGridRows = 'app-auto-allocation [role="grid"][aria-label="Data table"] tbody tr.k-master-row';
+  private readonly fieldSelectors: Record<string, string> = {
+    'Allocation Name': 'role=columnheader[name="Allocation Name"]',
+    Jurisdiction: 'role=columnheader[name="Jurisdiction"]',
+    'Impact Area': 'role=columnheader[name="Impact Area"]',
+    'Allocate To': 'role=columnheader[name="Allocate To"]',
+  };
+  private readonly setupFieldSelectors: Record<string, string> = {
+    'Allocation Name': `label.k-label:text-is("Allocation Name")`,
+    'Impact Area(s)': `label.k-label:text-is("Impact Area(s)")`,
+    'Jurisdiction(s)': `label.k-label:text-is("Jurisdiction(s)")`,
+    'Allocate Update To': `label.k-label:text-is("Allocate Update To")`,
+    'Update Owner': `label.k-label:text-is("Update Owner")`,
+    'Update Watchlist': `label.k-label:text-is("Update Watchlist")`,
+  };
+  private allocationRowByName = (allocationName: string) =>
+    `${this.allocationGridRows}:has(td[data-kendo-grid-column-index="0"]:text-is("${allocationName}"))`;
+  private editAllocationButtonByName = (allocationName: string) =>
+    `${this.allocationRowByName(allocationName)} button[title="Edit Allocation"]`;
+  private allocationRecipientPicker =
+    'app-auto-allocation-setup app-people-picker[formcontrolname="allocatedParty"] kendo-dropdownlist';
+  private allocationNameInput =
+    'app-auto-allocation-setup kendo-textbox[formcontrolname="allocationName"] input.k-input-inner';
+  private readonly fieldSelectionControlByFieldName: Record<string, string> = {
+    'Impact Area(s)':
+      'app-auto-allocation-setup kendo-multiselect[formcontrolname="impactAreas"] input[role="combobox"]',
+    Operator:
+      'app-auto-allocation-setup kendo-dropdownlist[formcontrolname="operator"][role="combobox"]',
+    'Jurisdiction(s)':
+      'app-auto-allocation-setup kendo-multiselect[formcontrolname="jurisdictions"] input[role="combobox"]',
+  };
+  private readonly userPickerByFieldName: Record<string, { controlSelector: string; searchInputSelector: string }> = {
+    'Update Owner':
+      {
+        controlSelector:
+          'app-auto-allocation-setup app-people-picker[formcontrolname="allocatedParty"] kendo-dropdownlist[role="combobox"]',
+        searchInputSelector:
+          'kendo-popup.k-animation-container-shown:visible .k-dropdownlist-popup.custom-people-picker input[role="searchbox"][aria-label="Filter"]',
+      },
+    'Update Watchlist': {
+      controlSelector:
+        'app-auto-allocation-setup app-people-picker[formcontrolname="allocatedWatchList"] kendo-multiselect input[role="combobox"]',
+      searchInputSelector:
+        'app-auto-allocation-setup app-people-picker[formcontrolname="allocatedWatchList"] kendo-multiselect input[role="combobox"]',
+    },
+  };
+  private allocationRecipientSearchInput =
+    'kendo-popup.k-animation-container-shown:visible .k-dropdownlist-popup input[role="searchbox"][aria-label="Filter"]';
+  private allocationRecipientOptionByEmail = (emailAddress: string) =>
+    `kendo-popup.k-animation-container-shown:visible .k-dropdownlist-popup li[role="option"]:has-text("${emailAddress}")`;
+  private setupFieldErrorByText = (message: string) =>
+    this._page.locator(`.k-form-error`).filter({ hasText: message });
+
+  /**
+   * Opens the edit form for an automatic allocation.
+   * @param allocationName Exact name of the allocation to edit.
+   */
+  async editAllocation(allocationName: string): Promise<void> {
+    await this.ensureKendoGridHasRows(
+      'app-auto-allocation [role="grid"][aria-label="Data table"]',
+      `Automatic Allocation must contain an allocation before "${allocationName}" can be edited.`,
+      'The Automatic Allocation grid was displayed before searching for the requested allocation.',
+    );
+    await expect(this._page.locator(this.allocationRowByName(allocationName))).toBeVisible();
+    await this.ensureExpectedBusinessElementIsVisible(
+      this._page.locator(this.editAllocationButtonByName(allocationName)),
+      `The allocation "${allocationName}" must provide the Edit Allocation action.`,
+      `The Edit Allocation button is displayed for "${allocationName}".`,
+      `The allocation row "${allocationName}" is visible in the Automatic Allocation grid.`,
+    );
+    await this.clickElement(this.editAllocationButtonByName(allocationName));
+  }
+
+  /**
+   * Verifies that the requested Automatic Allocation grid headers are visible.
+   * @param fields Semicolon-delimited display names of the expected grid headers.
+   */
+  async verifyAutomaticAllocationFieldsDisplayed(fields: string): Promise<void> {
+    await this.verifyRequestedFieldsDisplayed(fields, this.fieldSelectors);
+  }
+
+  /**
+   * Verifies that the requested fields are visible in the Automatic Allocation Setup form.
+   * @param fields Semicolon-delimited display names of the expected form fields.
+   */
+  async verifyAutomaticAllocationSetupFieldsDisplayed(fields: string): Promise<void> {
+    await this.verifyRequestedFieldsDisplayed(fields, this.setupFieldSelectors);
+  }
+
+  /**
+   * Verifies that the requested inline field errors are visible in the Automatic Allocation Setup form.
+   * @param messages Semicolon-delimited field-error messages.
+   */
+  async verifyAutomaticAllocationSetupFieldErrors(messages: string): Promise<void> {
+    await this._page.pause();
+    const fieldErrorMessages = messages.split(';').map(message => message.trim()).filter(Boolean);
+    if (fieldErrorMessages.length === 0) {
+      throw new Error('At least one Automatic Allocation Setup field-error message must be provided.');
+    }
+
+    for (const message of fieldErrorMessages) {
+      await expect(this.setupFieldErrorByText(message)).toBeVisible();
+    }
+  }
+
+  /**
+   * Fills the Allocation Name field in the Automatic Allocation Setup form.
+   * @param allocationName Value to enter as the allocation name.
+   */
+  async fillAllocationName(allocationName: string): Promise<void> {
+    await this.fillInputText(this.allocationNameInput, allocationName);
+  }
+
+  /**
+   * Returns the selector for a supported Automatic Allocation Kendo field.
+   * @param fieldName Business name of the Automatic Allocation field.
+   * @returns Selector for the field's Kendo selection control.
+   */
+  getFieldSelectionControlSelector(fieldName: string): string {
+    const fieldSelector = this.fieldSelectionControlByFieldName[fieldName];
+    if (!fieldSelector) {
+      throw new Error(`Automatic Allocation Kendo field "${fieldName}" is not supported.`);
+    }
+
+    return fieldSelector;
+  }
+
+  /**
+   * Returns the selectors for a supported Automatic Allocation people picker.
+   * @param fieldName Business name of the Automatic Allocation field.
+   * @returns Selectors for the picker control and its search input.
+   */
+  getUserPickerSelectors(fieldName: string): { controlSelector: string; searchInputSelector: string } {
+    const userPickerSelectors = this.userPickerByFieldName[fieldName];
+    if (!userPickerSelectors) {
+      throw new Error(`Automatic Allocation people picker "${fieldName}" is not supported.`);
+    }
+
+    return userPickerSelectors;
+  }
+
+  /**
+   * Determines whether an Automatic Allocation field is a people picker.
+   * @param fieldName Business name of the Automatic Allocation field.
+   * @returns True when the field selects users or teams.
+   */
+  isUserPickerField(fieldName: string): boolean {
+    return Boolean(this.userPickerByFieldName[fieldName]);
+  }
+
+  /**
+   * Assigns an automatic allocation to a user through the Search Teams and Users picker.
+   * @param emailAddress Email address of the user to assign.
+   */
+  async addAllocationRecipient(emailAddress: string): Promise<void> {
+    await this.clickElement(this.allocationRecipientPicker);
+    await this.fillInputText(this.allocationRecipientSearchInput, emailAddress);
+    await this.clickElement(this.allocationRecipientOptionByEmail(emailAddress));
+  }
+}

@@ -1,0 +1,984 @@
+import { expect } from '@playwright/test';
+import { BasePage } from "./BasePage";
+
+export class CommonPage extends BasePage {
+  private sideNavigation = '.side-navigation';
+  private navigationRenderTimeout = 5000;
+  private cookieConsentModal = '#onetrust-banner-sdk';
+  private closeCookieConsentButton = '#onetrust-banner-sdk #onetrust-close-btn-container button, #onetrust-banner-sdk button[aria-label="Close"]';
+
+  // Main navigation items
+  private menuLinkByText = (item: string) =>
+    `${this.sideNavigation} a.menu-link[title="${item}"], ${this.sideNavigation} a.menu-link[data-title="${item}"], ${this.sideNavigation} a.menu-link:has(.menu-text:text-is("${item}"))`;
+
+  // Submenu items
+  private submenuLinkByText = (item: string) =>
+    `${this.sideNavigation} a.submenu-link[title="${item}"], ` +
+    `${this.sideNavigation} a.submenu-link[data-title="${item}"], ` +
+    `${this.sideNavigation} a[title="${item}"], ` +
+    `${this.sideNavigation} a[data-title="${item}"], ` +
+    `${this.sideNavigation} a:has-text("${item}"), ` +
+    `${this.sideNavigation} button:has-text("${item}")`;
+
+  // Menu item with submenu
+  private menuWithSubmenu = `${this.sideNavigation} a.menu-link[title="Menu"]`;
+
+  private continueButton = 'button.k-button-primary:has-text("Continue")';
+  private nextButton = 'button.k-button-primary:has(.k-button-text:text-is("Next"))';
+  private reassignButton = 'button.k-button-primary:has(.k-button-text:text-is("Reassign"))';
+  private confirmButton = 'button[aria-label="Confirm"]';
+  private confirmDeletionButton = 'button.k-button-error:has(.k-button-text:text-is("Confirm Deletion"))';
+  private updateAnywayButton = 'button[aria-label="Update anyway"]';
+  private portalConfigurationSaveAndContinueButton = 'button.k-button-primary:has(.k-button-text:text-is("Save & Continue"))';
+  private setNotificationPreferencesButton = 'button.k-button-primary:has(.k-button-text:text-is("Set Notification Preferences"))';
+  private updatePortalButton = 'button.k-button-primary:has(.k-button-text:text-is("Update Portal"))';
+  private saveSettingsButton = 'button.k-button-primary:has(.k-button-text:text-is("Save Settings"))';
+  private clientPortalSetupHeading = 'app-title h1.heading:has-text("Client Portal Setup")';
+  private clientPortalNameInput = 'kendo-textbox[formcontrolname="clientPortalName"] input.k-input-inner';
+  private knowledgeModulesStep = 'kendo-stepper a.k-step-link[title="Knowledge Modules & Impact Areas"]';
+  private knowledgeModulesCurrentStep = 'kendo-stepper a.k-step-link[title="Knowledge Modules & Impact Areas"][aria-current="step"]';
+  private knowledgeModulesHeading = 'role=heading[name="Knowledge Modules & Impact Areas"][level="1"]';
+  private jurisdictionsSelectionHeading = 'role=heading[name="Jurisdictions selection"][level="1"]';
+  private addNewButton = 'button:has(.k-button-text:has-text("Add New"))';
+  private addNewUserButton = 'button:has(.k-button-text:text-is("Add New User"))';
+  private addNewUsersButton = 'button:has(.k-button-text:text-is("Add New Users"))';
+  private deleteSelectedUserButton = 'button:has(.k-button-text:text-is("Delete Selected User"))';
+  private deleteSelectedUsersButton = 'button:has(.k-button-text:text-is("Delete Selected Users"))';
+  private createTeamButton = 'role=button[name="Create Team"]';
+  private createNewPortalButton = 'button:has(.k-button-text:text-is("Create New Portal"))';
+  private createNewAllocationButton = 'button:has(.k-button-text:text-is("Create New Allocation"))';
+  private saveButton = 'button:has(.k-button-text:has-text("Save"))';
+  private cancelButton = 'button:has(.k-button-text:has-text("Cancel"))';
+  private disableImpactAreaButton = 'button:has(.k-button-text:has-text("Disable Impact Area"))';
+  private enableImpactAreaButton = 'button:has(.k-button-text:has-text("Enable Impact Area"))';
+  private expandAllButton = 'button:has(.k-button-text:has-text("Expand All"))';
+  private collapseAllButton = 'button:has(.k-button-text:has-text("Collapse All"))';
+  private disclaimerFooterLink = 'a[aria-label="Disclaimer"]';
+  private privacyFooterLink = 'a[aria-label="Privacy"]';
+  private termsOfUseFooterLink = 'a[aria-label="Terms of use"]';
+  private ossAttributionFooterLink = 'a[aria-label="OSS Attribution"]';
+  private cookieFooterLink = 'a[aria-label="Cookie"]';
+  private cookieSettingsFooterLink = 'a[aria-label="Cookie Settings"]';
+  private footerLinkByLabel = (label: string) => `.footerLinks a[aria-label="${label}"]`;
+  private viewAllUpdatesButton = 'button[title="Clear filters and view all updates"]';
+  private viewAllActionsButton = 'button[title="Clear filters and view all actions"]';
+  private addActionButton = 'button:has-text("Add Action")';
+  private backButton = 'app-title a.back-link';
+  private favouriteIcon = '.view-toggle > span:not(.d-none) i[title="Save as favourite"]';
+  private openDashboardButton = 'role=button[name="Open Dashboard"]';
+  private dashboardFilterButton = 'button[title="Filter"]';
+  private downloadUpdatesTemplateLink = 'a.download-template:has-text("Download Updates Template")';
+  private exportUsersButton = 'button:has(.k-button-text:text-is("EXPORT USERS"))';
+  private uploadSummaryPageTitle = 'h1.heading:text-matches("upload summary|updates summary", "i")';
+  private uploadCompletePageTitle = 'text=/upload complete/i';
+  private overviewPageTitle = 'h3.dashboard-title:has-text("Overview")';
+  private portalOverviewPageTitle = (pageName: string) =>
+    `role=heading[name="${pageName}"][level="3"]`;
+  private pageHeadingByName = (pageName: string) => `h1.heading:has-text("${pageName}")`;
+  private userManagementPageTitle = 'h1.heading:text-is("User Management")';
+  // Client roles render "Default Notifications Settings"; SuperAdmin/Deloitte roles render "Notification Preferences".
+  private defaultNotificationSettingsPageTitle =
+    'h1.heading:text-is("Default Notifications Settings"), h1.heading:text-is("Notification Preferences")';
+  private releaseNotesPageTitle = 'app-title h1.heading:text-is("RegulatoryAdvantage | Release Notes")';
+  private pageTitle = 'app-title h1.heading';
+  private disclaimerContent = 'div.description-section > div';
+  private privacyPreferenceCenterDialog = 'div[role="dialog"][aria-label="Privacy Preference Center"]';
+  private privacyPreferenceCenterTitle = `${this.privacyPreferenceCenterDialog} h2#ot-pc-title`;
+  private kendoDialogByTitle = (title: string) =>
+    `div[role="dialog"]:has(.k-dialog-title:text-is("${title}"))`;
+  private kendoDialogButtonByName = (title: string, buttonName: string) =>
+    `${this.kendoDialogByTitle(title)} button[aria-label="${buttonName}"]`;
+  private dialogActionButtonByName = (buttonName: string) =>
+    `div[role="dialog"]:visible kendo-dialog-actions button[aria-label="${buttonName}"]`;
+  private profileButton = 'app-header .profile-initials';
+  private notificationsButton = 'app-header .right-icons li.notification';
+  private notificationsPopup = 'kendo-popup.k-animation-container-shown .k-popup.notification-content';
+  private notificationsPopupTitle = `${this.notificationsPopup} .popup-header h6`;
+  private viewAllNotificationsLink = `${this.notificationsPopup} a.view-all-notifications`;
+  private profilePopup = '.profile-content:visible';
+  private profileName = `${this.profilePopup} .profile-details h5`;
+  private profileEmail = `${this.profilePopup} .profile-details .email a`;
+  private profileMenuOptionByName = (option: string) =>
+    `${this.profilePopup} ul a:text-is("${option}")`;
+  private buttonByName = (buttonName: string) =>
+    this._page.getByRole('button', { name: buttonName, exact: true });
+  private mandatoryFieldMessageByText = (message: string) =>
+    this._page.locator('.k-form-error').filter({ hasText: message });
+  private toastMessageByText = (message: string) =>
+    this._page.locator('.k-notification-content').filter({ hasText: message });
+  private checkboxLabelByName = (checkboxName: string) =>
+    `label.k-label:text-is("${checkboxName}")`;
+  private gridFilterInputByName = (fieldName: string) =>
+    `input[aria-label="${fieldName} Filter"]`;
+  private sharedKendoGrid = '[role="grid"][aria-label="Data table"]';
+  private sharedGridRows = `${this.sharedKendoGrid} tbody tr.k-master-row`;
+  private sharedGridColumnHeaderByName = (columnName: string) =>
+    `role=columnheader[name="${columnName}"]`;
+  private tabByName = (tabName: string) => `role=tab[name="${tabName}"]`;
+  private paginationPageSizes =
+    'kendo-pager-page-sizes:has(kendo-dropdownlist[role="combobox"][aria-label="items per page"])';
+  private visibleKendoFieldOptionByName = (optionName: string) =>
+    `kendo-popup.k-animation-container-shown:visible .select-all:text-is("${optionName}"), ` +
+    `kendo-popup.k-animation-container-shown:visible li[role="option"]:text-is("${optionName}"), ` +
+    `kendo-popup.k-animation-container-shown:visible li[role="option"]:has(.k-list-item-text:text-is("${optionName}"))`;
+  private visibleUserPickerOptionByName = (optionName: string) =>
+    `kendo-popup.k-animation-container-shown:visible li[role="option"]:has(.person-name:text-is("${optionName}"))`;
+
+
+  /**
+   * Launches the application by navigating to the specified URL.
+   * @param url The URL of the application to launch.
+   */
+  async launchApplication(url: string): Promise<void> {
+    await this.loadPage(url);
+    const [title, bodyText] = await Promise.all([
+      this._page.title(),
+      this._page.locator('body').innerText(),
+    ]);
+
+    if (title.trim().toLowerCase() === 'access denied' || /access denied/i.test(bodyText)) {
+      throw new Error(
+        `Application access was denied before authentication. URL: ${this._page.url()}. ` +
+        'Allowlist the Azure Pipelines agent egress IPs in the STAGE WAF, or run this pipeline on a self-hosted agent with approved network access.',
+      );
+    }
+  }
+
+  /**
+   * Verifies that a page displays its Kendo pagination page-size control.
+   * @param pageName Name of the page where pagination is expected.
+   */
+  async verifyPaginationIsDisplayed(pageName: string): Promise<void> {
+    if (!pageName.trim()) {
+      throw new Error('A page name must be provided when verifying pagination.');
+    }
+
+    await this.verifyElementIsDisplayed(this.paginationPageSizes);
+  }
+
+  /**
+   * Opens a Kendo field control and selects an option from its popup.
+   * @param controlSelector Selector for the page-specific Kendo selection control.
+   * @param optionName Exact visible option to select.
+   */
+  async selectKendoFieldOption(controlSelector: string, optionName: string): Promise<void> {
+    await this.clickElement(controlSelector);
+    await this.clickElement(this.visibleKendoFieldOptionByName(optionName));
+  }
+
+  /**
+   * Filters and confirms a user or team from a people-picker popup with Enter.
+   * @param controlSelector Selector for the page-specific people-picker control.
+   * @param searchInputSelector Selector for the people-picker search input.
+   * @param optionName Exact visible user or team name to select.
+   */
+  async selectUserPickerOption(
+    controlSelector: string,
+    searchInputSelector: string,
+    optionName: string,
+  ): Promise<void> {
+    await this.clickElement(controlSelector);
+    await this.fillInputText(searchInputSelector, optionName);
+    await this.waitForElement(this.visibleUserPickerOptionByName(optionName));
+    await this.pressKeyOnElement(searchInputSelector, 'Enter');
+  }
+
+  /**
+   * Opens an application page identified by its reusable Gherkin name.
+   * @param pageName Name of the application page to open.
+   */
+  async openNamedPage(pageName: string): Promise<void> {
+    const pageRoutes: Record<string, string> = {
+      'User Management - 01_13Jan REG': '/user-management/361',
+      'Team Management - 01_13Jan REG': '/teams/361',
+      'Automatic Allocation of Updates - 01_13Jan REG': '/allocation/361',
+      'Manage Impact Areas': '/impact-area-list',
+      'Update Privacy Notice': '/update-privacy-notice',
+      'RegulatoryAdvantage | Privacy Notice': '/privacy-notice',
+      'Updates Dashboard - 01_13Jan REG': '/project-dashboard/361/Updates/AllUpdates/All',
+      '01_13Jan REG - Updates Dashboard - All Updates': '/project-dashboard/361/Updates/AllUpdates/All',
+      'Updates Dashboard - Global Inc': '/project-dashboard/142/Updates/AllUpdates/All',
+      'Global Inc - Updates Dashboard - All Updates': '/project-dashboard/142/Updates/AllUpdates/All',
+      'Updates Dashboard - QA_Test client3': '/project-dashboard/213/Updates/AllUpdates/All',
+      '1_E2E_Test1 - Updates Dashboard - All Updates': '/project-dashboard/180/Updates/AllUpdates/All',
+      '01_QA_StageTestPortal - Updates Dashboard - All Updates': '/project-dashboard/415/Updates/AllUpdates/All',
+      'ClientPortal_20260209133616 - Updates Dashboard - All Updates': '/project-dashboard/540/Updates/AllUpdates/All',
+      '01_13Jan REG - Analytics Dashboard - Update Analytics': '/project-dashboard/361/Analytics/UpdateAnalytics/All',
+      '01_13Jan REG - Analytics Dashboard - Action Analytics': '/project-dashboard/361/Analytics/ActionsAnalytics/All',
+      '01_QA_ClientPortalSetup - Overview - Update Analytics': '/project-dashboard/616/Analytics/UpdateAnalytics/All',
+      '01_13Jan REG - Analytics Dashboard - UpdateAnalytics': '/project-dashboard/616/Analytics/UpdateAnalytics/All',
+      'QA_Test client3 - Analytics Dashboard - Update Analytics': '/project-dashboard/213/Analytics/UpdateAnalytics/All',
+      'QA_Test client3 - Analytics Dashboard - Action Analytics': '/project-dashboard/213/Analytics/ActionsAnalytics/All',
+      'Global Inc - Overview - Update Analytics': '/project-dashboard/142/Analytics/UpdateAnalytics/All',
+      'Global Inc - Analytics Dashboard - UpdateAnalytics': '/project-dashboard/142/Analytics/UpdateAnalytics/All',
+      'Global Inc - Analytics Dashboard - Update Analytics': '/project-dashboard/142/Analytics/UpdateAnalytics/All',
+      'Global Inc - Analytics Dashboard - Action Analytics': '/project-dashboard/142/Analytics/ActionsAnalytics/All',
+      '01_13Jan REG - Actions Dashboard': '/project-dashboard/361/Actions/AllActions/All',
+      'Actions Dashboard - 01_13Jan REG': '/project-dashboard/361/Actions/AllActions/All',
+      'Global Inc - Actions Dashboard': '/project-dashboard/142/Actions/AllActions/All',
+      'Actions Dashboard - Global Inc': '/project-dashboard/142/Actions/AllActions/All',
+      'Actions Dashboard - QA_Test client3': '/project-dashboard/213/Actions/AllActions/All',
+      'QA_Test client3 - Actions Dashboard': '/project-dashboard/213/Actions/AllActions/All',
+      'Global Inc- All Updates': '/project-dashboard/142/Updates/AllUpdates/All',
+      'ClientPortal_20260209133616 - Actions Dashboard': '/project-dashboard/540/Actions/AllActions/All',
+      'Updates Dashboard - ClientPortal_20260212191012': '/project-dashboard/553/Updates/AllUpdates/All',
+      'Actions Dashboard - ClientPortal_20260212191012': '/project-dashboard/553/Actions/AllActions/All',
+      'Updates Dashboard - ClientPortal_20260213081718': '/project-dashboard/553/Updates/AllUpdates/All',
+      'Actions Dashboard - ClientPortal_20260213081718': '/project-dashboard/553/Actions/AllActions/All',
+      '01_QA_StageTestPortal - Actions Dashboard': '/project-dashboard/415/Actions/AllActions/All',
+      'User Management - Global Inc': '/user-management/142',
+      'User Management - QA_Test client3': '/user-management/213',
+      'User Management - ClientPortal_20260213081718': '/user-management/553',
+      'Team Management - Global Inc': '/teams/142',
+      'Team Management - QA_Test client3': '/teams/213',
+      'Automatic Allocation of Updates - Global Inc': '/allocation/142',
+      'Automatic Allocation Setup - Global Inc': '/allocation-setup/142',
+      'Automatic Allocation of Updates': '/allocation/361',
+      'Automatic Allocation Setup': '/allocation-setup/616',
+      'Notifications Preference': '/user-notification-preference',
+
+    };
+    const pageRoute = pageRoutes[pageName];
+
+    if (!pageRoute) {
+      throw new Error(`Page "${pageName}" is not recognized.`);
+    }
+
+    const environment = (process.env.ENV || 'STAGE').toUpperCase();
+    const applicationUrl = environment === 'DEV' ? process.env.DEV_URL : process.env.STAGE_URL;
+    if (!applicationUrl) {
+      throw new Error(`URL is not configured for environment ${environment}.`);
+    }
+
+    await this.loadPage(new URL(pageRoute, applicationUrl).toString());
+  }
+
+  /**
+   * Closes the OneTrust cookie-consent banner when it is displayed.
+   */
+  async dismissCookieConsent(): Promise<void> {
+    const cookieConsentModal = this._page.locator(this.cookieConsentModal);
+
+    await cookieConsentModal.waitFor({ state: 'visible', timeout: 5000 }).catch(() => undefined);
+    if (await cookieConsentModal.isVisible()) {
+      await this.clickElement(this.closeCookieConsentButton, 5000);
+      await this.waitForSelectorStatus(this.cookieConsentModal, 'hidden');
+    }
+  }
+
+  /**
+   * Click on a navigation option by name.
+   * Handles both main menu items and submenu items.
+   * For submenu items (e.g., "Upload Updates"), automatically expands the "Menu" submenu.
+   * @param option The navigation option to click (e.g., "Home", "Upload Updates", "Manage Impact Areas").
+   * @returns A promise that resolves when the navigation option has been clicked.
+   */
+  async clickNavigationOption(option: string): Promise<void> {
+    for (let attempt = 1; attempt <= 3; attempt += 1) {
+      try {
+        await this.waitForSelectorStatus(
+          this.sideNavigation,
+          'visible',
+          this.navigationRenderTimeout,
+        );
+
+        const submenuLink = this.submenuLinkByText(option);
+        const mainMenuLink = this.menuLinkByText(option);
+        await this.waitForSelectorStatus(
+          `${submenuLink}, ${mainMenuLink}`,
+          'attached',
+          this.navigationRenderTimeout,
+        );
+
+        if (await this._page.locator(submenuLink).count() > 0) {
+          if (!await this.checkIfFieldIsDisplayed(submenuLink)) {
+            await this.clickElement(this.menuWithSubmenu, 5000);
+          }
+
+          await this.clickElement(submenuLink, 5000);
+          return;
+        }
+
+        await this.clickElement(mainMenuLink, 5000);
+        return;
+      } catch (error) {
+        if (attempt === 3) {
+          throw error;
+        }
+
+        await this.reload();
+      }
+    }
+  }
+
+  /**
+   * Clicks a checkbox through its visible label.
+   * @param checkboxName Exact visible label of the checkbox.
+   */
+  async clickCheckbox(checkboxName: string): Promise<void> {
+    await this._page.pause();
+    await this.clickElement(this.checkboxLabelByName(checkboxName));
+  }
+
+  /**
+   * Fills a named Kendo grid filter input.
+   * @param fieldName Display name of the grid field.
+   * @param value Value used to filter the grid.
+   * @param pageName Name of the page that owns the grid.
+   */
+  async fillGridFilterField(fieldName: string, value: string, pageName: string): Promise<void> {
+    const supportedPages = ['Client Portal List', 'Manage Impact Areas'];
+    if (!supportedPages.includes(pageName)) {
+      throw new Error(`Page "${pageName}" is not supported.`);
+    }
+
+    const filterInput = this.gridFilterInputByName(fieldName);
+    await this.clearInput(filterInput);
+    await this.fillInputText(filterInput, value);
+  }
+
+  /**
+   * Verifies that a shared Kendo grid column header is visible.
+   * @param columnName Name of the expected column.
+   * @param pageName Name of the page that owns the grid.
+   */
+  async verifyGridColumnHeaderDisplayed(columnName: string, pageName: string): Promise<void> {
+    await expect(this._page.locator(this.sharedGridColumnHeaderByName(columnName))).toBeVisible();
+  }
+
+  /**
+   * Clicks a shared Kendo grid column header to change its sort state.
+   * @param columnName Name of the column to sort.
+   * @param pageName Name of the page that owns the grid.
+   */
+  async clickGridColumnHeader(columnName: string, pageName: string): Promise<void> {
+    await this.clickElement(this.sharedGridColumnHeaderByName(columnName));
+  }
+
+  /**
+   * Verifies that visible rows in a shared Kendo grid are sorted by a requested column.
+   * @param order Expected sorting direction.
+   * @param columnName Name of the sorted column.
+   * @param pageName Name of the page that owns the grid.
+   */
+  async verifyGridItemsSorted(
+    order: 'ascending' | 'descending',
+    columnName: string,
+    pageName: string,
+  ): Promise<void> {
+    const columnHeader = this._page.locator(this.sharedGridColumnHeaderByName(columnName));
+    const columnIndex = await columnHeader.getAttribute('aria-colindex');
+    if (!columnIndex) {
+      throw new Error(`Column "${columnName}" is not supported on page "${pageName}".`);
+    }
+
+    await expect(columnHeader).toHaveAttribute('aria-sort', order);
+    await this.ensureKendoGridHasRows(
+      this.sharedKendoGrid,
+      `The "${pageName}" grid must contain data before "${columnName}" can be sorted.`,
+      `The "${columnName}" header reports aria-sort="${order}".`,
+    );
+    const columnCells = this._page.locator(
+      `${this.sharedGridRows} td[data-kendo-grid-column-index="${Number(columnIndex) - 1}"]`,
+    );
+    const areColumnValuesSorted = async (): Promise<boolean> => {
+      const values = (await columnCells.allTextContents()).map(value => value.trim());
+      const sortedValues = [...values].sort((firstValue, secondValue) => {
+        const comparison = columnName.includes('Date')
+          ? this.compareGridDateValues(firstValue, secondValue)
+          : this.compareGridTextValues(firstValue, secondValue);
+        return order === 'ascending' ? comparison : -comparison;
+      });
+
+      return values.length > 0 && values.every((value, index) => value === sortedValues[index]);
+    };
+
+    try {
+      await expect.poll(areColumnValuesSorted).toBe(true);
+    } catch {
+      const actualValues = (await columnCells.allTextContents()).map(value => value.trim());
+      const expectedValues = [...actualValues].sort((firstValue, secondValue) => {
+        const comparison = columnName.includes('Date')
+          ? this.compareGridDateValues(firstValue, secondValue)
+          : this.compareGridTextValues(firstValue, secondValue);
+        return order === 'ascending' ? comparison : -comparison;
+      });
+
+      this.failWithApplicationError(
+        `The "${columnName}" column in "${pageName}" must display rows in ${order} order ` +
+        'when the header declares that sort direction.',
+        `[${expectedValues.join(' | ')}]`,
+        `[${actualValues.join(' | ')}]`,
+        `The column header reports aria-sort="${order}".`,
+      );
+    }
+  }
+
+  /**
+   * Verifies that sorting has been removed from a shared Kendo grid column.
+   * @param columnName Name of the column without sorting.
+   * @param pageName Name of the page that owns the grid.
+   */
+  async verifyGridSortingRemoved(columnName: string, pageName: string): Promise<void> {
+    const columnHeader = this._page.locator(this.sharedGridColumnHeaderByName(columnName));
+    await expect(columnHeader).not.toHaveAttribute('aria-sort', /.+/);
+  }
+
+  /**
+   * Verifies that one or more tabs are visible on a supported application page.
+   * @param tabs Semicolon-delimited tab labels to verify.
+   * @param pageName Name of the page that owns the tabs.
+   */
+  async verifyTabsAreDisplayed(tabs: string, pageName: string): Promise<void> {
+
+    const tabNames = tabs.split(';').map(tab => tab.trim()).filter(Boolean);
+    if (tabNames.length === 0) {
+      throw new Error('At least one tab must be provided.');
+    }
+
+    for (const tabName of tabNames) {
+      await expect(this._page.locator(this.tabByName(tabName))).toBeVisible();
+    }
+  }
+
+  /**
+   * Verifies that a tab subsection is visible and active.
+   * @param subsectionName Accessible name of the active tab subsection.
+   */
+  async verifySubsectionIsDisplayed(subsectionName: string): Promise<void> {
+    const subsection = this._page.locator(this.tabByName(subsectionName));
+
+    await expect(subsection).toBeVisible();
+    await expect(subsection).toHaveAttribute('aria-selected', 'true');
+  }
+
+  /**
+   * Selects a tab by its accessible name and verifies that it becomes active.
+   * @param tabName Accessible name of the tab to select.
+   * @param tabKind Business hierarchy level represented by the tab.
+   */
+  async selectTab(tabName: string, tabKind: 'section' | 'subsection' = 'section'): Promise<void> {
+    const tab = this.tabByName(tabName);
+
+    await this.clickElement(tab);
+    await expect(this._page.locator(tab), `Expected ${tabKind} "${tabName}" to be active.`).toHaveAttribute('aria-selected', 'true');
+  }
+
+  /**
+   * Escapes text before it is used as literal regular-expression content.
+   * @param value Text to escape.
+   * @returns Escaped regular-expression content.
+   */
+  private escapeRegularExpression(value: string): string {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  /**
+   * Verifies that the requested action buttons are visible on an application page.
+   * @param buttons Semicolon-delimited button labels to verify.
+   * @param pageName Page name used in assertion messages.
+   */
+  async verifyButtonsAreDisplayed(buttons: string, pageName: string): Promise<void> {
+    const buttonNames = buttons.split(';').map(button => button.trim()).filter(Boolean);
+
+    if (buttonNames.length === 0) {
+      throw new Error(`At least one button must be provided for the ${pageName} page.`);
+    }
+
+    for (const buttonName of buttonNames) {
+      await expect(this.buttonByName(buttonName), `Expected "${buttonName}" button to be visible on the ${pageName} page.`).toBeVisible();
+    }
+  }
+
+  /**
+   * Verifies that every requested mandatory-field validation message is visible.
+   * @param messages Semicolon-delimited mandatory-field validation messages.
+   * @param pageName Page name used in assertion messages.
+   */
+  async verifyMandatoryFieldMessagesAreDisplayed(messages: string, pageName: string): Promise<void> {
+    const mandatoryFieldMessages = messages.split(';').map(message => message.trim()).filter(Boolean);
+
+    if (mandatoryFieldMessages.length === 0) {
+      throw new Error(`At least one mandatory-field message must be provided for the ${pageName} page.`);
+    }
+
+    for (const message of mandatoryFieldMessages) {
+      await expect(this.mandatoryFieldMessageByText(message), `Expected mandatory-field message "${message}" to be visible on the ${pageName} page.`).toBeVisible();
+    }
+  }
+
+  /**
+   * Verify that a navigation option is displayed.
+   * Works for both main menu items and submenu items.
+   * @param option The navigation option name to verify.
+   * @throws Error if the option is not found.
+   */
+  async verifyNavigationOption(option: string): Promise<void> {
+    // Check in submenu items first
+    const submenuLink = this.submenuLinkByText(option);
+    if (await this.checkIfFieldIsDisplayed(submenuLink)) {
+      return;
+    }
+
+    // Check in main menu items
+    const mainMenuLink = this.menuLinkByText(option);
+    if (await this.checkIfFieldIsDisplayed(mainMenuLink)) {
+      return;
+    }
+
+    throw new Error(
+      `Navigation option "${option}" is not displayed in main menu or submenu.`,
+    );
+  }
+
+  private compareGridDateValues(firstValue: string, secondValue: string): number {
+    const firstTime = Date.parse(firstValue);
+    const secondTime = Date.parse(secondValue);
+    const normalizedFirstTime = Number.isNaN(firstTime) ? Number.POSITIVE_INFINITY : firstTime;
+    const normalizedSecondTime = Number.isNaN(secondTime) ? Number.POSITIVE_INFINITY : secondTime;
+    return normalizedFirstTime - normalizedSecondTime;
+  }
+
+  private compareGridTextValues(firstValue: string, secondValue: string): number {
+    if (firstValue === secondValue) {
+      return 0;
+    }
+
+    return firstValue < secondValue ? -1 : 1;
+  }
+
+  private async clickSaveButton(): Promise<void> {
+    const dialogSaveButton = this.dialogActionButtonByName('Save');
+
+    if (await this._page.locator(dialogSaveButton).isVisible()) {
+      await this.clickElement(dialogSaveButton);
+      return;
+    }
+
+    await this.clickElement(this.saveButton);
+  }
+
+  /**
+   * Waits for a supported Client Portal configuration wizard page to render, then continues.
+   * @param pageName Current wizard page that owns the Save and Continue button.
+   */
+  async continuePortalConfiguration(pageName: string): Promise<void> {
+    let nextPageHeading: string;
+    let nextPageState: 'attached' | 'visible' = 'visible';
+
+    switch (pageName) {
+      case 'Client Portal Setup':
+        await this.waitForSelectorStatus(this.clientPortalSetupHeading, 'visible');
+        await this.waitForSelectorStatus(this.clientPortalNameInput, 'visible');
+        // The Client Portal Setup page keeps rendering after the name input appears; give it time to settle before clicking.
+        await this.waitImplicit(2000);
+        nextPageHeading = this.knowledgeModulesCurrentStep;
+        nextPageState = 'attached';
+        break;
+      case 'Knowledge Modules & Impact Areas':
+        await this.waitForSelectorStatus(this.knowledgeModulesHeading, 'visible');
+        nextPageHeading = this.jurisdictionsSelectionHeading;
+        break;
+      default:
+        throw new Error(`Save & Continue is not supported on page "${pageName}".`);
+    }
+
+    await this.clickElement(this.portalConfigurationSaveAndContinueButton);
+    await this.waitForSelectorStatus(nextPageHeading, nextPageState);
+  }
+
+  /**
+   * Clicks a supported shared action button.
+   * @param button Button label to click.
+   */
+  async clickButton(button: string): Promise<void> {
+    switch (button) {
+      case "Continue":
+        await this.clickElement(this.continueButton);
+        break;
+      case "Next":
+        await this.clickElement(this.nextButton);
+        break;
+      case "Reassign":
+        await this.clickElement(this.reassignButton);
+        break;
+      case "Confirm":
+        await this.clickElement(this.confirmButton);
+        break;
+      case "Confirm Deletion":
+        await this.clickElement(this.confirmDeletionButton);
+        break;
+      case "Update anyway":
+        await this.clickElement(this.updateAnywayButton);
+        break;
+      case "Add New":
+        await this.clickElement(this.addNewButton);
+        break;
+      case "Add New User":
+        await this.clickElement(this.addNewUserButton);
+        break;
+      case "Add New Users":
+        await this.clickElement(this.addNewUsersButton);
+        break;
+      case "Delete Selected User":
+        await this.clickElement(this.deleteSelectedUserButton);
+        break;
+      case "Delete Selected Users":
+        await this.clickElement(this.deleteSelectedUsersButton);
+        break;
+      case "Add Action":
+        await this.clickElement(this.addActionButton);
+        break;
+      case "Create Team":
+        await this.clickElement(this.createTeamButton);
+        break;
+      case "Create New Portal":
+        await this.clickElement(this.createNewPortalButton);
+        break;
+      case "Create New Allocation":
+        await this.clickElement(this.createNewAllocationButton);
+        break;
+      case "Save":
+        await this.clickSaveButton();
+        break;
+      case "Set Notifications Preferences":
+        await this.clickElement(this.setNotificationPreferencesButton);
+        await this.waitForSelectorStatus(this.defaultNotificationSettingsPageTitle, 'visible');
+        break;
+      case "Update Portal":
+        await this.clickElement(this.updatePortalButton);
+        break;
+      case "Save Settings":
+        await this.clickElement(this.saveSettingsButton);
+        break;
+      case "Close":
+        await this.clickElement(this.dialogActionButtonByName('Close'));
+        break;
+      case "Cancel":
+        await this.clickElement(this.cancelButton);
+        break;
+      case "Disable Impact Area":
+        await this.clickElement(this.disableImpactAreaButton);
+        break;
+      case "Enable Impact Area":
+        await this.clickElement(this.enableImpactAreaButton);
+        break;
+      case "Expand All":
+        await this.clickElement(this.expandAllButton);
+        break;
+      case "Collapse All":
+        await this.clickElement(this.collapseAllButton);
+        break;
+      case "Disclaimer":
+        await this.clickElement(this.disclaimerFooterLink);
+        break;
+      case "Privacy":
+        await this.clickElement(this.privacyFooterLink);
+        break;
+      case "Terms of Use":
+        await this.openFooterLinkInCurrentTab(this.termsOfUseFooterLink);
+        break;
+      case "OSS Attribution":
+        await this.clickElement(this.ossAttributionFooterLink);
+        break;
+      case "Cookie":
+        await this.openFooterLinkInCurrentTab(this.cookieFooterLink);
+        break;
+      case "Cookie Settings":
+        await this.clickElement(this.cookieSettingsFooterLink);
+        break;
+      case "View All Updates":
+        await this.clickElement(this.viewAllUpdatesButton);
+        break;
+      case "View All Actions":
+        await this.clickElement(this.viewAllActionsButton);
+        break;
+      case "View All":
+        await Promise.all([
+          this._page.waitForURL('**/view-all-notifications/all'),
+          this.clickElement(this.viewAllNotificationsLink),
+        ]);
+        break;
+      case "Profile":
+        await this.clickElement(this.profileButton);
+        await this.waitForSelectorStatus(this.profilePopup, 'visible');
+        break;
+      case "Notifications":
+        await this.clickElement(this.notificationsButton);
+        break;
+      case "Notification Preferences":
+      case "Release Notes":
+        await this.clickElement(this.profileMenuOptionByName(button));
+        break;
+      case "Back":
+      case "back":
+        await this.clickElement(this.backButton);
+        break;
+      case "favorite icon":
+        await this.clickElement(this.favouriteIcon);
+        break;
+      case "Open Dashboard":
+        await this.clickElement(this.openDashboardButton);
+        break;
+      case "Filter":
+        await this.clickElement(this.dashboardFilterButton);
+        break;
+      case "Dashboard Options":
+      case "Dashboard options":
+        await this.buttonByName('Dashboard Options').click();
+        break;
+      case "Generate Report":
+      case "Generate Audit Trail":
+      case "Mark as Unread":
+      case "Comment":
+      case "Delete":
+      case "More Filters":
+      case "Clear all filters":
+      case "Remove user":
+      case "Go Back":
+      case "Go back":
+      case "Create anyway":
+      case "Update Portal Now":
+      case "Deactivate Portal":
+      case "Yes":
+      case "Edit Client":
+      case "Reactivate Portal":
+        await this.buttonByName(button).click();
+        break;
+      case "Attachments":
+        await this._page.getByRole('tab', { name: 'Attachments', exact: true }).click();
+        break;
+      case "Knowledge Modules & Impact Areas":
+        await this.clickElement(this.knowledgeModulesStep);
+        break;
+      case "Actions":
+      case "My Actions":
+        await this.selectTab(button);
+        break;
+
+      default:
+        throw new Error(`Button "${button}" is not recognized.`);
+    }
+  }
+
+  /**
+   * Downloads a file from a supported shared control.
+   * @param elementName Display name of the control that starts the download.
+   */
+  async downloadFileFromElement(elementName: string): Promise<void> {
+    let selector: string;
+
+    switch (elementName) {
+      case 'Download updates template':
+        selector = this.downloadUpdatesTemplateLink;
+        break;
+      case 'EXPORT USERS':
+        selector = this.exportUsersButton;
+        break;
+      default:
+        throw new Error(`Download element "${elementName}" is not recognized.`);
+    }
+
+    await this.downloadFile(selector);
+  }
+
+  /**
+   * Verifies that the current application page displays the expected heading.
+   * @param pageName Exact text expected in the page heading.
+   */
+  async verifyPageTitle(pageName: string): Promise<void> {
+    await this.assertText(this.pageTitle, pageName);
+  }
+
+  /**
+   * Verifies that every requested footer link is visible.
+   * @param links Semicolon-delimited footer link labels.
+   */
+  async verifyFooterLinksAreDisplayed(links: string): Promise<void> {
+    const linkLabels = links.split(';').map(link => link.trim()).filter(Boolean);
+    if (linkLabels.length === 0) {
+      throw new Error('At least one footer link must be provided.');
+    }
+
+    for (const linkLabel of linkLabels) {
+      await expect(this._page.locator(this.footerLinkByLabel(linkLabel))).toBeVisible();
+    }
+  }
+
+  /**
+   * Verifies that navigation from a footer link displays the expected destination page heading.
+   * @param title Exact heading expected on the footer destination page.
+   */
+  async verifyFooterDestinationPageIsDisplayed(title: string): Promise<void> {
+    await this.assertText(this.pageHeadingByName(title), title);
+  }
+
+  /**
+   * Verifies that a shared application toast message is displayed.
+   * @param message Expected toast message.
+   * @param pageName Page name used in assertion messages.
+   */
+  async verifyToastMessageIsDisplayed(message: string, pageName: string): Promise<void> {
+    await expect(this.toastMessageByText(message), `Expected toast message "${message}" to be visible on the ${pageName} page.`).toBeVisible();
+  }
+
+  /**
+   * Resolves the heading selector for a supported application workflow page.
+   * @param pageName Name of the expected application page.
+   * @returns Selector for the page heading.
+   */
+  private getPageNavigationSelector(pageName: string): string {
+    const normalizedPageName = pageName.trim();
+
+    if (normalizedPageName.endsWith('Dashboard')) {
+      return this.pageHeadingByName(normalizedPageName);
+    }
+
+    if (normalizedPageName.endsWith(' - Overview')) {
+      return this.portalOverviewPageTitle(normalizedPageName);
+    }
+
+    switch (normalizedPageName) {
+      case 'Upload Summary Page':
+        return this.uploadSummaryPageTitle;
+      case 'Upload Complete':
+        return this.uploadCompletePageTitle;
+      case 'Overview':
+        return this.overviewPageTitle;
+      case 'User Management':
+        return this.userManagementPageTitle;
+      case 'Notifications Preference':
+      case 'Default Notifications Settings':
+        return this.defaultNotificationSettingsPageTitle;
+      case 'RegulatoryAdvantage | Release Notes':
+        return this.releaseNotesPageTitle;
+      default:
+        return this.pageHeadingByName(normalizedPageName);
+    }
+  }
+
+  /**
+   * Verifies that a supported application workflow page is displayed.
+   * @param pageName Name of the expected application page.
+   */
+  async verifyPageNavigation(pageName: string): Promise<void> {
+    const selector = this.getPageNavigationSelector(pageName);
+    await this.waitForSelectorStatus(selector, 'visible');
+  }
+
+  /**
+   * Verifies that a supported application popup displays the expected title.
+   * @param title Exact text expected in the popup heading.
+   */
+  async verifyPopupTitle(title: string): Promise<void> {
+    if (title === 'Notifications') {
+      await this.waitForSelectorStatus(this.notificationsPopup, 'visible');
+      await this.assertText(this.notificationsPopupTitle, title);
+      return;
+    }
+
+    if (title === 'Privacy Preference Center') {
+      await this.waitForElement(this.privacyPreferenceCenterDialog);
+      await this.assertText(this.privacyPreferenceCenterTitle, title);
+      return;
+    }
+
+    const dialog = this.kendoDialogByTitle(title);
+    await this.waitForElement(dialog);
+    await this.assertText(`${dialog} .k-dialog-title`, title);
+  }
+
+  /**
+   * Verifies that the requested action buttons are visible in a supported popup.
+   * @param buttons Semicolon-delimited button labels to verify.
+   * @param title Title of the popup that owns the buttons.
+   */
+  async verifyPopupButtonsAreDisplayed(buttons: string, title: string): Promise<void> {
+    const buttonNames = buttons.split(';').map(button => button.trim()).filter(Boolean);
+    if (buttonNames.length === 0) {
+      throw new Error(`At least one button must be provided for the ${title} popup.`);
+    }
+
+    for (const buttonName of buttonNames) {
+      await this.waitForElement(this.kendoDialogButtonByName(title, buttonName));
+    }
+  }
+
+  /**
+   * Clicks a requested action button in a supported popup.
+   * @param button Button label to click.
+   * @param title Title of the popup that owns the button.
+   */
+  async clickPopupButton(button: string, title: string): Promise<void> {
+    await this.clickElement(this.kendoDialogButtonByName(title, button));
+  }
+
+  /**
+   * Verifies that the Disclaimer page displays the expected legal content.
+   * @param content Expected Disclaimer content from the Gherkin DocString.
+   */
+  async verifyDisclaimerContent(content: string): Promise<void> {
+    const actualContent = await this.getText(this.disclaimerContent);
+    const normalizedExpectedContent = content.replace(/\s+/g, ' ').trim();
+    const normalizedActualContent = actualContent.replace(/\s+/g, ' ').trim();
+
+    if (normalizedActualContent !== normalizedExpectedContent) {
+      this.failWithApplicationError(
+        'The Disclaimer content must match the approved legal text.',
+        normalizedExpectedContent,
+        normalizedActualContent,
+        'The Disclaimer content was displayed and normalized before comparison.',
+      );
+    }
+  }
+
+  /**
+   * Verifies the identity details displayed in the Profile menu.
+   * @param userName Expected user name.
+   * @param emailAddress Expected email address.
+   */
+  async verifyProfileDetails(userName: string, emailAddress: string): Promise<void> {
+    await this.waitForSelectorStatus(this.profileEmail, 'attached');
+
+    const [actualUserName, actualEmailAddress] = await Promise.all([
+      this.getText(this.profileName),
+      this._page.locator(this.profileEmail).textContent(),
+    ]);
+    const normalizedEmailAddress = actualEmailAddress?.trim() ?? '';
+
+    if (actualUserName !== userName || normalizedEmailAddress !== emailAddress) {
+      this.failWithApplicationError(
+        'The Profile menu must display the authenticated user identity configured for the scenario.',
+        `Name: "${userName}"; email: "${emailAddress}".`,
+        `Name: "${actualUserName}"; email: "${normalizedEmailAddress}".`,
+        'The Profile popup was visible and both identity fields were rendered before comparison.',
+      );
+    }
+  }
+
+  /**
+   * Verifies that the requested menu options are visible in the Profile menu.
+   * @param menuOptions Semicolon-delimited Profile menu option labels.
+   */
+  async verifyProfileMenuOptions(menuOptions: string): Promise<void> {
+    const options = menuOptions.split(';').map(option => option.trim()).filter(Boolean);
+
+    if (options.length === 0) {
+      throw new Error('At least one Profile menu option must be provided.');
+    }
+
+    for (const option of options) {
+      await this.waitForSelectorStatus(this.profileMenuOptionByName(option), 'visible');
+    }
+  }
+
+  /**
+   * Opens a footer link in the active tab so its destination can be verified in the same scenario.
+   * @param selector Selector for the footer link that normally opens a new tab.
+   */
+  private async openFooterLinkInCurrentTab(selector: string): Promise<void> {
+    await this._page.locator(selector).evaluate(element => element.setAttribute('target', '_self'));
+    await this.clickElement(selector);
+    await this._page.waitForLoadState('domcontentloaded');
+  }
+}
