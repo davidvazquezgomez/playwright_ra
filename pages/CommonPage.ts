@@ -131,7 +131,6 @@ export class CommonPage extends BasePage {
    */
   async launchApplication(url: string): Promise<void> {
     await this.loadPage(url);
-    await this._page.pause();
     const [title, bodyText] = await Promise.all([
       this._page.title(),
       this._page.locator('body').innerText(),
