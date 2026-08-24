@@ -14,9 +14,9 @@ Feature: Dashboard Analytics for Portal Admin
     When press the "Analytics" section
     Then the "Update Analytics" subsection is displayed
 
-@readOnly
-Scenario: TC014_02_PortalAdmin_DashboardAnalytics - Reset the filter
-    Given the "Global Inc - Overview - Update Analytics" page is open
+  @readOnly
+  Scenario: TC014_02_PortalAdmin_DashboardAnalytics - Reset the filter
+    Given the "Global Inc - Analytics Dashboard - Update Analytics" page is open
     Then save the value from the "Outstanding Updates" chart
     And save the value from the "Update Priority" chart
     When press "Filter" button on the Dashboard filter
@@ -33,7 +33,7 @@ Scenario: TC014_02_PortalAdmin_DashboardAnalytics - Reset the filter
 
   @readOnly
   Scenario: TC014_03_PortalAdmin_DashboardAnalytics - Apply a predefined filter
-    Given the "Global Inc - Overview - Update Analytics" page is open
+    Given the "Global Inc - Analytics Dashboard - Update Analytics" page is open
     Then save the value from the "Outstanding Updates" chart
     And save the value from the "Update Priority" chart
     When press "Filter" button on the Dashboard filter
@@ -44,7 +44,7 @@ Scenario: TC014_02_PortalAdmin_DashboardAnalytics - Reset the filter
 
   @mutable
   Scenario: TC014_04_PortalAdmin_DashboardAnalytics - Create, save and delete a custom filter
-    Given the "Global Inc - Overview - Update Analytics" page is open
+    Given the "Global Inc - Analytics Dashboard - Update Analytics" page is open
     When remove saved filter "QaTest" if it exists on the Dashboard filter
     When press "Filter" button on the Dashboard filter
     When select "Awaiting Allocation" in the "Status" filter on the Dashboard filter
@@ -65,7 +65,7 @@ Scenario: TC014_02_PortalAdmin_DashboardAnalytics - Reset the filter
 
   @readOnly
   Scenario: TC014_05_PortalAdmin_DashboardAnalytics - Apply a customized filter
-    Given the "Global Inc - Overview - Update Analytics" page is open
+    Given the "Global Inc - Analytics Dashboard - Update Analytics" page is open
     Then save the value from the "Outstanding Updates" chart
     And save the value from the "Update Priority" chart
     When press "Filter" button on the Dashboard filter
@@ -74,9 +74,9 @@ Scenario: TC014_02_PortalAdmin_DashboardAnalytics - Reset the filter
     Then verify the "Outstanding Updates" chart value is not the same
     And verify the "Update Priority" chart value is not the same
 
-@readOnly
-Scenario: TC014_06_PortalAdmin_DashboardAnalytics - Verify Outstanding Updates chart is updated after filtering
-    Given the "Global Inc - Overview - Update Analytics" page is open
+  @readOnly
+  Scenario: TC014_06_PortalAdmin_DashboardAnalytics - Verify Outstanding Updates chart is updated after filtering
+    Given the "Global Inc - Analytics Dashboard - Update Analytics" page is open
     Then verify the "Outstanding Updates" chart is displayed
     And verify the "Outstanding Updates" chart contains the "<segment>" elements
     And save the value from the "Outstanding Updates" chart
@@ -87,7 +87,7 @@ Scenario: TC014_06_PortalAdmin_DashboardAnalytics - Verify Outstanding Updates c
 
   @readOnly
   Scenario: TC014_08_PortalAdmin_DashboardAnalytics - Verify Outstanding Updates Map controls
-    Given the "Global Inc - Overview - Update Analytics" page is open
+    Given the "Global Inc - Analytics Dashboard - Update Analytics" page is open
     Then verify the "Outstanding Updates Map" chart is displayed
     When press "Save visuals as PDF" map control
     When press "Reset Zoom" map control
@@ -98,9 +98,9 @@ Scenario: TC014_06_PortalAdmin_DashboardAnalytics - Verify Outstanding Updates c
     When press "Switch to World Map" map control
     Then verify the map control contains the "Switch to USA Map" name
 
-@mutable
-Scenario: TC014_09_PortalAdmin_DashboardAnalytics - Verify Update Priority chart is updated after filtering
-    Given the "Global Inc - Analytics Dashboard - UpdateAnalytics" page is open
+  @mutable
+  Scenario: TC014_09_PortalAdmin_DashboardAnalytics - Verify Update Priority chart is updated after filtering
+    Given the "Global Inc - Analytics Dashboard - Update Analytics" page is open
     Then verify the "Update Priority" chart is displayed
     And verify the "Update Priority" chart contains the "HIGH PRIORITY UPDATES;MEDIUM PRIORITY UPDATES;LOW PRIORITY UPDATES" elements
     And save the value from the "Update Priority" chart
@@ -109,18 +109,18 @@ Scenario: TC014_09_PortalAdmin_DashboardAnalytics - Verify Update Priority chart
     And press "View results" button on the Dashboard filter
     Then verify the "Update Priority" chart value is not the same
 
-@mutable
-Scenario: TC015_01_PortalAdmin_DashboardAnalytics - Verify data consistency between Update Analytics Data and All Updates section
-    Given the "Global Inc - Analytics Dashboard - UpdateAnalytics" page is open
+  @mutable
+  Scenario: TC015_01_PortalAdmin_DashboardAnalytics - Verify data consistency between Update Analytics Data and All Updates section
+    Given the "Global Inc - Analytics Dashboard - Update Analytics" page is open
     Then verify the "Update Analytics Data" chart is displayed
     And verify "Update Title;Jurisdiction;Impact Area;Date Announced;Date Effective;Priority;Status;Last Updated" column header is displayed in the "Global Inc - Analytics Dashboard - UpdateAnalytics" page
     Then save the "Update Analytics Data" items
     When press the "Updates" section
     Then verify the "All Updates" table contains the same number of items as the "Update Analytics Data" chart
 
-@mutable
-Scenario: TC015_02_PortalAdmin_DashboardAnalytics - Compare Update Analytics Data and Updates Dashboard pages for a selected result
-    Given the "Global Inc - Analytics Dashboard - UpdateAnalytics" page is open
+  @mutable
+  Scenario: TC015_02_PortalAdmin_DashboardAnalytics - Compare Update Analytics Data and Updates Dashboard pages for a selected result
+    Given the "Global Inc - Analytics Dashboard - Update Analytics" page is open
     When search for "Declarations have been clarified for 2026" update in the Analytics Dashboard
     Then verify the "Update Analytics Data" chart is displayed
     When open the first filtered update result in the "Update Analytics Data" table
@@ -201,8 +201,8 @@ Scenario: TC015_02_PortalAdmin_DashboardAnalytics - Compare Update Analytics Dat
     When press the "Action Analytics" subsection
     Then the "Action Analytics" subsection is displayed
 
-@readOnly
-Scenario: TC016_02_PortalAdmin_DashboardAnalytics - Reset the filter Action Analytics page
+  @readOnly
+  Scenario: TC016_02_PortalAdmin_DashboardAnalytics - Reset the filter Action Analytics page
     Given the "Global Inc - Analytics Dashboard - Action Analytics" page is open
     Then save the value from the "Outstanding Actions" chart
     And save the value from the "Action Priority" chart
@@ -263,8 +263,8 @@ Scenario: TC016_02_PortalAdmin_DashboardAnalytics - Reset the filter Action Anal
     And verify the "Action Priority" chart value is not the same
     And verify the "Completed Actions" chart value is not the same
 
-@readOnly
-Scenario: TC016_06_PortalAdmin_DashboardAnalytics - Verify Outstanding Actions chart is updated after filtering
+  @readOnly
+  Scenario: TC016_06_PortalAdmin_DashboardAnalytics - Verify Outstanding Actions chart is updated after filtering
     Given the "Global Inc - Analytics Dashboard - Action Analytics" page is open
     Then verify the "Outstanding Actions" chart is displayed
     And verify the "Outstanding Actions" chart contains the "<segment>" elements
@@ -287,8 +287,8 @@ Scenario: TC016_06_PortalAdmin_DashboardAnalytics - Verify Outstanding Actions c
     When press "Switch to World Map" map control
     Then verify the map control contains the "Switch to USA Map" name
 
-@mutable
-Scenario: TC016_09_PortalAdmin_DashboardAnalytics - Verify Action Priority chart is updated after filtering on the Action Analytics page
+  @mutable
+  Scenario: TC016_09_PortalAdmin_DashboardAnalytics - Verify Action Priority chart is updated after filtering on the Action Analytics page
     Given the "Global Inc - Analytics Dashboard - Action Analytics" page is open
     Then verify the "Action Priority" chart is displayed
     And verify the "Action Priority" chart contains the "Not Started;In progress;Complete;" elements
@@ -310,8 +310,8 @@ Scenario: TC016_09_PortalAdmin_DashboardAnalytics - Verify Action Priority chart
     Then verify the "Completed Actions" chart value is not the same
     And logout from the application
 
-@mutable
-Scenario: TC017_01_PortalAdmin_DashboardAnalytics - Verify Data consistency between Actions Analytics Data and All Actions section
+  @mutable
+  Scenario: TC017_01_PortalAdmin_DashboardAnalytics - Verify Data consistency between Actions Analytics Data and All Actions section
     Given the "Global Inc - Analytics Dashboard - Action Analytics" page is open
     Then verify the "Actions Analytics Data" chart is displayed
     And verify "Update Title;Action;UserAssigned;Deadline Date; Update Priority; Action Priority; Action Status" column header is displayed in the "Global Inc - Analytics Dashboard - Action Analytics" page
@@ -320,8 +320,8 @@ Scenario: TC017_01_PortalAdmin_DashboardAnalytics - Verify Data consistency betw
     Then the "All Actions" subsection is displayed
     And verify the "All Actions" table contains the same number of items as the "Actions Analytics Data" chart
 
-@mutable
-Scenario: TC017_02_PortalAdmin_DashboardAnalytics - Compare Action Analytics Data and Actions Dashboard pages for a selected result
+  @mutable
+  Scenario: TC017_02_PortalAdmin_DashboardAnalytics - Compare Action Analytics Data and Actions Dashboard pages for a selected result
     Given the "Global Inc - Analytics Dashboard - Action Analytics" page is open
     When search for "Labor Insurance Rates Updated" update in the Analytics Dashboard
     Then verify the "Actions Analytics Data" chart is displayed
@@ -346,8 +346,8 @@ Scenario: TC017_02_PortalAdmin_DashboardAnalytics - Compare Action Analytics Dat
     Then press "Close" button on the "Update Action" popup
     And press "clear" button in the "Select or type update title" search box
 
-@mutable
-Scenario: TC017_03_PortalAdmin_DashboardAnalytics - Verify the information displayed when selecting an Action result
+  @mutable
+  Scenario: TC017_03_PortalAdmin_DashboardAnalytics - Verify the information displayed when selecting an Action result
     Given the "Global Inc - Analytics Dashboard - Action Analytics" page is open
     When search for "Labor Insurance Rates Updated" update in the Analytics Dashboard
     Then verify the "Actions Analytics Data" chart is displayed

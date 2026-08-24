@@ -38,8 +38,8 @@ Feature: Dashboard Actions for Client User
       | Action Priority |
       | Action Status   |
 
-@mutable
-Scenario: TC010_01_ClientUser_DashboardActions - Create new action from the actions dashboard
+  @mutable
+  Scenario: TC010_01_ClientUser_DashboardActions - Create new action from the actions dashboard
     Given the "ClientPortal_20260209133616 - Actions Dashboard" page is open
     When press "Add Action" button
     Then the "Add Action" popup is displayed
@@ -164,8 +164,8 @@ Scenario: TC010_01_ClientUser_DashboardActions - Create new action from the acti
     Then verify "Action updated successfully" toast message is displayed in the "ClientPortal_20260209133616 - Actions Dashboard" page
     And verify "Test Action" action is not displayed in the "ClientPortal_20260209133616 - Actions Dashboard" page
 
-@mutable
-Scenario: TC011_01_ClientUser_DashboardActions - Verify adding an action from the update details page
+  @mutable
+  Scenario: TC011_01_ClientUser_DashboardActions - Verify adding an action from the update details page
     Given the "Updates Dashboard - 01_13Jan REG" page is open
     When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_13Jan REG" page
     Then verify "Occupational Illness Trust Fund" update is displayed from the "Updates Dashboard - 01_13Jan REG" page
@@ -291,7 +291,7 @@ Scenario: TC011_01_ClientUser_DashboardActions - Verify adding an action from th
 
   @readOnly
   Scenario Outline: TC012_01_ClientUser_DashboardActions - Verify filtering the 01_13Jan REG - Actions Dashboard by
-    Given the "01_13Jan REG - Actions Dashboard" page is open
+    Given the "Actions Dashboard - 01_13Jan REG" page is open
     When press "Filter" button on the Dashboard filter
     Then verify the "<filter>" option is displayed in the Dashboard filter
     When select "<value>" in the "<filter>" filter on the Dashboard filter
@@ -308,7 +308,7 @@ Scenario: TC011_01_ClientUser_DashboardActions - Verify adding an action from th
 
   @readOnly
   Scenario: TC012_02_ClientUser_DashboardActions - Verify filtering the 01_13Jan REG - Actions Dashboard by deadline range
-    Given the "01_13Jan REG - Actions Dashboard" page is open
+    Given the "Actions Dashboard - 01_13Jan REG" page is open
     When press "Filter" button on the Dashboard filter
     Then verify the "Deadline Range" option is displayed in the Dashboard filter
     When select "08/07/2026" from the "Start Date" calendar on the Dashboard filter
@@ -319,7 +319,7 @@ Scenario: TC011_01_ClientUser_DashboardActions - Verify adding an action from th
 
   @mutable
   Scenario: TC012_03_ClientUser_DashboardActions - Verify saving a filter
-    Given the "01_13Jan REG - Actions Dashboard" page is open
+    Given the "Actions Dashboard - 01_13Jan REG" page is open
     When remove saved filter "Test DashboardAction" if it exists on the Dashboard filter
     When press "Filter" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter
@@ -337,7 +337,7 @@ Scenario: TC011_01_ClientUser_DashboardActions - Verify adding an action from th
 
   @mutable
   Scenario: TC012_04_ClientUser_DashboardActions - Verify editing and deleting a saved filter
-    Given the "01_13Jan REG - Actions Dashboard" page is open
+    Given the "Actions Dashboard - 01_13Jan REG" page is open
     When press "Filter" button on the Dashboard filter
     When select "Test DashboardAction" located in the "Saved Filters" section on the Dashboard filter
     And press "Edit" button on the Dashboard filter
@@ -348,7 +348,7 @@ Scenario: TC011_01_ClientUser_DashboardActions - Verify adding an action from th
     When append " update" to the saved filter name on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify "Filter updated successfully." toast message is displayed in the "Actions Dashboard" page
-    Given the "01_13Jan REG - Actions Dashboard" page is open
+    Given the "Actions Dashboard - 01_13Jan REG" page is open
     When press "Filter" button on the Dashboard filter
     And double-click "Test DashboardAction update" option on the Dashboard filter
     And press "Edit" button on the Dashboard filter
@@ -358,7 +358,7 @@ Scenario: TC011_01_ClientUser_DashboardActions - Verify adding an action from th
 
   @readOnly
   Scenario: TC012_05_ClientUser_DashboardActions - Verify resetting the 01_13Jan REG - Actions Dashboard filters
-    Given the "01_13Jan REG - Actions Dashboard" page is open
+    Given the "Actions Dashboard - 01_13Jan REG" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter
@@ -373,7 +373,7 @@ Scenario: TC011_01_ClientUser_DashboardActions - Verify adding an action from th
 
   @readOnly
   Scenario: TC013_ClientUser_DashboardActions - Verify actions dashboard select all filter
-    Given the "01_13Jan REG - Actions Dashboard" page is open
+    Given the "Actions Dashboard - 01_13Jan REG" page is open
     When press "Filter" button on the Dashboard filter
     When expand the "Jurisdiction" filter on the Dashboard filter
     Then verify "Select All" is "unchecked" in the "Jurisdiction" filter on the Dashboard filter
@@ -396,9 +396,9 @@ Scenario: TC011_01_ClientUser_DashboardActions - Verify adding an action from th
     Then verify all options are selected in the "Action Status" filter on the Dashboard filter
     And verify the "Jurisdiction" filter selection remains unchanged on the Dashboard filter
 
-@mutable
-Scenario: TC018_ClientUser_DashboardActions - Verify actions dashboard dashboard options Action
-    Given the "01_13Jan REG - Actions Dashboard" page is open
+  @mutable
+  Scenario: TC018_ClientUser_DashboardActions - Verify actions dashboard dashboard options Action
+    Given the "Actions Dashboard - 01_13Jan REG" page is open
     Then verify "Action Status" column header is displayed in the "01_13Jan REG - Actions Dashboard" page
     When press "Dashboard Options" button on the Dashboard
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
@@ -412,4 +412,3 @@ Scenario: TC018_ClientUser_DashboardActions - Verify actions dashboard dashboard
     Then verify the "Dashboard Options" popup is closed on the Dashboard
     And verify "Action Status" column header is not displayed in the "01_13Jan REG - Actions Dashboard" page
     And logout from the application
-

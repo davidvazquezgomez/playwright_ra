@@ -48,7 +48,7 @@ Feature: Dashboard Options for Portal Admin
 
   @mutable
   Scenario: TC019_03_PortalAdmin_DashboardOptions - Generate an unfiltered Actions report
-    Given the "Actions Dashboard - Global Inc" page is open
+    Given the "Global Inc - Actions Dashboard" page is open
     When press "Dashboard Options" button
     Then verify "Dashboard Options" panel is opened
     And verify "Generate Report" option is displayed and clickable in the Dashboard options
@@ -63,7 +63,7 @@ Feature: Dashboard Options for Portal Admin
 
   @readOnly
   Scenario: TC019_04_PortalAdmin_DashboardOptions - Generate a filtered Actions report
-    Given the "Actions Dashboard - Global Inc" page is open
+    Given the "Global Inc - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And select "Italy" in the "Jurisdiction" filter on the Dashboard filter
     And select "Medium" in the "Action Priority" filter on the Dashboard filter
@@ -118,7 +118,7 @@ Feature: Dashboard Options for Portal Admin
 
   @mutable
   Scenario: TC020_03_PortalAdmin_DashboardOptions - Generate an unfiltered Actions audit trail
-    Given the "Actions Dashboard - Global Inc" page is open
+    Given the "Global Inc - Actions Dashboard" page is open
     Then verify for "Dashboard Options" button is visible
     When press "Dashboard Options" button
     Then verify "Dashboard Options" panel is opened
@@ -134,7 +134,7 @@ Feature: Dashboard Options for Portal Admin
 
   @mutable
   Scenario: TC020_04_PortalAdmin_DashboardOptions - Generate a filtered Actions audit trail
-    Given the "Actions Dashboard - Global Inc" page is open
+    Given the "Global Inc - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And select "Italy" in the "Jurisdiction" filter on the Dashboard filter
     And select "Medium" in the "Action Priority" filter on the Dashboard filter

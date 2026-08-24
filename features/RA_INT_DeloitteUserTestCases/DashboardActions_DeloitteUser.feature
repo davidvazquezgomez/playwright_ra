@@ -21,8 +21,7 @@ Feature: Dashboard Actions for Deloitte User
 
   @readOnly
   Scenario Outline: TC009_02_DeloitteUser_DashboardActions - Verify default column header and sorting
-# URL https://stage.regulatoryadvantage.deloitte.com/project-dashboard/213/Actions/AllActions/All
-    Given the "QA_Test client3 - Actions Dashboard" page is open
+    Given the "Actions Dashboard - QA_Test client3" page is open
     Then verify "<column>" column header is displayed in the "QA_Test client3 - Actions Dashboard" page
     When click on "<column>" column header in the "QA_Test client3 - Actions Dashboard" page
     Then verify items are sorted in "ascending" order by "<column>" in the "QA_Test client3 - Actions Dashboard" page
@@ -41,9 +40,9 @@ Feature: Dashboard Actions for Deloitte User
       | Action Priority |
       | Action Status   |
 
-@mutable
-Scenario: TC010_01_DeloitteUser_DashboardActions - Create new action from the actions dashboard
-    Given the "QA_Test client3 - Actions Dashboard" page is open
+  @mutable
+  Scenario: TC010_01_DeloitteUser_DashboardActions - Create new action from the actions dashboard
+    Given the "Actions Dashboard - QA_Test client3" page is open
     When press "Add Action" button
     Then the "Add Action" popup is displayed
     And verify "Update;Action;User Assigned;Priority;Status;Deadline Date" are displayed in the "Add Action" popup
@@ -79,7 +78,7 @@ Scenario: TC010_01_DeloitteUser_DashboardActions - Create new action from the ac
 
   @mutable
   Scenario: TC010_02_DeloitteUser_DashboardActions - Verify editing an action
-    Given the "QA_Test client3 - Actions Dashboard" page is open
+    Given the "Actions Dashboard - QA_Test client3" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And double-click "test_portaladmin" option on the Dashboard filter
@@ -100,7 +99,7 @@ Scenario: TC010_01_DeloitteUser_DashboardActions - Create new action from the ac
 
   @mutable
   Scenario: TC010_04_DeloitteUser_DashboardActions - Verify adding a comment to an action
-    Given the "QA_Test client3 - Actions Dashboard" page is open
+    Given the "Actions Dashboard - QA_Test client3" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And double-click "test_portaladmin" option on the Dashboard filter
@@ -120,7 +119,7 @@ Scenario: TC010_01_DeloitteUser_DashboardActions - Create new action from the ac
 
   @mutable
   Scenario: TC010_05_DeloitteUser_DashboardActions - Verify uploading an attachment to an action
-   Given the "QA_Test client3 - Actions Dashboard" page is open
+    Given the "Actions Dashboard - QA_Test client3" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And double-click "test_portaladmin" option on the Dashboard filter
@@ -144,7 +143,7 @@ Scenario: TC010_01_DeloitteUser_DashboardActions - Create new action from the ac
 
   @mutable
   Scenario: TC010_03_DeloitteUser_DashboardActions - Verify the private action toggle
-    Given the "QA_Test client3 - Actions Dashboard" page is open
+    Given the "Actions Dashboard - QA_Test client3" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And double-click "test_portaladmin" option on the Dashboard filter
@@ -283,7 +282,7 @@ Scenario: TC010_01_DeloitteUser_DashboardActions - Create new action from the ac
 
   @readOnly
   Scenario Outline: TC012_01_DeloitteUser_DashboardActions - Verify filtering the actions dashboard by
-    Given the "QA_Test client3 - Actions Dashboard" page is open
+    Given the "Actions Dashboard - QA_Test client3" page is open
     When press "Filter" button on the Dashboard filter
     Then verify the "<filter>" option is displayed in the Dashboard filter
     When select "<value>" in the "<filter>" filter on the Dashboard filter
@@ -300,7 +299,7 @@ Scenario: TC010_01_DeloitteUser_DashboardActions - Create new action from the ac
 
   @readOnly
   Scenario: TC012_02_DeloitteUser_DashboardActions - Verify filtering the actions dashboard by deadline range
-    Given the "QA_Test client3 - Actions Dashboard" page is open
+    Given the "Actions Dashboard - QA_Test client3" page is open
     When press "Filter" button on the Dashboard filter
     Then verify the "Deadline Range" option is displayed in the Dashboard filter
     When select "03/08/2026" from the "Start Date" calendar on the Dashboard filter
@@ -311,7 +310,7 @@ Scenario: TC010_01_DeloitteUser_DashboardActions - Create new action from the ac
 
   @mutable
   Scenario: TC012_03_DeloitteUser_DashboardActions - Verify saving a filter
-    Given the "QA_Test client3 - Actions Dashboard" page is open
+    Given the "Actions Dashboard - QA_Test client3" page is open
     When remove saved filter "Test DashboardAction" if it exists on the Dashboard filter
     When press "Filter" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter
@@ -329,7 +328,7 @@ Scenario: TC010_01_DeloitteUser_DashboardActions - Create new action from the ac
 
   @mutable
   Scenario: TC012_04_DeloitteUser_DashboardActions - Verify editing and deleting a saved filter
-    Given the "QA_Test client3 - Actions Dashboard" page is open
+    Given the "Actions Dashboard - QA_Test client3" page is open
     When press "Filter" button on the Dashboard filter
     When select "Test DashboardAction" located in the "Saved Filters" section on the Dashboard filter
     And press "Edit" button on the Dashboard filter
@@ -340,7 +339,7 @@ Scenario: TC010_01_DeloitteUser_DashboardActions - Create new action from the ac
     When append " update" to the saved filter name on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify "Filter updated successfully." toast message is displayed in the "Actions Dashboard" page
-    Given the "QA_Test client3 - Actions Dashboard" page is open
+    Given the "Actions Dashboard - QA_Test client3" page is open
     When press "Filter" button on the Dashboard filter
     And double-click "Test DashboardAction update" option on the Dashboard filter
     And press "Edit" button on the Dashboard filter
@@ -350,7 +349,7 @@ Scenario: TC010_01_DeloitteUser_DashboardActions - Create new action from the ac
 
   @readOnly
   Scenario: TC012_05_DeloitteUser_DashboardActions - Verify resetting the actions dashboard filters
-    Given the "QA_Test client3 - Actions Dashboard" page is open
+    Given the "Actions Dashboard - QA_Test client3" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter
@@ -365,7 +364,7 @@ Scenario: TC010_01_DeloitteUser_DashboardActions - Create new action from the ac
 
   @readOnly
   Scenario: TC013_DeloitteUser_DashboardActions - Verify actions dashboard select all filter
-    Given the "QA_Test client3 - Actions Dashboard" page is open
+    Given the "Actions Dashboard - QA_Test client3" page is open
     When press "Filter" button on the Dashboard filter
     When expand the "Jurisdiction" filter on the Dashboard filter
     Then verify "Select All" is "unchecked" in the "Jurisdiction" filter on the Dashboard filter
@@ -388,9 +387,9 @@ Scenario: TC010_01_DeloitteUser_DashboardActions - Create new action from the ac
     Then verify all options are selected in the "Action Status" filter on the Dashboard filter
     And verify the "Jurisdiction" filter selection remains unchanged on the Dashboard filter
 
-@mutable
-Scenario: TC018_DeloitteUser_DashboardActions - Verify actions dashboard dashboard options Action
-    Given the "QA_Test client3 - Actions Dashboard" page is open
+  @mutable
+  Scenario: TC018_DeloitteUser_DashboardActions - Verify actions dashboard dashboard options Action
+    Given the "Actions Dashboard - QA_Test client3" page is open
     Then verify "Action Status" column header is displayed in the "QA_Test client3 - Actions Dashboard" page
     When press "Dashboard Options" button on the Dashboard
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
@@ -404,4 +403,3 @@ Scenario: TC018_DeloitteUser_DashboardActions - Verify actions dashboard dashboa
     Then verify the "Dashboard Options" popup is closed on the Dashboard
     And verify "Action Status" column header is not displayed in the "QA_Test client3 - Actions Dashboard" page
     And logout from the application
-

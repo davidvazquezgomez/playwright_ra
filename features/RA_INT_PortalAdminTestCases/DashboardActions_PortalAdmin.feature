@@ -21,7 +21,6 @@ Feature: Dashboard Actions for Portal Admin
 
   @readOnly
   Scenario Outline: TC009_02_PortalAdmin_DashboardActions - Verify default column header and sorting
-# URL https://stage.regulatoryadvantage.deloitte.com/project-dashboard/142/Actions/AllActions/All
     Given the "Global Inc - Actions Dashboard" page is open
     Then verify "<column>" column header is displayed in the "Global Inc - Actions Dashboard" page
     When click on "<column>" column header in the "Global Inc - Actions Dashboard" page
@@ -41,8 +40,8 @@ Feature: Dashboard Actions for Portal Admin
       | Action Priority |
       | Action Status   |
 
-@mutable
-Scenario: TC010_01_PortalAdmin_DashboardActions - Create new action from the actions dashboard
+  @mutable
+  Scenario: TC010_01_PortalAdmin_DashboardActions - Create new action from the actions dashboard
     Given the "Global Inc - Actions Dashboard" page is open
     When press "Add Action" button
     Then the "Add Action" popup is displayed
@@ -388,8 +387,8 @@ Scenario: TC010_01_PortalAdmin_DashboardActions - Create new action from the act
     Then verify all options are selected in the "Action Status" filter on the Dashboard filter
     And verify the "Jurisdiction" filter selection remains unchanged on the Dashboard filter
 
-@mutable
-Scenario: TC018_PortalAdmin_DashboardActions - Verify actions dashboard dashboard options Action
+  @mutable
+  Scenario: TC018_PortalAdmin_DashboardActions - Verify actions dashboard dashboard options Action
     Given the "Global Inc - Actions Dashboard" page is open
     Then verify "Action Status" column header is displayed in the "Global Inc - Actions Dashboard" page
     When press "Dashboard Options" button on the Dashboard
@@ -404,4 +403,3 @@ Scenario: TC018_PortalAdmin_DashboardActions - Verify actions dashboard dashboar
     Then verify the "Dashboard Options" popup is closed on the Dashboard
     And verify "Action Status" column header is not displayed in the "Global Inc - Actions Dashboard" page
     And logout from the application
-
