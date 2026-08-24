@@ -30,9 +30,10 @@ Scenario: TC019_02_SuperAdmin_DashboardOptions - Generate a filtered Updates rep
     Given the "Updates Dashboard - 01_13Jan REG" page is open
     When press "Filter" button on the Dashboard filter
     And select "Belgium" in the "Jurisdiction" filter on the Dashboard filter
-    And select "High" in the "Priority" filter on the Dashboard filter
+    And select "Medium" in the "Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    Then verify the data is updated to show the applied filter records in the "Updates" dashboard
+    Then verify filtered actions are displayed for "Jurisdiction" with value "Belgium"
+    Then verify filtered actions are displayed for "Priority" with value "Medium"
     When press "Dashboard Options" button
     Then verify "Dashboard Options" panel is opened
     And verify "Generate Report" option is displayed and clickable in the Dashboard options
