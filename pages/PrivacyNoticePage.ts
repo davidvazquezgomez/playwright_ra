@@ -161,17 +161,15 @@ export class PrivacyNoticePage extends BasePage {
   async verifyLastParagraphDoesNotEndWith(text: string): Promise<void> {
     const lastParagraph = this.getLastPrivacyNoticeParagraph();
     await expect(lastParagraph).toBeVisible();
-    const paragraphText = (await lastParagraph.textContent())?.trim();
+    const trailingTextPattern = new RegExp(`${this.escapeForRegExp(text)}$`);
 
-    expect(paragraphText, 'Expected the final privacy-notice paragraph to contain text.').toBeTruthy();
-    if (new RegExp(`${this.escapeForRegExp(text)}$`).test(paragraphText!)) {
-      this.failWithApplicationError(
-        'The final Privacy Notice paragraph must not retain removed text.',
-        `Text that does not end with "${text}".`,
-        paragraphText!,
-        'The final Privacy Notice paragraph was displayed and read successfully.',
-      );
-    }
+    await expect.poll(
+      async () => {
+        const paragraphText = (await lastParagraph.textContent())?.trim() ?? '';
+        return paragraphText.length > 0 && !trailingTextPattern.test(paragraphText);
+      },
+      { message: 'Expected the final privacy-notice paragraph to contain text.' },
+    ).toBe(true);
   }
 
   /**
