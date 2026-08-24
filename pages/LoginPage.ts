@@ -99,8 +99,7 @@ export class LoginPage extends BasePage {
       if (mfaResult === 'invalid-code') {
         await this._page.waitForTimeout(totp.remaining() + 100);
         await oneTimePasswordField.fill(totp.generate());
-        await this.waitForElementToBeEnabled(this.verifyOneTimePasswordButton);
-        await this.clickElement(this.verifyOneTimePasswordButton);
+        await oneTimePasswordField.press('Enter');
         await invalidOneTimePasswordAlert.waitFor({ state: 'hidden', timeout: 5000 }).catch(() => undefined);
 
         const retryResult = await Promise.race([

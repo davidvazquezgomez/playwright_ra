@@ -217,6 +217,11 @@ async function createAuthState(browser: Browser, authentication: FeatureAuthenti
     await loginPage.login(authentication.username, authentication.password, authentication.totpSecret);
     await commonPage.dismissCookieConsent();
     await context.storageState({ path: statePath });
+  } catch (error) {
+    throw new Error(
+      `Unable to prewarm authentication state for ${authentication.userType} user ${authentication.role}. ` +
+      `${error instanceof Error ? error.message : String(error)}`,
+    );
   } finally {
     try {
       await context.close();
