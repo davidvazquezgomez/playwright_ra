@@ -29,7 +29,7 @@ jobs:
         displayName: 'Cache npm packages'
         inputs:
           key: 'npm | "$(Agent.OS)" | package-lock.json'
-          path: '$(npm_config_cache)'
+          path: '$(HOME)/.npm'
 
       - script: npm ci
         displayName: 'Install dependencies'
@@ -61,7 +61,7 @@ jobs:
         displayName: 'Cache npm packages'
         inputs:
           key: 'npm | "$(Agent.OS)" | package-lock.json'
-          path: '$(npm_config_cache)'
+          path: '$(HOME)/.npm'
     
       - task: JavaToolInstaller@0
         displayName: 'Install Java 21'
@@ -90,11 +90,12 @@ jobs:
     
       - script: |
           npx rimraf allure-results
+          npx rimraf test-results/auth-state
           mkdir -p test-results/custom-screenshots
           CI=true npm run bdd:generate
 
           set +e
-          CI=true RETRIES=0 PARALLEL_RUN=true WORKERS=6 RESULTS_GROUP=readonly PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @readOnly --workers=6
+          CI=true RESET_AUTH_STATES=true RETRIES=0 PARALLEL_RUN=true WORKERS=6 RESULTS_GROUP=readonly PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @readOnly --workers=6
           readonly_exit=$?
 
           CI=true RETRIES=0 PARALLEL_RUN=false WORKERS=1 RESULTS_GROUP=mutable PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @mutable --workers=1

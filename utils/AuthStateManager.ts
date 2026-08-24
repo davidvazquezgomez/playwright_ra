@@ -32,7 +32,7 @@ export function isAuthStateReuseEnabled(): boolean {
 }
 
 export async function clearAuthStates(): Promise<void> {
-  if (isAuthStateReuseEnabled()) {
+  if (isAuthStateReuseEnabled() && process.env.RESET_AUTH_STATES === 'true') {
     await fs.rm(authStateDirectory, { recursive: true, force: true });
   }
 }
@@ -52,6 +52,10 @@ export async function prewarmAuthStates(browser: Browser): Promise<void> {
 
   console.log(`Prewarming ${authenticationsByStatePath.size} authentication state(s).`);
   for (const [statePath, authentication] of authenticationsByStatePath) {
+    if (await fileExists(statePath)) {
+      continue;
+    }
+
     await fs.mkdir(path.dirname(statePath), { recursive: true });
     await createAuthState(browser, authentication, statePath);
   }

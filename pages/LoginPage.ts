@@ -86,6 +86,7 @@ export class LoginPage extends BasePage {
 
       const oneTimePasswordField = this._page.locator(this.oneTimePasswordInput);
       await oneTimePasswordField.pressSequentially(currentOtp, { delay: 100 });
+      await this.waitForElementToBeEnabled(this.nextButton);
       await this.clickElement(this.nextButton);
 
       const invalidOneTimePasswordAlert = this._page.locator(this.invalidOneTimePasswordAlert);
@@ -97,6 +98,7 @@ export class LoginPage extends BasePage {
       if (mfaResult === 'invalid-code') {
         await this._page.waitForTimeout(totp.remaining() + 100);
         await oneTimePasswordField.fill(totp.generate());
+        await this.waitForElementToBeEnabled(this.nextButton);
         await this.clickElement(this.nextButton);
         await invalidOneTimePasswordAlert.waitFor({ state: 'hidden', timeout: 5000 }).catch(() => undefined);
 
