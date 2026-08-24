@@ -196,6 +196,10 @@ Then('the {string} popup is displayed', async ({ commonPage }, title: string) =>
   await commonPage.verifyPopupTitle(title);
 });
 
+Then('the popup message is {string}', async ({ commonPage }, message: string) => {
+  await commonPage.verifyPopupMessage(message);
+});
+
 Then('verify {string} buttons are displayed in the {string} page', async ({ commonPage, userManagementPage }, buttons: string, pageName: string) => {
   if (pageName === 'User Management') {
     await userManagementPage.verifyButtonsAreDisplayed(buttons);

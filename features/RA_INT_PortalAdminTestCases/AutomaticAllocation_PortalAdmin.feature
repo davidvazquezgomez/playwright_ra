@@ -66,7 +66,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
     Then select "UserTest2, TestDeloitte" from the search results
     And press "Cancel" button
     Then the "Unsaved Changes" popup is displayed
-    And the pop up message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
+    And the popup message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
     And verify "Continue;Cancel" buttons are displayed on the "Unsaved Changes" popup
     When press "Cancel" button on the "Unsaved Changes" popup
     Then verify the "Impact Area(s)" checkbox is still selected

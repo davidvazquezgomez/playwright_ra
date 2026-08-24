@@ -88,6 +88,7 @@ export class CommonPage extends BasePage {
     `div[role="dialog"]:has(.k-dialog-title:text-is("${title}"))`;
   private kendoDialogButtonByName = (title: string, buttonName: string) =>
     `${this.kendoDialogByTitle(title)} button[aria-label="${buttonName}"]`;
+    private visibleKendoDialogContent = 'div[role="dialog"]:visible .k-dialog-content';
   private dialogActionButtonByName = (buttonName: string) =>
     `div[role="dialog"]:visible kendo-dialog-actions button[aria-label="${buttonName}"]`;
   private profileButton = 'app-header .profile-initials';
@@ -880,6 +881,14 @@ export class CommonPage extends BasePage {
     const dialog = this.kendoDialogByTitle(title);
     await this.waitForElement(dialog);
     await this.assertText(`${dialog} .k-dialog-title`, title);
+  }
+
+  /**
+   * Verifies that the visible Kendo dialog displays the expected message.
+   * @param message Exact text expected in the popup content.
+   */
+  async verifyPopupMessage(message: string): Promise<void> {
+    await expect(this._page.locator(this.visibleKendoDialogContent)).toHaveText(message);
   }
 
   /**

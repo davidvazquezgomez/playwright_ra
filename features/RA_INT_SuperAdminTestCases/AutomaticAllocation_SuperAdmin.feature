@@ -61,17 +61,17 @@ Feature: Automatic Allocation of Updates for Super Admin
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
     Then select the "clientadmin1, satest" option in the "Update Owner" field
-    Then select the "audit, sonigour" option in the "Update Watchlist" field
+    Then select the "satestclientadmin, satestclientadmin" option in the "Update Watchlist" field
     And press "Cancel" button
     Then the "Unsaved Changes" popup is displayed
-    And the pop up message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
+    And the popup message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
     And verify "Continue;Cancel" buttons are displayed on the "Unsaved Changes" popup
     When press "Cancel" button on the "Unsaved Changes" popup
     Then verify the "Impact Area(s)" checkbox is still selected
     And verify the "Jurisdiction(s)" checkbox is still selected
     And verify "AND" is still selected in the "Operator" field
     And verify "clientadmin1, satest" value is displayed in the "Update Owner" field
-    And verify "audit, sonigour" value is displayed in the "Update Watchlist" field
+    And verify "satestclientadmin, satestclientadmin" value is displayed in the "Update Watchlist" field
     When press "Save" button
     Then verify the "Allocation created successfully." message appears
     And the "Automatic Allocation of Updates" page is displayed
@@ -111,7 +111,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     And select the "clientadmin1, satest" option in the "Update Owner" field
     When press "Back" button
     Then verify the "Unsaved Changes" pop up is displayed
-    And the pop up message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
+    And the popup message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
     And verify "Continue;Cancel" buttons are displayed on the "Unsaved Changes" popup
     When press "Cancel" button
     Then verify the "Automatic Allocation Setup" pop up is displayed
@@ -199,7 +199,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     And select the "clientadmin1, satest" option in the "Update Owner" field
     And press "Save" button
     Then verify the "Duplicate automatic allocation detected" pop up is displayed
-    And the pop up message is "Automatic allocation(s) named 'QaTest' already exists for the same Impact Area(s) and/or Jurisdiction(s).If you continue, the new rule will be created, but matching updates will be allocated according to oldest created rule(s). Do you want to proceed?"
+    And the popup message is "Automatic allocation(s) named 'QaTest' already exists for the same Impact Area(s) and/or Jurisdiction(s).If you continue, the new rule will be created, but matching updates will be allocated according to oldest created rule(s). Do you want to proceed?"
     And verify "Continue;Cancel" buttons are displayed on the "Duplicate automatic allocation detected" popup
     When press "Create anyway" button
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation Setup" page
