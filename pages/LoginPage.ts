@@ -17,6 +17,7 @@ export class LoginPage extends BasePage {
   private accountSelectionHeading = '#loginHeader [role="heading"]';
   private accountSelectionList = '#tilesHolder[role="list"]';
   private oneTimePasswordInput = "input[placeholder='Code']";
+  private verifyOneTimePasswordButton = "input[name='callback_2'][value='Verify']";
   private invalidOneTimePasswordAlert = '[role="alert"]:has-text("code is invalid")';
   private selectWorkAccount = '//div[text()="Work or school account"]';
   private emailInputGA = "input[type='text']";
@@ -86,8 +87,8 @@ export class LoginPage extends BasePage {
 
       const oneTimePasswordField = this._page.locator(this.oneTimePasswordInput);
       await oneTimePasswordField.pressSequentially(currentOtp, { delay: 100 });
-      await this.waitForElementToBeEnabled(this.nextButton);
-      await this.clickElement(this.nextButton);
+      await this.waitForElementToBeEnabled(this.verifyOneTimePasswordButton);
+      await this.clickElement(this.verifyOneTimePasswordButton);
 
       const invalidOneTimePasswordAlert = this._page.locator(this.invalidOneTimePasswordAlert);
       const mfaResult = await Promise.race([
@@ -98,8 +99,8 @@ export class LoginPage extends BasePage {
       if (mfaResult === 'invalid-code') {
         await this._page.waitForTimeout(totp.remaining() + 100);
         await oneTimePasswordField.fill(totp.generate());
-        await this.waitForElementToBeEnabled(this.nextButton);
-        await this.clickElement(this.nextButton);
+        await this.waitForElementToBeEnabled(this.verifyOneTimePasswordButton);
+        await this.clickElement(this.verifyOneTimePasswordButton);
         await invalidOneTimePasswordAlert.waitFor({ state: 'hidden', timeout: 5000 }).catch(() => undefined);
 
         const retryResult = await Promise.race([
