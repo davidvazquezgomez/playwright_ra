@@ -2,7 +2,7 @@
 Feature: Dashboard Updates for Client User
 
   Background:
-    Given launch Regulatory Advantage application URL and login as "deloitte" user "CLIENTUSER"
+    Given launch Regulatory Advantage application URL and login as "external" user "CLIENTUSER"
     And verify if applicable portals are displayed
 
   @readOnly
@@ -253,7 +253,7 @@ Feature: Dashboard Updates for Client User
     Then press "Save as favourite" button for "Test_ClientUser" on the Dashboard filter
     And verify "Filter updated successfully." toast message is displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And logout from the application
-    When launch Regulatory Advantage application URL and login as "deloitte" user "CLIENTUSER"
+    When launch Regulatory Advantage application URL and login as "external" user "CLIENTUSER"
     Then the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     Then verify the "ClientPortal_20260209133616 - Updates Dashboard" item count is not the same
     When press "Remove as favourite" button for "Test_ClientUser" on the Dashboard filter

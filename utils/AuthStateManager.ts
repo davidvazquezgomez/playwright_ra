@@ -147,7 +147,9 @@ async function getFeatureAuthenticationFromFile(featureFile: string): Promise<Fe
   const normalizedRole = role.toUpperCase();
   const username = process.env[`USER_${normalizedRole}`];
   const password = process.env[`USER_${normalizedRole}_PASSWORD`];
-  const totpSecret = process.env[`USER_${normalizedRole}_TOTP_SECRET`] || '';
+  const totpSecret = userType === 'external'
+    ? process.env[`USER_${normalizedRole}_TOTP_SECRET`] || ''
+    : '';
   if (!username || !password) {
     throw new Error(`Credentials are missing for "${role}". Configure USER_${normalizedRole} and USER_${normalizedRole}_PASSWORD.`);
   }

@@ -2,7 +2,7 @@
 Feature: Notifications for Team Member
 
   Background:
-    Given launch Regulatory Advantage application URL and login as "deloitte" user "TEAMMEMBER"
+    Given launch Regulatory Advantage application URL and login as "external" user "TEAMMEMBER"
     And verify if applicable portals are displayed
 #Como Aqui solo verificamos que las opciones mencionadas sean visibles, no es necesario coger un portal especifico
 

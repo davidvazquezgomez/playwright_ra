@@ -2,7 +2,7 @@
 Feature: Notifications for Team Leader
 
   Background:
-    Given launch Regulatory Advantage application URL and login as "deloitte" user "TEAMLEADER"
+    Given launch Regulatory Advantage application URL and login as "external" user "TEAMLEADER"
     And verify if applicable portals are displayed
 
   @mutable
@@ -59,7 +59,7 @@ Feature: Notifications for Team Leader
   @mutable
   Scenario: TC002_2_TeamLeader_Notifications - Verify triggered notifications for updates
     When logout from the application
-    Then launch Regulatory Advantage application URL and login as "deloitte" user "CLIENTADMIN"
+    Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     When press "Profile" button
     And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
@@ -100,7 +100,7 @@ Feature: Notifications for Team Leader
   @mutable
   Scenario: TC003_2_TeamLeader_Notifications - Verify triggered notifications for actions
     When logout from the application
-    Then launch Regulatory Advantage application URL and login as "deloitte" user "CLIENTADMIN"
+    Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     When press "Profile" button
     And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
@@ -139,7 +139,7 @@ Feature: Notifications for Team Leader
   @mutable
   Scenario: TC004_2_TeamLeader_Notifications - Verify triggered notifications for teams
     When logout from the application
-    Then launch Regulatory Advantage application URL and login as "deloitte" user "CLIENTADMIN"
+    Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     When press "Profile" button
     And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button

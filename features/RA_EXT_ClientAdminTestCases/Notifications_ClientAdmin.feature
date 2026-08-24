@@ -2,7 +2,7 @@
 Feature: Notifications for Client Admin
 
   Background:
-    Given launch Regulatory Advantage application URL and login as "deloitte" user "CLIENTADMIN"
+    Given launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     And verify if applicable portals are displayed
 
   @mutable
@@ -86,7 +86,7 @@ Feature: Notifications for Client Admin
   @mutable
   Scenario: TC003_2_ClientAdmin_Notifications - Verify triggered notifications for updates
     When logout from the application
-    Then launch Regulatory Advantage application URL and login as "deloitte" user "CLIENTADMIN"
+    Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     When press "Profile" button
     And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
@@ -128,7 +128,7 @@ Feature: Notifications for Client Admin
   @mutable
   Scenario: TC003_4_ClientAdmin_Notifications - Verify triggered notifications for updates
     When logout from the application
-    Then launch Regulatory Advantage application URL and login as "deloitte" user "CLIENTADMIN"
+    Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     And the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
     Then open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
@@ -162,7 +162,7 @@ Feature: Notifications for Client Admin
   @mutable
   Scenario: TC004_2_ClientAdmin_Notifications - Verify triggered notifications for actions
     When logout from the application
-    Then launch Regulatory Advantage application URL and login as "deloitte" user "CLIENTADMIN"
+    Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     When press "Profile" button
     And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
@@ -203,7 +203,7 @@ Feature: Notifications for Client Admin
   @mutable
   Scenario: TC004_4_ClientAdmin_Notifications - Verify triggered notifications for updates
     When logout from the application
-    Then launch Regulatory Advantage application URL and login as "deloitte" user "CLIENTADMIN"
+    Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     And the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
     Then open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
@@ -237,7 +237,7 @@ Feature: Notifications for Client Admin
   @mutable
   Scenario: TC005_2_ClientAdmin_Notifications - Verify triggered notifications for teams
     When logout from the application
-    Then launch Regulatory Advantage application URL and login as "deloitte" user "CLIENTADMIN"
+    Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     When press "Profile" button
     And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
@@ -282,7 +282,7 @@ Feature: Notifications for Client Admin
   @mutable
   Scenario: TC005_4_ClientAdmin_Notifications - Verify triggered notifications for teams
     When logout from the application
-    Then launch Regulatory Advantage application URL and login as "deloitte" user "CLIENTADMIN"
+    Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     And the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
     Then click on "Team Management" option from the left navigation
     And the "Team Management" page is displayed

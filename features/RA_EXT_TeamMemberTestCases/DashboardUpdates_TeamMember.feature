@@ -2,7 +2,7 @@
 Feature: Dashboard page for Team Member
 
   Background:
-    Given launch Regulatory Advantage application URL and login as "deloitte" user "TEAMMEMBER"
+    Given launch Regulatory Advantage application URL and login as "external" user "TEAMMEMBER"
     And verify if applicable portals are displayed
 
   @readOnly
@@ -234,7 +234,7 @@ Feature: Dashboard page for Team Member
     Then press "Save as favourite" button for "Test_TeamMember" on the Dashboard filter
     And verify "Filter updated successfully." toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     And logout from the application
-    When launch Regulatory Advantage application URL and login as "deloitte" user "TEAMMEMBER"
+    When launch Regulatory Advantage application URL and login as "external" user "TEAMMEMBER"
     Then the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     Then verify the "01_QA_StageTestPortal - Updates Dashboard" item count is not the same
     When press "Remove as favourite" button for "Test_TeamMember" on the Dashboard filter

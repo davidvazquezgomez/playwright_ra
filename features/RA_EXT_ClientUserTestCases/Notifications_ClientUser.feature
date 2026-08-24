@@ -2,7 +2,7 @@
 Feature: Notifications for Client User
 
   Background:
-    Given launch Regulatory Advantage application URL and login as "deloitte" user "CLIENTUSER"
+    Given launch Regulatory Advantage application URL and login as "external" user "CLIENTUSER"
     And verify if applicable portals are displayed
 #Como Aqui solo verificamos que las opciones mencionadas sean visibles, no es necesario coger un portal especifico
 

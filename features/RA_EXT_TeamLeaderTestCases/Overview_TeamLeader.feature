@@ -2,11 +2,11 @@
 Feature: Overview for Team Leader
 
   Background:
-    Given launch Regulatory Advantage application URL and login as "deloitte" user "TEAMLEADER"
+    Given launch Regulatory Advantage application URL and login as "external" user "TEAMLEADER"
     And verify if applicable portals are displayed
 
-@readOnly
-Scenario: TC001_TeamLeader_Overview - Verify overview page loads with all the fields and buttons visible
+  @readOnly
+  Scenario: TC001_TeamLeader_Overview - Verify overview page loads with all the fields and buttons visible
     When click on "01_QA_StageTestPortal" of the portals
     Then the "Overview" page is displayed
     And verify for client portal name "01_QA_StageTestPortal"
@@ -38,8 +38,8 @@ Scenario: TC001_TeamLeader_Overview - Verify overview page loads with all the fi
       | Outstanding Updates;Outstanding Actions | Outstanding Updates | View All Updates | 01_QA_StageTestPortal - Updates Dashboard | Updates;Actions;Analytics |
       | Outstanding Updates;Outstanding Actions | Outstanding Actions | View All Actions | 01_QA_StageTestPortal - Actions Dashboard | Updates;Actions;Analytics |
 
-@readOnly
-Scenario: TC003_02_TeamLeader_Overview - Verify left navigation options
+  @readOnly
+  Scenario: TC003_02_TeamLeader_Overview - Verify left navigation options
     When click on "01_QA_StageTestPortal" of the portals
     Then the "Overview" page is displayed
     When click on "Team Management" option from the left navigation
@@ -60,8 +60,8 @@ Scenario: TC003_02_TeamLeader_Overview - Verify left navigation options
     And verify for view as grid or card is displayed and save as favorite option is visible
     And is selected and the star is "" filled by default
 
-@readOnly
-Scenario: TC005_TeamLeader_Overview - Verify navigation from Open Dashboard to Updates Dashboard and vice versa
+  @readOnly
+  Scenario: TC005_TeamLeader_Overview - Verify navigation from Open Dashboard to Updates Dashboard and vice versa
     When click on "01_QA_StageTestPortal" of the portals
     Then the "Overview" page is displayed
     When press "Open Dashboard" button
@@ -70,4 +70,3 @@ Scenario: TC005_TeamLeader_Overview - Verify navigation from Open Dashboard to U
     When press "back" button
     Then the "Overview" page is displayed
     And logout from the application
-
