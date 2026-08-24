@@ -112,6 +112,7 @@ jobs:
         displayName: 'Execute read-only and mutable BDD groups (STAGE / Desktop)'
         env:
           REUSE_AUTH_STATE: 'true'
+          TIMEOUT: '15000'
           TEST_TIMEOUT: '120000'
           TRACE_MODE: 'off'
           SCREENSHOT_FOLDER: 'test-results/custom-screenshots'

@@ -92,7 +92,7 @@ export class BasePage {
         .slice(0, 120);
       const screenshotPath = `${screenshotFolder}/FAILED_${screenshotId}_${Date.now()}.jpg`;
       await this.takeScreenshot(screenshotPath, { type: 'jpeg', quality: 60 });
-      await allure.attachmentPath("Failed test screenshot", screenshotPath, {
+      await allure.attachmentPath("screenshot", screenshotPath, {
         contentType: allure.ContentType.JPEG,
         fileExtension: "jpg",
       });
@@ -111,7 +111,7 @@ export class BasePage {
    * @returns Element in selector
    */
   async waitForElement(selector: string, timeout?: number): Promise<ElementHandle<Element>> {
-    const waitTimeout = timeout ?? (process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 30000);
+    const waitTimeout = timeout ?? (process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000);
     const element = await this._page.waitForSelector(selector, { timeout: waitTimeout });
     if (!element) {
       throw new Error(`Element "${selector}" not found. Timeout exceeded.`);
@@ -155,7 +155,7 @@ export class BasePage {
     state: 'attached' | 'detached' | 'visible' | 'hidden' = 'visible',
     timeout?: number,
   ): Promise<void> {
-    const waitTimeout = timeout ?? (process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 30000);
+    const waitTimeout = timeout ?? (process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000);
     await this._page.locator(selector).waitFor({ state, timeout: waitTimeout });
   }
 
@@ -165,7 +165,7 @@ export class BasePage {
    * @param timeout Maximum time to wait in milliseconds.
    */
   async waitForElementToBeEnabled(selector: string, timeout?: number): Promise<void> {
-    const waitTimeout = timeout ?? (process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 30000);
+    const waitTimeout = timeout ?? (process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000);
     await expect(this._page.locator(selector)).toBeEnabled({ timeout: waitTimeout });
   }
 
@@ -427,6 +427,19 @@ export class BasePage {
   async clickElement(selector: string, timeout?: number) {
     const element = await this.waitForElement(selector, timeout);
     await element.click({ noWaitAfter: true });
+  }
+
+  /**
+   * Clicks a Locator after waiting for it to become visible, bounded by a fixed timeout so
+   * unresolved dynamic locators (e.g. dropdown/autocomplete options) fail fast instead of
+   * hanging until the overall test timeout.
+   * @param locator Element locator to click.
+   * @param timeout Maximum time to wait in milliseconds.
+   */
+  async clickLocator(locator: Locator, timeout?: number): Promise<void> {
+    const waitTimeout = timeout ?? (process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000);
+    await locator.waitFor({ state: 'visible', timeout: waitTimeout });
+    await locator.click({ timeout: waitTimeout });
   }
 
   /**

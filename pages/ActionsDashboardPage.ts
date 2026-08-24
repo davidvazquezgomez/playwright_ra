@@ -131,7 +131,7 @@ export class ActionsDashboardPage extends BasePage {
   async fillField(fieldName: string, value: string): Promise<void> {
     if (fieldName === 'Update') {
       await this.fillInputText(this.updateInput, value);
-      await this.updateSearchResultByTitle(value).click();
+      await this.clickLocator(this.updateSearchResultByTitle(value));
       return;
     }
 
@@ -158,7 +158,7 @@ export class ActionsDashboardPage extends BasePage {
 
     for (const option of options.split(',').map((value) => value.trim()).filter(Boolean)) {
       await this.clickElement(fieldSelector);
-      await this._page.getByRole('option', { name: option, exact: true }).click();
+      await this.clickLocator(this._page.getByRole('option', { name: option, exact: true }));
     }
   }
 
@@ -269,7 +269,7 @@ export class ActionsDashboardPage extends BasePage {
    */
   async searchForUpdate(updateTitle: string): Promise<void> {
     await this.fillInputText(this.dashboardUpdateSearchInput, updateTitle);
-    await this.dashboardUpdateSearchResultByTitle(updateTitle).click();
+    await this.clickLocator(this.dashboardUpdateSearchResultByTitle(updateTitle));
   }
 
   /**
@@ -299,7 +299,7 @@ export class ActionsDashboardPage extends BasePage {
       'The Actions Dashboard must contain an action before the first action can be opened.',
       'The Actions Dashboard grid was displayed before attempting to open its first row.',
     );
-    await this.actionsGrid().getByRole('row').nth(1).click();
+    await this.clickLocator(this.actionsGrid().getByRole('row').nth(1));
   }
 
   /**
@@ -313,8 +313,7 @@ export class ActionsDashboardPage extends BasePage {
       `The Actions Dashboard grid was displayed before searching for update "${updateTitle}".`,
     );
     const actionCell = this.actionCellByUpdateTitle(updateTitle);
-    await expect(actionCell).toBeVisible();
-    await actionCell.click();
+    await this.clickLocator(actionCell);
   }
 
   /**
@@ -382,7 +381,7 @@ export class ActionsDashboardPage extends BasePage {
 
     const dropdownSelector = this.getUpdateActionDropdownSelector(fieldName);
     await this.clickElement(dropdownSelector);
-    await this._page.getByRole('option', { name: option, exact: true }).first().click();
+    await this.clickLocator(this._page.getByRole('option', { name: option, exact: true }).first());
   }
 
   /**
@@ -550,7 +549,7 @@ export class ActionsDashboardPage extends BasePage {
   async removeFirstAttachment(): Promise<void> {
     const attachmentRow = this.firstAttachmentRow();
     await expect(attachmentRow).toBeVisible();
-    await attachmentRow.getByRole('button', { name: 'Remove', exact: true }).click();
+    await this.clickLocator(attachmentRow.getByRole('button', { name: 'Remove', exact: true }));
   }
 
   /**

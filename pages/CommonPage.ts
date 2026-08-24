@@ -68,6 +68,7 @@ export class CommonPage extends BasePage {
   private openDashboardButton = 'role=button[name="Open Dashboard"]';
   private dashboardFilterButton = 'button[title="Filter"]';
   private downloadUpdatesTemplateLink = 'a.download-template:has-text("Download Updates Template")';
+  private updatesDashboardSearchInput = 'input[placeholder="Select or type update title"][role="combobox"]';
   private exportUsersButton = 'button:has(.k-button-text:text-is("EXPORT USERS"))';
   private uploadSummaryPageTitle = 'h1.heading:text-matches("upload summary|updates summary", "i")';
   private uploadCompletePageTitle = 'text=/upload complete/i';
@@ -246,6 +247,38 @@ export class CommonPage extends BasePage {
     }
 
     await this.loadPage(new URL(pageRoute, applicationUrl).toString());
+    await this.waitForNamedPageToRender(pageName, pageRoute);
+  }
+
+  /**
+   * Verifies that a named route has completed rendering its page-specific content.
+   * @param pageName Gherkin name of the requested page.
+   * @param pageRoute Relative route used to open the page.
+   */
+  private async waitForNamedPageToRender(pageName: string, pageRoute: string): Promise<void> {
+    let readinessSelector: string | undefined;
+
+    if (pageRoute.includes('/Actions/')) {
+      readinessSelector = this.dashboardFilterButton;
+    } else if (pageRoute.includes('/Updates/')) {
+      readinessSelector = this.updatesDashboardSearchInput;
+    }
+
+    if (!readinessSelector) {
+      return;
+    }
+
+    try {
+      await this.waitForElement(readinessSelector);
+    } catch (error) {
+      const currentUrl = this._page.url();
+      const title = await this._page.title().catch(() => 'unavailable');
+      const navigationError = error instanceof Error ? error.message : String(error);
+      throw new Error(
+        `Unable to render "${pageName}" after navigation. Expected route: "${pageRoute}". ` +
+        `Current URL: "${currentUrl}". Page title: "${title}". Original error: ${navigationError}`,
+      );
+    }
   }
 
   /**
@@ -823,6 +856,11 @@ export class CommonPage extends BasePage {
    */
   private getPageNavigationSelector(pageName: string): string {
     const normalizedPageName = pageName.trim();
+
+    // The " - All Updates" suffix identifies the default tab for routing but is not part of the rendered heading.
+    if (normalizedPageName.endsWith(' - All Updates')) {
+      return this.pageHeadingByName(normalizedPageName.replace(/ - All Updates$/, ''));
+    }
 
     if (normalizedPageName.endsWith('Dashboard')) {
       return this.pageHeadingByName(normalizedPageName);

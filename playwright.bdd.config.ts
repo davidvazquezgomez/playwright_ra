@@ -65,12 +65,19 @@ export default defineConfig({
     }],
   ],
 
+  // Bounds every action/navigation to fail fast instead of inheriting the 300s test timeout.
   use: {
     baseURL: envUrls[env],
     acceptDownloads: true,
-    screenshot: 'off',
+    screenshot: 'only-on-failure',
     trace: traceMode,
     video: 'off',
+    actionTimeout: process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000,
+    navigationTimeout: process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000,
+  },
+
+  expect: {
+    timeout: process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000,
   },
 
   projects: [
