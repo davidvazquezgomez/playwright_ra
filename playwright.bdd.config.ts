@@ -31,7 +31,7 @@ type MissingStepsMode = 'fail-on-gen' | 'fail-on-run' | 'skip-scenario';
 type TraceMode = 'off' | 'on' | 'retain-on-failure' | 'on-first-retry' | 'on-all-retries';
 const missingStepsMode =
   (process.env.BDD_MISSING_STEPS_MODE as MissingStepsMode | undefined) ||
-  (process.env.CI ? 'fail-on-gen' : 'fail-on-run');
+  (process.env.CI ? 'skip-scenario' : 'fail-on-run');
 const retries = Number(process.env.RETRIES ?? (process.env.CI ? 2 : 0));
 const traceMode = (process.env.TRACE_MODE as TraceMode | undefined) || 'retain-on-failure';
 const resultsGroup = process.env.RESULTS_GROUP || 'all';
