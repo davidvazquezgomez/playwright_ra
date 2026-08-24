@@ -28,7 +28,7 @@ export interface AuthSession {
 }
 
 export function isAuthStateReuseEnabled(): boolean {
-  return process.env.REUSE_AUTH_STATE === 'true';
+  return process.env.REUSE_AUTH_STATE === 'true' && process.env.CI === 'true';
 }
 
 export async function clearAuthStates(): Promise<void> {

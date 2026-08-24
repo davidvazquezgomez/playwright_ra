@@ -18,9 +18,9 @@ El numero de apariciones en el log no equivale al numero de bugs. Un mismo probl
 
 | Prioridad | Familia                          |                           Volumen observado | Estado              | Objetivo                                                           |
 | --------- | -------------------------------- | ------------------------------------------: | ------------------- | ------------------------------------------------------------------ |
-| P0        | Pasos BDD inexistentes           |                             120 apariciones | Pendiente           | Todas las frases de las features deben tener binding               |
+| P0        | Pasos BDD inexistentes           |                             120 apariciones | En curso (Lucia)    | Todas las frases de las features deben tener binding               |
 | P0        | Timeouts de Playwright           |                             147 apariciones | Pendiente           | Las paginas y controles comunes deben cargar de forma determinista |
-| P1        | Acciones y botones no soportados |                    Repetido en varios roles | Pendiente           | Los page objects deben reconocer todas las acciones validas        |
+| P1        | Acciones y botones no soportados |                    Repetido en varios roles | En curso            | Los page objects deben reconocer todas las acciones validas        |
 | P1        | Concurrencia y autenticacion     | 3 locks de auth y varios contextos cerrados | Pendiente           | Cada worker debe usar estado y datos aislados                      |
 | P1        | Flujos incompatibles con el rol  |               Repetido en usuarios externos | Pendiente           | No ejecutar campos internos en formularios externos                |
 | P1        | Defectos funcionales confirmados |   65 mensajes `APPLICATION DEFECT DETECTED` | Pendiente de triage | Corregir producto o confirmar datos/permisos                       |
@@ -65,7 +65,7 @@ Resultado esperado: cero mensajes `Missing step`.
 
 **Puntos del log:** [primer bloque de pasos ausentes](ejecucion-pipeline.md#L1961), [attachments](ejecucion-pipeline.md#L2391), [Team Management](ejecucion-pipeline.md#L15233), [Privacy Notice](ejecucion-pipeline.md#L22589).
 
-### Fase 2: estabilizar autenticacion y ejecucion paralela
+### Fase 2: estabilizar autenticacion y ejecucion paralela - implementada, pendiente certificacion en Azure
 
 #### Prioridad: P0/P1
 
@@ -100,15 +100,25 @@ browserContext.close: Target page, context or browser has been closed
 npx playwright test --workers=1
 ```
 
-**Validacion de cierre:**
+**Implementado en esta fase:**
+
+- Espera del lock configurable, con cinco minutos por defecto.
+- Deteccion y limpieza de locks huérfanos solo cuando el proceso propietario ya no esta activo.
+- Token por propietario para impedir que un worker elimine el lock de otro.
+- Cierre del contexto del fixture mediante `try/finally`.
+- Prewarm limitado a ejecuciones CI/Azure; las ejecuciones locales y la UI lo omiten.
+
+**Validacion de cierre en Azure:**
 
 - Cero `Timed out waiting for authentication state lock`.
 - Cero errores de contexto cerrado derivados del fixture.
 - El login llega de forma consistente a `#headerTile`.
 
+La prueba local no pudo alcanzar el login porque Stage devolvio `Access denied` durante el prewarm. Por ello, la certificacion runtime debe ejecutarse en Azure o desde una red permitida por el WAF de Stage.
+
 **Puntos del log:** [lock de autenticacion](ejecucion-pipeline.md#L3190), [contexto cerrado](ejecucion-pipeline.md#L2169).
 
-### Fase 3: corregir acciones no reconocidas
+### Fase 3: corregir acciones no reconocidas - en curso
 
 #### Prioridad P1: acciones no reconocidas
 
@@ -139,6 +149,13 @@ Se repiten errores de dispatching:
 4. Revisar primero `BasePage.ts` para reutilizar esperas y clicks existentes.
 
 **Validacion de cierre:** buscar de nuevo `not recognized`, `not supported` y `Unsupported Overview button` en el log de una ejecucion reducida.
+
+**Avance implementado:**
+
+- `Dashboard Options` se resuelve desde `DashboardPage`.
+- `Mark as Unread` y `Attachments` de Update Details se resuelven desde `UpdatesDashboardPage`.
+- `saveTeam` se resuelve desde `TeamManagementPage`.
+- `Remove` de adjuntos del Update Action popup se resuelve desde `ActionsDashboardPage` y ya tiene binding BDD.
 
 **Puntos del log:** [Dashboard Options](ejecucion-pipeline.md#L1988), [Mark as Unread](ejecucion-pipeline.md#L2236), [Attachments](ejecucion-pipeline.md#L2553), [Remove](ejecucion-pipeline.md#L15386).
 
@@ -286,18 +303,18 @@ Estos errores son tecnicos o de automatizacion hasta que una prueba independient
 
 ## 6. Matriz de seguimiento
 
-| ID      | Problema                          | Prioridad | Area                               | Evidencia                                | Responsable sugerido     | Criterio de cierre                          |
-| ------- | --------------------------------- | --------- | ---------------------------------- | ---------------------------------------- | ------------------------ | ------------------------------------------- |
-| BDD-01  | Pasos `Missing step`              | P0        | `features/steps`                   | 120 apariciones                          | Mantenimiento QA         | `bdd:generate` sin pasos ausentes           |
-| AUTH-01 | Lock compartido de auth           | P0        | `utils/AuthStateManager.ts`        | Lock de Stage                            | QA/Infra                 | Sin locks agotados con 4 workers            |
-| UI-01   | Selectores comunes no encontrados | P1        | `pages/BasePage.ts` y page objects | 147 timeouts                             | Mantenimiento QA         | Escenarios base estables                    |
-| UI-02   | Botones no reconocidos            | P1        | `CommonPage`, `OverviewPage`       | Dispatchers                              | Mantenimiento QA         | Cero `not recognized`                       |
-| ROLE-01 | Campos incorrectos para externos  | P1        | Features y page objects            | `User Assigned`, `Comments`, `Team Name` | QA funcional             | Flujos separados por rol                    |
-| DATA-01 | Datos compartidos entre workers   | P1        | Fixtures/test-data                 | Allocation ausente                       | QA/Infra                 | Datos aislados o precondiciones verificadas |
-| APP-01  | Ordenacion inconsistente          | P1        | Aplicacion                         | `aria-sort` contradice filas             | Equipo producto          | Orden correcto para cada tipo de dato       |
-| APP-02  | `Edit Client` ausente             | P1        | Client Portal List                 | 9565                                     | Equipo producto/permisos | Accion visible para usuario autorizado      |
-| APP-03  | Email de perfil vacio             | P1        | Perfil/API                         | 18696                                    | Equipo producto/API      | Email esperado visible                      |
-| APP-04  | Mensajes de notificacion          | P2        | Notifications                      | Toast ausente                            | Equipo producto/QA       | Toast y persistencia verificados            |
+| ID      | Problema                          | Prioridad | Area                               | Evidencia                                | Responsable sugerido     | Criterio de cierre                                                 |
+| ------- | --------------------------------- | --------- | ---------------------------------- | ---------------------------------------- | ------------------------ | ------------------------------------------------------------------ |
+| BDD-01  | Pasos `Missing step`              | P0        | `features/steps`                   | 120 apariciones                          | Mantenimiento QA         | `bdd:generate` sin pasos ausentes                                  |
+| AUTH-01 | Lock compartido de auth           | P0        | `utils/AuthStateManager.ts`        | Lock de Stage                            | QA/Infra                 | Solucion implementada; pendiente validar en Azure sin bloqueos WAF |
+| UI-01   | Selectores comunes no encontrados | P1        | `pages/BasePage.ts` y page objects | 147 timeouts                             | Mantenimiento QA         | Escenarios base estables                                           |
+| UI-02   | Botones no reconocidos            | P1        | `CommonPage`, `OverviewPage`       | Dispatchers                              | Mantenimiento QA         | Cero `not recognized`                                              |
+| ROLE-01 | Campos incorrectos para externos  | P1        | Features y page objects            | `User Assigned`, `Comments`, `Team Name` | QA funcional             | Flujos separados por rol                                           |
+| DATA-01 | Datos compartidos entre workers   | P1        | Fixtures/test-data                 | Allocation ausente                       | QA/Infra                 | Datos aislados o precondiciones verificadas                        |
+| APP-01  | Ordenacion inconsistente          | P1        | Aplicacion                         | `aria-sort` contradice filas             | Equipo producto          | Orden correcto para cada tipo de dato                              |
+| APP-02  | `Edit Client` ausente             | P1        | Client Portal List                 | 9565                                     | Equipo producto/permisos | Accion visible para usuario autorizado                             |
+| APP-03  | Email de perfil vacio             | P1        | Perfil/API                         | 18696                                    | Equipo producto/API      | Email esperado visible                                             |
+| APP-04  | Mensajes de notificacion          | P2        | Notifications                      | Toast ausente                            | Equipo producto/QA       | Toast y persistencia verificados                                   |
 
 ## 7. Secuencia de validacion final
 
@@ -329,9 +346,9 @@ npx playwright show-trace test-results/<carpeta-del-test>/trace.zip
 
 ## 8. Resumen de prioridad
 
-1. Resolver bindings BDD ausentes.
-2. Aislar autenticacion, usuarios y datos de prueba por worker.
-3. Corregir botones y acciones no soportadas.
+1. Resolver bindings BDD ausentes (fase en curso con la compañera).
+2. Aislar autenticacion, usuarios y datos de prueba por worker (fase 2 implementada; validacion runtime pendiente en Azure por bloqueo WAF local).
+3. Corregir botones y acciones no soportadas (fase 3 en curso).
 4. Revisar DOM, selectores, esperas y cierre de dialogs.
 5. Separar los flujos internos y externos.
 6. Repetir el pipeline con un worker y despues con cuatro.
