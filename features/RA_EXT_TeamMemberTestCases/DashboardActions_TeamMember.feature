@@ -21,7 +21,8 @@ Feature: Dashboard Actions for Team Member
 
   @readOnly
   Scenario Outline: TC009_02_TeamMember_DashboardActions - Verify default column header and sorting
-    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
+# URL https://stage.regulatoryadvantage.deloitte.com/project-dashboard/415/Actions/AllActions/All
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     Then verify "<column>" column header is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When click on "<column>" column header in the "01_QA_StageTestPortal - Actions Dashboard" page
     Then verify items are sorted in "ascending" order by "<column>" in the "01_QA_StageTestPortal - Actions Dashboard" page
@@ -42,7 +43,7 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario: TC010_01_TeamMember_DashboardActions - Create new action from the actions dashboard
-    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Add Action" button
     Then the "Add Action" popup is displayed
     And verify "Update;Action;User Assigned;Priority;Status;Deadline Date" are displayed in the "Add Action" popup
@@ -77,7 +78,7 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario: TC010_02_TeamMember_DashboardActions - Verify editing an action
-    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And double-click "Test_TeamMember_2" option on the Dashboard filter
@@ -98,7 +99,7 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario: TC010_03_TeamMember_DashboardActions - Verify the private action toggle
-    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And double-click "Test_TeamMember_2" option on the Dashboard filter
@@ -122,7 +123,7 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario: TC010_04_TeamMember_DashboardActions - Verify adding a comment to an action
-    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And double-click "Test_TeamMember" option on the Dashboard filter
@@ -142,7 +143,7 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario: TC010_05_TeamMember_DashboardActions - Verify uploading an attachment to an action
-    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And double-click "Test_TeamMember" option on the Dashboard filter
@@ -166,7 +167,7 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario Outline: TC010_06_TeamMember_DashboardActions - Upload an attachment with unsupported format
-    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And double-click "Test_TeamMember" option on the Dashboard filter
@@ -320,10 +321,10 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario Outline: TC011_06_TeamMember_DashboardActions - Upload an attachment with unsupported format from the update details page
-    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "22Podcast - BGN to EUR conversion" update from the "Updates Dashboard - 01_QA_StageTestPortal - All Updates" page
-    And open the first update in the "Updates Dashboard - 01_QA_StageTestPortal - All Updates" page
+    When search for "22Podcast - BGN to EUR conversion" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
+    And open the first update in the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
@@ -345,7 +346,7 @@ Feature: Dashboard Actions for Team Member
 
   @readOnly
   Scenario Outline: TC012_01_TeamMember_DashboardActions - Verify filtering the 01_QA_StageTestPortal - Actions Dashboard by
-    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     Then verify the "<filter>" option is displayed in the Dashboard filter
     When select "<value>" in the "<filter>" filter on the Dashboard filter
@@ -358,11 +359,11 @@ Feature: Dashboard Actions for Team Member
       | Update Priority | Low         |
       | Action Priority | High        |
       | Action Status   | In Progress |
-      | User Assigned   | Smoke       |
+      | User Assigned   | Alam, Asjad |
 
   @readOnly
   Scenario: TC012_02_TeamMember_DashboardActions - Verify filtering the 01_QA_StageTestPortal - Actions Dashboard by deadline range
-    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     Then verify the "Deadline Range" option is displayed in the Dashboard filter
     When select "20/08/2026" from the "Start Date" calendar on the Dashboard filter
@@ -373,7 +374,7 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario: TC012_03_TeamMember_DashboardActions - Verify saving a filter
-    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When remove saved filter "Test DashboardAction" if it exists on the Dashboard filter
     When press "Filter" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter
@@ -391,7 +392,7 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario: TC012_04_TeamMember_DashboardActions - Verify editing and deleting a saved filter
-    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     When select "Test DashboardAction" located in the "Saved Filters" section on the Dashboard filter
     And press "Edit" button on the Dashboard filter
@@ -402,7 +403,7 @@ Feature: Dashboard Actions for Team Member
     When append " update" to the saved filter name on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify "Filter updated successfully." toast message is displayed in the "Actions Dashboard" page
-    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And double-click "Test DashboardAction update" option on the Dashboard filter
     And press "Edit" button on the Dashboard filter
@@ -411,8 +412,8 @@ Feature: Dashboard Actions for Team Member
     Then verify "Saved filter deleted successfully." toast message is displayed in the "Actions Dashboard" page
 
   @readOnly
-  Scenario: TC012_05_TeamMember_DashboardActions - Verify resetting the 01_13Jan REG - Actions Dashboard filters
-    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
+  Scenario: TC012_05_TeamMember_DashboardActions - Verify resetting the 01_QA_StageTestPortal - Actions Dashboard filters
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter
@@ -427,7 +428,7 @@ Feature: Dashboard Actions for Team Member
 
   @readOnly
   Scenario: TC013_TeamMember_DashboardActions - Verify actions dashboard select all filter
-    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     When expand the "Jurisdiction" filter on the Dashboard filter
     Then verify "Select All" is "unchecked" in the "Jurisdiction" filter on the Dashboard filter
@@ -452,7 +453,7 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario: TC018_TeamMember_DashboardActions - Verify actions dashboard dashboard options Action
-    Given the "Actions Dashboard - 01_QA_StageTestPortal" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     Then verify "Action Status" column header is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When press "Dashboard Options" button on the Dashboard
     Then verify the "Dashboard Options" popup is displayed on the Dashboard

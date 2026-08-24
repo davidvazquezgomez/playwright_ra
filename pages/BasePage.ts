@@ -160,6 +160,16 @@ export class BasePage {
   }
 
   /**
+   * Waits for an element to become enabled.
+   * @param selector Element selector.
+   * @param timeout Maximum time to wait in milliseconds.
+   */
+  async waitForElementToBeEnabled(selector: string, timeout?: number): Promise<void> {
+    const waitTimeout = timeout ?? (process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 30000);
+    await expect(this._page.locator(selector)).toBeEnabled({ timeout: waitTimeout });
+  }
+
+  /**
    * Verifies that an element is not visible on the current page.
    * @param selector Element selector.
    */

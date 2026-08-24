@@ -106,3 +106,25 @@ Then(
     }
   },
 );
+
+Then(
+  'the {string} word is displayed in the {string} page',
+  async ({ privacyNoticePage }, linkName: string, pageName: string) => {
+    if (pageName !== 'RegulatoryAdvantage | Privacy Notice') {
+      throw new Error(`Page "${pageName}" is not supported for privacy notice links.`);
+    }
+
+    await privacyNoticePage.verifyPublishedLinkDisplayed(linkName);
+  },
+);
+
+When('click on {string} word', async ({ privacyNoticePage }, linkName: string) => {
+  await privacyNoticePage.clickPublishedLink(linkName);
+});
+
+Then(
+  'the {string} destination is displayed',
+  async ({ privacyNoticePage }, expectedDestination: string) => {
+    await privacyNoticePage.verifyLastClickedLinkDestination(expectedDestination);
+  },
+);
