@@ -21,6 +21,7 @@ Feature: Dashboard Actions for Team Member
 
   @readOnly
   Scenario Outline: TC009_02_TeamMember_DashboardActions - Verify default column header and sorting
+# URL https://stage.regulatoryadvantage.deloitte.com/project-dashboard/415/Actions/AllActions/All
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     Then verify "<column>" column header is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When click on "<column>" column header in the "01_QA_StageTestPortal - Actions Dashboard" page
@@ -50,9 +51,9 @@ Scenario: TC010_01_TeamMember_DashboardActions - Create new action from the acti
     And verify attachments section is not displayed in the "Add Action" popup
     When press "Save" button
     Then verify "Update title is required.;Action is required.;Assigned User is required;Priority is required.;Status is required.;Deadline is required." validation messages are displayed in the "Add Action" popup
-    When fill the "Update" field with "Migration_test" value in the "Add Action" popup
+    When fill the "Update" field with "32Increase of maximum meal voucher vaalue" value in the "Add Action" popup
     And fill the "Action" field with "Test Action" value in the "Add Action" popup
-    And select "Smoke, Test" options in the "User Assigned" field in the "Add Action" popup
+    And select "satestclientuser3, satestclientuser3" options in the "User Assigned" field in the "Add Action" popup
     And select "Medium" option in the "Priority" field in the "Add Action" popup
     And select "In Progress" option in the "Status" field in the "Add Action" popup
     And select today's date from the "Deadline" calendar in the "Add Action" popup
@@ -60,77 +61,76 @@ Scenario: TC010_01_TeamMember_DashboardActions - Create new action from the acti
     Then the "Unsaved Changes" popup is displayed
     And verify "Continue;Cancel" buttons are displayed on the "Unsaved Changes" popup
     When press "Cancel" button on the "Unsaved Changes" popup
-    Then verify "Migration_test" value is displayed in the "Update" field on the "Add Action" popup
+    Then verify "32Increase of maximum meal voucher vaalue" value is displayed in the "Update" field on the "Add Action" popup
     And verify "Test Action" value is displayed in the "Action" field on the "Add Action" popup
-    And verify "Smoke, Test" options are selected in the "User Assigned" field on the "Add Action" popup
+    And verify "satestclientuser3, satestclientuser3" options are selected in the "User Assigned" field on the "Add Action" popup
     And verify "Medium" option is selected in the "Priority" field on the "Add Action" popup
     And verify "In Progress" option is selected in the "Status" field on the "Add Action" popup
     And verify today's date is displayed in the "Deadline" field on the "Add Action" popup
     When press "Save" button
-    Then verify "Action added successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
+    Then verify "Action added successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    And double-click "SelectAll_Test_1784288008539" option on the Dashboard filter
+    And double-click "Test_TeamMember" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    And click on "Deadline Date" column header in the "01_13Jan REG - Actions Dashboard" page
-    And click on "Deadline Date" column header in the "01_13Jan REG - Actions Dashboard" page
-    And verify "Test Action" action is displayed in the first row of the "01_13Jan REG - Actions Dashboard" page
+    And click on "Deadline Date" column header in the "01_QA_StageTestPortal - Actions Dashboard" page
+    And verify "Test Action" action is displayed in the first row of the "01_QA_StageTestPortal - Actions Dashboard" page
 
   @mutable
   Scenario: TC010_02_TeamMember_DashboardActions - Verify editing an action
-    Given the "01_13Jan REG - Actions Dashboard" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    And double-click "SelectAll_Test_1784288008539" option on the Dashboard filter
+    And double-click "Test_TeamMember_2" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    And search for "Migration_test" update in the "01_13Jan REG - Actions Dashboard" page
-    Then verify "Migration_test" update is displayed in the "01_13Jan REG - Actions Dashboard" page
-    When click on the first action in the "01_13Jan REG - Actions Dashboard" page
+    And search for "Test_TeamMember_2" update in the "01_QA_StageTestPortal - Actions Dashboard" page
+    Then verify "28Guidance on SBTV employment related security (ERS) returns" update is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
+    When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
     Then the "Update Action" popup is displayed
-    When select "User, TestAP" option in the "User Assigned" field in the "Update Action" popup
+    When select "satestclientuser2, satestclientuser2" option in the "User Assigned" field in the "Update Action" popup
     And select "Not Started" option in the "Status" field in the "Update Action" popup
     And select "High" option in the "Priority" field in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
-    When click on the first action in the "01_13Jan REG - Actions Dashboard" page
+    Then verify "Action updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
+    When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
     Then the "Update Action" popup is displayed
-    And verify "User, TestAP" option is selected in the "User Assigned" field on the "Update Action" popup
+    And verify "satestclientuser2, satestclientuser2" option is selected in the "User Assigned" field on the "Update Action" popup
     And verify "Not Started" option is selected in the "Status" field on the "Update Action" popup
 
   @mutable
   Scenario: TC010_03_TeamMember_DashboardActions - Verify the private action toggle
-    Given the "01_13Jan REG - Actions Dashboard" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    And double-click "SelectAll_Test_1784288008539" option on the Dashboard filter
+    And double-click "Test_TeamMember_2" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    And search for "Migration_test" update in the "01_13Jan REG - Actions Dashboard" page
-    Then verify "Migration_test" update is displayed in the "01_13Jan REG - Actions Dashboard" page
-    When click on the first action in the "01_13Jan REG - Actions Dashboard" page
+    And search for "LINK TEST 1" update in the "01_QA_StageTestPortal - Actions Dashboard" page
+    Then verify "LINK TEST 1" update is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
+    When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
     Then the "Update Action" popup is displayed
     When enable the "Private Action" toggle in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
-    When click on the first action in the "01_13Jan REG - Actions Dashboard" page
+    Then verify "Action updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
+    When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
     Then the "Update Action" popup is displayed
     And verify the "Private Action" toggle is enabled in the "Update Action" popup
     When disable the "Private Action" toggle in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
-    When click on the first action in the "01_13Jan REG - Actions Dashboard" page
+    Then verify "Action updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
+    When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
     Then the "Update Action" popup is displayed
     And verify the "Private Action" toggle is disabled in the "Update Action" popup
 
   @mutable
   Scenario: TC010_04_TeamMember_DashboardActions - Verify adding a comment to an action
-    Given the "01_13Jan REG - Actions Dashboard" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    And double-click "SelectAll_Test_1784288008539" option on the Dashboard filter
+    And double-click "Test_TeamMember" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    And search for "Migration_test" update in the "01_13Jan REG - Actions Dashboard" page
-    Then verify "Migration_test" update is displayed in the "01_13Jan REG - Actions Dashboard" page
-    When click on the first action in the "01_13Jan REG - Actions Dashboard" page
+    And search for "LINK TEST 3" update in the "01_QA_StageTestPortal - Actions Dashboard" page
+    Then verify "LINK TEST 3" update is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
+    When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
     Then the "Update Action" popup is displayed
     When open the "Comments" tab in the "Update Action" popup
     And enter "Test comment" comment in the "Update Action" popup
@@ -139,39 +139,66 @@ Scenario: TC010_01_TeamMember_DashboardActions - Create new action from the acti
     And verify a date is displayed for "Test comment" comment in the "Update Action" popup
     And verify actions are displayed for "Test comment" comment in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
+    Then verify "Action updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
 
   @mutable
   Scenario: TC010_05_TeamMember_DashboardActions - Verify uploading an attachment to an action
-    Given the "01_13Jan REG - Actions Dashboard" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    And double-click "SelectAll_Test_1784288008539" option on the Dashboard filter
+    And double-click "Test_TeamMember" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    And search for "Migration_test" update in the "01_13Jan REG - Actions Dashboard" page
-    Then verify "Migration_test" update is displayed in the "01_13Jan REG - Actions Dashboard" page
-    When click on the first action in the "01_13Jan REG - Actions Dashboard" page
+    And search for "LINK TEST 3" update in the "01_QA_StageTestPortal - Actions Dashboard" page
+    Then verify "LINK TEST 3" update is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
+    When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
     Then the "Update Action" popup is displayed
     When open the "Attachments" tab in the "Update Action" popup
-    # And upload "test-data/valid-attachment.pdf" attachment in the "Update Action" popup
-    # Then verify "valid-attachment.pdf" attachment is displayed in the "Update Action" popup
-    # When upload "test-data/oversized-51mb.pdf" attachment in the "Update Action" popup
-    # Then verify "oversized-51mb.pdf" attachment is not displayed in the "Update Action" popup
-    # When upload "test-data/invalid.exe" attachment in the "Update Action" popup
-    # Then verify "invalid.exe" attachment is not displayed in the "Update Action" popup
-    # When upload "test-data/corrupted.png" attachment in the "Update Action" popup
-    # Then verify "corrupted.png" attachment is not displayed in the "Update Action" popup
+    When upload "<file path>" attachment in the "Update Action" popup
+    And verify "<name>" attachment is displayed in the "Update Action" popup
+
+    Examples:
+      | valid extension | file path              | name         |
+      | pdf             | test-data/valid.pdf    | valid.pdf    |
+      | pdf             | test-data/invalid.pdf  | invalid.pdf  |
+      | xlsx            | test-data/valid.xlsx   | valid.xlsx   |
+      | svg             | test-data/valid.svg    | valid.svg    |
+      | png             | test-data/valid.png    | valid.png    |
+      | docx            | test-data/invalid.docx | invalid.docx |
+
+
+ Scenario Outline: TC010_06_TeamMember_DashboardActions - Upload an attachment with unsupported format
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
+    When press "Filter" button on the Dashboard filter
+    And press "Reset Filters" button on the Dashboard filter
+    And double-click "Test_TeamMember" option on the Dashboard filter
+    And press "View results" button on the Dashboard filter
+    And search for "LINK TEST 3" update in the "01_QA_StageTestPortal - Actions Dashboard" page
+    When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
+    Then the "Update Action" popup is displayed
+    When open the "Attachments" tab in the "Update Action" popup
+    When upload "<file path>" attachment in the "Update Action" popup
+    Then a message should get displayed as "<expected message>"
+    And verify "<name>" attachment is not displayed in the "Update Action" popup
     When select "Complete" option in the "Status" field in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
-    And verify "Test Action" action is not displayed in the "01_13Jan REG - Actions Dashboard" page
+    Then verify "Action updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
+    And verify "Test Action" action is not displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
+
+    Examples:
+      | invalid extension | file path                  | expected message | name             |
+      | xls               | test-data/valid.xls        |                  | valid.xls        |
+      | jpg               | test-data/invalid.jpg      |                  | invalid.jpg      |
+      | csv               | test-data/invalid.csv      |                  | invalid.csv      |
+      | txt               | test-data/invalid.txt      |                  | invalid.txt      |
+      | xlsx              | test-data/Fichero94MB.xlsx |                  | Fichero94MB.xlsx |
+  
 
 @mutable
 Scenario: TC011_01_TeamMember_DashboardActions - Verify adding an action from the update details page
-    Given the "Updates Dashboard - 01_13Jan REG" page is open
-    When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_13Jan REG" page
-    Then verify "Occupational Illness Trust Fund" update is displayed from the "Updates Dashboard - 01_13Jan REG" page
-    When open the first update in the "Updates Dashboard - 01_13Jan REG" page
+    Given the "Updates Dashboard - 01_QA_StageTestPortal" page is open
+    When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_QA_StageTestPortal" page
+    Then verify "22Podcast - BGN to EUR conversion" update is displayed from the "Updates Dashboard - 01_QA_StageTestPortal" page
+    When open the first update in the "Updates Dashboard - 01_QA_StageTestPortal" page
     Then the "Update Details" page is displayed from the Updates Dashboard
     And verify "Update Details;Update Actions" tabs are displayed on the selected update
     When open the "Update Actions" tab on the selected update
@@ -180,11 +207,11 @@ Scenario: TC011_01_TeamMember_DashboardActions - Verify adding an action from th
     And verify "Action;User Assigned;Priority;Status;Deadline Date" are displayed in the "Add Action" popup
     And verify comments section is not displayed in the "Add Action" popup
     And verify attachments section is not displayed in the "Add Action" popup
-    And verify "Occupational Illness Trust Fund" value is displayed in the "Update" field on the "Add Action" popup
+    And verify "22Podcast - BGN to EUR conversion" value is displayed in the "Update" field on the "Add Action" popup
     When press "Save" button
     Then verify "Action is required.;Assigned User is required;Priority is required.;Status is required.;Deadline is required." validation messages are displayed in the "Add Action" popup
     When fill the "Action" field with "Test Action" value in the "Add Action" popup
-    And select "Smoke, Test" options in the "User Assigned" field in the "Add Action" popup
+    And select "Alam, Asjad" options in the "User Assigned" field in the "Add Action" popup
     And select "Medium" option in the "Priority" field in the "Add Action" popup
     And select "In Progress" option in the "Status" field in the "Add Action" popup
     And select today's date from the "Deadline" calendar in the "Add Action" popup
