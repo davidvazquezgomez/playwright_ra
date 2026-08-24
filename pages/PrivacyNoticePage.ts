@@ -3,9 +3,79 @@ import { BasePage } from './BasePage';
 
 export class PrivacyNoticePage extends BasePage {
   private privacyNoticeEditor = 'kendo-editor[formcontrolname="globalPrivacyNotice"] .ProseMirror';
-  private lastPrivacyNoticeParagraph = `${this.privacyNoticeEditor} > p:last-of-type`;
+  private privacyNoticeParagraphs = `${this.privacyNoticeEditor} > p`;
   private firstPrivacyNoticeParagraph = `${this.privacyNoticeEditor} > p:first-of-type`;
   private privacyNoticeContentTitle = 'Global RegulatoryAdvantage Privacy Notice';
+  private privacyNoticeLinkByName = (linkName: string) =>
+    this._page.getByRole('link', { name: linkName, exact: true });
+  private lastClickedLinkDestination: string | undefined;
+
+  private async getPublishedLink(linkName: string) {
+    const exactLink = this.privacyNoticeLinkByName(linkName);
+    if (await exactLink.count() > 0) {
+      return exactLink;
+    }
+
+    const linkNameWithoutTrailingPunctuation = linkName.replace(/[.,;:!?]+$/, '');
+    return this.privacyNoticeLinkByName(linkNameWithoutTrailingPunctuation);
+  }
+
+  /**
+   * Verifies that a named link is visible in the published privacy notice.
+   * @param linkName Accessible name of the expected link.
+   */
+  async verifyPublishedLinkDisplayed(linkName: string): Promise<void> {
+    await expect(await this.getPublishedLink(linkName)).toBeVisible();
+  }
+
+  /**
+   * Opens a published privacy-notice link and retains its declared destination.
+   * External links opened in a new tab are brought into the page object context.
+   * @param linkName Accessible name of the link to open.
+   */
+  async clickPublishedLink(linkName: string): Promise<void> {
+    const link = await this.getPublishedLink(linkName);
+    await expect(link).toBeVisible();
+
+    const destination = await link.getAttribute('href');
+    if (!destination) {
+      throw new Error(`Privacy Notice link "${linkName}" does not declare a destination.`);
+    }
+
+    this.lastClickedLinkDestination = destination;
+    const opensNewTab = (await link.getAttribute('target')) === '_blank';
+
+    if (opensNewTab) {
+      const popupPromise = this._page.waitForEvent('popup');
+      await link.click();
+      this._page = await popupPromise;
+      await this._page.waitForLoadState('domcontentloaded').catch(() => undefined);
+      return;
+    }
+
+    await link.click();
+  }
+
+  /**
+   * Verifies that the destination declared by the last clicked link was opened.
+   * Mail links are validated against their declared href because no browser page
+   * is created for an external mail client.
+   * @param expectedDestination Expected href from the feature example.
+   */
+  async verifyLastClickedLinkDestination(expectedDestination: string): Promise<void> {
+    if (this.lastClickedLinkDestination !== expectedDestination) {
+      throw new Error(
+        `Expected Privacy Notice destination "${expectedDestination}", ` +
+        `but the link declared "${this.lastClickedLinkDestination ?? 'none'}".`,
+      );
+    }
+
+    if (expectedDestination.startsWith('mailto:')) {
+      return;
+    }
+
+    await expect(this._page).toHaveURL(expectedDestination);
+  }
 
   /**
    * Appends text to the final paragraph of the editable privacy notice.
@@ -13,7 +83,7 @@ export class PrivacyNoticePage extends BasePage {
    */
   async appendTextToLastParagraph(text: string): Promise<void> {
     const editor = this._page.locator(this.privacyNoticeEditor);
-    const lastParagraph = this._page.locator(this.lastPrivacyNoticeParagraph);
+    const lastParagraph = this.getLastPrivacyNoticeParagraph();
 
     await expect(lastParagraph).toBeVisible();
     await editor.focus();
@@ -26,7 +96,7 @@ export class PrivacyNoticePage extends BasePage {
    * @param text Text expected at the end of the final paragraph.
    */
   async verifyLastParagraphEndsWith(text: string): Promise<void> {
-    const lastParagraph = this._page.locator(this.lastPrivacyNoticeParagraph);
+    const lastParagraph = this.getLastPrivacyNoticeParagraph();
     await expect(lastParagraph).toBeVisible();
     const paragraphText = (await lastParagraph.textContent())?.trim();
 
@@ -46,7 +116,7 @@ export class PrivacyNoticePage extends BasePage {
    * @returns The final word in the final paragraph.
    */
   async getLastContentWord(): Promise<string> {
-    const lastParagraph = this._page.locator(this.lastPrivacyNoticeParagraph);
+    const lastParagraph = this.getLastPrivacyNoticeParagraph();
     await expect(lastParagraph).toBeVisible();
     await expect.poll(
       async () => (await lastParagraph.textContent())?.trim() ?? '',
@@ -89,7 +159,7 @@ export class PrivacyNoticePage extends BasePage {
    * @param text Text not expected at the end of the final paragraph.
    */
   async verifyLastParagraphDoesNotEndWith(text: string): Promise<void> {
-    const lastParagraph = this._page.locator(this.lastPrivacyNoticeParagraph);
+    const lastParagraph = this.getLastPrivacyNoticeParagraph();
     await expect(lastParagraph).toBeVisible();
     const paragraphText = (await lastParagraph.textContent())?.trim();
 
@@ -112,10 +182,23 @@ export class PrivacyNoticePage extends BasePage {
     await this.verifyLastParagraphEndsWith(text);
 
     const editor = this._page.locator(this.privacyNoticeEditor);
+    const lastParagraph = this.getLastPrivacyNoticeParagraph();
+    const paragraphText = (await lastParagraph.textContent())?.trim() ?? '';
+    const trailingTextPattern = new RegExp(`(?:^|\\s)${this.escapeForRegExp(text)}$`);
+    let remainingOccurrences = 0;
+    let textToInspect = paragraphText;
+
+    while (trailingTextPattern.test(textToInspect)) {
+      remainingOccurrences += 1;
+      textToInspect = textToInspect.slice(0, textToInspect.lastIndexOf(text)).trimEnd();
+    }
+
     await editor.focus();
-    await editor.press('Control+End');
-    await editor.press('Control+Shift+ArrowLeft');
-    await editor.press('Backspace');
+    for (let occurrence = 0; occurrence < remainingOccurrences; occurrence += 1) {
+      await editor.press('Control+End');
+      await editor.press('Control+Shift+ArrowLeft');
+      await editor.press('Backspace');
+    }
   }
 
   private getPrivacyNoticeParagraphLocator(
@@ -123,9 +206,9 @@ export class PrivacyNoticePage extends BasePage {
     position: 'first' | 'last',
   ) {
     if (pageName === 'Update Privacy Notice') {
-      return this._page.locator(
-        position === 'first' ? this.firstPrivacyNoticeParagraph : this.lastPrivacyNoticeParagraph,
-      );
+      return position === 'first'
+        ? this._page.locator(this.firstPrivacyNoticeParagraph)
+        : this.getLastPrivacyNoticeParagraph();
     }
 
     const publishedContent = this._page
@@ -133,6 +216,10 @@ export class PrivacyNoticePage extends BasePage {
       .locator('..');
     const publishedParagraphs = publishedContent.locator(':scope > p');
     return position === 'first' ? publishedParagraphs.first() : publishedParagraphs.last();
+  }
+
+  private getLastPrivacyNoticeParagraph() {
+    return this._page.locator(this.privacyNoticeParagraphs).filter({ hasText: /\S/ }).last();
   }
 
   private normalizeText(text: string): string {
