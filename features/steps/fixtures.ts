@@ -69,8 +69,11 @@ export const test = base.extend<{
   context: async ({ browser }, use, testInfo) => {
     const storageState = await prepareFeatureAuthState(browser, testInfo.file);
     const context = await browser.newContext(storageState ? { storageState } : undefined);
-    await use(context);
-    await context.close();
+    try {
+      await use(context);
+    } finally {
+      await context.close();
+    }
   },
   basePage: async ({ page, context }, use) => {
     await use(new BasePage(page, context));

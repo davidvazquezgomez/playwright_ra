@@ -1,6 +1,6 @@
 import { Browser } from '@playwright/test';
 import { promises as fs } from 'fs';
-import { createHash } from 'crypto';
+import { createHash, randomUUID } from 'crypto';
 import path from 'path';
 import { CommonPage } from '../pages/CommonPage';
 import { LoginPage } from '../pages/LoginPage';
@@ -17,7 +17,8 @@ interface FeatureAuthentication {
 const featureLoginStep =
   /^\s*(?:Given|When|Then|And|But)\s+launch Regulatory Advantage application URL and login as "([^"]+)" user "([^"]+)"\s*$/m;
 const authStateDirectory = path.join(process.cwd(), 'test-results', 'auth-state');
-const lockTimeoutMs = 60000;
+const lockTimeoutMs = Number(process.env.AUTH_STATE_LOCK_TIMEOUT_MS || 300000);
+const staleLockTimeoutMs = Number(process.env.AUTH_STATE_STALE_LOCK_TIMEOUT_MS || 900000);
 const lockRetryDelayMs = 200;
 
 export interface AuthSession {
@@ -99,14 +100,14 @@ export async function prepareFeatureAuthState(browser: Browser, testFile: string
 
   const lockPath = `${statePath}.lock`;
   await fs.mkdir(path.dirname(statePath), { recursive: true });
-  await acquireLock(lockPath);
+  const lockToken = await acquireLock(lockPath);
 
   try {
     if (!await fileExists(statePath)) {
       await createAuthState(browser, authentication, statePath);
     }
   } finally {
-    await fs.rm(lockPath, { recursive: true, force: true });
+    await releaseLock(lockPath, lockToken);
   }
 
   return statePath;
@@ -223,22 +224,70 @@ async function createAuthState(browser: Browser, authentication: FeatureAuthenti
   }
 }
 
-async function acquireLock(lockPath: string): Promise<void> {
+async function acquireLock(lockPath: string): Promise<string> {
   const deadline = Date.now() + lockTimeoutMs;
+  const lockToken = `${process.pid}:${randomUUID()}`;
 
   while (true) {
     try {
       await fs.mkdir(lockPath);
-      return;
+      await fs.writeFile(path.join(lockPath, 'owner'), lockToken, 'utf8');
+      return lockToken;
     } catch (error) {
       if (!isAlreadyExistsError(error)) {
         throw error;
       }
+      await removeStaleLock(lockPath);
       if (Date.now() >= deadline) {
         throw new Error(`Timed out waiting for authentication state lock ${lockPath}.`);
       }
       await delay(lockRetryDelayMs);
     }
+  }
+}
+
+async function releaseLock(lockPath: string, lockToken: string): Promise<void> {
+  try {
+    const owner = await fs.readFile(path.join(lockPath, 'owner'), 'utf8');
+    if (owner === lockToken) {
+      await fs.rm(lockPath, { recursive: true, force: true });
+    }
+  } catch (error) {
+    if (!isNotFoundError(error)) {
+      throw error;
+    }
+  }
+}
+
+async function removeStaleLock(lockPath: string): Promise<void> {
+  try {
+    const lockStats = await fs.stat(lockPath);
+    const lockAgeMs = Date.now() - lockStats.mtimeMs;
+    if (lockAgeMs > staleLockTimeoutMs && !(await isLockOwnerAlive(lockPath))) {
+      await fs.rm(lockPath, { recursive: true, force: true });
+    }
+  } catch (error) {
+    if (!isNotFoundError(error)) {
+      throw error;
+    }
+  }
+}
+
+async function isLockOwnerAlive(lockPath: string): Promise<boolean> {
+  try {
+    const owner = await fs.readFile(path.join(lockPath, 'owner'), 'utf8');
+    const processId = Number(owner.split(':', 1)[0]);
+    if (!Number.isInteger(processId) || processId <= 0) {
+      return false;
+    }
+
+    process.kill(processId, 0);
+    return true;
+  } catch (error) {
+    if (error instanceof Error && 'code' in error && (error as NodeJS.ErrnoException).code === 'EPERM') {
+      return true;
+    }
+    return false;
   }
 }
 
@@ -253,6 +302,10 @@ async function fileExists(filePath: string): Promise<boolean> {
 
 function isAlreadyExistsError(error: unknown): error is NodeJS.ErrnoException {
   return error instanceof Error && 'code' in error && (error as NodeJS.ErrnoException).code === 'EEXIST';
+}
+
+function isNotFoundError(error: unknown): error is NodeJS.ErrnoException {
+  return error instanceof Error && 'code' in error && (error as NodeJS.ErrnoException).code === 'ENOENT';
 }
 
 function isResourceBusyError(error: unknown): error is NodeJS.ErrnoException {
