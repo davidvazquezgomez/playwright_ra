@@ -233,6 +233,10 @@ export class UserManagementPage extends BasePage {
    * @param fieldLabel Visible label of the field to populate.
    */
   async enterExternalUserField(value: string, fieldLabel: string): Promise<void> {
+    await this.fillInputText(this.externalUserFieldSelector(fieldLabel), value);
+  }
+
+  private externalUserFieldSelector(fieldLabel: string): string {
     const fieldNames: Record<string, string> = {
       'First Name': 'firstName',
       'Last Name': 'lastName',
@@ -246,7 +250,7 @@ export class UserManagementPage extends BasePage {
       throw new Error(`Field "${fieldLabel}" is not supported for external users.`);
     }
 
-    await this.fillInputText(this.externalUserFieldByName(fieldName), value);
+    return this.externalUserFieldByName(fieldName);
   }
 
   /**
