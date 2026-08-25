@@ -127,8 +127,17 @@ export class ClientPortalListPage extends BasePage {
     const normalizedPortalName = portalName.trim();
     await this.fillInputText(this.clientPortalNameFilter, normalizedPortalName);
     await this.verifyClientPortalDisplayed(normalizedPortalName);
+    const editButton = this._page.locator(this.editClientButtonByPortalName(normalizedPortalName));
+    if (await editButton.count() === 0) {
+      this.failWithApplicationError(
+        'A displayed client portal must provide the Edit Client action to an authorized user.',
+        `The Edit Client button is displayed for client portal "${normalizedPortalName}".`,
+        `The Edit Client button is not displayed for client portal "${normalizedPortalName}".`,
+        `The Client Portal List was filtered to client portal "${normalizedPortalName}".`,
+      );
+    }
     await this.ensureExpectedBusinessElementIsVisible(
-      this._page.locator(this.editClientButtonByPortalName(normalizedPortalName)),
+      editButton,
       'A displayed client portal must provide the Edit Client action to an authorized user.',
       `The Edit Client button is displayed for client portal "${normalizedPortalName}".`,
       `The Client Portal List was filtered to client portal "${normalizedPortalName}".`,
