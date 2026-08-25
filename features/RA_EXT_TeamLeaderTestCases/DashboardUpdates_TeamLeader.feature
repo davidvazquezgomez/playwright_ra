@@ -325,9 +325,10 @@ Feature: Dashboard page for Team Leader
     Then verify all options are selected in the "Status" filter on the Dashboard filter
     And verify the "Jurisdiction" filter selection remains unchanged on the Dashboard filter
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC008_TeamLeader_DashboardUpdates - Verify updates dashboard options
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    And register cleanup to restore the "Status" column on "01_QA_StageTestPortal - Updates Dashboard - All Updates"
     Then press "Dashboard options" button
     When verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify the "Updates Dashboard" tab is selected in the Dashboard Options popup

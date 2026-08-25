@@ -324,9 +324,10 @@ Feature: Dashboard Updates for Deloitte User
     Then verify all options are selected in the "Status" filter on the Dashboard filter
     And verify the "Jurisdiction" filter selection remains unchanged on the Dashboard filter
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC008_DeloitteUser_DashboardUpdates - Verify updates dashboard dashboard options
     Given the "01_13Jan REG - Updates Dashboard - All Updates" page is open
+    And register cleanup to restore the "Status" column on "01_13Jan REG - Updates Dashboard - All Updates"
     Then press "Dashboard options" button
     When verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify the "Updates Dashboard" tab is selected in the Dashboard Options popup

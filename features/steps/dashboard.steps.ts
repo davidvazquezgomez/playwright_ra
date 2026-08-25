@@ -33,6 +33,18 @@ When('deselect {string} column in the Dashboard Options popup', async ({ dashboa
     await dashboardPage.setDashboardOptionColumnSelected(columnName, false);
 });
 
+When(
+    'register cleanup to restore the {string} column on {string}',
+    async ({ commonPage, dashboardPage, testData }, columnName: string, pageName: string) => {
+        registerScenarioCleanup(testData, async () => {
+            await commonPage.openNamedPage(pageName);
+            await dashboardPage.openDashboardOptions();
+            await dashboardPage.setDashboardOptionColumnSelected(columnName, true);
+            await dashboardPage.saveDashboardOptions();
+        });
+    },
+);
+
 When('wait {int} seconds', async ({ dashboardPage }, seconds: number) => {
     await dashboardPage.waitImplicit(seconds * 1000);
 });

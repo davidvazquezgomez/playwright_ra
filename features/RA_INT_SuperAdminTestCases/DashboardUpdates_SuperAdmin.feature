@@ -325,9 +325,10 @@ Feature: Dashboard Updates for Super Admin
     Then verify all options are selected in the "Status" filter on the Dashboard filter
     And verify the "Jurisdiction" filter selection remains unchanged on the Dashboard filter
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC008_SuperAdmin_DashboardUpdates - Verify updates dashboard dashboard options
     Given the "1_E2E_Test1 - Updates Dashboard - All Updates" page is open
+    And register cleanup to restore the "Status" column on "1_E2E_Test1 - Updates Dashboard - All Updates"
     Then press "Dashboard options" button
     When verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify the "Updates Dashboard" tab is selected in the Dashboard Options popup

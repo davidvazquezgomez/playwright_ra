@@ -398,9 +398,10 @@ Feature: Dashboard Actions for Team Leader
     Then verify all options are selected in the "Action Status" filter on the Dashboard filter
     And verify the "Jurisdiction" filter selection remains unchanged on the Dashboard filter
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC018_TeamLeader_DashboardActions - Verify actions dashboard dashboard options Action
     Given the "Actions Dashboard - 01_13Jan REG" page is open
+    And register cleanup to restore the "Action Status" column on "Actions Dashboard - 01_13Jan REG"
     Then verify "Action Status" column header is displayed in the "01_13Jan REG - Actions Dashboard" page
     When press "Dashboard Options" button on the Dashboard
     Then verify the "Dashboard Options" popup is displayed on the Dashboard

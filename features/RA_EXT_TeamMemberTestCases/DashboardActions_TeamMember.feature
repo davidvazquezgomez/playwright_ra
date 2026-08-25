@@ -451,9 +451,10 @@ Feature: Dashboard Actions for Team Member
     Then verify all options are selected in the "Action Status" filter on the Dashboard filter
     And verify the "Jurisdiction" filter selection remains unchanged on the Dashboard filter
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC018_TeamMember_DashboardActions - Verify actions dashboard dashboard options Action
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
+    And register cleanup to restore the "Action Status" column on "01_QA_StageTestPortal - Actions Dashboard"
     Then verify "Action Status" column header is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When press "Dashboard Options" button on the Dashboard
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
