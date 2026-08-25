@@ -45,8 +45,11 @@ jobs:
         env:
           STAGE_URL: $(STAGE_URL)
 
-  - job: RegressionTests
-    displayName: 'RA Regression'
+  # Read-only and mutable suites run as independent parallel jobs (separate agents) instead of
+  # sequentially in one job. Mutable stays single-worker/serial because scenarios share mutable
+  # state (create/edit/delete on the same records), but it no longer waits for read-only to finish.
+  - job: RegressionTestsReadOnly
+    displayName: 'RA Regression - Read-only (5 workers)'
     dependsOn: ValidateContracts
     timeoutInMinutes: '300'
     pool:
@@ -62,24 +65,17 @@ jobs:
         inputs:
           key: 'npm | "$(Agent.OS)" | package-lock.json'
           path: '$(HOME)/.npm'
-    
-      - task: JavaToolInstaller@0
-        displayName: 'Install Java 21'
-        inputs:
-          versionSpec: '21'
-          jdkArchitectureOption: 'x64'
-          jdkSourceOption: 'PreInstalled'
-    
+
       - script: npm ci
         displayName: 'Install dependencies'
-    
+
       - task: Cache@2
         displayName: 'Cache Playwright browsers'
         inputs:
           key: 'playwright | "$(Agent.OS)" | package-lock.json'
           path: '$(Pipeline.Workspace)/.cache/ms-playwright'
           cacheHitVar: 'PLAYWRIGHT_CACHE_RESTORED'
-    
+
       - script: |
           if [ "$(PLAYWRIGHT_CACHE_RESTORED)" != "true" ]; then
             PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright install --with-deps chromium
@@ -87,7 +83,7 @@ jobs:
             echo "Using cached Playwright Chromium binaries."
           fi
         displayName: 'Install Playwright browsers'
-    
+
       - script: |
           npx rimraf allure-results
           npx rimraf test-results/auth-state
@@ -95,21 +91,18 @@ jobs:
           CI=true npm run bdd:generate
 
           set +e
-          CI=true RETRIES=0 PARALLEL_RUN=true WORKERS=6 RESULTS_GROUP=readonly PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @readOnly --workers=6
+          CI=true RETRIES=1 PARALLEL_RUN=true WORKERS=5 RESULTS_GROUP=readonly PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @readOnly --workers=5
           readonly_exit=$?
 
-          CI=true RETRIES=0 PARALLEL_RUN=false WORKERS=1 RESULTS_GROUP=mutable PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @mutable --workers=1
-          mutable_exit=$?
-
-          if [ "$readonly_exit" -ne 0 ] || [ "$mutable_exit" -ne 0 ]; then
+          if [ "$readonly_exit" -ne 0 ]; then
             echo "##vso[task.setvariable variable=bddTestsFailed]true"
-            echo "BDD tests reported failures (read-only exit: $readonly_exit, mutable exit: $mutable_exit). Review the Allure report and the Tests tab."
+            echo "Read-only BDD tests reported failures (exit: $readonly_exit). Review the Allure report and the Tests tab."
           fi
 
           # The build must stay green even when tests fail; results are reported in the Tests tab and Allure.
           exit 0
         name: ExecuteBddTests
-        displayName: 'Execute read-only and mutable BDD groups (STAGE / Desktop)'
+        displayName: 'Execute read-only BDD group (STAGE / Desktop)'
         env:
           REUSE_AUTH_STATE: 'true'
           TIMEOUT: '15000'
@@ -140,7 +133,7 @@ jobs:
           USER_GAPORTAL_CLIENTADMIN_PASSWORD: $(USER_GAPORTAL_CLIENTADMIN_PASSWORD)
           USER_GAPORTAL_CLIENTUSER: $(USER_GAPORTAL_CLIENTUSER)
           USER_GAPORTAL_CLIENTUSER_PASSWORD: $(USER_GAPORTAL_CLIENTUSER_PASSWORD)
-    
+
       - task: PublishTestResults@2
         displayName: 'Publish Playwright test results'
         condition: always()
@@ -151,8 +144,210 @@ jobs:
           mergeTestResults: true
           failTaskOnFailedTests: false
           failTaskOnMissingResultsFile: false
-          testRunTitle: 'Playwright BDD - STAGE / Desktop'
-    
+          testRunTitle: 'Playwright BDD - STAGE / Desktop - Read-only'
+
+      - script: npm run diagnostics:prepare
+        displayName: 'Prepare sanitized Playwright diagnostics'
+        condition: always()
+
+      - task: PublishPipelineArtifact@1
+        displayName: 'Publish allure-results (read-only)'
+        condition: always()
+        inputs:
+          targetPath: 'allure-results'
+          artifact: 'allure-results-readonly'
+          publishLocation: 'pipeline'
+
+      - task: PublishPipelineArtifact@1
+        displayName: 'Publish Playwright diagnostics (failed runs)'
+        condition: eq(variables['bddTestsFailed'], 'true')
+        continueOnError: true
+        inputs:
+          targetPath: 'test-results/diagnostics'
+          artifact: 'playwright-test-results-readonly'
+          publishLocation: 'pipeline'
+
+  - job: RegressionTestsMutable
+    displayName: 'RA Regression - Mutable (1 worker, serial)'
+    dependsOn: ValidateContracts
+    timeoutInMinutes: '300'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      - task: UseNode@1
+        displayName: 'Install Node.js'
+        inputs:
+          version: '22.x'
+
+      - task: Cache@2
+        displayName: 'Cache npm packages'
+        inputs:
+          key: 'npm | "$(Agent.OS)" | package-lock.json'
+          path: '$(HOME)/.npm'
+
+      - script: npm ci
+        displayName: 'Install dependencies'
+
+      - task: Cache@2
+        displayName: 'Cache Playwright browsers'
+        inputs:
+          key: 'playwright | "$(Agent.OS)" | package-lock.json'
+          path: '$(Pipeline.Workspace)/.cache/ms-playwright'
+          cacheHitVar: 'PLAYWRIGHT_CACHE_RESTORED'
+
+      - script: |
+          if [ "$(PLAYWRIGHT_CACHE_RESTORED)" != "true" ]; then
+            PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright install --with-deps chromium
+          else
+            echo "Using cached Playwright Chromium binaries."
+          fi
+        displayName: 'Install Playwright browsers'
+
+      - script: |
+          npx rimraf allure-results
+          npx rimraf test-results/auth-state
+          mkdir -p test-results/custom-screenshots
+          CI=true npm run bdd:generate
+
+          set +e
+          # RETRIES=1: a failing scenario gets a fresh worker/browser context instead of
+          # permanently skipping every Example/Scenario queued after it in this single-worker run.
+          CI=true RETRIES=1 PARALLEL_RUN=false WORKERS=1 RESULTS_GROUP=mutable PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @mutable --workers=1
+          mutable_exit=$?
+
+          if [ "$mutable_exit" -ne 0 ]; then
+            echo "##vso[task.setvariable variable=bddTestsFailed]true"
+            echo "Mutable BDD tests reported failures (exit: $mutable_exit). Review the Allure report and the Tests tab."
+          fi
+
+          # The build must stay green even when tests fail; results are reported in the Tests tab and Allure.
+          exit 0
+        name: ExecuteBddTests
+        displayName: 'Execute mutable BDD group (STAGE / Desktop)'
+        env:
+          REUSE_AUTH_STATE: 'true'
+          TIMEOUT: '15000'
+          TEST_TIMEOUT: '120000'
+          TRACE_MODE: 'off'
+          SCREENSHOT_FOLDER: 'test-results/custom-screenshots'
+          STAGE_URL: $(STAGE_URL)
+          GA_PORTAL_STAGE_URL: $(GA_PORTAL_STAGE_URL)
+          USER_SUPERADMIN: $(USER_SUPERADMIN)
+          USER_SUPERADMIN_PASSWORD: $(USER_SUPERADMIN_PASSWORD)
+          USER_PORTALADMIN: $(USER_PORTALADMIN)
+          USER_PORTALADMIN_PASSWORD: $(USER_PORTALADMIN_PASSWORD)
+          USER_DELOITTEUSER: $(USER_DELOITTEUSER)
+          USER_DELOITTEUSER_PASSWORD: $(USER_DELOITTEUSER_PASSWORD)
+          USER_CLIENTUSER: $(USER_CLIENTUSER)
+          USER_CLIENTUSER_PASSWORD: $(USER_CLIENTUSER_PASSWORD)
+          USER_CLIENTUSER_TOTP_SECRET: $(USER_CLIENTUSER_TOTP_SECRET)
+          USER_TEAMLEADER: $(USER_TEAMLEADER)
+          USER_TEAMLEADER_PASSWORD: $(USER_TEAMLEADER_PASSWORD)
+          USER_TEAMLEADER_TOTP_SECRET: $(USER_TEAMLEADER_TOTP_SECRET)
+          USER_TEAMMEMBER: $(USER_TEAMMEMBER)
+          USER_TEAMMEMBER_PASSWORD: $(USER_TEAMMEMBER_PASSWORD)
+          USER_TEAMMEMBER_TOTP_SECRET: $(USER_TEAMMEMBER_TOTP_SECRET)
+          USER_CLIENTADMIN: $(USER_CLIENTADMIN)
+          USER_CLIENTADMIN_PASSWORD: $(USER_CLIENTADMIN_PASSWORD)
+          USER_CLIENTADMIN_TOTP_SECRET: $(USER_CLIENTADMIN_TOTP_SECRET)
+          USER_GAPORTAL_CLIENTADMIN: $(USER_GAPORTAL_CLIENTADMIN)
+          USER_GAPORTAL_CLIENTADMIN_PASSWORD: $(USER_GAPORTAL_CLIENTADMIN_PASSWORD)
+          USER_GAPORTAL_CLIENTUSER: $(USER_GAPORTAL_CLIENTUSER)
+          USER_GAPORTAL_CLIENTUSER_PASSWORD: $(USER_GAPORTAL_CLIENTUSER_PASSWORD)
+
+      - task: PublishTestResults@2
+        displayName: 'Publish Playwright test results'
+        condition: always()
+        inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: 'test-results/junit-*.xml'
+          searchFolder: '$(System.DefaultWorkingDirectory)'
+          mergeTestResults: true
+          failTaskOnFailedTests: false
+          failTaskOnMissingResultsFile: false
+          testRunTitle: 'Playwright BDD - STAGE / Desktop - Mutable'
+
+      - script: npm run diagnostics:prepare
+        displayName: 'Prepare sanitized Playwright diagnostics'
+        condition: always()
+
+      - task: PublishPipelineArtifact@1
+        displayName: 'Publish allure-results (mutable)'
+        condition: always()
+        inputs:
+          targetPath: 'allure-results'
+          artifact: 'allure-results-mutable'
+          publishLocation: 'pipeline'
+
+      - task: PublishPipelineArtifact@1
+        displayName: 'Publish Playwright diagnostics (failed runs)'
+        condition: eq(variables['bddTestsFailed'], 'true')
+        continueOnError: true
+        inputs:
+          targetPath: 'test-results/diagnostics'
+          artifact: 'playwright-test-results-mutable'
+          publishLocation: 'pipeline'
+
+  - job: PublishResults
+    displayName: 'Merge Allure results and publish report'
+    dependsOn:
+      - RegressionTestsReadOnly
+      - RegressionTestsMutable
+    condition: always()
+    timeoutInMinutes: '30'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      - task: UseNode@1
+        displayName: 'Install Node.js'
+        inputs:
+          version: '22.x'
+
+      - task: Cache@2
+        displayName: 'Cache npm packages'
+        inputs:
+          key: 'npm | "$(Agent.OS)" | package-lock.json'
+          path: '$(HOME)/.npm'
+
+      - task: JavaToolInstaller@0
+        displayName: 'Install Java 21'
+        inputs:
+          versionSpec: '21'
+          jdkArchitectureOption: 'x64'
+          jdkSourceOption: 'PreInstalled'
+
+      - script: npm ci
+        displayName: 'Install dependencies'
+
+      - task: DownloadPipelineArtifact@2
+        displayName: 'Download allure-results (read-only)'
+        condition: always()
+        continueOnError: true
+        inputs:
+          buildType: 'current'
+          artifact: 'allure-results-readonly'
+          path: '$(Pipeline.Workspace)/allure-results-readonly'
+
+      - task: DownloadPipelineArtifact@2
+        displayName: 'Download allure-results (mutable)'
+        condition: always()
+        continueOnError: true
+        inputs:
+          buildType: 'current'
+          artifact: 'allure-results-mutable'
+          path: '$(Pipeline.Workspace)/allure-results-mutable'
+
+      - script: |
+          mkdir -p allure-results
+          if [ -d "$(Pipeline.Workspace)/allure-results-readonly" ]; then
+            cp -R "$(Pipeline.Workspace)/allure-results-readonly/." allure-results/
+          fi
+          if [ -d "$(Pipeline.Workspace)/allure-results-mutable" ]; then
+            cp -R "$(Pipeline.Workspace)/allure-results-mutable/." allure-results/
+          fi
+        displayName: 'Merge allure-results from both jobs'
+        condition: always()
+
       - task: DownloadPipelineArtifact@2
         displayName: 'Restore Allure history from the latest branch build'
         condition: always()
@@ -167,7 +362,7 @@ jobs:
           allowFailedBuilds: true
           artifact: 'allure-history'
           path: '$(Pipeline.Workspace)/allure-history'
-    
+
       - script: |
           if [ -d "$(Pipeline.Workspace)/allure-history" ]; then
             mkdir -p allure-results/history
@@ -175,7 +370,7 @@ jobs:
           fi
         displayName: 'Restore Allure history into test results'
         condition: always()
-    
+
       - script: npm run allure:generate
         displayName: 'Generate Allure report and history'
         condition: always()
@@ -186,26 +381,13 @@ jobs:
           PARALLEL_RUN: 'false'
           RETRIES: '0'
 
-      - script: npm run diagnostics:prepare
-        displayName: 'Prepare sanitized Playwright diagnostics'
-        condition: always()
-    
       - task: PublishAllureReport@1
         displayName: 'Publish Allure Report tab (BDD)'
         condition: always()
         inputs:
           testResultsDir: '$(System.DefaultWorkingDirectory)/allure-results'
           reportName: 'Allure Report - Playwright BDD'
-    
-      - task: PublishPipelineArtifact@1
-        displayName: 'Publish Playwright diagnostics (failed runs)'
-        condition: eq(variables['bddTestsFailed'], 'true')
-        continueOnError: true
-        inputs:
-          targetPath: 'test-results/diagnostics'
-          artifact: 'playwright-test-results'
-          publishLocation: 'pipeline'
-    
+
       - task: PublishPipelineArtifact@1
         displayName: 'Publish Allure history for the next build'
         condition: always()
