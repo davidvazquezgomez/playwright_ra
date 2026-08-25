@@ -272,6 +272,7 @@ export class DashboardPage extends BasePage {
      */
     async viewFilteredResults(): Promise<void> {
         await this.viewResultsButton().click();
+        await this.waitForSelectorStatus(this.filterDialog, 'hidden');
     }
 
     /**
