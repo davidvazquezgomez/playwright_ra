@@ -373,12 +373,20 @@ export class CommonPage extends BasePage {
   }
 
   /**
-   * Verifies that a shared Kendo grid column header is visible.
-   * @param columnName Name of the expected column.
+   * Verifies that one or more shared Kendo grid column headers are visible.
+   * @param columnNames Semicolon-delimited names of the expected columns.
    * @param pageName Name of the page that owns the grid.
    */
-  async verifyGridColumnHeaderDisplayed(columnName: string, pageName: string): Promise<void> {
-    await expect(this._page.locator(this.sharedGridColumnHeaderByName(columnName))).toBeVisible();
+  async verifyGridColumnHeaderDisplayed(columnNames: string, pageName: string): Promise<void> {
+    const columnNamesToVerify = columnNames.split(';').map(columnName => columnName.trim()).filter(Boolean);
+
+    if (columnNamesToVerify.length === 0) {
+      throw new Error(`At least one column header must be provided for page "${pageName}".`);
+    }
+
+    for (const columnName of columnNamesToVerify) {
+      await this.verifyElementIsDisplayed(this.sharedGridColumnHeaderByName(columnName));
+    }
   }
 
   /**
