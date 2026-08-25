@@ -35,7 +35,7 @@ Scenario: TC001_SuperAdmin_UploadUpdates - Verify required fields and complete u
     When press "Continue" button
     Then the "Upload Summary Page" page is displayed
 
-  @mutable
+  @readOnly
   Scenario Outline: TC003_SuperAdmin_UploadUpdates - Verify valid XLS and XLSX uploads complete without validation errors
     When click on "Menu" option from the left navigation
     Then verify it displays "Upload Updates" option from the left navigation
@@ -49,7 +49,7 @@ Scenario: TC001_SuperAdmin_UploadUpdates - Verify required fields and complete u
       | xls             | test-data/valid.xls  |
       | xlsx            | test-data/valid.xlsx |
 
-  @mutable
+  @readOnly
   Scenario Outline: TC004_SuperAdmin_UploadUpdates - Verify validation messages for invalid XLSX content
     When click on "Menu" option from the left navigation
     Then verify it displays "Upload Updates" option from the left navigation
@@ -66,7 +66,7 @@ Scenario: TC001_SuperAdmin_UploadUpdates - Verify required fields and complete u
       | test-data/fileWithNoRowsUnderValidHeaderColumns.xlsx            | Blank file upload error |
       | test-data/withRecordsAlreadyPresentInTheApplication.xlsx        | Duplicate upload error  |
 
-  @mutable
+  @readOnly
   Scenario Outline: TC005_SuperAdmin_UploadUpdates - Verify unsupported file formats are rejected
     When click on "Menu" option from the left navigation
     Then verify it displays "Upload Updates" option from the left navigation
@@ -82,7 +82,7 @@ Scenario: TC001_SuperAdmin_UploadUpdates - Verify required fields and complete u
       | csv               | test-data/invalid.csv  | Only excel files (.xls, .xlsx) are allowed |
       | ppt               | test-data/invalid.pptx | Only excel files (.xls, .xlsx) are allowed |
 
-  @mutable
+  @readOnly
   Scenario Outline: TC006_SuperAdmin_UploadUpdates - Verify handling of XLSX with missing required columns
     When click on "Menu" option from the left navigation
     Then verify it displays "Upload Updates" option from the left navigation
