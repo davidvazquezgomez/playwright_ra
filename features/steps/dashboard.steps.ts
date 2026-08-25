@@ -1,4 +1,5 @@
 import { Then, When } from './fixtures';
+import { registerScenarioCleanup } from './scenarioCleanup.hooks';
 
 When('press "Filter" button on the Dashboard filter', async ({ dashboardPage }) => {
     await dashboardPage.openFilterPanel();
@@ -31,6 +32,18 @@ Then('verify {string} columns are selected in the Dashboard Options popup', asyn
 When('deselect {string} column in the Dashboard Options popup', async ({ dashboardPage }, columnName: string) => {
     await dashboardPage.setDashboardOptionColumnSelected(columnName, false);
 });
+
+When(
+    'register cleanup to restore the {string} column on {string}',
+    async ({ commonPage, dashboardPage, testData }, columnName: string, pageName: string) => {
+        registerScenarioCleanup(testData, async () => {
+            await commonPage.openNamedPage(pageName);
+            await dashboardPage.openDashboardOptions();
+            await dashboardPage.setDashboardOptionColumnSelected(columnName, true);
+            await dashboardPage.saveDashboardOptions();
+        });
+    },
+);
 
 When('wait {int} seconds', async ({ dashboardPage }, seconds: number) => {
     await dashboardPage.waitImplicit(seconds * 1000);
@@ -106,6 +119,16 @@ When('press "Edit" button on the Dashboard filter', async ({ dashboardPage }) =>
 When('remove saved filter {string} if it exists on the Dashboard filter', async ({ dashboardPage }, filterName: string) => {
     await dashboardPage.removeSavedFilterIfExists(filterName);
 });
+
+When(
+    'register cleanup to remove saved filter {string} from {string}',
+    async ({ commonPage, dashboardPage, testData }, filterName: string, pageName: string) => {
+        registerScenarioCleanup(testData, async () => {
+            await commonPage.openNamedPage(pageName);
+            await dashboardPage.removeSavedFilterIfExists(filterName);
+        });
+    },
+);
 
 When('press "Delete filter" button for {string} on the Dashboard filter', async ({ dashboardPage }, filterName: string) => {
     await dashboardPage.deleteSavedFilter(filterName);

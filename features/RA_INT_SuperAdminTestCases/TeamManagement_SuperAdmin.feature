@@ -5,7 +5,7 @@ Feature: Team Management for Super Admin
     Given launch Regulatory Advantage application URL and login as "deloitte" user "SUPERADMIN"
     And verify if applicable portals are displayed
 
-  @mutable
+    @mutable
   Scenario Outline: TC001_01_SuperAdmin_TeamManagement - Verify mandatory field validations for team setup
     When click on "01_13Jan REG" of the portals
     Then the "Overview" page is displayed
@@ -39,14 +39,16 @@ Feature: Team Management for Super Admin
       | Created Date |
       | Updated Date |
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC002_01_SuperAdmin_TeamManagement - Create a team
     Given the "Team Management - 01_13Jan REG" page is open
+    And ensure the team "QA_TEST_01" does not exist
+    And register the team "QA_TEST_01" for cleanup
     When press "Create Team" button
     And enter "QA_TEST_01" in the "Team Name" field
     And enter "Additional information for the QA team" in the "Additional Information" field
     And add "ext-teamleadr@yopmail.com" in the "Team Leader" field
-    And press "Add Team Members" button on the "Create/Edit Team" page
+    And open the Add Team Members dialog
     And add "smoke@gmail.com;test.user.1783697990969@gmail.com" in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
     When click on "Home" option from the left navigation
@@ -56,12 +58,14 @@ Feature: Team Management for Super Admin
     When save the team from the "Create/Edit Team" page
     Then verify "Team created successfully." toast message is displayed in the "Team Management" page
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC002_02_SuperAdmin_TeamManagement - Edit a created team
     Given the "Team Management - 01_13Jan REG" page is open
+    And ensure the team "QA_TEST_01" exists with Team Leader "ext-teamleadr@yopmail.com" and Team Member "smoke@gmail.com"
+    And register the team "QA_TEST_01" for cleanup
     When click on "Edit" button for the "QA_TEST_01" team
     And add "smriti.naidu@gmail.com" in the "Team Leader" field
-    And press "Add Team Members" button on the "Create/Edit Team" page
+    And open the Add Team Members dialog
     And add "test.user.1784145920996@gmail.com;test.user.1782906153337@gmail.com" in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
     And save the team from the "Create/Edit Team" page
@@ -76,9 +80,11 @@ Feature: Team Management for Super Admin
     And save the team from the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC002_03_SuperAdmin_TeamManagement - Delete a created team
     Given the "Team Management - 01_13Jan REG" page is open
+    And ensure the team "QA_TEST_01" exists with Team Leader "ext-teamleadr@yopmail.com" and Team Member "smoke@gmail.com"
+    And register the team "QA_TEST_01" for cleanup
     When click on "Remove" button for the "QA_TEST_01" team
     Then the "Warning" popup is displayed
     And verify "Delete;Cancel" buttons are displayed on the "Warning" popup

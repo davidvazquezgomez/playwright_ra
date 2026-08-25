@@ -5,7 +5,7 @@ Feature: Team Management for Portal Admin
     Given launch Regulatory Advantage application URL and login as "deloitte" user "PORTALADMIN"
     And verify if applicable portals are displayed
 
-  @mutable
+    @mutable
   Scenario Outline: TC001_01_PortalAdmin_TeamManagement - Verify mandatory field validations for team setup
     When click on "Global Inc" of the portals
     Then the "Overview" page is displayed
@@ -39,14 +39,16 @@ Feature: Team Management for Portal Admin
       | Created Date |
       | Updated Date |
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC002_01_PortalAdmin_TeamManagement - Create a team
     Given the "Team Management - Global Inc" page is open
+    And ensure the team "QA_TEST_01" does not exist
+    And register the team "QA_TEST_01" for cleanup
     When press "Create Team" button
     And enter "QA_TEST_01" in the "Team Name" field
     And enter "Additional information for the QA team" in the "Additional Information" field
     And add "validadmin@external.com" in the "Team Leader" field
-    And press "Add Team Members" button on the "Create/Edit Team" page
+    And open the Add Team Members dialog
     And add "externaluserra1@yopmail.com" in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
     When click on "Home" option from the left navigation
@@ -56,12 +58,14 @@ Feature: Team Management for Portal Admin
     When save the team from the "Create/Edit Team" page
     Then verify "Team created successfully." toast message is displayed in the "Team Management" page
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC002_02_PortalAdmin_TeamManagement - Edit a created team
     Given the "Team Management - Global Inc" page is open
+    And ensure the team "QA_TEST_01" exists with Team Leader "validadmin@external.com" and Team Member "externaluserra1@yopmail.com"
+    And register the team "QA_TEST_01" for cleanup
     When click on "Edit" button for the "QA_TEST_01" team
     And add "ra.grewspec@gmail.com" in the "Team Leader" field
-    And press "Add Team Members" button on the "Create/Edit Team" page
+    And open the Add Team Members dialog
     And add "externaluserra2@yopmail.com;externaluserra3@yopmail.com;externaluserra4@yopmail.com" in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
     And save the team from the "Create/Edit Team" page
@@ -76,9 +80,11 @@ Feature: Team Management for Portal Admin
     And save the team from the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC002_03_PortalAdmin_TeamManagement - Delete a created team
     Given the "Team Management - Global Inc" page is open
+    And ensure the team "QA_TEST_01" exists with Team Leader "validadmin@external.com" and Team Member "externaluserra1@yopmail.com"
+    And register the team "QA_TEST_01" for cleanup
     When click on "Remove" button for the "QA_TEST_01" team
     Then the "Warning" popup is displayed
     And verify "Delete;Cancel" buttons are displayed on the "Warning" popup

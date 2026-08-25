@@ -387,9 +387,10 @@ Feature: Dashboard Actions for Portal Admin
     Then verify all options are selected in the "Action Status" filter on the Dashboard filter
     And verify the "Jurisdiction" filter selection remains unchanged on the Dashboard filter
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC018_PortalAdmin_DashboardActions - Verify actions dashboard dashboard options Action
     Given the "Global Inc - Actions Dashboard" page is open
+    And register cleanup to restore the "Action Status" column on "Global Inc - Actions Dashboard"
     Then verify "Action Status" column header is displayed in the "Global Inc - Actions Dashboard" page
     When press "Dashboard Options" button on the Dashboard
     Then verify the "Dashboard Options" popup is displayed on the Dashboard

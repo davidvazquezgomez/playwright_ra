@@ -236,6 +236,87 @@ export class UserManagementPage extends BasePage {
     await this.fillInputText(this.externalUserFieldSelector(fieldLabel), value);
   }
 
+  /**
+   * Ensures that an external user exists in the selected User Management section.
+   * @param emailAddress Email address of the external user.
+   * @param firstName First name used when the user must be created.
+   * @param lastName Last name used when the user must be created.
+   * @param companyName Company name used when the user must be created.
+   */
+  async ensureExternalUserExists(
+    emailAddress: string,
+    firstName: string,
+    lastName: string,
+    companyName: string,
+  ): Promise<void> {
+    await this.searchUsers(emailAddress, 'Email');
+    await this.waitImplicit(500);
+
+    if (await this._page.locator(this.gridRowByEmail(emailAddress)).count() > 0) {
+      return;
+    }
+
+    await this.clearInput(this.gridFilterInputByName('Email'));
+    await this.clickLocator(this.buttonByName('Add New Users'));
+    await this.enterExternalUserField(firstName, 'First Name');
+    await this.enterExternalUserField(lastName, 'Last Name');
+    await this.enterExternalUserField(emailAddress, 'Email');
+    await this.enterExternalUserField(companyName, 'Company Name');
+    await this.clickLocator(this.buttonByName('Save'));
+    await this.searchUsers(emailAddress, 'Email');
+    await expect(this._page.locator(this.gridRowByEmail(emailAddress))).toBeVisible();
+  }
+
+  /**
+   * Ensures that a Deloitte user association exists in the selected User Management section.
+   * @param emailAddress Email address used to locate the Deloitte user.
+   * @param userName Display name selected from the Deloitte user search results.
+   */
+  async ensureDeloitteUserExists(emailAddress: string, userName: string): Promise<void> {
+    await this.searchUsers(emailAddress, 'Email');
+    await this.waitImplicit(500);
+
+    if (await this._page.locator(this.gridRowByEmail(emailAddress)).count() > 0) {
+      return;
+    }
+
+    await this.clearInput(this.gridFilterInputByName('Email'));
+    await this.clickLocator(this.buttonByName('Add New User'));
+    await this.enterDeloitteUserSearchEmail(emailAddress);
+    await this.clickElement(this.searchResultByName(userName));
+    await this.clickLocator(this.buttonByName('Save'));
+    await this.searchUsers(emailAddress, 'Email');
+    await expect(this._page.locator(this.gridRowByEmail(emailAddress))).toBeVisible();
+  }
+
+  /**
+   * Removes an unassigned external user when it is present in the selected User Management section.
+   * @param emailAddress Email address of the external user to remove.
+   */
+  async removeExternalUserIfPresent(emailAddress: string): Promise<void> {
+    await this.removeUserIfPresent(emailAddress);
+  }
+
+  /**
+   * Removes a user when it is present in the selected User Management section.
+   * @param emailAddress Email address of the user to remove.
+   */
+  async removeUserIfPresent(emailAddress: string): Promise<void> {
+    await this.searchUsers(emailAddress, 'Email');
+    await this.waitImplicit(500);
+
+    const userRow = this._page.locator(this.gridRowByEmail(emailAddress));
+    if (await userRow.count() === 0) {
+      return;
+    }
+
+    const userCheckbox = this._page.locator(this.userCheckboxByEmail(emailAddress));
+    await userCheckbox.check();
+    await this.clickLocator(this._page.getByRole('button', { name: /^Delete Selected Users?$/ }));
+    await this.clickLocator(this.buttonByName('Confirm'));
+    await expect(userRow).toHaveCount(0);
+  }
+
   private externalUserFieldSelector(fieldLabel: string): string {
     const fieldNames: Record<string, string> = {
       'First Name': 'firstName',

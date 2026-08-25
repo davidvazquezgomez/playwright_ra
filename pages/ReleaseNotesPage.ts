@@ -152,6 +152,49 @@ export class ReleaseNotesPage extends BasePage {
     }
 
     /**
+     * Verifies that a named Release Note displays its expected details in the viewer.
+     * @param title Unique title of the Release Note.
+     * @param details Expected Release Note details.
+     */
+    async verifyReleaseNoteDetailsAreDisplayed(title: string, details: string): Promise<void> {
+        const releaseNote = this._page
+            .locator(this.releaseNotesViewerItems)
+            .filter({ has: this.releaseNoteTitleByText(title) })
+            .first();
+
+        await expect(releaseNote).toBeVisible();
+        await expect(releaseNote.locator('.release-note-panel-content')).toContainText(details);
+    }
+
+    /**
+     * Collapses a named Release Note in the viewer.
+     * @param title Unique title of the Release Note to collapse.
+     */
+    async clickReleaseNote(title: string): Promise<void> {
+        const releaseNote = this._page
+            .locator(this.releaseNotesViewerItems)
+            .filter({ has: this.releaseNoteTitleByText(title) })
+            .first();
+
+        await releaseNote.locator('.k-link').click();
+        await expect(releaseNote).toHaveAttribute('aria-expanded', 'false');
+    }
+
+    /**
+     * Verifies that a named Release Note's expected details are hidden.
+     * @param title Unique title of the Release Note.
+     * @param details Release Note details expected to be hidden.
+     */
+    async verifyReleaseNoteDetailsAreNotDisplayed(title: string, details: string): Promise<void> {
+        const releaseNote = this._page
+            .locator(this.releaseNotesViewerItems)
+            .filter({ has: this.releaseNoteTitleByText(title) })
+            .first();
+
+        await expect(releaseNote.locator('.release-note-panel-content').filter({ hasText: details })).not.toBeVisible();
+    }
+
+    /**
      * Converts a Release Notes viewer date label into a comparable UTC timestamp.
      * @param dateLabel Rendered date label in the format "- dd MMM yyyy".
      */

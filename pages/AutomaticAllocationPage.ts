@@ -39,12 +39,12 @@ export class AutomaticAllocationPage extends BasePage {
   };
   private readonly userPickerByFieldName: Record<string, { controlSelector: string; searchInputSelector: string }> = {
     'Update Owner':
-      {
-        controlSelector:
-          'app-auto-allocation-setup app-people-picker[formcontrolname="allocatedParty"] kendo-dropdownlist[role="combobox"]',
-        searchInputSelector:
-          'kendo-popup.k-animation-container-shown:visible .k-dropdownlist-popup.custom-people-picker input[role="searchbox"][aria-label="Filter"]',
-      },
+    {
+      controlSelector:
+        'app-auto-allocation-setup app-people-picker[formcontrolname="allocatedParty"] kendo-dropdownlist[role="combobox"]',
+      searchInputSelector:
+        'kendo-popup.k-animation-container-shown:visible .k-dropdownlist-popup.custom-people-picker input[role="searchbox"][aria-label="Filter"]',
+    },
     'Update Watchlist': {
       controlSelector:
         'app-auto-allocation-setup app-people-picker[formcontrolname="allocatedWatchList"] kendo-multiselect input[role="combobox"]',
@@ -106,6 +106,21 @@ export class AutomaticAllocationPage extends BasePage {
       `The allocation row "${allocationName}" is visible in the Automatic Allocation grid.`,
     );
     await this.clickElement(this.removeAllocationButtonByName(allocationName));
+  }
+
+  /**
+   * Opens deletion for an allocation only when its row is currently listed.
+   * @param allocationName Exact allocation name to remove.
+   * @returns True when the deletion confirmation was opened.
+   */
+  async removeAllocationIfPresent(allocationName: string): Promise<boolean> {
+    const removeButton = this._page.locator(this.removeAllocationButtonByName(allocationName));
+    if (await removeButton.count() === 0 || !await removeButton.first().isVisible()) {
+      return false;
+    }
+
+    await this.clickElement(this.removeAllocationButtonByName(allocationName));
+    return true;
   }
 
   /**
@@ -290,5 +305,24 @@ export class AutomaticAllocationPage extends BasePage {
     await this.clickElement(this.allocationRecipientPicker);
     await this.fillInputText(this.allocationRecipientSearchInput, emailAddress);
     await this.clickElement(this.allocationRecipientOptionByEmail(emailAddress));
+  }
+
+  /**
+   * Reads the currently selected recipient from the Automatic Allocation form.
+   * @returns The visible recipient name.
+   */
+  async getAllocationRecipient(): Promise<string> {
+    return (await this.getText(this.selectedValueSelectorByFieldName['Update Owner'])).trim();
+  }
+
+  /**
+   * Restores the recipient selected in the Automatic Allocation form.
+   * @param recipient Visible name or email address of the recipient to restore.
+   */
+  async restoreAllocationRecipient(recipient: string): Promise<void> {
+    const currentRecipient = await this.getAllocationRecipient();
+    if (currentRecipient !== recipient) {
+      await this.addAllocationRecipient(recipient);
+    }
   }
 }

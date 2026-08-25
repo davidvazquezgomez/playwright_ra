@@ -387,9 +387,10 @@ Feature: Dashboard Actions for Deloitte User
     Then verify all options are selected in the "Action Status" filter on the Dashboard filter
     And verify the "Jurisdiction" filter selection remains unchanged on the Dashboard filter
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC018_DeloitteUser_DashboardActions - Verify actions dashboard dashboard options Action
     Given the "Actions Dashboard - QA_Test client3" page is open
+    And register cleanup to restore the "Action Status" column on "Actions Dashboard - QA_Test client3"
     Then verify "Action Status" column header is displayed in the "QA_Test client3 - Actions Dashboard" page
     When press "Dashboard Options" button on the Dashboard
     Then verify the "Dashboard Options" popup is displayed on the Dashboard

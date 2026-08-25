@@ -194,9 +194,10 @@ Feature: Dashboard page for Team Member
     When press "View results" button on the Dashboard filter
     Then verify the "01_QA_StageTestPortal - Updates Dashboard" item count is not the same
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC006_03_TeamMember_DashboardUpdates - Create, save and delete a custom filter
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    And register cleanup to remove saved filter "QaTest" from "01_QA_StageTestPortal - Updates Dashboard - All Updates"
     When press "Filter" button on the Dashboard filter
     Then remove saved filter "QaTest" if it exists on the Dashboard filter
     When select "Awaiting Allocation" in the "Status" filter on the Dashboard filter
@@ -289,9 +290,10 @@ Feature: Dashboard page for Team Member
     Then verify all options are selected in the "Status" filter on the Dashboard filter
     And verify the "Jurisdiction" filter selection remains unchanged on the Dashboard filter
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC008_TeamMember_DashboardUpdates - Verify updates dashboard options
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    And register cleanup to restore the "Status" column on "01_QA_StageTestPortal - Updates Dashboard - All Updates"
     Then press "Dashboard options" button
     When verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify the "Updates Dashboard" tab is selected in the Dashboard Options popup

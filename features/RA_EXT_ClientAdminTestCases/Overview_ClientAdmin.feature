@@ -5,8 +5,8 @@ Feature: Overview for Client Admin
     Given launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     And verify if applicable portals are displayed
 
-@readOnly
-Scenario: TC001_ClientAdmin_Overview - Verify overview page loads with all the fields and buttons visible
+  @readOnly
+  Scenario: TC001_ClientAdmin_Overview - Verify overview page loads with all the fields and buttons visible
     When click on "01_QA_StageTestPortal" of the portals
     Then the "Overview" page is displayed
     And verify for client portal name "01_QA_StageTestPortal"
@@ -16,6 +16,7 @@ Scenario: TC001_ClientAdmin_Overview - Verify overview page loads with all the f
     And is selected and the star is "" filled by default
     When click on view as grid or card and verify view as grid or card
     Then verify for view as grid or card is displayed and save as favorite option is visible
+    When restore the initial overview view
     And verify for "open dashboard" button is visible
     And verify if "Deloitte label;Application Name;Ask Deloitte;Notifications bell;Profile" are displayed on the Overview page
     And verify if "Disclaimer;Privacy;Terms of use;OSS Attribution;Cookie;Cookie Settings" are displayed on the Overview page
@@ -65,10 +66,11 @@ Scenario: TC001_ClientAdmin_Overview - Verify overview page loads with all the f
     When press "favorite icon" button
     And verify for view as grid or card is displayed and save as favorite option is visible
     And is selected and the star is "" filled by default
+    When restore the initial overview view
     And logout from the application
 
-@readOnly
-Scenario: TC005_ClientAdmin_Overview - Verify navigation from Open Dashboard to Updates Dashboard and vice versa
+  @readOnly
+  Scenario: TC005_ClientAdmin_Overview - Verify navigation from Open Dashboard to Updates Dashboard and vice versa
     When click on "01_QA_StageTestPortal" of the portals
     Then the "Overview" page is displayed
     When press "Open Dashboard" button
@@ -77,4 +79,3 @@ Scenario: TC005_ClientAdmin_Overview - Verify navigation from Open Dashboard to 
     When press "back" button
     Then the "Overview" page is displayed
     And logout from the application
-

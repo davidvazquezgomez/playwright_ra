@@ -203,6 +203,26 @@ export class OverviewPage extends BasePage {
   }
 
   /**
+   * Restores the Overview grid or card preference captured at the start of the scenario.
+   */
+  async restoreInitialView(): Promise<void> {
+    if (!this.initialViewToggleTitle) {
+      throw new Error('Initial Overview view state has not been captured. Verify the view control before restoring it.');
+    }
+
+    const currentViewToggleTitle = await this._page.locator(this.visibleViewToggleButton).getAttribute('title');
+    if (currentViewToggleTitle === this.initialViewToggleTitle) {
+      return;
+    }
+
+    const restoreSelector = this.initialViewToggleTitle === 'List View'
+      ? this.viewAsCardsButton
+      : this.viewAsGridButton;
+    await this.clickElement(restoreSelector);
+    await expect(this._page.locator(this.visibleViewToggleButton)).toHaveAttribute('title', this.initialViewToggleTitle);
+  }
+
+  /**
    * Verifies that the named Overview button is visible.
    * @param buttonName Gherkin name of the Overview button to verify.
    */

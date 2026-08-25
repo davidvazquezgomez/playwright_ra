@@ -5,7 +5,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
     Given launch Regulatory Advantage application URL and login as "deloitte" user "PORTALADMIN"
     And verify if applicable portals are displayed
 
-  @mutable
+    @mutable
   Scenario: TC001_01_PortalAdmin_AutomaticAllocation - Navigate to Automatic Allocation Setup
     When click on "Global Inc" of the portals
     And the "Global Inc - Overview" page is displayed
@@ -51,9 +51,10 @@ Feature: Automatic Allocation of Updates for Portal Admin
     And select "Canada" in the "Jurisdiction(s)" field
     Then verify "Update Owner is required." field errors are displayed in the Automatic Allocation Setup page
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC001_04_PortalAdmin_AutomaticAllocation - Create and delete an allocation with the Cancel button
     Given the "Automatic Allocation Setup - Global Inc" page is open
+    And register cleanup to remove the "QaTest" allocation from portal "Global Inc"
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
     And select the "Employer tax reporting/filing requirements" option in the "Impact Area(s)" field

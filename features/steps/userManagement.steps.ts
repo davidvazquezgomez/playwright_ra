@@ -1,4 +1,5 @@
 import { Then, When } from './fixtures';
+import { registerScenarioCleanup } from './scenarioCleanup.hooks';
 
 Then('the "Deloitte Users" section is displayed', async ({ userManagementPage }) => {
   await userManagementPage.verifyDeloitteUsersSectionDisplayed();
@@ -68,6 +69,50 @@ When('enter {string} in the search user field', async ({ userManagementPage }, e
 
 When('enter {string} in the {string} field', async ({ userManagementPage }, value: string, fieldLabel: string) => {
   await userManagementPage.enterExternalUserField(value, fieldLabel);
+});
+
+When('ensure the external user {string} does not exist', async ({ userManagementPage }, emailAddress: string) => {
+  await userManagementPage.removeExternalUserIfPresent(emailAddress);
+});
+
+When('ensure the Deloitte user {string} does not exist', async ({ userManagementPage }, emailAddress: string) => {
+  await userManagementPage.removeUserIfPresent(emailAddress);
+});
+
+When(
+  'ensure the external user {string} exists with first name {string}, last name {string}, and company {string}',
+  async ({ userManagementPage, testData }, emailAddress: string, firstName: string, lastName: string, companyName: string) => {
+    await userManagementPage.ensureExternalUserExists(emailAddress, firstName, lastName, companyName);
+    registerScenarioCleanup(
+      testData,
+      () => userManagementPage.removeExternalUserIfPresent(emailAddress),
+    );
+  },
+);
+
+When(
+  'ensure the Deloitte user {string} exists with name {string}',
+  async ({ userManagementPage, testData }, emailAddress: string, userName: string) => {
+    await userManagementPage.ensureDeloitteUserExists(emailAddress, userName);
+    registerScenarioCleanup(
+      testData,
+      () => userManagementPage.removeUserIfPresent(emailAddress),
+    );
+  },
+);
+
+When('register the external user {string} for cleanup', async ({ userManagementPage, testData }, emailAddress: string) => {
+  registerScenarioCleanup(
+    testData,
+    () => userManagementPage.removeExternalUserIfPresent(emailAddress),
+  );
+});
+
+When('register the user {string} for cleanup', async ({ userManagementPage, testData }, emailAddress: string) => {
+  registerScenarioCleanup(
+    testData,
+    () => userManagementPage.removeUserIfPresent(emailAddress),
+  );
 });
 
 When('select {string} from the search results', async ({ userManagementPage }, userName: string) => {

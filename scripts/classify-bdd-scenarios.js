@@ -10,10 +10,11 @@ const FEATURES_DIR = path.join(ROOT, 'features');
 const WRITE_MODE = process.argv.includes('--write');
 const CLASSIFICATION_TAGS = new Set(['@readOnly', '@mutable']);
 const newId = IdGenerator.uuid();
+const uploadMutationPattern = /\bupload\b/i;
 
 const mutationPatterns = [
   /\b(toggle|check|uncheck)\b/i,
-  /\bupload\b/i,
+  uploadMutationPattern,
   /\b(mark|unmark)\b.*\b(unread|read|favo(?:u)?rite)\b/i,
   /\b(create|delete|remove|reassign|deactivate|reactivate)\b/i,
   /\b(edit|update)\b.*\b(action|allocation|client|impact area|portal|privacy|release|team|update|user)\b/i,
@@ -157,7 +158,15 @@ function isMutableScenario(scenario) {
     return false;
   }
 
-  return scenario.steps.some(step => mutationPatterns.some(pattern => pattern.test(step.text)));
+  const isUnsubmittedUploadUpdatesScenario =
+    /UploadUpdates/.test(scenario.name) &&
+    scenario.steps.some(step => /\bupload\b/i.test(step.text)) &&
+    !scenario.steps.some(step => /press "Continue" button/i.test(step.text));
+  const applicableMutationPatterns = isUnsubmittedUploadUpdatesScenario
+    ? mutationPatterns.filter(pattern => pattern !== uploadMutationPattern)
+    : mutationPatterns;
+
+  return scenario.steps.some(step => applicableMutationPatterns.some(pattern => pattern.test(step.text)));
 }
 
 function findFeatureFiles(directory) {

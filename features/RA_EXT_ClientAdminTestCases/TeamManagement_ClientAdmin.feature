@@ -37,7 +37,7 @@ Feature: Team Management for Client Admin
     And enter a unique name in the "Team Name" field
     And enter "Additional information for the QA team" in the "Additional Information" field
     And add "TeamLeaderRA@outlook.com" as a new Team Leader
-    And press "Add Team Members" button on the "Create/Edit Team" page
+    And open the Add Team Members dialog
     And add "TeamMemberRA@outlook.com" on the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
     Then verify the "TeamMemberRA@outlook.com" Team Member is added to the team member table
@@ -50,7 +50,7 @@ Feature: Team Management for Client Admin
     And verify the created team details are added to the "Team Management" table
     When click on "Edit" button of the created team in the Teams table
     And add "ndaextuser@outlook.com" as a new Team Leader
-    And press "Add Team Members" button on the "Create/Edit Team" page
+    And open the Add Team Members dialog
     And add the following Team Members on the "Search user" field:
       | test.user.1784145920996@gmail.com |
       | test.user.1783697990969@gmail.com |

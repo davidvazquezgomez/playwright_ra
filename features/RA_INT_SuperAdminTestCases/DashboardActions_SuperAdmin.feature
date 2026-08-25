@@ -372,10 +372,13 @@ Feature: Dashboard Actions for Super Admin
     Then verify filtered actions are displayed
     And verify every filtered action has a deadline within the selected range
 
-  @mutable
-  Scenario: TC012_03_SuperAdmin_DashboardActions - Verify saving a filter
+  @mutable @cleanup
+  Scenario: TC012_03_SuperAdmin_DashboardActions - Create, edit and delete a saved filter
     Given the "Actions Dashboard - 01_13Jan REG" page is open
     When remove saved filter "Test DashboardAction" if it exists on the Dashboard filter
+    And remove saved filter "Test DashboardAction update" if it exists on the Dashboard filter
+    And register cleanup to remove saved filter "Test DashboardAction" from "Actions Dashboard - 01_13Jan REG"
+    And register cleanup to remove saved filter "Test DashboardAction update" from "Actions Dashboard - 01_13Jan REG"
     When press "Filter" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
@@ -389,11 +392,6 @@ Feature: Dashboard Actions for Super Admin
     When press "Filter" button on the Dashboard filter
     Then verify the "Saved Filters" option is displayed in the Dashboard filter
     And verify the "Test DashboardAction" filter is displayed in the "Saved Filters" section on the Dashboard filter
-
-  @mutable
-  Scenario: TC012_04_SuperAdmin_DashboardActions - Verify editing and deleting a saved filter
-    Given the "Actions Dashboard - 01_13Jan REG" page is open
-    When press "Filter" button on the Dashboard filter
     When select "Test DashboardAction" located in the "Saved Filters" section on the Dashboard filter
     And press "Edit" button on the Dashboard filter
     And deselect "Low" in the "Action   Priority" filter on the Dashboard filter
@@ -451,9 +449,10 @@ Feature: Dashboard Actions for Super Admin
     Then verify all options are selected in the "Action Status" filter on the Dashboard filter
     And verify the "Jurisdiction" filter selection remains unchanged on the Dashboard filter
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC018_SuperAdmin_DashboardActions - Verify actions dashboard dashboard options Action
     Given the "Actions Dashboard - 01_13Jan REG" page is open
+    And register cleanup to restore the "Action Status" column on "Actions Dashboard - 01_13Jan REG"
     Then verify "Action Status" column header is displayed in the "01_13Jan REG - Actions Dashboard" page
     When press "Dashboard Options" button on the Dashboard
     Then verify the "Dashboard Options" popup is displayed on the Dashboard

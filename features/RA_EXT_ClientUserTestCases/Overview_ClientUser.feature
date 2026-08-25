@@ -5,8 +5,8 @@ Feature: Overview for Client User
     Given launch Regulatory Advantage application URL and login as "external" user "CLIENTUSER"
     And verify if applicable portals are displayed
 
-@readOnly
-Scenario: TC001_ClientUser_Overview - Verify overview page loads with all the fields and buttons visible
+  @readOnly
+  Scenario: TC001_ClientUser_Overview - Verify overview page loads with all the fields and buttons visible
     When click on "ClientPortal_20260209133616" of the portals
     Then the "Overview" page is displayed
     And verify for client portal name "ClientPortal_20260209133616"
@@ -16,12 +16,13 @@ Scenario: TC001_ClientUser_Overview - Verify overview page loads with all the fi
     And is selected and the star is "" filled by default
     When click on view as grid or card and verify view as grid or card
     Then verify for view as grid or card is displayed and save as favorite option is visible
+    When restore the initial overview view
     And verify for "open dashboard" button is visible
     And verify if "Deloitte label;Application Name;Ask Deloitte;Notifications bell;Profile" are displayed on the Overview page
     And verify if "Disclaimer;Privacy;Terms of use;OSS Attribution;Cookie;Cookie Settings" are displayed on the Overview page
 
-@readOnly
-Scenario: TC002_ClientUser_Overview - Verify navigation from overview widgets
+  @readOnly
+  Scenario: TC002_ClientUser_Overview - Verify navigation from overview widgets
     When click on "ClientPortal_20260209133616" of the portals
     Then the "Overview" page is displayed
     And verify "Outstanding Updates" are displayed
@@ -47,4 +48,5 @@ Scenario: TC002_ClientUser_Overview - Verify navigation from overview widgets
     When press "favorite icon" button
     And verify for view as grid or card is displayed and save as favorite option is visible
     And is selected and the star is "" filled by default
+    When restore the initial overview view
     And logout from the application

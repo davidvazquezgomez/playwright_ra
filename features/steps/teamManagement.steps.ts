@@ -1,10 +1,11 @@
 import { Then, When } from './fixtures';
+import { registerScenarioCleanup } from './scenarioCleanup.hooks';
 
 When('press "Edit" button for the first team in the "Team Management" page', async ({ teamManagementPage }) => {
   await teamManagementPage.editFirstTeam();
 });
 
-When('press "Add Team Members" button on the "Create/Edit Team" page', async ({ teamManagementPage }) => {
+When('open the Add Team Members dialog', async ({ teamManagementPage }) => {
   await teamManagementPage.openAddTeamMembersDialog();
 });
 
@@ -48,6 +49,37 @@ When('search for {string} in the Team Name field', async ({ teamManagementPage }
   await teamManagementPage.searchTeamsByName(teamName);
 });
 
+When('ensure the team {string} does not exist', async ({ teamManagementPage }, teamName: string) => {
+  await teamManagementPage.removeTeamIfPresent(teamName);
+});
+
+When(
+  'ensure the team {string} exists with Team Leader {string} and Team Member {string}',
+  async ({ teamManagementPage }, teamName: string, leaderEmail: string, memberName: string) => {
+    await teamManagementPage.ensureTeamExists(teamName, leaderEmail, memberName);
+  },
+);
+
+When(
+  'register the team {string} for cleanup',
+  async ({ teamManagementPage, testData }, teamName: string) => {
+    registerScenarioCleanup(testData, () => teamManagementPage.removeTeamIfPresent(teamName));
+  },
+);
+
 Then('verify the user {string} is not available in the team leaders', async ({ teamManagementPage }, userName: string) => {
   await teamManagementPage.verifyUserIsNotAvailableInTeamLeaders(userName);
 });
+
+When(
+  'register cleanup to restore {string} as Team Leader of {string}, remove {string}, and use portal {string}',
+  async ({ commonPage, teamManagementPage, userManagementPage, testData }, requiredLeader: string, teamName: string, temporaryUserEmail: string, portalName: string) => {
+    registerScenarioCleanup(testData, async () => {
+      await commonPage.openNamedPage(`Team Management - ${portalName}`);
+      await teamManagementPage.restoreTeamLeaderConfiguration(teamName, requiredLeader, temporaryUserEmail);
+      await commonPage.openNamedPage(`User Management - ${portalName}`);
+      await commonPage.selectTab('Non-Deloitte Admins');
+      await userManagementPage.removeExternalUserIfPresent(temporaryUserEmail);
+    });
+  },
+);

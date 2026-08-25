@@ -52,10 +52,11 @@ Feature: Manage Impact Areas for Super Admin
     Then verify "Impact Area updated successfully" toast message is displayed in the "Manage Impact Areas" page
     And verify "Impact Area Test" impact area is displayed in the "Manage Impact Areas" page
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC002_02_SuperAdmin_ManageImpactAreas - Verify disabling, enabling and restoring an impact area
     Given the "Manage Impact Areas" page is open
     And the "Impact Area Test" impact area is restored in the "Manage Impact Areas" page
+    And register cleanup to restore the "Impact Area Test" impact area in the "Manage Impact Areas" page
     When fill the "Impact Area Name" field with "Impact Area Test" value in the "Manage Impact Areas" page
     And click on the "Impact Area Test" impact area in the "Manage Impact Areas" page
     Then the "Edit Impact Area" page is displayed
