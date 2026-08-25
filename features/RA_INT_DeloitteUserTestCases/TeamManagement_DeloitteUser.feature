@@ -5,7 +5,7 @@ Feature: Team Management for Deloitte User
     Given launch Regulatory Advantage application URL and login as "deloitte" user "DELOITTEUSER"
     And verify if applicable portals are displayed
 
-  @readOnly
+    @mutable
   Scenario Outline: TC001_01_DeloitteUser_TeamManagement - Verify mandatory field validations for team setup
     When click on "QA_Test client3" of the portals
     Then the "Overview" page is displayed

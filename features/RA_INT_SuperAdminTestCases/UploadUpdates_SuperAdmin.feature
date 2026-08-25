@@ -5,8 +5,8 @@ Feature: Upload Updates for Super Admin
     Given launch Regulatory Advantage application URL and login as "deloitte" user "SUPERADMIN"
     And verify if applicable portals are displayed
 
-@mutable
-Scenario: TC001_SuperAdmin_UploadUpdates - Verify required fields and complete upload flow for all applicable clients
+  @mutable
+  Scenario: TC001_SuperAdmin_UploadUpdates - Verify required fields and complete upload flow for all applicable clients
     When click on "Menu" option from the left navigation
     Then verify it displays "Upload Updates" option from the left navigation
     When click on "Upload Updates" option from the left navigation

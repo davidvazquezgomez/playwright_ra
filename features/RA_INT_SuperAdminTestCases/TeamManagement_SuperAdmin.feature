@@ -5,7 +5,7 @@ Feature: Team Management for Super Admin
     Given launch Regulatory Advantage application URL and login as "deloitte" user "SUPERADMIN"
     And verify if applicable portals are displayed
 
-  @readOnly
+    @mutable
   Scenario Outline: TC001_01_SuperAdmin_TeamManagement - Verify mandatory field validations for team setup
     When click on "01_13Jan REG" of the portals
     Then the "Overview" page is displayed

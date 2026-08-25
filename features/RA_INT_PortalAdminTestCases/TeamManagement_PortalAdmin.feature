@@ -5,7 +5,7 @@ Feature: Team Management for Portal Admin
     Given launch Regulatory Advantage application URL and login as "deloitte" user "PORTALADMIN"
     And verify if applicable portals are displayed
 
-  @readOnly
+    @mutable
   Scenario Outline: TC001_01_PortalAdmin_TeamManagement - Verify mandatory field validations for team setup
     When click on "Global Inc" of the portals
     Then the "Overview" page is displayed

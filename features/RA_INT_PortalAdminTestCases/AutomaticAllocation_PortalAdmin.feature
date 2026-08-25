@@ -5,7 +5,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
     Given launch Regulatory Advantage application URL and login as "deloitte" user "PORTALADMIN"
     And verify if applicable portals are displayed
 
-  @readOnly
+    @mutable
   Scenario: TC001_01_PortalAdmin_AutomaticAllocation - Navigate to Automatic Allocation Setup
     When click on "Global Inc" of the portals
     And the "Global Inc - Overview" page is displayed
@@ -33,7 +33,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
       | Impact Area     |
       | Allocate To     |
 
-  @readOnly
+  @mutable
   Scenario: TC001_03_PortalAdmin_AutomaticAllocation - Verify warning message validations before creating a new allocation
     Given the "Automatic Allocation Setup - Global Inc" page is open
     Then verify "Allocation Name; Impact Area(s);Jurisdiction(s);Allocate Update To; Update Owner;Update Watchlist" form fields are displayed in the Automatic Allocation Setup page

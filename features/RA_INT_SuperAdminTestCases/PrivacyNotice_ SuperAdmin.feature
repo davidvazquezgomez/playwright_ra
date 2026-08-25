@@ -5,7 +5,7 @@ Feature: Privacy Notice for Super Admin
     Given launch Regulatory Advantage application URL and login as "deloitte" user "SUPERADMIN"
     And verify if applicable portals are displayed
 
-  @readOnly
+    @mutable
   Scenario: TC001_01_SuperAdmin_PrivacyNotice - Navigate to Update Privacy Notice page
     When click on "Menu" option from the left navigation
     Then verify it displays "Update Privacy Notice" option from the left navigation
@@ -13,7 +13,7 @@ Feature: Privacy Notice for Super Admin
     Then the "Update Privacy Notice" page is displayed
     And verify "Cancel;Save" buttons are displayed in the "Update Privacy Notice" page
 
-  @readOnly
+  @mutable
   Scenario: TC001_02_SuperAdmin_PrivacyNotice - Apply changes and press "Cancel" button
     Given the "Update Privacy Notice" page is open
     When add the "QaTest" word to the end of the "Update Privacy Notice" content
