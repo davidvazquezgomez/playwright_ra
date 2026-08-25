@@ -251,7 +251,7 @@ Feature: Notifications for Deloitte User
     And the "Team Management" page is displayed
     When press "Edit" button for the first team in the "Team Management" page
     Then the "Create/Edit Team" page is displayed
-    When press "Add Team Members" button on the "Create/Edit Team" page
+    When open the Add Team Members dialog
     Then the "Add Team Members" popup is displayed
     When select "clientadmin1" option in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
@@ -289,7 +289,7 @@ Feature: Notifications for Deloitte User
     And the "Team Management" page is displayed
     When press "Edit" button for the first team in the "Team Management" page
     Then the "Create/Edit Team" page is displayed
-    When press "Add Team Members" button on the "Create/Edit Team" page
+    When open the Add Team Members dialog
     Then the "Add Team Members" popup is displayed
     When select "clientadmin1" option in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup

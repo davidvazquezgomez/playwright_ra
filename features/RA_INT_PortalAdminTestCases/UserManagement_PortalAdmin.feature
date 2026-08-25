@@ -59,9 +59,10 @@ Feature: User Management for Portal Admin
     When press "Close" button
     Then the "Add Deloitte User" pop up is closed
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC002_02_PortalAdmin_UserManagement - Add and export a Deloitte User
     Given the "User Management - Global Inc" page is open
+    And ensure the Deloitte user "br.dtt@deloitte.com" does not exist
     When press "Add New User" button
     And press "Save" button
     Then the warning message "User is required" is displayed
@@ -70,6 +71,7 @@ Feature: User Management for Portal Admin
     And press "Save" button
     And search for "br.dtt@deloitte.com" in the User Management table "Email" field
     Then verify the user "br.dtt@deloitte.com" is displayed in the table
+    And register the user "br.dtt@deloitte.com" for cleanup
     When press "Add New User" button
     And enter "br.dtt@deloitte.com" in the search user field
     And select "BR, Deloitte Brasil" from the search results
@@ -77,10 +79,11 @@ Feature: User Management for Portal Admin
     Then verify "BR, Deloitte Brasil is already associated with this client as Deloitte User." toast message is displayed in the "User Management" page
     When user click at "EXPORT USERS" link
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC002_03_PortalAdmin_UserManagement - Create a Non-Deloitte Admin
     Given the "User Management - Global Inc" page is open
     When press the "Non-Deloitte Admins" section
+    And ensure the external user "qa.admin@example.com" does not exist
     When press "Add New Users" button
     Then the "Add Non-Deloitte Admin" pop up is displayed with the title "Add Non-Deloitte Admin"
     When press "Save" button
@@ -92,11 +95,13 @@ Feature: User Management for Portal Admin
     And press "Save" button
     And search for "qa.admin@example.com" in the User Management table "Email" field
     Then verify the user "qa.admin@example.com" is displayed in the table
+    And register the external user "qa.admin@example.com" for cleanup
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC002_04_PortalAdmin_UserManagement - Create a Non-Deloitte User without associations
     Given the "User Management - Global Inc" page is open
     When press the "Non-Deloitte Users" section
+    And ensure the external user "qa.user@example.com" does not exist
     When press "Add New Users" button
     Then the "Add Non-Deloitte User" pop up is displayed with the title "Add Non-Deloitte User"
     When press "Save" button
@@ -108,11 +113,13 @@ Feature: User Management for Portal Admin
     When press "Save" button
     And search for "qa.user@example.com" in the User Management table "Email" field
     Then verify the user "qa.user@example.com" is displayed in the table
+    And register the external user "qa.user@example.com" for cleanup
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC002_05_PortalAdmin_UserManagement - Create a Non-Deloitte User for automatic allocation
     Given the "User Management - Global Inc" page is open
     When press the "Non-Deloitte Users" section
+    And ensure the external user "qa.allocation@example.com" does not exist
     When press "Add New Users" button
     And enter "QA" in the "First Name" field
     And enter "Allocation" in the "Last Name" field
@@ -121,6 +128,7 @@ Feature: User Management for Portal Admin
     And press "Save" button
     And search for "qa.allocation@example.com" in the User Management table "Email" field
     Then verify the user "qa.allocation@example.com" is displayed in the table
+    And register the external user "qa.allocation@example.com" for cleanup
 
   @mutable
   Scenario: TC002_06_PortalAdmin_UserManagement - Verify user is not able to add Non-Deloitte Users with invalid characters
@@ -169,9 +177,10 @@ Feature: User Management for Portal Admin
       | Non-Deloitte Users  | QA, User             | User Name | QA, User            |
       | Non-Deloitte Users  | qa.user@example.com  | Email     | QA, User            |
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC003_01_PortalAdmin_UserManagement - Delete the Deloitte User
     Given the "User Management - Global Inc" page is open
+    And ensure the Deloitte user "br.dtt@deloitte.com" exists with name "BR, Deloitte Brasil"
     When select the user "br.dtt@deloitte.com" from the table
     When press "Delete Selected Users" button
     And press "Confirm" button
@@ -179,10 +188,11 @@ Feature: User Management for Portal Admin
     And search for "br.dtt@deloitte.com" in the User Management table "Email" field
     And verify the user "br.dtt@deloitte.com" is not displayed in the table
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC003_02_PortalAdmin_UserManagement - Delete the Non-Deloitte User without associations
     Given the "User Management - Global Inc" page is open
     When press the "Non-Deloitte Users" section
+    And ensure the external user "qa.user@example.com" exists with first name "QA", last name "User", and company "Regulatory Advantage Testing"
     And select the user "qa.user@example.com" from the table
     When press "Delete Selected Users" button
     And press "Confirm" button
@@ -190,10 +200,15 @@ Feature: User Management for Portal Admin
     And search for "qa.user@example.com" in the User Management table "Email" field
     And verify the user "qa.user@example.com" is not displayed in the table
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC003_03_PortalAdmin_UserManagement - Delete the Non-Deloitte Admin assigned to an existing team
     Given the "Team Management - Global Inc" page is open
+    When click on "User Management" option from the left navigation
+    And press the "Non-Deloitte Admins" section
+    And ensure the external user "qa.admin@example.com" exists with first name "QA", last name "Admin", and company "Regulatory Advantage Testing"
+    When click on "Team Management" option from the left navigation
     When click on "Edit" button for the "01_QA_UserManagement" team
+    And register cleanup to restore "sonigour, audit" as Team Leader of "01_QA_UserManagement", remove "qa.admin@example.com", and use portal "Global Inc"
     And remove "sonigour, audit" from the "Team Leader" field
     And add "qa.admin@example.com" in the "Team Leader" field
     And press "Save" button
@@ -219,10 +234,15 @@ Feature: User Management for Portal Admin
     And search for "01_QA_UserManagement" in the Team Name field
     Then verify the user "QA, Admin" is not available in the team leaders
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC003_04_PortalAdmin_UserManagement - Delete the Non-Deloitte user assigned to an existing automatic allocation
     Given the "Automatic Allocation of Updates - Global Inc" page is open
+    When click on "User Management" option from the left navigation
+    And press the "Non-Deloitte Users" section
+    And ensure the external user "qa.allocation@example.com" exists with first name "QA", last name "Allocation", and company "Regulatory Advantage Testing"
+    When click on "Automatic Allocation of Updates" option from the left navigation
     When click on "Edit Allocation" icon for the "01_QA_UserManagement" allocation
+    And register cleanup to restore the recipient of the "01_QA_UserManagement" allocation, remove "qa.allocation@example.com", and use portal "Global Inc"
     And add the user "qa.allocation@example.com" in the "Search for Teams and Users" field
     And press "Save" button
     And press "Update anyway" button

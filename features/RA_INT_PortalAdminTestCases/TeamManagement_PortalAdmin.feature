@@ -46,7 +46,7 @@ Feature: Team Management for Portal Admin
     And enter "QA_TEST_01" in the "Team Name" field
     And enter "Additional information for the QA team" in the "Additional Information" field
     And add "validadmin@external.com" in the "Team Leader" field
-    And press "Add Team Members" button on the "Create/Edit Team" page
+    And open the Add Team Members dialog
     And add "externaluserra1@yopmail.com" in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
     When click on "Home" option from the left navigation
@@ -61,7 +61,7 @@ Feature: Team Management for Portal Admin
     Given the "Team Management - Global Inc" page is open
     When click on "Edit" button for the "QA_TEST_01" team
     And add "ra.grewspec@gmail.com" in the "Team Leader" field
-    And press "Add Team Members" button on the "Create/Edit Team" page
+    And open the Add Team Members dialog
     And add "externaluserra2@yopmail.com;externaluserra3@yopmail.com;externaluserra4@yopmail.com" in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
     And save the team from the "Create/Edit Team" page

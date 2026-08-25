@@ -141,4 +141,4 @@ export const test = base.extend<{
  * Creates the Given, When, and Then functions bound to the fixtures.
  * They are imported by the step definitions.
  */
-export const { Given, When, Then } = createBdd(test);
+export const { Given, When, Then, After } = createBdd(test);

@@ -46,7 +46,7 @@ Feature: Team Management for Super Admin
     And enter "QA_TEST_01" in the "Team Name" field
     And enter "Additional information for the QA team" in the "Additional Information" field
     And add "ext-teamleadr@yopmail.com" in the "Team Leader" field
-    And press "Add Team Members" button on the "Create/Edit Team" page
+    And open the Add Team Members dialog
     And add "smoke@gmail.com;test.user.1783697990969@gmail.com" in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
     When click on "Home" option from the left navigation
@@ -61,7 +61,7 @@ Feature: Team Management for Super Admin
     Given the "Team Management - 01_13Jan REG" page is open
     When click on "Edit" button for the "QA_TEST_01" team
     And add "smriti.naidu@gmail.com" in the "Team Leader" field
-    And press "Add Team Members" button on the "Create/Edit Team" page
+    And open the Add Team Members dialog
     And add "test.user.1784145920996@gmail.com;test.user.1782906153337@gmail.com" in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
     And save the team from the "Create/Edit Team" page

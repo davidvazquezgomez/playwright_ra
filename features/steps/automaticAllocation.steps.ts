@@ -1,4 +1,5 @@
 import { Then, When } from './fixtures';
+import { registerScenarioCleanup } from './scenarioCleanup.hooks';
 
 Then('verify if {string} are displayed on the Automatic Allocation of Updates page', async ({ automaticAllocationPage }, fields: string) => {
   await automaticAllocationPage.verifyAutomaticAllocationFieldsDisplayed(fields);
@@ -66,3 +67,19 @@ When('add the user {string} in the {string} field', async ({ automaticAllocation
 
   await automaticAllocationPage.addAllocationRecipient(emailAddress);
 });
+
+When(
+  'register cleanup to restore the recipient of the {string} allocation, remove {string}, and use portal {string}',
+  async ({ automaticAllocationPage, commonPage, userManagementPage, testData }, allocationName: string, temporaryUserEmail: string, portalName: string) => {
+    const originalRecipient = await automaticAllocationPage.getAllocationRecipient();
+    registerScenarioCleanup(testData, async () => {
+      await commonPage.openNamedPage(`Automatic Allocation of Updates - ${portalName}`);
+      await automaticAllocationPage.editAllocation(allocationName);
+      await automaticAllocationPage.restoreAllocationRecipient(originalRecipient);
+      await commonPage.clickButton('Save');
+      await commonPage.openNamedPage(`User Management - ${portalName}`);
+      await commonPage.selectTab('Non-Deloitte Users');
+      await userManagementPage.removeExternalUserIfPresent(temporaryUserEmail);
+    });
+  },
+);

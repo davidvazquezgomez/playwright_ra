@@ -46,7 +46,7 @@ Feature: Team Management for Deloitte User
     And enter "QA_TEST_01" in the "Team Name" field
     And enter "Additional information for the QA team" in the "Additional Information" field
     And add "satestclientadmin1@yopmail.com" in the "Team Leader" field
-    And press "Add Team Members" button on the "Create/Edit Team" page
+    And open the Add Team Members dialog
     And add "DeloitteUserTest@gmail.com" in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
     When click on "Home" option from the left navigation
@@ -61,7 +61,7 @@ Feature: Team Management for Deloitte User
     Given the "Team Management - QA_Test client3" page is open
     When click on "Edit" button for the "QA_TEST_01" team
     And add "ra.grewspec@gmail.com" in the "Team Leader" field
-    And press "Add Team Members" button on the "Create/Edit Team" page
+    And open the Add Team Members dialog
     And add "DeloitteUserTest2@gmail.com;TestDeloitteUserTest2@gmail.com;NonDeloitteUserTest@gmail.com" in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
     And save the team from the "Create/Edit Team" page
