@@ -102,6 +102,12 @@ export async function prepareFeatureAuthState(browser: Browser, testFile: string
   if (await fileExists(statePath)) {
     return statePath;
   }
+  if (process.env.SHARED_AUTH_STATES === 'true') {
+    throw new Error(
+      `Shared authentication state is missing for ${authentication.userType} user ${authentication.role}: ${statePath}. ` +
+      'Verify that the prewarm artifact was downloaded and that ENV matches the prewarm job.',
+    );
+  }
 
   const lockPath = `${statePath}.lock`;
   await fs.mkdir(path.dirname(statePath), { recursive: true });

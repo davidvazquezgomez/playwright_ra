@@ -151,6 +151,15 @@ jobs:
           artifact: 'auth-states'
           path: '$(System.DefaultWorkingDirectory)/test-results/auth-state'
 
+      - script: |
+          state_count=$(find test-results/auth-state -name '*.json' -type f | wc -l)
+          if [ "$state_count" -lt 1 ]; then
+            echo "##vso[task.logissue type=error]The shared authentication-state artifact did not contain any state files."
+            exit 1
+          fi
+          echo "Using $state_count shared authentication state file(s)."
+        displayName: 'Verify shared authentication states'
+
       - task: Cache@2
         displayName: 'Cache Playwright browsers'
         inputs:
@@ -186,6 +195,8 @@ jobs:
         displayName: 'Execute read-only BDD group (STAGE / Desktop)'
         env:
           REUSE_AUTH_STATE: 'true'
+          SHARED_AUTH_STATES: 'true'
+          ENV: $(ENV)
           TIMEOUT: '15000'
           TEST_TIMEOUT: '120000'
           TRACE_MODE: 'off'
@@ -289,6 +300,15 @@ jobs:
           artifact: 'auth-states'
           path: '$(System.DefaultWorkingDirectory)/test-results/auth-state'
 
+      - script: |
+          state_count=$(find test-results/auth-state -name '*.json' -type f | wc -l)
+          if [ "$state_count" -lt 1 ]; then
+            echo "##vso[task.logissue type=error]The shared authentication-state artifact did not contain any state files."
+            exit 1
+          fi
+          echo "Using $state_count shared authentication state file(s)."
+        displayName: 'Verify shared authentication states'
+
       - task: Cache@2
         displayName: 'Cache Playwright browsers'
         inputs:
@@ -326,6 +346,8 @@ jobs:
         displayName: 'Execute mutable BDD group (STAGE / Desktop)'
         env:
           REUSE_AUTH_STATE: 'true'
+          SHARED_AUTH_STATES: 'true'
+          ENV: $(ENV)
           TIMEOUT: '15000'
           TEST_TIMEOUT: '120000'
           TRACE_MODE: 'off'
