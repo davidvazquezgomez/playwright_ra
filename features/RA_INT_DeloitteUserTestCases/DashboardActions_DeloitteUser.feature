@@ -186,7 +186,7 @@ Feature: Dashboard Actions for Deloitte User
     When press "Cancel" button on the "Unsaved Changes" popup
     Then verify "Test Action" value is displayed in the "Action" field on the "Add Action" popup
     When press "Save" button
-    Then verify "Action added successfully" toast message is displayed in the "Update Details" page
+    Then verify "Action added successfully" toast message is displayed in the "Update Actions" page
 
   @mutable
   Scenario: TC011_02_DeloitteUser_DashboardActions - Verify editing an action from the update details page
@@ -196,17 +196,17 @@ Feature: Dashboard Actions for Deloitte User
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
-    And click on the first action in the "Update Details" page
+    And click on the first action in the "Update Actions" page
     Then the "Update Action" popup is displayed
     When select "satestclientuser1, satestclientuser1" option in the "User Assigned" field in the "Update Action" popup
     And select "Not Started" option in the "Status" field in the "Update Action" popup
     And select "High" option in the "Priority" field in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "Update Details" page
+    Then verify "Action updated successfully" toast message is displayed in the "Update Actions" page
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
-    When click on the first action in the "Update Details" page
+    When click on the first action in the "Update Actions" page
     Then the "Update Action" popup is displayed
     And verify "satestclientuser1, satestclientuser1" option is selected in the "User Assigned" field on the "Update Action" popup
     And verify "Not Started" option is selected in the "Status" field on the "Update Action" popup
@@ -219,7 +219,7 @@ Feature: Dashboard Actions for Deloitte User
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
-    And click on the first action in the "Update Details" page
+    And click on the first action in the "Update Actions" page
     Then the "Update Action" popup is displayed
     When open the "Comments" tab in the "Update Action" popup
     And enter "Test comment" comment in the "Update Action" popup
@@ -228,7 +228,7 @@ Feature: Dashboard Actions for Deloitte User
     And verify a date is displayed for "Test comment" comment in the "Update Action" popup
     And verify actions are displayed for "Test comment" comment in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "Update Details" page
+    Then verify "Action updated successfully" toast message is displayed in the "Update Actions" page
 
   @mutable
   Scenario: TC011_05_DeloitteUser_DashboardActions - Verify uploading an attachment to an action from the update details page
@@ -238,13 +238,13 @@ Feature: Dashboard Actions for Deloitte User
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
-    And click on the first action in the "Update Details" page
+    And click on the first action in the "Update Actions" page
     Then the "Update Action" popup is displayed
     When open the "Attachments" tab in the "Update Action" popup
     When upload "<file path>" attachment in the "Update Action" popup
     And verify "<name>" attachment is displayed in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "Update Details" page
+    Then verify "Action updated successfully" toast message is displayed in the "Update Actions" page
 
     Examples:
       | valid extension | file path              | name         |
@@ -263,22 +263,22 @@ Feature: Dashboard Actions for Deloitte User
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
-    And click on the first action in the "Update Details" page
+    And click on the first action in the "Update Actions" page
     Then the "Update Action" popup is displayed
     When enable the "Private Action" toggle in the "Update Action" popup
     And verify the "Private Action" toggle is enabled in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "Update Details" page
+    Then verify "Action updated successfully" toast message is displayed in the "Update Actions" page
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
-    When click on the first action in the "Update Details" page
+    When click on the first action in the "Update Actions" page
     Then the "Update Action" popup is displayed
     And verify the "Private Action" toggle is enabled in the "Update Action" popup
     When disable the "Private Action" toggle in the "Update Action" popup
     And select "Complete" option in the "Status" field in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "Update Details" page
+    Then verify "Action updated successfully" toast message is displayed in the "Update Actions" page
 
   @readOnly
   Scenario Outline: TC012_01_DeloitteUser_DashboardActions - Verify filtering the actions dashboard by
