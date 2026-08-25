@@ -64,9 +64,11 @@ Feature: Notifications for Team Leader
     And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
     Then the "Default Notifications Settings" page is displayed
+    When disable all user notification preferences
     And verify all the "Notifications Preferences" are disabled
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     And the "01_QA_StageTestPortal- Updates Dashboard" page is displayed
     Then open the first update in the "01_QA_StageTestPortal- Updates Dashboard" page
     When press "Edit" button on the selected update
@@ -105,9 +107,11 @@ Feature: Notifications for Team Leader
     And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
     Then the "Notification Preferences" page is displayed
+    When disable all user notification preferences
     And verify all the "Notifications Preferences" are disabled
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When the "01_QA_StageTestPortal - Actions Dashboard" page is displayed
     Then click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
     And the "Update Action" popup is displayed
@@ -144,6 +148,7 @@ Feature: Notifications for Team Leader
     And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
     Then the "Notification Preferences" page is displayed
+    When disable all user notification preferences
     And verify all the "Notifications Preferences" are disabled
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page

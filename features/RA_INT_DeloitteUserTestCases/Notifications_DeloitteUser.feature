@@ -92,9 +92,11 @@ Feature: Notifications for Deloitte User
     And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
     Then the "Default Notifications Settings" page is displayed
+    When disable all user notification preferences
     And verify all the "Notifications Preferences" are disabled
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
+    Given the "01_QA_ClientPortalSetup - Updates Dashboard - All Updates" page is open
     And the "01_QA_ClientPortalSetup - Updates Dashboard" page is displayed
     Then open the first update in the "01_QA_ClientPortalSetup- Updates Dashboard" page
     When press "Edit" button on the selected update
@@ -130,6 +132,7 @@ Feature: Notifications for Deloitte User
   Scenario: TC003_4_DeloitteUser_Notifications - Verify triggered notifications for updates
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
+    Given the "01_QA_ClientPortalSetup - Updates Dashboard - All Updates" page is open
     And the "01_QA_ClientPortalSetup - Updates Dashboard" page is displayed
     Then open the first update in the "01_QA_ClientPortalSetup - Updates Dashboard" page
     When press "Edit" button on the selected update
@@ -168,9 +171,11 @@ Feature: Notifications for Deloitte User
     And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
     Then the "Default Notifications Settings" page is displayed
+    When disable all user notification preferences
     And verify all the "Notifications Preferences" are disabled
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
+    Given the "01_QA_ClientPortalSetup - Actions Dashboard" page is open
     When the "01_QA_ClientPortalSetup - Actions Dashboard" page is displayed
     Then click on the first action in the "01_QA_ClientPortalSetup - Actions Dashboard" page
     And the "Update Action" popup is displayed
@@ -205,6 +210,7 @@ Feature: Notifications for Deloitte User
   Scenario: TC004_4_DeloitteUser_Notifications - Verify triggered notifications for updates
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
+    Given the "01_QA_ClientPortalSetup - Updates Dashboard - All Updates" page is open
     And the "01_QA_ClientPortalSetup - Updates Dashboard" page is displayed
     Then open the first update in the "01_QA_ClientPortalSetup - Updates Dashboard" page
     When press "Edit" button on the selected update
@@ -243,10 +249,11 @@ Feature: Notifications for Deloitte User
     And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
     Then the "Notification Preferences" page is displayed
+    When disable all user notification preferences
     And verify all the "Notifications Preferences" are disabled
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
-    When click on "01_QA_ClientPortalSetup" of the portals
+    Given the "01_QA_ClientPortalSetup - Updates Dashboard - All Updates" page is open
     Then click on "Team Management" option from the left navigation
     And the "Team Management" page is displayed
     When press "Edit" button for the first team in the "Team Management" page
@@ -284,6 +291,7 @@ Feature: Notifications for Deloitte User
   Scenario: TC005_4_DeloitteUser_Notifications - Verify triggered notifications for teams
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
+    When click on "01_QA_ClientPortalSetup" of the portals
     And the "01_QA_ClientPortalSetup - Updates Dashboard" page is displayed
     Then click on "Team Management" option from the left navigation
     And the "Team Management" page is displayed

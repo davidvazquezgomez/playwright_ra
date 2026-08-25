@@ -260,6 +260,31 @@ export class NotificationsPage extends BasePage {
     }
 
     /**
+     * Disables every user-level notification checkbox and the periodic summary switch.
+     */
+    async disableAllUserNotificationPreferences(): Promise<void> {
+        await this.waitForSelectorStatus(this.notificationCategoryByHeading('Updates'), 'visible');
+        const checkboxes = this._page.locator(this.userNotificationOptionCheckboxes);
+
+        for (let index = 0; index < await checkboxes.count(); index += 1) {
+            const checkbox = checkboxes.nth(index);
+            if (await checkbox.isChecked()) {
+                await checkbox.click({ force: true });
+            }
+        }
+
+        const periodicSummarySwitch = this.periodicSummaryOptionByName(
+            'Periodic summary of Updates and Actions via email?',
+        );
+        await this.waitForSelectorStatus(periodicSummarySwitch, 'visible');
+        if (await this.getElementAttribute(periodicSummarySwitch, 'aria-checked') === 'true') {
+            await this.clickElement(periodicSummarySwitch);
+        }
+
+        await this.verifyAllUserNotificationPreferencesAreDisabled('Notifications Preferences');
+    }
+
+    /**
      * Toggles a Select All notification checkbox only when it has the requested current state.
      * @param checkboxName Visible label of the checkbox. Only Select All is supported.
      * @param columnName Notification column: System, Email, or Lock Settings.
