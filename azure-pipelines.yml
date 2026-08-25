@@ -579,6 +579,16 @@ jobs:
           PARALLEL_RUN: 'false'
           RETRIES: '0'
 
+      - script: |
+          summary_file="$(System.DefaultWorkingDirectory)/test-results/analysis/allure-quality-summary.md"
+          if [ -f "$summary_file" ]; then
+            echo "##vso[task.uploadsummary]$summary_file"
+          else
+            echo "Allure quality summary was not generated."
+          fi
+        displayName: 'Publish automation and application quality summary'
+        condition: always()
+
       - task: PublishAllureReport@1
         displayName: 'Publish Allure Report tab (BDD)'
         condition: always()
@@ -593,4 +603,13 @@ jobs:
         inputs:
           targetPath: 'allure-report/history'
           artifact: 'allure-history'
+          publishLocation: 'pipeline'
+
+      - task: PublishPipelineArtifact@1
+        displayName: 'Publish Allure quality analysis'
+        condition: always()
+        continueOnError: true
+        inputs:
+          targetPath: 'test-results/analysis'
+          artifact: 'allure-quality-analysis'
           publishLocation: 'pipeline'

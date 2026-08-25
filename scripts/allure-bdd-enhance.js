@@ -22,6 +22,9 @@ const ALLURE_DIR = path.resolve('allure-results');
 const GEN_DIR = path.resolve('.features-gen');
 const CATEGORY_FILE = path.resolve('config', 'allure-categories.json');
 const ANALYSIS_DIR = path.resolve('test-results', 'analysis');
+const QUALITY_SUMMARY_FILE = path.join(ANALYSIS_DIR, 'allure-quality-summary.md');
+const QUALITY_METRICS_FILE = path.join(ANALYSIS_DIR, 'allure-quality-metrics.json');
+const APPLICATION_DEFECT_PATTERN = /APPLICATION DEFECT DETECTED/;
 
 function escapePropertyValue(value) {
   return String(value ?? '').replace(/\\/g, '\\\\').replace(/\r?\n/g, ' ');
@@ -126,6 +129,91 @@ function classifyTimeoutFailures() {
   );
 
   console.log(`  ✅ ${timeoutGroups.length} timeout group(s) analyzed across ${resultFiles.length} result(s).`);
+}
+
+function generateQualitySummary() {
+  if (!fs.existsSync(ALLURE_DIR)) {
+    return;
+  }
+
+  const metrics = {
+    totalResults: 0,
+    executed: 0,
+    passed: 0,
+    applicationDefects: 0,
+    technicalFailures: 0,
+    skipped: 0,
+    unknown: 0,
+  };
+  const resultFiles = fs.readdirSync(ALLURE_DIR).filter(file => file.endsWith('-result.json'));
+
+  for (const file of resultFiles) {
+    const filePath = path.join(ALLURE_DIR, file);
+    const result = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    const status = result.status || 'unknown';
+    const failureDetails = `${result.statusDetails?.message || ''}\n${result.statusDetails?.trace || ''}`;
+    const isApplicationDefect =
+      (status === 'failed' || status === 'broken') && APPLICATION_DEFECT_PATTERN.test(failureDetails);
+
+    metrics.totalResults += 1;
+    if (status === 'passed') {
+      metrics.passed += 1;
+      metrics.executed += 1;
+    } else if (isApplicationDefect) {
+      metrics.applicationDefects += 1;
+      metrics.executed += 1;
+      result.labels = result.labels || [];
+      setLabel(result.labels, 'failureOrigin', 'application');
+      setLabel(result.labels, 'failureClassification', 'confirmed application defect');
+      fs.writeFileSync(filePath, JSON.stringify(result));
+    } else if (status === 'failed' || status === 'broken') {
+      metrics.technicalFailures += 1;
+      metrics.executed += 1;
+    } else if (status === 'skipped') {
+      metrics.skipped += 1;
+    } else {
+      metrics.unknown += 1;
+    }
+  }
+
+  const functionalEvaluations = metrics.passed + metrics.applicationDefects;
+  const percentage = (numerator, denominator) => denominator === 0
+    ? null
+    : Number(((numerator / denominator) * 100).toFixed(1));
+  const summary = {
+    generatedAt: new Date().toISOString(),
+    ...metrics,
+    functionalCompliance: percentage(metrics.passed, functionalEvaluations),
+    automationHealth: percentage(metrics.passed + metrics.applicationDefects, metrics.executed),
+    allurePassRate: percentage(metrics.passed, metrics.executed),
+  };
+
+  fs.mkdirSync(ANALYSIS_DIR, { recursive: true });
+  fs.writeFileSync(QUALITY_METRICS_FILE, JSON.stringify(summary, null, 2));
+  fs.writeFileSync(QUALITY_SUMMARY_FILE, buildQualitySummaryMarkdown(summary));
+  console.log(`  ✅ Quality summary: ${summary.applicationDefects} application defect(s), ${summary.technicalFailures} technical failure(s).`);
+}
+
+function buildQualitySummaryMarkdown(summary) {
+  const formatPercentage = value => value === null ? 'N/A' : `${value.toFixed(1)}%`;
+
+  return [
+    '# Playwright BDD Quality Summary',
+    '',
+    `- **Automation health:** ${formatPercentage(summary.automationHealth)} (${summary.passed + summary.applicationDefects} of ${summary.executed} executed scenarios detected behavior correctly)`,
+    `- **Functional compliance:** ${formatPercentage(summary.functionalCompliance)} (${summary.passed} of ${summary.passed + summary.applicationDefects} evaluated scenarios met the business rule)`,
+    `- **Allure pass rate:** ${formatPercentage(summary.allurePassRate)} (${summary.passed} passed of ${summary.executed} executed scenarios)`,
+    '',
+    '## Failure classification',
+    '',
+    `- **Confirmed application defects:** ${summary.applicationDefects}`,
+    `- **Technical automation failures:** ${summary.technicalFailures}`,
+    `- **Skipped scenarios:** ${summary.skipped}`,
+    `- **Unknown-status scenarios:** ${summary.unknown}`,
+    '',
+    'Confirmed application defects retain the Allure failed status and are grouped under `APPLICATION DEFECT DETECTED`. They are excluded only from the automation-health metric.',
+    '',
+  ].join('\n');
 }
 
 function findTimeoutStatusDetails(container) {
@@ -462,3 +550,4 @@ enhanceResults(bddMap);
 organizeFailureArtifacts();
 classifyTimeoutFailures();
 normalizeSuiteHierarchy();
+generateQualitySummary();
