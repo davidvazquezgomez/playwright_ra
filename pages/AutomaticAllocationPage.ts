@@ -125,14 +125,28 @@ export class AutomaticAllocationPage extends BasePage {
     const normalizedAllocationName = allocationName.trim();
     const allocationGrid = this._page.locator('app-auto-allocation [role="grid"][aria-label="Data table"]');
     const noRecordsRow = allocationGrid.locator('tbody tr.k-grid-norecords');
+    const requestedAllocationRow = this._page.locator(this.allocationRowByName(normalizedAllocationName));
 
     await expect(allocationGrid).toBeVisible();
     if (expectedPresent) {
-      await this.ensureKendoGridHasRows(
-        allocationGrid,
-        `Automatic Allocation must display "${normalizedAllocationName}" after it is created.`,
-        'The Automatic Allocation grid was displayed before reading the allocation names.',
-      );
+      try {
+        await expect(requestedAllocationRow).toBeVisible();
+        return;
+      } catch (error) {
+        const displayedAllocationNames = (await this._page.locator(this.allocationNameCells).allTextContents())
+          .map(name => name.trim());
+
+        if (await noRecordsRow.isVisible() || displayedAllocationNames.length > 0) {
+          this.failWithApplicationError(
+            'A created allocation must be listed in Automatic Allocation of Updates.',
+            `The allocation "${normalizedAllocationName}" is displayed.`,
+            `The allocation "${normalizedAllocationName}" is not displayed.`,
+            `Displayed allocation names: ${displayedAllocationNames.join(', ') || '(none)'}.`,
+          );
+        }
+
+        throw error;
+      }
     } else {
       await expect.poll(async () =>
         (await this._page.locator(this.allocationGridRows).count()) > 0 ||
