@@ -125,22 +125,7 @@ function classifyTimeoutFailures() {
     JSON.stringify({ totalTimeouts: timeoutGroups.reduce((total, group) => total + group.count, 0), groups: timeoutGroups }, null, 2),
   );
 
-  const configuredCategories = fs.existsSync(CATEGORY_FILE)
-    ? JSON.parse(fs.readFileSync(CATEGORY_FILE, 'utf8'))
-    : [];
-  const timeoutCategories = timeoutGroups
-    .filter(group => group.signature !== 'UnknownPageObject.unknownMethod')
-    .map(group => ({
-      name: `Timeout (${group.count}) - ${group.signature}`,
-      matchedStatuses: ['failed', 'broken'],
-      traceRegex: `(?s).*${escapeRegularExpression(group.signature)}.*`,
-    }));
-  fs.writeFileSync(
-    path.join(ALLURE_DIR, 'categories.json'),
-    JSON.stringify([...timeoutCategories, ...configuredCategories], null, 2),
-  );
-
-  console.log(`  ✅ ${timeoutGroups.length} timeout group(s) classified across ${resultFiles.length} result(s).`);
+  console.log(`  ✅ ${timeoutGroups.length} timeout group(s) analyzed across ${resultFiles.length} result(s).`);
 }
 
 function findTimeoutStatusDetails(container) {
@@ -184,10 +169,6 @@ function setLabel(labels, name, value) {
   } else {
     labels.push({ name, value });
   }
-}
-
-function escapeRegularExpression(value) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 // ─── 1. Load bddFileData from generated .spec.js files ───────────────────────
