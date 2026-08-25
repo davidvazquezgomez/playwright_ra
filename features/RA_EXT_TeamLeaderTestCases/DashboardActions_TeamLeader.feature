@@ -70,7 +70,7 @@ Feature: Dashboard Actions for Team Leader
     Then verify "Action added successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    And double-click "Test_TeamLeader" option on the Dashboard filter
+    And double-click "Test_TeamLeader2" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
     And click on "Deadline Date" column header in the "01_QA_StageTestPortal - Actions Dashboard" page
     And click on "Deadline Date" column header in the "01_QA_StageTestPortal - Actions Dashboard" page
@@ -164,7 +164,6 @@ Feature: Dashboard Actions for Team Leader
       | svg             | test-data/valid.svg    | valid.svg    |
       | png             | test-data/valid.png    | valid.png    |
       | docx            | test-data/invalid.docx | invalid.docx |
-
 
   @mutable
   Scenario Outline: TC010_06_TeamLeader_DashboardActions - Upload an attachment with unsupported format
@@ -309,7 +308,7 @@ Feature: Dashboard Actions for Team Leader
     When upload "<file path>" attachment in the "Update Action" popup
     And verify "<name>" attachment is displayed in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "Update Details" page
+    Then verify "Action updated successfully" toast message is displayed in the "Update Actions" page
 
     Examples:
       | valid extension | file path              | name         |
@@ -320,17 +319,15 @@ Feature: Dashboard Actions for Team Leader
       | png             | test-data/valid.png    | valid.png    |
       | docx            | test-data/invalid.docx | invalid.docx |
 
-
- @mutable
+  @mutable
   Scenario Outline: TC011_06_TeamLeader_DashboardActions - Upload an attachment with unsupported format from the update details page
-    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
-    Given the "01_QA_StageTestPortal - Updates Dashboard" page is open
-    When search for "Employment Taxes_Outstanding Update is approaching Effective Date 7 days" update from the "Updates Dashboard - 01_13Jan REG" page
-    And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When search for "Employment Taxes_Outstanding Update is approaching Effective Date 7 days" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
+    And open the first update in the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
-    And click on the first action in the "Update Details" page
+    And click on the first action in the "Update Actions" page
     Then the "Update Action" popup is displayed
     When open the "Attachments" tab in the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
@@ -357,14 +354,14 @@ Feature: Dashboard Actions for Team Leader
 
     Examples:
       | filter          | value       |
-      | Jurisdiction    | Belgium     |
+      | Jurisdiction    | Canada      |
       | Update Priority | Low         |
       | Action Priority | High        |
       | Action Status   | In Progress |
-      | User Assigned   | Alam, Asjad     |
+      | User Assigned   | Alam, Asjad |
 
   @readOnly
-  Scenario: TC012_02_TeamLeader_DashboardActions - Verify filtering the 01_13Jan REG - Actions Dashboard by deadline range
+  Scenario: TC012_02_TeamLeader_DashboardActions - Verify filtering the 01_QA_StageTestPortal - Actions Dashboard by deadline range
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     Then verify the "Deadline Range" option is displayed in the Dashboard filter
@@ -419,10 +416,10 @@ Feature: Dashboard Actions for Team Leader
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter
-    And select "Belgium" in the "Jurisdiction" filter on the Dashboard filter
+    And select "United Kingdom" in the "Jurisdiction" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed for "Action Priority" with value "Low"
-    And verify filtered actions are displayed for "Jurisdiction" with value "Belgium"
+    And verify filtered actions are displayed for "Jurisdiction" with value "United Kingdom"
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And press "View results" button on the Dashboard filter

@@ -71,7 +71,7 @@ Feature: Dashboard Actions for Team Member
     Then verify "Action added successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    And double-click "Test_TeamMember" option on the Dashboard filter
+    And double-click "Test_TeamMember3" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
     And click on "Deadline Date" column header in the "01_QA_StageTestPortal - Actions Dashboard" page
     And verify "Test Action" action is displayed in the first row of the "01_QA_StageTestPortal - Actions Dashboard" page
@@ -83,7 +83,7 @@ Feature: Dashboard Actions for Team Member
     And press "Reset Filters" button on the Dashboard filter
     And double-click "Test_TeamMember_2" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    And search for "Test_TeamMember_2" update in the "01_QA_StageTestPortal - Actions Dashboard" page
+    And search for "28Guidance on SBTV employment related security (ERS) returns" update in the "01_QA_StageTestPortal - Actions Dashboard" page
     Then verify "28Guidance on SBTV employment related security (ERS) returns" update is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
     Then the "Update Action" popup is displayed
@@ -195,8 +195,8 @@ Feature: Dashboard Actions for Team Member
   @mutable
   Scenario: TC011_01_TeamMember_DashboardActions - Verify adding an action from the update details page
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "Occupational Illness Trust Fund" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
-    Then verify "22Podcast - BGN to EUR conversion" update is displayed from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
+    When search for "28Guidance on SBTV employment related security (ERS) returns" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
+    Then verify "28Guidance on SBTV employment related security (ERS) returns" update is displayed from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     When open the first update in the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     Then the "Update Details" page is displayed from the Updates Dashboard
     And verify "Update Details;Update Actions" tabs are displayed on the selected update
@@ -206,11 +206,11 @@ Feature: Dashboard Actions for Team Member
     And verify "Action;User Assigned;Priority;Status;Deadline Date" are displayed in the "Add Action" popup
     And verify comments section is not displayed in the "Add Action" popup
     And verify attachments section is not displayed in the "Add Action" popup
-    And verify "22Podcast - BGN to EUR conversion" value is displayed in the "Update" field on the "Add Action" popup
+    And verify "28Guidance on SBTV employment related security (ERS) returns" value is displayed in the "Update" field on the "Add Action" popup
     When press "Save" button
     Then verify "Action is required.;Assigned User is required;Priority is required.;Status is required.;Deadline is required." validation messages are displayed in the "Add Action" popup
     When fill the "Action" field with "Test Action" value in the "Add Action" popup
-    And select "Alam, Asjad" options in the "User Assigned" field in the "Add Action" popup
+    And select "satestclientuser3, satestclientuser3" options in the "User Assigned" field in the "Add Action" popup
     And select "Medium" option in the "Priority" field in the "Add Action" popup
     And select "In Progress" option in the "Status" field in the "Add Action" popup
     And select today's date from the "Deadline" calendar in the "Add Action" popup
@@ -321,7 +321,6 @@ Feature: Dashboard Actions for Team Member
 
   @mutable
   Scenario Outline: TC011_06_TeamMember_DashboardActions - Upload an attachment with unsupported format from the update details page
-    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When search for "22Podcast - BGN to EUR conversion" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
@@ -355,7 +354,7 @@ Feature: Dashboard Actions for Team Member
 
     Examples:
       | filter          | value       |
-      | Jurisdiction    | Belgium     |
+      | Jurisdiction    | Bulgaria    |
       | Update Priority | Low         |
       | Action Priority | High        |
       | Action Status   | In Progress |
@@ -417,10 +416,10 @@ Feature: Dashboard Actions for Team Member
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter
-    And select "Belgium" in the "Jurisdiction" filter on the Dashboard filter
+    And select "Mexico" in the "Jurisdiction" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed for "Action Priority" with value "Low"
-    And verify filtered actions are displayed for "Jurisdiction" with value "Belgium"
+    And verify filtered actions are displayed for "Jurisdiction" with value "Mexico"
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And press "View results" button on the Dashboard filter

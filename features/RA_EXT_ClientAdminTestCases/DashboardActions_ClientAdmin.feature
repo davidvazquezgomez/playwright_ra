@@ -321,8 +321,7 @@ Feature: Dashboard Actions for Client Admin
 
   @mutable
   Scenario Outline: TC011_06_ClientAdmin_DashboardActions - Upload an attachment with unsupported format from the update details page
-    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
-    Given the "01_QA_StageTestPortal - Updates Dashboard" page is open
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When search for "24Maximum social security contributions have been proposed" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the "Update Actions" tab on the selected update
@@ -355,11 +354,11 @@ Feature: Dashboard Actions for Client Admin
 
     Examples:
       | filter          | value       |
-      | Jurisdiction    | Belgium     |
+      | Jurisdiction    | Bulgaria    |
       | Update Priority | Low         |
       | Action Priority | High        |
       | Action Status   | In Progress |
-      | User Assigned   | Smoke       |
+      | User Assigned   | Alam, Asjad |
 
   @readOnly
   Scenario: TC012_02_ClientAdmin_DashboardActions - Verify filtering the 01_QA_StageTestPortal - Actions Dashboard by deadline range

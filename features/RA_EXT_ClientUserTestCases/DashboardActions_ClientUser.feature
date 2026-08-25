@@ -193,7 +193,7 @@ Feature: Dashboard Actions for Client User
 
   @mutable
   Scenario: TC011_01_ClientUser_DashboardActions - Verify adding an action from the update details page
-    Given the "ClientPortal_20260209133616 - Updates Dashboard" page is open
+    Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
     Then verify "People Law" update is displayed from the "ClientPortal_20260209133616 - Updates Dashboard" page
     When open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
@@ -223,7 +223,7 @@ Feature: Dashboard Actions for Client User
 
   @mutable
   Scenario: TC011_02_ClientUser_DashboardActions - Verify editing an action from the update details page
-    Given the "ClientPortal_20260209133616 - Updates Dashboard" page is open
+    Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the "Update Actions" tab on the selected update
@@ -246,7 +246,7 @@ Feature: Dashboard Actions for Client User
 
   @mutable
   Scenario: TC011_03_ClientUser_DashboardActions - Verify the private action toggle from the update details page
-    Given the "ClientPortal_20260209133616 - Updates Dashboard" page is open
+    Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the "Update Actions" tab on the selected update
@@ -276,7 +276,7 @@ Feature: Dashboard Actions for Client User
 
   @mutable
   Scenario: TC011_04_ClientUser_DashboardActions - Verify adding a comment to an action from the update details page
-    Given the "ClientPortal_20260209133616 - Updates Dashboard" page is open
+    Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the "Update Actions" tab on the selected update
@@ -295,7 +295,7 @@ Feature: Dashboard Actions for Client User
 
   @mutable
   Scenario: TC011_05_ClientUser_DashboardActions - Verify uploading an attachment to an action from the update details page
-    Given the "ClientPortal_20260209133616 - Updates Dashboard" page is open
+    Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the "Update Actions" tab on the selected update
@@ -320,8 +320,7 @@ Feature: Dashboard Actions for Client User
 
   @mutable
   Scenario Outline: TC011_06_ClientUser_DashboardActions - Upload an attachment with unsupported format from the update details page
-    Given the "ClientPortal_20260209133616 - Actions Dashboard" page is open
-    Given the "ClientPortal_20260209133616 - Updates Dashboard" page is open
+    Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the "Update Actions" tab on the selected update
@@ -354,7 +353,7 @@ Feature: Dashboard Actions for Client User
 
     Examples:
       | filter          | value        |
-      | Jurisdiction    | Mexico       |
+      | Jurisdiction    | Canada       |
       | Update Priority | Low          |
       | Action Priority | High         |
       | Action Status   | In Progress  |
@@ -416,10 +415,10 @@ Feature: Dashboard Actions for Client User
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter
-    And select "Mexico" in the "Jurisdiction" filter on the Dashboard filter
+    And select "Canada" in the "Jurisdiction" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed for "Action Priority" with value "Low"
-    And verify filtered actions are displayed for "Jurisdiction" with value "Mexico"
+    And verify filtered actions are displayed for "Jurisdiction" with value "Canada"
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And press "View results" button on the Dashboard filter

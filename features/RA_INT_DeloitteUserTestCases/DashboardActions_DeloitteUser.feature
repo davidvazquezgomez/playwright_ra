@@ -142,6 +142,33 @@ Feature: Dashboard Actions for Deloitte User
       | docx            | test-data/invalid.docx | invalid.docx |
 
   @mutable
+  Scenario Outline: TC010_06_DeloitteUser_DashboardActions - Upload an attachment with unsupported format
+    Given the "Actions Dashboard - QA_Test client3" page is open
+    When press "Filter" button on the Dashboard filter
+    And press "Reset Filters" button on the Dashboard filter
+    And double-click "SelectAll_Test_1784288008539" option on the Dashboard filter
+    And press "View results" button on the Dashboard filter
+    And search for "Migration_test" update in the "QA_Test client3 - Actions Dashboard" page
+    When click on the first action in the "QA_Test client3 - Actions Dashboard" page
+    Then the "Update Action" popup is displayed
+    When open the "Attachments" tab in the "Update Action" popup
+    When upload "<file path>" attachment in the "Update Action" popup
+    Then a message should get displayed as "<expected message>"
+    And verify "<name>" attachment is not displayed in the "Update Action" popup
+    When select "Complete" option in the "Status" field in the "Update Action" popup
+    And press "Update" button in the "Update Action" popup
+    Then verify "Action updated successfully" toast message is displayed in the "QA_Test client3 - Actions Dashboard" page
+    And verify "Test Action" action is not displayed in the "QA_Test client3 - Actions Dashboard" page
+
+    Examples:
+      | invalid extension | file path                  | expected message | name             |
+      | xls               | test-data/valid.xls        |                  | valid.xls        |
+      | jpg               | test-data/invalid.jpg      |                  | invalid.jpg      |
+      | csv               | test-data/invalid.csv      |                  | invalid.csv      |
+      | txt               | test-data/invalid.txt      |                  | invalid.txt      |
+      | xlsx              | test-data/Fichero94MB.xlsx |                  | Fichero94MB.xlsx |
+
+  @mutable
   Scenario: TC010_03_DeloitteUser_DashboardActions - Verify the private action toggle
     Given the "Actions Dashboard - QA_Test client3" page is open
     When press "Filter" button on the Dashboard filter
@@ -156,7 +183,15 @@ Feature: Dashboard Actions for Deloitte User
     And verify the "Private Action" toggle is enabled in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
     Then verify "Action updated successfully" toast message is displayed in the "QA_Test client3 - Actions Dashboard" page
-    And verify "Test Action" action is not displayed in the "QA_Test client3 - Actions Dashboard" page
+    When click on the first action in the "QA_Test client3 - Actions Dashboard" page
+    Then the "Update Action" popup is displayed
+    And verify the "Private Action" toggle is enabled in the "Update Action" popup
+    When disable the "Private Action" toggle in the "Update Action" popup
+    And press "Update" button in the "Update Action" popup
+    Then verify "Action updated successfully" toast message is displayed in the "QA_Test client3 - Actions Dashboard" page
+    When click on the first action in the "QA_Test client3 - Actions Dashboard" page
+    Then the "Update Action" popup is displayed
+    And verify the "Private Action" toggle is disabled in the "Update Action" popup
 
   @mutable
   Scenario: TC011_01_DeloitteUser_DashboardActions - Verify adding an action from the update details page
@@ -212,6 +247,31 @@ Feature: Dashboard Actions for Deloitte User
     And verify "Not Started" option is selected in the "Status" field on the "Update Action" popup
 
   @mutable
+  Scenario: TC011_03_DeloitteUser_DashboardActions - Verify the private action toggle from the update details page
+    Given the "Updates Dashboard - QA_Test client3" page is open
+    When search for "Increase to Monthly Social Security Tax Bases" update from the "Updates Dashboard - QA_Test client3" page
+    And open the first update in the "Updates Dashboard - QA_Test client3" page
+    And open the "Update Actions" tab on the selected update
+    And press "Action Status" header on the selected update
+    And press "Action Status" header on the selected update
+    And click on the first action in the "Update Actions" page
+    Then the "Update Action" popup is displayed
+    When enable the "Private Action" toggle in the "Update Action" popup
+    And verify the "Private Action" toggle is enabled in the "Update Action" popup
+    And press "Update" button in the "Update Action" popup
+    Then verify "Action updated successfully" toast message is displayed in the "Update Actions" page
+    And press "Action Status" header on the selected update
+    And press "Action Status" header on the selected update
+    And press "Action Status" header on the selected update
+    When click on the first action in the "Update Actions" page
+    Then the "Update Action" popup is displayed
+    And verify the "Private Action" toggle is enabled in the "Update Action" popup
+    When disable the "Private Action" toggle in the "Update Action" popup
+    And select "Complete" option in the "Status" field in the "Update Action" popup
+    And press "Update" button in the "Update Action" popup
+    Then verify "Action updated successfully" toast message is displayed in the "Update Actions" page
+
+  @mutable
   Scenario: TC011_04_DeloitteUser_DashboardActions - Verify adding a comment to an action from the update details page
     Given the "Updates Dashboard - QA_Test client3" page is open
     When search for "Increase to Monthly Social Security Tax Bases" update from the "Updates Dashboard - QA_Test client3" page
@@ -256,29 +316,28 @@ Feature: Dashboard Actions for Deloitte User
       | docx            | test-data/invalid.docx | invalid.docx |
 
   @mutable
-  Scenario: TC011_03_DeloitteUser_DashboardActions - Verify the private action toggle from the update details page
+  Scenario Outline: TC011_06_DeloitteUser_DashboardActions - Upload an attachment with unsupported format from the update details page
     Given the "Updates Dashboard - QA_Test client3" page is open
-    When search for "Increase to Monthly Social Security Tax Bases" update from the "Updates Dashboard - QA_Test client3" page
+    When search for "04May 2026 Employment Income Brackets test stage" update from the "Updates Dashboard - QA_Test client3" page
     And open the first update in the "Updates Dashboard - QA_Test client3" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
     And click on the first action in the "Update Actions" page
     Then the "Update Action" popup is displayed
-    When enable the "Private Action" toggle in the "Update Action" popup
-    And verify the "Private Action" toggle is enabled in the "Update Action" popup
-    And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "Update Actions" page
-    And press "Action Status" header on the selected update
-    And press "Action Status" header on the selected update
-    And press "Action Status" header on the selected update
-    When click on the first action in the "Update Actions" page
-    Then the "Update Action" popup is displayed
-    And verify the "Private Action" toggle is enabled in the "Update Action" popup
-    When disable the "Private Action" toggle in the "Update Action" popup
-    And select "Complete" option in the "Status" field in the "Update Action" popup
-    And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "Update Actions" page
+    When open the "Attachments" tab in the "Update Action" popup
+    When open the "Attachments" tab in the "Update Action" popup
+    When upload "<file path>" attachment in the "Update Action" popup
+    Then a message should get displayed as "<expected message>"
+    And verify "<name>" attachment is not displayed in the "Update Action" popup
+
+    Examples:
+      | invalid extension | file path                  | expected message | name             |
+      | xls               | test-data/valid.xls        |                  | valid.xls        |
+      | jpg               | test-data/invalid.jpg      |                  | invalid.jpg      |
+      | csv               | test-data/invalid.csv      |                  | invalid.csv      |
+      | txt               | test-data/invalid.txt      |                  | invalid.txt      |
+      | xlsx              | test-data/Fichero94MB.xlsx |                  | Fichero94MB.xlsx |
 
   @readOnly
   Scenario Outline: TC012_01_DeloitteUser_DashboardActions - Verify filtering the actions dashboard by
@@ -290,12 +349,12 @@ Feature: Dashboard Actions for Deloitte User
     Then verify filtered actions are displayed for "<filter>" with value "<value>"
 
     Examples:
-      | filter          | value        |
-      | Jurisdiction    | Brazil       |
-      | Update Priority | High         |
-      | Action Priority | High         |
-      | Action Status   | Complete     |
-      | User Assigned   | DeloitteUser |
+      | filter          | value               |
+      | Jurisdiction    | Brazil              |
+      | Update Priority | High                |
+      | Action Priority | High                |
+      | Action Status   | Complete            |
+      | User Assigned   | DeloitteUser, Test2 |
 
   @readOnly
   Scenario: TC012_02_DeloitteUser_DashboardActions - Verify filtering the actions dashboard by deadline range
