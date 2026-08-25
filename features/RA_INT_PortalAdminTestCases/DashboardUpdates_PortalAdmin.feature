@@ -203,9 +203,10 @@ Feature: Dashboard Updates for Portal Admin
     When press "View results" button on the Dashboard filter
     Then verify the "Global Inc - Updates Dashboard" item count is not the same
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC006_03_PortalAdmin_DashboardUpdates - Create, save and delete a custom filter
     Given the "Global Inc - Updates Dashboard - All Updates" page is open
+    And register cleanup to remove saved filter "QaTest" from "Global Inc - Updates Dashboard - All Updates"
     When press "Filter" button on the Dashboard filter
     Then remove saved filter "QaTest" if it exists on the Dashboard filter
     When select "Awaiting Allocation" in the "Status" filter on the Dashboard filter
