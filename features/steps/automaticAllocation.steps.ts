@@ -60,6 +60,18 @@ When('click on "Remove Allocation" icon from the allocation {string}', async ({ 
   await automaticAllocationPage.removeAllocation(allocationName);
 });
 
+When(
+  'register cleanup to remove the {string} allocation from portal {string}',
+  async ({ automaticAllocationPage, commonPage, testData }, allocationName: string, portalName: string) => {
+    registerScenarioCleanup(testData, async () => {
+      await commonPage.openNamedPage(`Automatic Allocation of Updates - ${portalName}`);
+      if (await automaticAllocationPage.removeAllocationIfPresent(allocationName)) {
+        await commonPage.clickButton('Delete');
+      }
+    });
+  },
+);
+
 When('add the user {string} in the {string} field', async ({ automaticAllocationPage }, emailAddress: string, fieldLabel: string) => {
   if (fieldLabel !== 'Search for Teams and Users') {
     throw new Error(`Automatic Allocation field "${fieldLabel}" is not supported.`);

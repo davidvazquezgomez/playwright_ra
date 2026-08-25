@@ -1,4 +1,5 @@
 import { Given, Then, When } from './fixtures';
+import { registerScenarioCleanup } from './scenarioCleanup.hooks';
 
 Given(
   'the {string} impact area is restored in the {string} page',
@@ -12,6 +13,23 @@ Given(
       'Impact Area Test Updated'
     );
   }
+);
+
+Given(
+  'register cleanup to restore the {string} impact area in the {string} page',
+  async ({ commonPage, manageImpactAreasPage, testData }, impactAreaName: string, pageName: string) => {
+    if (pageName !== 'Manage Impact Areas' || impactAreaName !== 'Impact Area Test') {
+      throw new Error(`Impact area "${impactAreaName}" on page "${pageName}" is not supported.`);
+    }
+
+    registerScenarioCleanup(testData, async () => {
+      await commonPage.openNamedPage(pageName);
+      await manageImpactAreasPage.restoreImpactAreaNameIfNeeded(
+        impactAreaName,
+        'Impact Area Test Updated',
+      );
+    });
+  },
 );
 
 When(

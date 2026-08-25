@@ -109,6 +109,21 @@ export class AutomaticAllocationPage extends BasePage {
   }
 
   /**
+   * Opens deletion for an allocation only when its row is currently listed.
+   * @param allocationName Exact allocation name to remove.
+   * @returns True when the deletion confirmation was opened.
+   */
+  async removeAllocationIfPresent(allocationName: string): Promise<boolean> {
+    const removeButton = this._page.locator(this.removeAllocationButtonByName(allocationName));
+    if (await removeButton.count() === 0 || !await removeButton.first().isVisible()) {
+      return false;
+    }
+
+    await this.clickElement(this.removeAllocationButtonByName(allocationName));
+    return true;
+  }
+
+  /**
    * Verifies that the requested Automatic Allocation grid headers are visible.
    * @param fields Semicolon-delimited display names of the expected grid headers.
    */

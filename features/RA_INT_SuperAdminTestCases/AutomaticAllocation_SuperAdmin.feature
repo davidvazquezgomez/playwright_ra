@@ -51,9 +51,10 @@ Feature: Automatic Allocation of Updates for Super Admin
     And select the "Canada" option in the "Jurisdiction(s)" field
     Then verify "Update Owner is required." field errors are displayed in the Automatic Allocation Setup page
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC001_04_SuperAdmin_AutomaticAllocation - Create and delete an allocation with the Cancel button
     Given the "Automatic Allocation Setup" page is open
+    And register cleanup to remove the "QaTest" allocation from portal "01_13Jan REG"
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
     And select the "Employer tax reporting/filing requirements" option in the "Impact Area(s)" field
@@ -114,9 +115,10 @@ Feature: Automatic Allocation of Updates for Super Admin
     Then the "Automatic Allocation of Updates" page is displayed
     And verify the "QaTest" allocation is not in the "Automatic Allocation of Updates" page
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC001_07_SuperAdmin_AutomaticAllocation - Create and delete an allocation with the Back button
     Given the "Automatic Allocation Setup" page is open
+    And register cleanup to remove the "QaTest" allocation from portal "01_13Jan REG"
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
     And select the "Employer tax reporting/filing requirements" option in the "Impact Area(s)" field
@@ -143,9 +145,10 @@ Feature: Automatic Allocation of Updates for Super Admin
     And press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC003_01_SuperAdmin_AutomaticAllocation - Use multiple Jurisdiction and Impact Area selections
     Given the "Automatic Allocation Setup" page is open
+    And register cleanup to remove the "QaTest" allocation from portal "01_13Jan REG"
     When fill the "Allocation Name" field with "QaTest"
     Then click on the "Impact Area(s)" checkbox
     And select the "Select All" option in the "Impact Area(s)" field
@@ -162,9 +165,10 @@ Feature: Automatic Allocation of Updates for Super Admin
     And press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC004_01_SuperAdmin_AutomaticAllocation - Create and delete an allocation using a team
     Given the "Automatic Allocation Setup" page is open
+    And register cleanup to remove the "QaTest" allocation from portal "01_13Jan REG"
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
     And select the "Employer tax reporting/filing requirements" option in the "Impact Area(s)" field
@@ -183,9 +187,11 @@ Feature: Automatic Allocation of Updates for Super Admin
     And press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC005_SuperAdmin_AutomaticAllocation - Verify warning message for duplicate allocations
     Given the "Automatic Allocation of Updates - 01_13Jan REG" page is open
+    And register cleanup to remove the "QaTest" allocation from portal "01_13Jan REG"
+    And register cleanup to remove the "QaTest2" allocation from portal "01_13Jan REG"
     Then press "Create New Allocation" button
     And the "Automatic Allocation Setup" page is displayed
     When fill the "Allocation Name" field with "QaTest2"
