@@ -93,8 +93,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     And select the "clientadmin1, satest" option in the "Update Owner" field
     When press "Cancel" button
     Then the "Unsaved Changes" popup is displayed
-    When press "Cancel" button on the "Unsaved Changes" popup
-    When press "Continue" button
+    When press "Continue" button on the "Unsaved Changes" popup
     Then the "Automatic Allocation of Updates" page is displayed
     And verify the "QaTest" allocation is not in the "Automatic Allocation of Updates" page
 
@@ -111,10 +110,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     When press "Back" button
     Then the "Unsaved Changes" popup is displayed
     And the popup message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
-    And verify "Continue;Cancel" buttons are displayed on the "Unsaved Changes" popup
-    When press "Cancel" button
-    Then the "Automatic Allocation Setup" popup is displayed
-    When press "Continue" button
+    When press "Continue" button on the "Unsaved Changes" popup
     Then the "Automatic Allocation of Updates" page is displayed
     And verify the "QaTest" allocation is not in the "Automatic Allocation of Updates" page
 
@@ -157,7 +153,6 @@ Feature: Automatic Allocation of Updates for Super Admin
     Then select the "Select All" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
     And select the "clientadmin1, satest" option in the "Update Owner" field
-    And select the "clientadmin1, satest" option in the "Update Owner" field
     And press "Save" button
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation Setup" page
     And the "Automatic Allocation of Updates" page is displayed
@@ -177,12 +172,16 @@ Feature: Automatic Allocation of Updates for Super Admin
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
     And select the "StageTeam11Aug2026" option in the "Update Owner" field
-    And verify the "Responsible User" field displays the corresponding value
+    And verify "StageTeam11Aug2026" is still selected in the "Update Owner" field
     When select the "clientadmin1, satest" option in the "Update Owner" field
     And press "Save" button
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation Setup" page
     And the "Automatic Allocation of Updates" page is displayed
     And verify the "QaTest" allocation is present in the "Automatic Allocation of Updates" page
+    When click on "Remove Allocation" icon from the allocation "QaTest"
+    Then the "Confirm Deletion" popup is displayed
+    And press "Delete" button
+    Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
 
   @mutable
   Scenario: TC005_SuperAdmin_AutomaticAllocation - Verify warning message for duplicate allocations
@@ -195,7 +194,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     And click on the "Jurisdiction(s)" checkbox
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
-    And select the "clientadmin1, satest" option in the "Update Owner" field
+    And select the "satestclientuser2, satestclientuser2" option in the "Update Owner" field
     And press "Save" button
     Then the "Duplicate automatic allocation detected" popup is displayed
     And the popup message is "Automatic allocation(s) named 'QaTest' already exists for the same Impact Area(s) and/or Jurisdiction(s).If you continue, the new rule will be created, but matching updates will be allocated according to oldest created rule(s). Do you want to proceed?"

@@ -63,7 +63,7 @@ export class CommonPage extends BasePage {
   private viewAllUpdatesButton = 'button[title="Clear filters and view all updates"]';
   private viewAllActionsButton = 'button[title="Clear filters and view all actions"]';
   private addActionButton = 'button:has-text("Add Action")';
-  private backButton = 'app-title a.back-link';
+  private backButton = 'app-title a.back-link, .back a.back-link';
   private favouriteIcon = '.view-toggle > span:not(.d-none) i[title="Save as favourite"]';
   private openDashboardButton = 'role=button[name="Open Dashboard"]';
   private dashboardFilterButton = 'button[title="Filter"]';
@@ -123,6 +123,8 @@ export class CommonPage extends BasePage {
     `kendo-popup.k-animation-container-shown:visible .select-all:text-is("${optionName}"), ` +
     `kendo-popup.k-animation-container-shown:visible li[role="option"]:text-is("${optionName}"), ` +
     `kendo-popup.k-animation-container-shown:visible li[role="option"]:has(.k-list-item-text:text-is("${optionName}"))`;
+  private visibleKendoSelectAllCheckbox =
+    'kendo-popup.k-animation-container-shown:visible .select-all input[type="checkbox"]';
   private visibleUserPickerOptionByName = (optionName: string) =>
     `kendo-popup.k-animation-container-shown:visible li[role="option"]:has(.person-name:text-is("${optionName}"))`;
 
@@ -165,6 +167,12 @@ export class CommonPage extends BasePage {
    */
   async selectKendoFieldOption(controlSelector: string, optionName: string): Promise<void> {
     await this.clickElement(controlSelector);
+
+    if (optionName === 'Select All') {
+      await this._page.locator(this.visibleKendoSelectAllCheckbox).check({ force: true });
+      return;
+    }
+
     await this.clickElement(this.visibleKendoFieldOptionByName(optionName));
   }
 
