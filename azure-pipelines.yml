@@ -45,12 +45,87 @@ jobs:
         env:
           STAGE_URL: $(STAGE_URL)
 
+  - job: PrewarmAuthStates
+    displayName: 'Prewarm shared authentication states'
+    dependsOn: ValidateContracts
+    timeoutInMinutes: '15'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      - task: UseNode@1
+        displayName: 'Install Node.js'
+        inputs:
+          version: '22.x'
+
+      - task: Cache@2
+        displayName: 'Cache npm packages'
+        inputs:
+          key: 'npm | "$(Agent.OS)" | package-lock.json'
+          path: '$(HOME)/.npm'
+
+      - script: npm ci
+        displayName: 'Install dependencies'
+
+      - task: Cache@2
+        displayName: 'Cache Playwright browsers'
+        inputs:
+          key: 'playwright | "$(Agent.OS)" | package-lock.json'
+          path: '$(Pipeline.Workspace)/.cache/ms-playwright'
+          cacheHitVar: 'PLAYWRIGHT_CACHE_RESTORED'
+
+      - script: |
+          if [ "$(PLAYWRIGHT_CACHE_RESTORED)" != "true" ]; then
+            PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright install --with-deps chromium
+          else
+            echo "Using cached Playwright Chromium binaries."
+          fi
+        displayName: 'Install Playwright browsers'
+
+      - script: |
+          npx rimraf test-results/auth-state
+          CI=true REUSE_AUTH_STATE=true AUTH_STATE_PREWARM_ONLY=true PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop
+        displayName: 'Create shared authentication states'
+        env:
+          HEADLESS: $(HEADLESS)
+          ENV: $(ENV)
+          STAGE_URL: $(STAGE_URL)
+          GA_PORTAL_STAGE_URL: $(GA_PORTAL_STAGE_URL)
+          USER_SUPERADMIN: $(USER_SUPERADMIN)
+          USER_SUPERADMIN_PASSWORD: $(USER_SUPERADMIN_PASSWORD)
+          USER_PORTALADMIN: $(USER_PORTALADMIN)
+          USER_PORTALADMIN_PASSWORD: $(USER_PORTALADMIN_PASSWORD)
+          USER_DELOITTEUSER: $(USER_DELOITTEUSER)
+          USER_DELOITTEUSER_PASSWORD: $(USER_DELOITTEUSER_PASSWORD)
+          USER_CLIENTUSER: $(USER_CLIENTUSER)
+          USER_CLIENTUSER_PASSWORD: $(USER_CLIENTUSER_PASSWORD)
+          USER_CLIENTUSER_TOTP_SECRET: $(USER_CLIENTUSER_TOTP_SECRET)
+          USER_TEAMLEADER: $(USER_TEAMLEADER)
+          USER_TEAMLEADER_PASSWORD: $(USER_TEAMLEADER_PASSWORD)
+          USER_TEAMLEADER_TOTP_SECRET: $(USER_TEAMLEADER_TOTP_SECRET)
+          USER_TEAMMEMBER: $(USER_TEAMMEMBER)
+          USER_TEAMMEMBER_PASSWORD: $(USER_TEAMMEMBER_PASSWORD)
+          USER_TEAMMEMBER_TOTP_SECRET: $(USER_TEAMMEMBER_TOTP_SECRET)
+          USER_CLIENTADMIN: $(USER_CLIENTADMIN)
+          USER_CLIENTADMIN_PASSWORD: $(USER_CLIENTADMIN_PASSWORD)
+          USER_CLIENTADMIN_TOTP_SECRET: $(USER_CLIENTADMIN_TOTP_SECRET)
+          USER_GAPORTAL_CLIENTADMIN: $(USER_GAPORTAL_CLIENTADMIN)
+          USER_GAPORTAL_CLIENTADMIN_PASSWORD: $(USER_GAPORTAL_CLIENTADMIN_PASSWORD)
+          USER_GAPORTAL_CLIENTUSER: $(USER_GAPORTAL_CLIENTUSER)
+          USER_GAPORTAL_CLIENTUSER_PASSWORD: $(USER_GAPORTAL_CLIENTUSER_PASSWORD)
+
+      - task: PublishPipelineArtifact@1
+        displayName: 'Publish shared authentication states'
+        inputs:
+          targetPath: 'test-results/auth-state'
+          artifact: 'auth-states'
+          publishLocation: 'pipeline'
+
   # Read-only and mutable suites run as independent parallel jobs (separate agents) instead of
   # sequentially in one job. Mutable stays single-worker/serial because scenarios share mutable
   # state (create/edit/delete on the same records), but it no longer waits for read-only to finish.
   - job: RegressionTestsReadOnly
     displayName: 'RA Regression - Read-only (5 workers)'
-    dependsOn: ValidateContracts
+    dependsOn: PrewarmAuthStates
     timeoutInMinutes: '300'
     pool:
       vmImage: 'ubuntu-latest'
@@ -68,6 +143,13 @@ jobs:
 
       - script: npm ci
         displayName: 'Install dependencies'
+
+      - task: DownloadPipelineArtifact@2
+        displayName: 'Download shared authentication states'
+        inputs:
+          buildType: 'current'
+          artifact: 'auth-states'
+          path: '$(System.DefaultWorkingDirectory)/test-results/auth-state'
 
       - task: Cache@2
         displayName: 'Cache Playwright browsers'
@@ -169,7 +251,7 @@ jobs:
 
   - job: RegressionTestsMutable
     displayName: 'RA Regression - Mutable (1 worker, serial)'
-    dependsOn: ValidateContracts
+    dependsOn: PrewarmAuthStates
     timeoutInMinutes: '300'
     pool:
       vmImage: 'ubuntu-latest'
@@ -187,6 +269,13 @@ jobs:
 
       - script: npm ci
         displayName: 'Install dependencies'
+
+      - task: DownloadPipelineArtifact@2
+        displayName: 'Download shared authentication states'
+        inputs:
+          buildType: 'current'
+          artifact: 'auth-states'
+          path: '$(System.DefaultWorkingDirectory)/test-results/auth-state'
 
       - task: Cache@2
         displayName: 'Cache Playwright browsers'
@@ -291,9 +380,10 @@ jobs:
   - job: PublishResults
     displayName: 'Merge Allure results and publish report'
     dependsOn:
+      - ValidateContracts
       - RegressionTestsReadOnly
       - RegressionTestsMutable
-    condition: always()
+    condition: and(succeeded('ValidateContracts'), always())
     timeoutInMinutes: '30'
     pool:
       vmImage: 'ubuntu-latest'

@@ -35,6 +35,7 @@ const missingStepsMode =
 const retries = Number(process.env.RETRIES ?? (process.env.CI ? 2 : 0));
 const traceMode = (process.env.TRACE_MODE as TraceMode | undefined) || 'retain-on-failure';
 const resultsGroup = process.env.RESULTS_GROUP || 'all';
+const authStatePrewarmOnly = process.env.AUTH_STATE_PREWARM_ONLY === 'true';
 
 // playwright-bdd configuration: generate tests from .feature files
 const testDir = defineBddConfig({
@@ -44,7 +45,8 @@ const testDir = defineBddConfig({
 });
 
 export default defineConfig({
-  testDir,
+  testDir: authStatePrewarmOnly ? 'playwright' : testDir,
+  testMatch: authStatePrewarmOnly ? /authState\.prewarm\.spec\.ts/ : undefined,
   globalSetup: require.resolve('./playwright/authState.setup'),
   fullyParallel: process.env.PARALLEL_RUN === 'true',
   timeout: process.env.TEST_TIMEOUT ? Number(process.env.TEST_TIMEOUT) : 300000,
