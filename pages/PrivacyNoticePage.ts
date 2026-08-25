@@ -199,6 +199,24 @@ export class PrivacyNoticePage extends BasePage {
     }
   }
 
+  /**
+   * Removes the final text when it is present at the end of the editable privacy notice.
+   * @param text Text to remove when it is the final word.
+   * @returns True when the content was changed.
+   */
+  async removeTextFromLastParagraphIfPresent(text: string): Promise<boolean> {
+    const lastParagraph = this.getLastPrivacyNoticeParagraph();
+    const paragraphText = (await lastParagraph.textContent())?.trim() ?? '';
+    const trailingTextPattern = new RegExp(`${this.escapeForRegExp(text)}$`);
+
+    if (!trailingTextPattern.test(paragraphText)) {
+      return false;
+    }
+
+    await this.removeTextFromLastParagraph(text);
+    return true;
+  }
+
   private getPrivacyNoticeParagraphLocator(
     pageName: 'Update Privacy Notice' | 'Privacy Notice',
     position: 'first' | 'last',

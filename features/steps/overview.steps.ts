@@ -40,6 +40,10 @@ When('click on view as grid or card and verify view as grid or card', async ({ o
   await overviewPage.clickViewAsGridAndVerifyViewAsCards();
 });
 
+When('restore the initial overview view', async ({ overviewPage }) => {
+  await overviewPage.restoreInitialView();
+});
+
 Then('verify for {string} button is visible', async ({ overviewPage }, buttonName: string) => {
   await overviewPage.verifyOverviewButtonIsVisible(buttonName);
 });

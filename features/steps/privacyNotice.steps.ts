@@ -1,4 +1,5 @@
 import { Then, When } from './fixtures';
+import { registerScenarioCleanup } from './scenarioCleanup.hooks';
 
 const updatePrivacyNoticePage = 'Update Privacy Notice';
 const publishedPrivacyNoticePage = 'Privacy Notice';
@@ -52,6 +53,29 @@ When(
   async ({ privacyNoticePage }, word: string, pageName: string) => {
     verifyUpdatePrivacyNoticePage(pageName);
     await privacyNoticePage.removeTextFromLastParagraph(word);
+  },
+);
+
+When(
+  'ensure the {string} word is removed from the end of the {string} content',
+  async ({ commonPage, privacyNoticePage }, word: string, pageName: string) => {
+    verifyUpdatePrivacyNoticePage(pageName);
+    if (await privacyNoticePage.removeTextFromLastParagraphIfPresent(word)) {
+      await commonPage.clickButton('Save');
+    }
+  },
+);
+
+When(
+  'register cleanup to remove the {string} word from the {string} content',
+  async ({ commonPage, privacyNoticePage, testData }, word: string, pageName: string) => {
+    verifyUpdatePrivacyNoticePage(pageName);
+    registerScenarioCleanup(testData, async () => {
+      await commonPage.openNamedPage(pageName);
+      if (await privacyNoticePage.removeTextFromLastParagraphIfPresent(word)) {
+        await commonPage.clickButton('Save');
+      }
+    });
   },
 );
 
