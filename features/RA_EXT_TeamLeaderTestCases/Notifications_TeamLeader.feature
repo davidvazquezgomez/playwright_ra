@@ -20,13 +20,13 @@ Feature: Notifications for Team Leader
 
   @readOnly
   Scenario: TC001_2_TeamLeader_Notifications - Verify Notifications Preferences has Actions and Teams Sections Available
-    Given the "Notifications Preference" page is open
+    Given the "Notification Preferences" page is open
     Then verify "Actions" section is visible with notification options for the following "Allocated an Action; Changes to Action Status (where assigned to Action); Changes to Action Priority (where assigned to Action); Action due tomorrow and not yet complete; Action deadline today and not yet complete"
     And verify "Teams" section is visible with notification options for the following "Added to team; Removed from team"
 
   @mutable
   Scenario: TC001_3_TeamLeader_Notifications - Verify Notifications Preferences for Updates, Actions and Teams
-    Given the "Notifications Preference" page is open
+    Given the "Notification Preferences" page is open
     When toggle "Set as responsible person" System notification option to be "enabled"
     When toggle "Changes to Update Status (where on the team)" System notification option to be "enabled"
     When toggle "Allocated an Action" System notification option to be "enabled"
@@ -104,7 +104,7 @@ Feature: Notifications for Team Leader
     When press "Profile" button
     And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
-    Then the "Notifications Preference" page is displayed
+    Then the "Notification Preferences" page is displayed
     And verify all the "Notifications Preferences" are disabled
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
@@ -143,7 +143,7 @@ Feature: Notifications for Team Leader
     When press "Profile" button
     And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
-    Then the "Notifications Preference" page is displayed
+    Then the "Notification Preferences" page is displayed
     And verify all the "Notifications Preferences" are disabled
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
