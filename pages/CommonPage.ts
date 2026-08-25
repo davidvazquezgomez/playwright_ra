@@ -566,7 +566,8 @@ export class CommonPage extends BasePage {
       return 0;
     }
 
-    return firstValue < secondValue ? -1 : 1;
+    // The grid sorts text case-insensitively, so comparisons must ignore letter casing.
+    return firstValue.localeCompare(secondValue, 'en', { sensitivity: 'base', numeric: true });
   }
 
   private async clickSaveButton(): Promise<void> {
