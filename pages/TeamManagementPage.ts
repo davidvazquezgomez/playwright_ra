@@ -3,6 +3,7 @@ import { BasePage } from './BasePage';
 
 export class TeamManagementPage extends BasePage {
   private teamGridRows = '[role="grid"][aria-label="Data table"] tbody tr.k-master-row';
+  private createTeamButton = 'button:has(.k-button-text:text-is("Create Team"))';
   private firstTeamEditButton = `${this.teamGridRows}:first-child button[title^="Edit"]`;
   private addTeamMembersButton = 'button.add-save-btn:has(.k-button-text:text-is("Add Team Members"))';
   private addTeamMembersDialog = 'div[role="dialog"]:has(.k-dialog-title:text-is("Add Team Members"))';
@@ -12,6 +13,7 @@ export class TeamManagementPage extends BasePage {
     `kendo-popup.k-animation-container-shown:visible li[role="option"]:has(.person-name:text-is("${userName}"))`;
   private addUserButton = `${this.addTeamMembersDialog} button[aria-label="Add User"]`;
   private saveTeamButton = 'button[form="teamForm"]:has(.k-button-text:text-is("Save"))';
+  private teamNameInput = '#teamForm kendo-textbox[formcontrolname="teamName"] input.k-input-inner';
   private teamNameFilter = 'input[aria-label="Team Name Filter"]';
   private teamLeaderSearchInput = '#teamForm app-people-picker[formcontrolname="teamLeaders"] input[role="combobox"]';
   private visibleKendoPopup = 'kendo-popup.k-animation-container-shown:visible';
@@ -26,6 +28,10 @@ export class TeamManagementPage extends BasePage {
   private teamLeadersCell = 'td[data-kendo-grid-column-index="1"]';
   private editButtonByTeamName = (teamName: string) =>
     `${this.teamRowByName(teamName)} button[title^="Edit"]`;
+  private removeButtonByTeamName = (teamName: string) =>
+    `${this.teamRowByName(teamName)} button[title^="Remove"]`;
+  private warningDialog = 'div[role="dialog"]:has(.k-dialog-title:text-is("Warning"))';
+  private warningDeleteButton = `${this.warningDialog} button:has(.k-button-text:text-is("Delete"))`;
 
   /**
    * Opens the editor for the first team displayed in the Team Management grid.
@@ -76,6 +82,46 @@ export class TeamManagementPage extends BasePage {
    */
   async saveTeam(): Promise<void> {
     await this.clickElement(this.saveTeamButton);
+  }
+
+  /**
+   * Ensures that a minimally valid team exists for a scenario that edits or deletes it.
+   * @param teamName Exact team name.
+   * @param leaderEmail Email address of the Team Leader.
+   * @param memberName Display name of the Team Member.
+   */
+  async ensureTeamExists(teamName: string, leaderEmail: string, memberName: string): Promise<void> {
+    await this.searchTeamsByName(teamName);
+    if (await this._page.locator(this.teamRowByName(teamName)).count() > 0) {
+      return;
+    }
+
+    await this.clearInput(this.teamNameFilter);
+    await this.clickElement(this.createTeamButton);
+    await this.fillInputText(this.teamNameInput, teamName);
+    await this.addTeamLeader(leaderEmail);
+    await this.openAddTeamMembersDialog();
+    await this.selectTeamMemberToAdd(memberName);
+    await this.addSelectedTeamMembers();
+    await this.saveTeam();
+    await this.searchTeamsByName(teamName);
+    await expect(this._page.locator(this.teamRowByName(teamName))).toBeVisible();
+  }
+
+  /**
+   * Removes a team when it is present, allowing setup and cleanup to be rerun safely.
+   * @param teamName Exact team name to remove.
+   */
+  async removeTeamIfPresent(teamName: string): Promise<void> {
+    await this.searchTeamsByName(teamName);
+    const teamRow = this._page.locator(this.teamRowByName(teamName));
+    if (await teamRow.count() === 0) {
+      return;
+    }
+
+    await this.clickElement(this.removeButtonByTeamName(teamName));
+    await this.clickElement(this.warningDeleteButton);
+    await expect(teamRow).toHaveCount(0);
   }
 
   /**

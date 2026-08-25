@@ -49,6 +49,24 @@ When('search for {string} in the Team Name field', async ({ teamManagementPage }
   await teamManagementPage.searchTeamsByName(teamName);
 });
 
+When('ensure the team {string} does not exist', async ({ teamManagementPage }, teamName: string) => {
+  await teamManagementPage.removeTeamIfPresent(teamName);
+});
+
+When(
+  'ensure the team {string} exists with Team Leader {string} and Team Member {string}',
+  async ({ teamManagementPage }, teamName: string, leaderEmail: string, memberName: string) => {
+    await teamManagementPage.ensureTeamExists(teamName, leaderEmail, memberName);
+  },
+);
+
+When(
+  'register the team {string} for cleanup',
+  async ({ teamManagementPage, testData }, teamName: string) => {
+    registerScenarioCleanup(testData, () => teamManagementPage.removeTeamIfPresent(teamName));
+  },
+);
+
 Then('verify the user {string} is not available in the team leaders', async ({ teamManagementPage }, userName: string) => {
   await teamManagementPage.verifyUserIsNotAvailableInTeamLeaders(userName);
 });

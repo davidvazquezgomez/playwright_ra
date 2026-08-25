@@ -5,7 +5,7 @@ Feature: Team Management for Deloitte User
     Given launch Regulatory Advantage application URL and login as "deloitte" user "DELOITTEUSER"
     And verify if applicable portals are displayed
 
-  @mutable
+  @readOnly
   Scenario Outline: TC001_01_DeloitteUser_TeamManagement - Verify mandatory field validations for team setup
     When click on "QA_Test client3" of the portals
     Then the "Overview" page is displayed
@@ -39,9 +39,11 @@ Feature: Team Management for Deloitte User
       | Created Date |
       | Updated Date |
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC002_01_DeloitteUser_TeamManagement - Create a team
     Given the "Team Management - QA_Test client3" page is open
+    And ensure the team "QA_TEST_01" does not exist
+    And register the team "QA_TEST_01" for cleanup
     When press "Create Team" button
     And enter "QA_TEST_01" in the "Team Name" field
     And enter "Additional information for the QA team" in the "Additional Information" field
@@ -56,9 +58,11 @@ Feature: Team Management for Deloitte User
     When save the team from the "Create/Edit Team" page
     Then verify "Team created successfully." toast message is displayed in the "Team Management" page
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC002_02_DeloitteUser_TeamManagement - Edit a created team
     Given the "Team Management - QA_Test client3" page is open
+    And ensure the team "QA_TEST_01" exists with Team Leader "satestclientadmin1@yopmail.com" and Team Member "DeloitteUserTest@gmail.com"
+    And register the team "QA_TEST_01" for cleanup
     When click on "Edit" button for the "QA_TEST_01" team
     And add "ra.grewspec@gmail.com" in the "Team Leader" field
     And open the Add Team Members dialog
@@ -76,9 +80,11 @@ Feature: Team Management for Deloitte User
     And save the team from the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC002_03_DeloitteUser_TeamManagement - Delete a created team
     Given the "Team Management - QA_Test client3" page is open
+    And ensure the team "QA_TEST_01" exists with Team Leader "satestclientadmin1@yopmail.com" and Team Member "DeloitteUserTest@gmail.com"
+    And register the team "QA_TEST_01" for cleanup
     When click on "Remove" button for the "QA_TEST_01" team
     Then the "Warning" popup is displayed
     And verify "Delete;Cancel" buttons are displayed on the "Warning" popup
