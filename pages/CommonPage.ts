@@ -239,7 +239,7 @@ export class CommonPage extends BasePage {
       'Automatic Allocation Setup - Global Inc': '/allocation-setup/142',
       'Automatic Allocation of Updates': '/allocation/361',
       'Automatic Allocation Setup': '/allocation-setup/616',
-      'Notifications Preference': '/user-notification-preference',
+      'Notification Preferences': '/user-notification-preference',
 
     };
     const pageRoute = pageRoutes[pageName];
@@ -891,7 +891,7 @@ export class CommonPage extends BasePage {
         return this.overviewPageTitle;
       case 'User Management':
         return this.userManagementPageTitle;
-      case 'Notifications Preference':
+      case 'Notification Preferences':
       case 'Default Notifications Settings':
         return this.defaultNotificationSettingsPageTitle;
       case 'RegulatoryAdvantage | Release Notes':
