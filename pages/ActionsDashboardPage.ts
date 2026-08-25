@@ -73,6 +73,14 @@ export class ActionsDashboardPage extends BasePage {
       })
       .first()
       .locator('td[aria-colindex="2"]');
+  private readonly updateTitleCellByUpdateTitle = (updateTitle: string) =>
+    this.actionsGrid()
+      .locator('tbody tr.k-master-row')
+      .filter({
+        has: this._page.locator('td[aria-colindex="1"]').getByText(updateTitle, { exact: true }),
+      })
+      .first()
+      .locator('td[aria-colindex="1"]');
   private readonly actionsPagerInfo = '.k-grid .k-pager-info';
 
   /**
@@ -303,17 +311,28 @@ export class ActionsDashboardPage extends BasePage {
   }
 
   /**
-   * Opens the first Action associated with the requested update title.
+   * Opens the Update Action dialog from the requested Action Analytics grid cell.
    * @param updateTitle Exact update title shown in the result row.
+   * @param sectionName Grid section used to open the action.
    */
-  async openActionForUpdate(updateTitle: string): Promise<void> {
+  async openActionForUpdate(updateTitle: string, sectionName: string): Promise<void> {
     await this.ensureKendoGridHasRows(
       this.actionsGrid(),
       `The Actions Dashboard must contain an action before the action for update "${updateTitle}" can be opened.`,
       `The Actions Dashboard grid was displayed before searching for update "${updateTitle}".`,
     );
-    const actionCell = this.actionCellByUpdateTitle(updateTitle);
-    await this.clickLocator(actionCell);
+
+    const resultCellBySection = {
+      Action: this.actionCellByUpdateTitle,
+      'Update Title': this.updateTitleCellByUpdateTitle,
+    }[sectionName];
+
+    if (!resultCellBySection) {
+      throw new Error(`Section "${sectionName}" is not supported for update action selection.`);
+    }
+
+    await this.clickLocator(resultCellBySection(updateTitle));
+    await expect(this._page.locator(this.updateActionDialog)).toBeVisible();
   }
 
   /**

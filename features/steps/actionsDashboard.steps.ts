@@ -100,11 +100,7 @@ When('click on the first action in the {string} page', async ({ actionsDashboard
 When(
   'select the {string} result by clicking on the {string} section',
   async ({ actionsDashboardPage }, updateTitle: string, sectionName: string) => {
-    if (sectionName !== 'Action') {
-      throw new Error(`Section "${sectionName}" is not supported for update action selection.`);
-    }
-
-    await actionsDashboardPage.openActionForUpdate(updateTitle);
+    await actionsDashboardPage.openActionForUpdate(updateTitle, sectionName);
   },
 );
 
