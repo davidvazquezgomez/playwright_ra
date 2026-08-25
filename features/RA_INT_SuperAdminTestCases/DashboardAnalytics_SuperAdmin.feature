@@ -194,8 +194,8 @@ Feature: Dashboard Analytics for Super Admin
     Then the "01_13Jan REG - Updates Dashboard" page is displayed
     When press the "Analytics" section
     Then the "Update Analytics" subsection is displayed
-    When press the "Action Analytics" subsection
-    Then the "Action Analytics" subsection is displayed
+    When press the "Actions Analytics" subsection
+    Then the "Actions Analytics" subsection is displayed
 
   @readOnly
   Scenario: TC016_02_SuperAdmin_DashboardAnalytics - Reset the filter Action Analytics page
@@ -277,7 +277,7 @@ Feature: Dashboard Analytics for Super Admin
   Scenario: TC016_08_SuperAdmin_DashboardAnalytics - Verify Outstanding Actions Map controls
     Given the "01_13Jan REG - Analytics Dashboard - Action Analytics" page is open
     Then verify the "Outstanding Actions Map" chart is displayed
-    And press "Save visual as PDF" map control
+    And press "Save visuals as PDF" map control
     When press "Reset Zoom" map control
     When press "Zoom In" map control
     When press "Zoom Out" map control
@@ -374,7 +374,7 @@ Feature: Dashboard Analytics for Super Admin
     Then the "All Updates" subsection is displayed
     When press the "Analytics" section
     And the "Update Analytics" subsection is displayed
-    Then press the "Action Analytics" subsection
+    Then press the "Actions Analytics" subsection
     And verify the "Actions Analytics Data" item count is the same
 
   @readOnly
@@ -388,7 +388,7 @@ Feature: Dashboard Analytics for Super Admin
     Then verify items are sorted in "descending" order by "<column>" in the "01_13Jan REG - Analytics Dashboard - Action Analytics" page
     When press the "Updates" section
     And press the "Analytics" section
-    And press the "Action Analytics" subsection
+    And press the "Actions Analytics" subsection
     Then verify items are sorted in "descending" order by "<column>" in the "01_13Jan REG - Analytics Dashboard - Action Analytics" page
 
     Examples:
@@ -409,5 +409,5 @@ Feature: Dashboard Analytics for Super Admin
     Then verify that the first result that appears is number "31"
     When press the "Updates" section
     Then press the "Analytics" section
-    And press the "Action Analytics" subsection
+    And press the "Actions Analytics" subsection
     And verify that the first result that appears is number "31"

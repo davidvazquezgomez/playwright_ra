@@ -199,7 +199,7 @@ Scenario: TC015_02_DeloitteUser_DashboardAnalytics - Compare Update Analytics Da
     Then the "QA_Test client3 - Updates Dashboard" page is displayed
     When press the "Analytics" section
     Then the "Update Analytics" subsection is displayed
-    When press the "Action Analytics" subsection
+    When press the "Actions Analytics" subsection
     Then the "Action Analytics" subsection is displayed
 
   @readOnly
@@ -279,7 +279,7 @@ Scenario: TC016_06_DeloitteUser_DashboardAnalytics - Verify Outstanding Actions 
   Scenario: TC016_08_DeloitteUser_DashboardAnalytics - Verify Outstanding Actions Map controls
     Given the "QA_Test client3 - Analytics Dashboard - Action Analytics" page is open
     Then verify the "Outstanding Actions Map" chart is displayed
-    And press "Save visual as PDF" map control
+    And press "Save visuals as PDF" map control
     When press "Reset Zoom" map control
     When press "Zoom In" map control
     When press "Zoom Out" map control
@@ -373,7 +373,7 @@ Scenario: TC017_03_DeloitteUser_DashboardAnalytics - Verify the information disp
     Then the "All Updates" subsection is displayed
     When press the "Analytics" section
     And the "Update Analytics" subsection is displayed
-    Then press the "Action Analytics" subsection
+    Then press the "Actions Analytics" subsection
     And verify the "Actions Analytics Data" item count is the same
 
   @readOnly
@@ -387,7 +387,7 @@ Scenario: TC017_03_DeloitteUser_DashboardAnalytics - Verify the information disp
     Then verify items are sorted in "descending" order by "<column>" in the "QA_Test client3 - Analytics Dashboard - Action Analytics" page
     When press the "Updates" section
     And press the "Analytics" section
-    And press the "Action Analytics" subsection
+    And press the "Actions Analytics" subsection
     Then verify items are sorted in "descending" order by "<column>" in the "QA_Test client3 - Analytics Dashboard - Action Analytics" page
 
     Examples:
@@ -408,5 +408,5 @@ Scenario: TC017_03_DeloitteUser_DashboardAnalytics - Verify the information disp
     Then verify that the first result that appears is number "1"
     When press the "Updates" section
     Then press the "Analytics" section
-    And press the "Action Analytics" subsection
+    And press the "Actions Analytics" subsection
     And verify that the first result that appears is number "1"
