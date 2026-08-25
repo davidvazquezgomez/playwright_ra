@@ -197,8 +197,8 @@ Feature: Automatic Allocation of Updates for Super Admin
     And select the "satestclientuser2, satestclientuser2" option in the "Update Owner" field
     And press "Save" button
     Then the "Duplicate automatic allocation detected" popup is displayed
-    And the popup message is "Automatic allocation(s) named 'QaTest' already exists for the same Impact Area(s) and/or Jurisdiction(s).If you continue, the new rule will be created, but matching updates will be allocated according to oldest created rule(s). Do you want to proceed?"
-    And verify "Continue;Cancel" buttons are displayed on the "Duplicate automatic allocation detected" popup
+    And the popup message is "Automatic allocation(s) named 'Test Allocation TC005_1783699615807, Test Allocation TC003 1784104916315-520, Test Allocation TC003 1784105354185-722, Test Allocation TC003 Repeat 1784107218326-608, Test Allocation TC003 Repeat 1784115332979-261, Test Allocation TC005_1784120420899, Test Allocation TC005_1784120611896, Test Allocation TC005_1784120891620, TEST AUTO 32, tEST_ALLOCATION_INT and eye' already exists for the same Impact Area(s) and/or Jurisdiction(s).If you continue, the new rule will be created, but matching updates will be allocated according to oldest created rule(s). Do you want to proceed?"
+    And verify "Create anyway;Cancel" buttons are displayed on the "Duplicate automatic allocation detected" popup
     When press "Create anyway" button
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation Setup" page
     And the "Automatic Allocation of Updates" page is displayed
