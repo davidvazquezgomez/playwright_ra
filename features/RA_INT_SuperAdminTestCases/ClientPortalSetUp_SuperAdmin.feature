@@ -5,7 +5,7 @@ Feature: Client Portal Setup for Super Admin
     Given launch Regulatory Advantage application URL and login as "deloitte" user "SUPERADMIN"
     And verify if applicable portals are displayed
 
-  @mutable
+  @readOnly
   Scenario: TC001_SuperAdmin_ClientPortalSetup - Validate fields and navigation warnings
     When press "Create New Portal" button
     Then the "Client Portal Setup" page is displayed

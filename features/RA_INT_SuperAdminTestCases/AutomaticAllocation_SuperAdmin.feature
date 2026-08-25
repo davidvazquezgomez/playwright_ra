@@ -5,7 +5,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     Given launch Regulatory Advantage application URL and login as "deloitte" user "SUPERADMIN"
     And verify if applicable portals are displayed
 
-  @mutable
+  @readOnly
   Scenario: TC001_01_SuperAdmin_AutomaticAllocation - Navigate to Automatic Allocation Setup
     When click on "01_13Jan REG" of the portals
     And the "01_13Jan REG - Overview" page is displayed
@@ -33,7 +33,7 @@ Feature: Automatic Allocation of Updates for Super Admin
       | Impact Area     |
       | Allocate To     |
 
-  @mutable
+  @readOnly
   Scenario: TC001_03_SuperAdmin_AutomaticAllocation - Verify warning message validations before creating a new allocation
     Given the "Automatic Allocation Setup" page is open
     And verify "Allocation Name;Impact Area(s);Jurisdiction(s);Allocate Update To;Update Owner;Update Watchlist" form fields are displayed in the Automatic Allocation Setup page
