@@ -89,7 +89,7 @@ export class CommonPage extends BasePage {
     `div[role="dialog"]:has(.k-dialog-title:text-is("${title}"))`;
   private kendoDialogButtonByName = (title: string, buttonName: string) =>
     `${this.kendoDialogByTitle(title)} button[aria-label="${buttonName}"]`;
-    private visibleKendoDialogContent = 'div[role="dialog"]:visible .k-dialog-content';
+  private visibleKendoDialogContent = 'div[role="dialog"]:visible .k-dialog-content';
   private dialogActionButtonByName = (buttonName: string) =>
     `div[role="dialog"]:visible kendo-dialog-actions button[aria-label="${buttonName}"]`;
   private profileButton = 'app-header .profile-initials';
@@ -549,21 +549,16 @@ export class CommonPage extends BasePage {
    * @throws Error if the option is not found.
    */
   async verifyNavigationOption(option: string): Promise<void> {
-    // Check in submenu items first
-    const submenuLink = this.submenuLinkByText(option);
-    if (await this.checkIfFieldIsDisplayed(submenuLink)) {
-      return;
-    }
+    await this.waitForSelectorStatus(this.sideNavigation, 'visible', this.navigationRenderTimeout);
 
-    // Check in main menu items
-    const mainMenuLink = this.menuLinkByText(option);
-    if (await this.checkIfFieldIsDisplayed(mainMenuLink)) {
-      return;
-    }
+    const navigationOption = this._page
+      .locator(`${this.submenuLinkByText(option)}, ${this.menuLinkByText(option)}`)
+      .first();
 
-    throw new Error(
+    await expect(
+      navigationOption,
       `Navigation option "${option}" is not displayed in main menu or submenu.`,
-    );
+    ).toBeVisible({ timeout: this.navigationRenderTimeout });
   }
 
   private compareGridDateValues(firstValue: string, secondValue: string): number {
@@ -579,7 +574,8 @@ export class CommonPage extends BasePage {
       return 0;
     }
 
-    return firstValue < secondValue ? -1 : 1;
+    // The grid sorts text case-insensitively, so comparisons must ignore letter casing.
+    return firstValue.localeCompare(secondValue, 'en', { sensitivity: 'base', numeric: true });
   }
 
   private async clickSaveButton(): Promise<void> {

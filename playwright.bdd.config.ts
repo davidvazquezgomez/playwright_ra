@@ -69,7 +69,8 @@ export default defineConfig({
   use: {
     baseURL: envUrls[env],
     acceptDownloads: true,
-    screenshot: 'only-on-failure',
+    // Off: BasePage.teardown() already attaches a compact JPEG on failure; avoid a duplicate PNG in Allure.
+    screenshot: 'off',
     trace: traceMode,
     video: 'off',
     actionTimeout: process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000,

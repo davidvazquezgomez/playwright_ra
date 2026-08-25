@@ -130,7 +130,8 @@ Feature: User Management for Super Admin
     Then the "Add Non-Deloitte User" pop up is displayed with the title "Add Non-Deloitte User"
     And enter ",.-´ç`+'¡" in the "First Name" field
     And enter ",.-´ç`+'¡" in the "Last Name" field
-    And enter ",.-´ç`+'¡@example.com" in the "Email" field
+    And enter "invalid-email" in the "Email" field
+    When press "Save" button
     Then verify the warning message "Please enter a valid email address" for fields "Email" is displayed
     And enter "example@example.com" in the "Email" field
     And enter ",.-´ç`+'¡" in the "Company Name" field
@@ -147,7 +148,7 @@ Feature: User Management for Super Admin
 
     Examples:
       | tab                 | exportFileName                    |
-      | Non-Deloitte Users  | 01_13Jan_REG_Non_Deloitte_Users_  |
+      | Non-Deloitte Users  |  01_13Jan_REG_Non_Deloitte_Users_ |
       | Non-Deloitte Admins | 01_13Jan_REG_Non_Deloitte_Admins_ |
 
   @readOnly
@@ -160,13 +161,13 @@ Feature: User Management for Super Admin
     Then verify the filter is removed
 
     Examples:
-      | tab                 | searchText           | column    | user                |
-      | Deloitte Users      | Deloitte             | User Name | BR, Deloitte Brasil |
-      | Deloitte Users      | br.dtt@deloitte.com  | Email     | BR, Deloitte Brasil |
-      | Non-Deloitte Admins | QA, Admin             | User Name | QA, Admin           |
-      | Non-Deloitte Admins | qa.admin@example.com | Email     | QA, Admin           |
-      | Non-Deloitte Users  | QA, User              | User Name | QA, User            |
-      | Non-Deloitte Users  | qa.user@example.com  | Email     | QA, User            |
+      | tab                 | searchText                      | column    | user                |
+      | Deloitte Users      | g-coreconfirmations             | User Name | g-coreconfirmations |
+      | Deloitte Users      | g-coreconfirmations@deloitte.lu | Email     | g-coreconfirmations |
+      | Non-Deloitte Admins | QA, Admin                       | User Name | QA, Admin           |
+      | Non-Deloitte Admins | qa.admin@example.com            | Email     | QA, Admin           |
+      | Non-Deloitte Users  | Leader, Team                    | User Name | Leader, Team        |
+      | Non-Deloitte Users  | ext-teamleadr@yopmail.com       | Email     | Leader, Team        |
 
   @mutable
   Scenario: TC003_01_SuperAdmin_UserManagement - Delete the Deloitte User

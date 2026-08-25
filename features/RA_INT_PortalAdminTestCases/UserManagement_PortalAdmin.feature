@@ -130,7 +130,8 @@ Feature: User Management for Portal Admin
     Then the "Add Non-Deloitte User" pop up is displayed with the title "Add Non-Deloitte User"
     And enter ",.-Â´Ã§`+'Â¡" in the "First Name" field
     And enter ",.-Â´Ã§`+'Â¡" in the "Last Name" field
-    And enter ",.-Â´Ã§`+'Â¡@example.com" in the "Email" field
+    And enter "invalid-email" in the "Email" field
+    When press "Save" button
     Then verify the warning message "Please enter a valid email address" for fields "Email" is displayed
     And enter "example@example.com" in the "Email" field
     And enter ",.-Â´Ã§`+'Â¡" in the "Company Name" field
