@@ -407,14 +407,7 @@ jobs:
       - ValidateContracts
       - RegressionTestsReadOnly
       - RegressionTestsMutable
-    condition: and(
-      succeeded('ValidateContracts'),
-      and(
-        eq(dependencies.RegressionTestsReadOnly.outputs['DetectAllureResults.allureResultsAvailableForPublish'], 'true'),
-        eq(dependencies.RegressionTestsMutable.outputs['DetectAllureResults.allureResultsAvailableForPublish'], 'true')
-      ),
-      always()
-    )
+    condition: and(succeeded('ValidateContracts'), eq(dependencies.RegressionTestsReadOnly.outputs['DetectAllureResults.allureResultsAvailableForPublish'], 'true'), eq(dependencies.RegressionTestsMutable.outputs['DetectAllureResults.allureResultsAvailableForPublish'], 'true'), always())
     timeoutInMinutes: '30'
     pool:
       vmImage: 'ubuntu-latest'
