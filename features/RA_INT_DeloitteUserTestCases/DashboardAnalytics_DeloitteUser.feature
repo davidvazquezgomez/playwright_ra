@@ -42,10 +42,11 @@ Scenario: TC014_02_DeloitteUser_DashboardAnalytics - Reset the filter
     Then verify the "Outstanding Updates" chart value is not the same
     And verify the "Update Priority" chart value is not the same
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC014_04_DeloitteUser_DashboardAnalytics - Create, save and delete a custom filter
     Given the "01_QA_ClientPortalSetup - Overview - Update Analytics" page is open
     When remove saved filter "QaTest" if it exists on the Dashboard filter
+    And register cleanup to remove saved filter "QaTest" from "01_QA_ClientPortalSetup - Overview - Update Analytics"
     When press "Filter" button on the Dashboard filter
     When select "Awaiting Allocation" in the "Status" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
@@ -228,10 +229,11 @@ Scenario: TC015_02_DeloitteUser_DashboardAnalytics - Compare Update Analytics Da
     And verify the "Action Priority" chart value is not the same
     And verify the "Completed Actions" chart value is not the same
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC016_04_DeloitteUser_DashboardAnalytics - Create, save and delete a custom filter in the Analytics page
     Given the "QA_Test client3 - Analytics Dashboard - Action Analytics" page is open
     When remove saved filter "QaTest" if it exists on the Dashboard filter
+    And register cleanup to remove saved filter "QaTest" from "QA_Test client3 - Analytics Dashboard - Action Analytics"
     When press "Filter" button on the Dashboard filter
     When select "clientadmin1, satest" in the "User Assigned" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter

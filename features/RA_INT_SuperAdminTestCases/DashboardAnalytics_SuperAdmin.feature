@@ -44,10 +44,11 @@ Feature: Dashboard Analytics for Super Admin
     Then verify the "Outstanding Updates" chart value is not the same
     And verify the "Update Priority" chart value is not the same
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC014_04_SuperAdmin_DashboardAnalytics - Create, save and delete a custom filter
     Given the "01_13Jan REG - Analytics Dashboard - Update Analytics" page is open
     When remove saved filter "QaTest" if it exists on the Dashboard filter
+    And register cleanup to remove saved filter "QaTest" from "01_13Jan REG - Analytics Dashboard - Update Analytics"
     When press "Filter" button on the Dashboard filter
     Then verify the "Saved Filters;My Updates;Knowledge Module;Jurisdiction;Impact Areas;Priority;Status" option is displayed in the Dashboard filter
     When select "Awaiting Allocation" in the "Status" filter on the Dashboard filter
@@ -224,10 +225,11 @@ Feature: Dashboard Analytics for Super Admin
     And verify the "Action Priority" chart value is not the same
     And verify the "Completed Actions" chart value is not the same
 
-  @mutable
+  @mutable @cleanup
   Scenario: TC016_04_SuperAdmin_DashboardAnalytics - Create, save and delete a custom filter in the Analytics page
     Given the "01_13Jan REG - Analytics Dashboard - Action Analytics" page is open
     When remove saved filter "QaTest" if it exists on the Dashboard filter
+    And register cleanup to remove saved filter "QaTest" from "01_13Jan REG - Analytics Dashboard - Action Analytics"
     When press "Filter" button on the Dashboard filter
     When select "Test, Smoke" in the "User Assigned" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter

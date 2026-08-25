@@ -1,4 +1,5 @@
 import { Then, When } from './fixtures';
+import { registerScenarioCleanup } from './scenarioCleanup.hooks';
 
 When('press "Filter" button on the Dashboard filter', async ({ dashboardPage }) => {
     await dashboardPage.openFilterPanel();
@@ -106,6 +107,16 @@ When('press "Edit" button on the Dashboard filter', async ({ dashboardPage }) =>
 When('remove saved filter {string} if it exists on the Dashboard filter', async ({ dashboardPage }, filterName: string) => {
     await dashboardPage.removeSavedFilterIfExists(filterName);
 });
+
+When(
+    'register cleanup to remove saved filter {string} from {string}',
+    async ({ commonPage, dashboardPage, testData }, filterName: string, pageName: string) => {
+        registerScenarioCleanup(testData, async () => {
+            await commonPage.openNamedPage(pageName);
+            await dashboardPage.removeSavedFilterIfExists(filterName);
+        });
+    },
+);
 
 When('press "Delete filter" button for {string} on the Dashboard filter', async ({ dashboardPage }, filterName: string) => {
     await dashboardPage.deleteSavedFilter(filterName);
