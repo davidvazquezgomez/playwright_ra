@@ -56,6 +56,14 @@ export class UpdatesDashboardPage extends BasePage {
    * @returns Total item count reported by the All Updates table pager.
    */
   async getAllUpdatesItemCount(): Promise<number> {
+    await expect.poll(
+      async () => this.getKendoPagerItemCount(this.updatesPagerInfo),
+      {
+        message: 'Waiting for the All Updates pager to finish loading.',
+        timeout: process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000,
+      },
+    ).toBeGreaterThan(0);
+
     return this.getKendoPagerItemCount(this.updatesPagerInfo);
   }
 
