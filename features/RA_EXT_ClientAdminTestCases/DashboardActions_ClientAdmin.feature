@@ -50,9 +50,9 @@ Feature: Dashboard Actions for Client Admin
     And verify attachments section is not displayed in the "Add Action" popup
     When press "Save" button
     Then verify "Update title is required.;Action is required.;Assigned User is required;Priority is required.;Status is required.;Deadline is required." validation messages are displayed in the "Add Action" popup
-    When fill the "Update" field with "Migration_test" value in the "Add Action" popup
+    When fill the "Update" field with "StageUpdate02_30-04" value in the "Add Action" popup
     And fill the "Action" field with "Test Action" value in the "Add Action" popup
-    And select "Smoke, Test" options in the "User Assigned" field in the "Add Action" popup
+    And select "Alam, Asjad" options in the "User Assigned" field in the "Add Action" popup
     And select "Medium" option in the "Priority" field in the "Add Action" popup
     And select "In Progress" option in the "Status" field in the "Add Action" popup
     And select today's date from the "Deadline" calendar in the "Add Action" popup
@@ -60,9 +60,9 @@ Feature: Dashboard Actions for Client Admin
     Then the "Unsaved Changes" popup is displayed
     And verify "Continue;Cancel" buttons are displayed on the "Unsaved Changes" popup
     When press "Cancel" button on the "Unsaved Changes" popup
-    Then verify "Migration_test" value is displayed in the "Update" field on the "Add Action" popup
+    Then verify "StageUpdate02_30-04" value is displayed in the "Update" field on the "Add Action" popup
     And verify "Test Action" value is displayed in the "Action" field on the "Add Action" popup
-    And verify "Smoke, Test" options are selected in the "User Assigned" field on the "Add Action" popup
+    And verify "Alam, Asjad" options are selected in the "User Assigned" field on the "Add Action" popup
     And verify "Medium" option is selected in the "Priority" field on the "Add Action" popup
     And verify "In Progress" option is selected in the "Status" field on the "Add Action" popup
     And verify today's date is displayed in the "Deadline" field on the "Add Action" popup
@@ -70,7 +70,7 @@ Feature: Dashboard Actions for Client Admin
     Then verify "Action added successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    And double-click "SelectAll_Test_1784288008539" option on the Dashboard filter
+    And double-click "Test_filter" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
     And click on "Deadline Date" column header in the "01_QA_StageTestPortal - Actions Dashboard" page
     And click on "Deadline Date" column header in the "01_QA_StageTestPortal - Actions Dashboard" page
@@ -83,18 +83,18 @@ Feature: Dashboard Actions for Client Admin
     And press "Reset Filters" button on the Dashboard filter
     And double-click "Test_ClientAdmin" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    And search for "Migration_test" update in the "01_QA_StageTestPortal - Actions Dashboard" page
-    Then verify "Migration_test" update is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
+    And search for "24Maximum social security contributions have been proposed" update in the "01_QA_StageTestPortal - Actions Dashboard" page
+    Then verify "24Maximum social security contributions have been proposed" update is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
     Then the "Update Action" popup is displayed
-    When select "User, TestAP" option in the "User Assigned" field in the "Update Action" popup
+    When select "satestclientuser3, satestclientuser3" option in the "User Assigned" field in the "Update Action" popup
     And select "Not Started" option in the "Status" field in the "Update Action" popup
     And select "High" option in the "Priority" field in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
     Then verify "Action updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
     Then the "Update Action" popup is displayed
-    And verify "User, TestAP" option is selected in the "User Assigned" field on the "Update Action" popup
+    And verify "satestclientuser3, satestclientuser3" option is selected in the "User Assigned" field on the "Update Action" popup
     And verify "Not Started" option is selected in the "Status" field on the "Update Action" popup
 
   @mutable
@@ -102,10 +102,10 @@ Feature: Dashboard Actions for Client Admin
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    And double-click "SelectAll_Test_1784288008539" option on the Dashboard filter
+    And double-click "Test_ClientAdmin" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    And search for "Migration_test" update in the "01_QA_StageTestPortal - Actions Dashboard" page
-    Then verify "Migration_test" update is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
+    And search for "24Maximum social security contributions have been proposed" update in the "01_QA_StageTestPortal - Actions Dashboard" page
+    Then verify "24Maximum social security contributions have been proposed" update is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
     Then the "Update Action" popup is displayed
     When enable the "Private Action" toggle in the "Update Action" popup
@@ -126,10 +126,10 @@ Feature: Dashboard Actions for Client Admin
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    And double-click "SelectAll_Test_1784288008539" option on the Dashboard filter
+    And double-click "Test_ClientAdmin" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    And search for "Migration_test" update in the "01_QA_StageTestPortal - Actions Dashboard" page
-    Then verify "Migration_test" update is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
+    And search for "24Maximum social security contributions have been proposed" update in the "01_QA_StageTestPortal - Actions Dashboard" page
+    Then verify "24Maximum social security contributions have been proposed" update is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
     Then the "Update Action" popup is displayed
     When open the "Comments" tab in the "Update Action" popup
@@ -146,31 +146,57 @@ Feature: Dashboard Actions for Client Admin
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    And double-click "SelectAll_Test_1784288008539" option on the Dashboard filter
+    And double-click "Test_ClientAdmin" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    And search for "Migration_test" update in the "01_QA_StageTestPortal - Actions Dashboard" page
-    Then verify "Migration_test" update is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
+    And search for "24Maximum social security contributions have been proposed" update in the "01_QA_StageTestPortal - Actions Dashboard" page
+    Then verify "24Maximum social security contributions have been proposed" update is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
     Then the "Update Action" popup is displayed
     When open the "Attachments" tab in the "Update Action" popup
-    # And upload "test-data/valid-attachment.pdf" attachment in the "Update Action" popup
-    # Then verify "valid-attachment.pdf" attachment is displayed in the "Update Action" popup
-    # When upload "test-data/oversized-51mb.pdf" attachment in the "Update Action" popup
-    # Then verify "oversized-51mb.pdf" attachment is not displayed in the "Update Action" popup
-    # When upload "test-data/invalid.exe" attachment in the "Update Action" popup
-    # Then verify "invalid.exe" attachment is not displayed in the "Update Action" popup
-    # When upload "test-data/corrupted.png" attachment in the "Update Action" popup
-    # Then verify "corrupted.png" attachment is not displayed in the "Update Action" popup
+    When upload "<file path>" attachment in the "Update Action" popup
+    And verify "<name>" attachment is displayed in the "Update Action" popup
+
+    Examples:
+      | valid extension | file path              | name         |
+      | pdf             | test-data/valid.pdf    | valid.pdf    |
+      | pdf             | test-data/invalid.pdf  | invalid.pdf  |
+      | xlsx            | test-data/valid.xlsx   | valid.xlsx   |
+      | svg             | test-data/valid.svg    | valid.svg    |
+      | png             | test-data/valid.png    | valid.png    |
+      | docx            | test-data/invalid.docx | invalid.docx |
+
+  @mutable
+  Scenario Outline: TC010_06_ClientAdmin_DashboardActions - Upload an attachment with unsupported format
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
+    When press "Filter" button on the Dashboard filter
+    And press "Reset Filters" button on the Dashboard filter
+    And double-click "Test_ClientAdmin" option on the Dashboard filter
+    And press "View results" button on the Dashboard filter
+    And search for "24Maximum social security contributions have been proposed" update in the "01_QA_StageTestPortal - Actions Dashboard" page
+    When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
+    Then the "Update Action" popup is displayed
+    When open the "Attachments" tab in the "Update Action" popup
+    When upload "<file path>" attachment in the "Update Action" popup
+    Then a message should get displayed as "<expected message>"
+    And verify "<name>" attachment is not displayed in the "Update Action" popup
     When select "Complete" option in the "Status" field in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
     Then verify "Action updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     And verify "Test Action" action is not displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
 
+    Examples:
+      | invalid extension | file path                  | expected message | name             |
+      | xls               | test-data/valid.xls        |                  | valid.xls        |
+      | jpg               | test-data/invalid.jpg      |                  | invalid.jpg      |
+      | csv               | test-data/invalid.csv      |                  | invalid.csv      |
+      | txt               | test-data/invalid.txt      |                  | invalid.txt      |
+      | xlsx              | test-data/Fichero94MB.xlsx |                  | Fichero94MB.xlsx |
+
   @mutable
   Scenario: TC011_01_ClientAdmin_DashboardActions - Verify adding an action from the update details page
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "Occupational Illness Trust Fund" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
-    Then verify "Occupational Illness Trust Fund" update is displayed from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
+    When search for "24Maximum social security contributions have been proposed" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
+    Then verify "24Maximum social security contributions have been proposed" update is displayed from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     When open the first update in the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     Then the "Update Details" page is displayed from the Updates Dashboard
     And verify "Update Details;Update Actions" tabs are displayed on the selected update
@@ -180,11 +206,11 @@ Feature: Dashboard Actions for Client Admin
     And verify "Action;User Assigned;Priority;Status;Deadline Date" are displayed in the "Add Action" popup
     And verify comments section is not displayed in the "Add Action" popup
     And verify attachments section is not displayed in the "Add Action" popup
-    And verify "Occupational Illness Trust Fund" value is displayed in the "Update" field on the "Add Action" popup
+    And verify "24Maximum social security contributions have been proposed" value is displayed in the "Update" field on the "Add Action" popup
     When press "Save" button
     Then verify "Action is required.;Assigned User is required;Priority is required.;Status is required.;Deadline is required." validation messages are displayed in the "Add Action" popup
     When fill the "Action" field with "Test Action" value in the "Add Action" popup
-    And select "Smoke, Test" options in the "User Assigned" field in the "Add Action" popup
+    And select "Admin, Client" options in the "User Assigned" field in the "Add Action" popup
     And select "Medium" option in the "Priority" field in the "Add Action" popup
     And select "In Progress" option in the "Status" field in the "Add Action" popup
     And select today's date from the "Deadline" calendar in the "Add Action" popup
@@ -194,40 +220,40 @@ Feature: Dashboard Actions for Client Admin
     When press "Cancel" button on the "Unsaved Changes" popup
     Then verify "Test Action" value is displayed in the "Action" field on the "Add Action" popup
     When press "Save" button
-    Then verify "Action added successfully" toast message is displayed in the "Update Details" page
+    Then verify "Action added successfully" toast message is displayed in the "Update Actions" page
 
   @mutable
   Scenario: TC011_02_ClientAdmin_DashboardActions - Verify editing an action from the update details page
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "Occupational Illness Trust Fund" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
+    When search for "24Maximum social security contributions have been proposed" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
-    And click on the first action in the "Update Details" page
+    And click on the first action in the "Update Actions" page
     Then the "Update Action" popup is displayed
-    When select "User, TestAP" option in the "User Assigned" field in the "Update Action" popup
+    When select "Admin, Client" option in the "User Assigned" field in the "Update Action" popup
     And select "Not Started" option in the "Status" field in the "Update Action" popup
     And select "High" option in the "Priority" field in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "Update Details" page
+    Then verify "Action updated successfully" toast message is displayed in the "Update Actions" page
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
-    When click on the first action in the "Update Details" page
+    When click on the first action in the "Update Actions" page
     Then the "Update Action" popup is displayed
-    And verify "User, TestAP" option is selected in the "User Assigned" field on the "Update Action" popup
+    And verify "Admin, Client" option is selected in the "User Assigned" field on the "Update Action" popup
     And verify "Not Started" option is selected in the "Status" field on the "Update Action" popup
 
   @mutable
   Scenario: TC011_03_ClientAdmin_DashboardActions - Verify the private action toggle from the update details page
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "Occupational Illness Trust Fund" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
+    When search for "24Maximum social security contributions have been proposed" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
-    And click on the first action in the "Update Details" page
+    And click on the first action in the "Update Actions" page
     Then the "Update Action" popup is displayed
     When enable the "Private Action" toggle in the "Update Action" popup
     And verify the "Private Action" toggle is enabled in the "Update Action" popup
@@ -236,28 +262,28 @@ Feature: Dashboard Actions for Client Admin
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
-    When click on the first action in the "Update Details" page
+    When click on the first action in the "Update Actions" page
     Then the "Update Action" popup is displayed
     And verify the "Private Action" toggle is enabled in the "Update Action" popup
     When disable the "Private Action" toggle in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "Update Details" page
+    Then verify "Action updated successfully" toast message is displayed in the "Update Actions" page
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
-    When click on the first action in the "Update Details" page
+    When click on the first action in the "Update Actions" page
     Then the "Update Action" popup is displayed
     And verify the "Private Action" toggle is disabled in the "Update Action" popup
 
   @mutable
   Scenario: TC011_04_ClientAdmin_DashboardActions - Verify adding a comment to an action from the update details page
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "Occupational Illness Trust Fund" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
+    When search for "24Maximum social security contributions have been proposed" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
-    And click on the first action in the "Update Details" page
+    And click on the first action in the "Update Actions" page
     Then the "Update Action" popup is displayed
     When open the "Comments" tab in the "Update Action" popup
     And enter "Test comment" comment in the "Update Action" popup
@@ -266,30 +292,57 @@ Feature: Dashboard Actions for Client Admin
     And verify a date is displayed for "Test comment" comment in the "Update Action" popup
     And verify actions are displayed for "Test comment" comment in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "Update Details" page
+    Then verify "Action updated successfully" toast message is displayed in the "Update Actions" page
 
   @mutable
   Scenario: TC011_05_ClientAdmin_DashboardActions - Verify uploading an attachment to an action from the update details page
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "Occupational Illness Trust Fund" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
+    When search for "24Maximum social security contributions have been proposed" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
-    And click on the first action in the "Update Details" page
+    And click on the first action in the "Update Actions" page
     Then the "Update Action" popup is displayed
     When open the "Attachments" tab in the "Update Action" popup
-    # And upload "test-data/valid-attachment.pdf" attachment in the "Update Action" popup
-    # Then verify "valid-attachment.pdf" attachment is displayed in the "Update Action" popup
-    # When upload "test-data/oversized-51mb.pdf" attachment in the "Update Action" popup
-    # Then verify "oversized-51mb.pdf" attachment is not displayed in the "Update Action" popup
-    # When upload "test-data/invalid.exe" attachment in the "Update Action" popup
-    # Then verify "invalid.exe" attachment is not displayed in the "Update Action" popup
-    # When upload "test-data/corrupted.png" attachment in the "Update Action" popup
-    # Then verify "corrupted.png" attachment is not displayed in the "Update Action" popup
-    When select "Complete" option in the "Status" field in the "Update Action" popup
+    When upload "<file path>" attachment in the "Update Action" popup
+    And verify "<name>" attachment is displayed in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "Update Details" page
+    Then verify "Action updated successfully" toast message is displayed in the "Update Actions" page
+
+    Examples:
+      | valid extension | file path              | name         |
+      | pdf             | test-data/valid.pdf    | valid.pdf    |
+      | pdf             | test-data/invalid.pdf  | invalid.pdf  |
+      | xlsx            | test-data/valid.xlsx   | valid.xlsx   |
+      | svg             | test-data/valid.svg    | valid.svg    |
+      | png             | test-data/valid.png    | valid.png    |
+      | docx            | test-data/invalid.docx | invalid.docx |
+
+  @mutable
+  Scenario Outline: TC011_06_ClientAdmin_DashboardActions - Upload an attachment with unsupported format from the update details page
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    #Diseñado para fallar 
+    When search for "24Maximum social security contributions have been proposed" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
+    And open the "Update Actions" tab on the selected update
+    And press "Action Status" header on the selected update
+    And press "Action Status" header on the selected update
+    And click on the first action in the "Update Actions" page
+    Then the "Update Action" popup is displayed
+    When open the "Attachments" tab in the "Update Action" popup
+    When open the "Attachments" tab in the "Update Action" popup
+    When upload "<file path>" attachment in the "Update Action" popup
+    Then a message should get displayed as "<expected message>"
+    And verify "<name>" attachment is not displayed in the "Update Action" popup
+
+    Examples:
+      | invalid extension | file path                  | expected message | name             |
+      | xls               | test-data/valid.xls        |                  | valid.xls        |
+      | jpg               | test-data/invalid.jpg      |                  | invalid.jpg      |
+      | csv               | test-data/invalid.csv      |                  | invalid.csv      |
+      | txt               | test-data/invalid.txt      |                  | invalid.txt      |
+      | xlsx              | test-data/Fichero94MB.xlsx |                  | Fichero94MB.xlsx |
 
   @readOnly
   Scenario Outline: TC012_01_ClientAdmin_DashboardActions - Verify filtering the 01_QA_StageTestPortal - Actions Dashboard by
@@ -302,19 +355,19 @@ Feature: Dashboard Actions for Client Admin
 
     Examples:
       | filter          | value       |
-      | Jurisdiction    | Belgium     |
+      | Jurisdiction    | Bulgaria    |
       | Update Priority | Low         |
       | Action Priority | High        |
       | Action Status   | In Progress |
-      | User Assigned   | Smoke       |
+      | User Assigned   | Alam, Asjad |
 
   @readOnly
   Scenario: TC012_02_ClientAdmin_DashboardActions - Verify filtering the 01_QA_StageTestPortal - Actions Dashboard by deadline range
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     Then verify the "Deadline Range" option is displayed in the Dashboard filter
-    When select "08/07/2026" from the "Start Date" calendar on the Dashboard filter
-    And select "10/07/2026" from the "End Date" calendar on the Dashboard filter
+    When select "25/01/2026" from the "Start Date" calendar on the Dashboard filter
+    And select "21/08/2026" from the "End Date" calendar on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed
     And verify every filtered action has a deadline within the selected range
@@ -364,10 +417,10 @@ Feature: Dashboard Actions for Client Admin
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter
-    And select "Belgium" in the "Jurisdiction" filter on the Dashboard filter
+    And select "Mexico" in the "Jurisdiction" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed for "Action Priority" with value "Low"
-    And verify filtered actions are displayed for "Jurisdiction" with value "Brazil"
+    And verify filtered actions are displayed for "Jurisdiction" with value "Mexico"
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And press "View results" button on the Dashboard filter
