@@ -126,8 +126,19 @@ export class ActionsDashboardPage extends BasePage {
       throw new Error('At least one Add Action validation message must be provided.');
     }
 
+    await this.waitForElement(this.addActionDialog);
+
     for (const message of validationMessages) {
-      await expect(this._page.locator(this.validationMessageByText(message))).toBeVisible();
+      try {
+        await expect(this._page.locator(this.validationMessageByText(message))).toBeVisible();
+      } catch {
+        this.failWithApplicationError(
+          'Submitting an Add Action form with missing required values must display the corresponding validation message.',
+          `Validation message "${message}" is displayed in the Add Action dialog.`,
+          `Validation message "${message}" is not displayed in the Add Action dialog.`,
+          `Visible Add Action dialog content: "${(await this._page.locator(this.addActionDialog).innerText()).trim()}".`,
+        );
+      }
     }
   }
 

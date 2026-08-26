@@ -231,7 +231,18 @@ export class DashboardPage extends BasePage {
      * @param errorMessage Exact validation message to verify.
      */
     async verifyNameFilterErrorMessage(errorMessage: string): Promise<void> {
-        await this.verifyElementIsDisplayed(this.nameFilterErrorMessageByText(errorMessage));
+        await this.waitForElement(this.nameFilterDialog);
+
+        try {
+            await expect(this._page.locator(this.nameFilterErrorMessageByText(errorMessage))).toBeVisible();
+        } catch {
+            this.failWithApplicationError(
+                'Saving a dashboard filter with invalid input must display its validation message.',
+                `Validation message "${errorMessage}" is displayed in the Name Filter dialog.`,
+                `Validation message "${errorMessage}" is not displayed in the Name Filter dialog.`,
+                `Visible Name Filter dialog content: "${(await this._page.locator(this.nameFilterDialog).innerText()).trim()}".`,
+            );
+        }
     }
 
     /**
