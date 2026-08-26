@@ -60,6 +60,10 @@ When('click on "Remove Allocation" icon from the allocation {string}', async ({ 
   await automaticAllocationPage.removeAllocation(allocationName);
 });
 
+When('click on "Remove Allocation" icon from the first allocation', async ({ automaticAllocationPage }) => {
+  await automaticAllocationPage.removeFirstAllocation();
+});
+
 Given('remove the {string} allocation if it exists', async ({ automaticAllocationPage }, allocationName: string) => {
   await automaticAllocationPage.deleteAllocationIfPresent(allocationName);
 });

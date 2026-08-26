@@ -988,6 +988,23 @@ export class CommonPage extends BasePage {
   }
 
   /**
+   * Confirms the duplicate automatic-allocation dialog when it is displayed after saving.
+   */
+  async confirmDuplicateAutomaticAllocationIfDisplayed(): Promise<void> {
+    const duplicateDialog = this._page.locator(this.kendoDialogByTitle('Duplicate automatic allocation detected'));
+
+    try {
+      await duplicateDialog.waitFor({ state: 'visible', timeout: 2000 });
+    } catch {
+      return;
+    }
+
+    await this.clickElement(
+      this.kendoDialogButtonByName('Duplicate automatic allocation detected', 'Create anyway'),
+    );
+  }
+
+  /**
    * Verifies that the Disclaimer page displays the expected legal content.
    * @param content Expected Disclaimer content from the Gherkin DocString.
    */

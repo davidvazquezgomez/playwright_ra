@@ -53,16 +53,19 @@ Feature: Automatic Allocation of Updates for Super Admin
 
   @mutable @cleanup
   Scenario: TC001_04_SuperAdmin_AutomaticAllocation - Create and delete an allocation with the Cancel button
-    Given the "Automatic Allocation Setup - 01_13Jan REG" page is open
+    Given the "Automatic Allocation of Updates - 01_13Jan REG" page is open
+    And remove the "QaTest" allocation if it exists
     And register cleanup to remove the "QaTest" allocation from portal "01_13Jan REG"
+    Then press "Create New Allocation" button
+    And the "Automatic Allocation Setup" page is displayed
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
     And select the "Employer tax reporting/filing requirements" option in the "Impact Area(s)" field
     And click on the "Jurisdiction(s)" checkbox
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
-    Then select the "satestclientuser2, satestclientuser2" option in the "Update Owner" field
-    Then select the "satestclientadmin, satestclientadmin" option in the "Update Watchlist" field
+    Then select the "Allocation, QA" option in the "Update Owner" field
+    Then select the "Alam, Asjad" option in the "Update Watchlist" field
     And press "Cancel" button
     Then the "Unsaved Changes" popup is displayed
     And the popup message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
@@ -71,9 +74,10 @@ Feature: Automatic Allocation of Updates for Super Admin
     Then verify the "Impact Area(s)" checkbox is still selected
     And verify the "Jurisdiction(s)" checkbox is still selected
     And verify "AND" is still selected in the "Operator" field
-    And verify "satestclientuser2, satestclientuser2" is still selected in the "Update Owner" field
-    And verify "satestclientadmin, satestclientadmin" is still selected in the "Update Watchlist" field
+    And verify "Allocation, QA" is still selected in the "Update Owner" field
+    And verify "Alam, Asjad" is still selected in the "Update Watchlist" field
     When press "Save" button
+    And confirm the duplicate automatic allocation if displayed
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation of Updates" page
     And the "Automatic Allocation of Updates" page is displayed
     And verify the "QaTest" allocation is present in the "Automatic Allocation of Updates" page
@@ -117,8 +121,11 @@ Feature: Automatic Allocation of Updates for Super Admin
 
   @mutable @cleanup
   Scenario: TC001_07_SuperAdmin_AutomaticAllocation - Create and delete an allocation with the Back button
-    Given the "Automatic Allocation Setup - 01_13Jan REG" page is open
+    Given the "Automatic Allocation of Updates - 01_13Jan REG" page is open
+    And remove the "QaTest" allocation if it exists
     And register cleanup to remove the "QaTest" allocation from portal "01_13Jan REG"
+    Then press "Create New Allocation" button
+    And the "Automatic Allocation Setup" page is displayed
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
     And select the "Employer tax reporting/filing requirements" option in the "Impact Area(s)" field
@@ -137,6 +144,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     And verify "satestclientuser2, satestclientuser2" is still selected in the "Update Owner" field
     And verify "audit, sonigour" is still selected in the "Update Watchlist" field
     When press "Save" button
+    And confirm the duplicate automatic allocation if displayed
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation Setup" page
     And the "Automatic Allocation of Updates" page is displayed
     And verify the "QaTest" allocation is present in the "Automatic Allocation of Updates" page
@@ -147,8 +155,11 @@ Feature: Automatic Allocation of Updates for Super Admin
 
   @mutable @cleanup
   Scenario: TC003_01_SuperAdmin_AutomaticAllocation - Use multiple Jurisdiction and Impact Area selections
-    Given the "Automatic Allocation Setup - 01_13Jan REG" page is open
+    Given the "Automatic Allocation of Updates - 01_13Jan REG" page is open
+    And remove the "QaTest" allocation if it exists
     And register cleanup to remove the "QaTest" allocation from portal "01_13Jan REG"
+    Then press "Create New Allocation" button
+    And the "Automatic Allocation Setup" page is displayed
     When fill the "Allocation Name" field with "QaTest"
     Then click on the "Impact Area(s)" checkbox
     And select the "Select All" option in the "Impact Area(s)" field
@@ -157,6 +168,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     And select the "AND" option in the "Operator" field
     And select the "satestclientuser2, satestclientuser2" option in the "Update Owner" field
     And press "Save" button
+    And confirm the duplicate automatic allocation if displayed
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation Setup" page
     And the "Automatic Allocation of Updates" page is displayed
     And verify the "QaTest" allocation is present in the "Automatic Allocation of Updates" page
@@ -167,18 +179,21 @@ Feature: Automatic Allocation of Updates for Super Admin
 
   @mutable @cleanup
   Scenario: TC004_01_SuperAdmin_AutomaticAllocation - Create and delete an allocation using a team
-    Given the "Automatic Allocation Setup - 01_13Jan REG" page is open
+    Given the "Automatic Allocation of Updates - 01_13Jan REG" page is open
+    And remove the "QaTest" allocation if it exists
     And register cleanup to remove the "QaTest" allocation from portal "01_13Jan REG"
+    Then press "Create New Allocation" button
+    And the "Automatic Allocation Setup" page is displayed
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
     And select the "Employer tax reporting/filing requirements" option in the "Impact Area(s)" field
     And click on the "Jurisdiction(s)" checkbox
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
-    And select the "StageTeam11Aug2026" option in the "Update Owner" field
-    And verify "StageTeam11Aug2026" is still selected in the "Update Owner" field
-    When select the "satestclientuser2, satestclientuser2" option in the "Update Owner" field
+    And select the "satestclientuser2, satestclientuser2" option in the "Update Owner" field
+    And verify "satestclientuser2, satestclientuser2" is still selected in the "Update Owner" field
     And press "Save" button
+    And confirm the duplicate automatic allocation if displayed
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation Setup" page
     And the "Automatic Allocation of Updates" page is displayed
     And verify the "QaTest" allocation is present in the "Automatic Allocation of Updates" page

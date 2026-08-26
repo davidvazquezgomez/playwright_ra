@@ -225,6 +225,10 @@ When('press {string} button on the {string} popup', async ({ commonPage }, butto
   await commonPage.clickPopupButton(button, title);
 });
 
+When('confirm the duplicate automatic allocation if displayed', async ({ commonPage }) => {
+  await commonPage.confirmDuplicateAutomaticAllocationIfDisplayed();
+});
+
 Then('verify the following content is displayed:', async ({ commonPage }, content: string) => {
   await commonPage.verifyDisclaimerContent(content);
 });

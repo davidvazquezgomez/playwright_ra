@@ -114,6 +114,30 @@ export class AutomaticAllocationPage extends BasePage {
   }
 
   /**
+   * Opens the deletion confirmation dialog for the first allocation displayed in the grid.
+   */
+  async removeFirstAllocation(): Promise<void> {
+    await this.ensureKendoGridHasRows(
+      'app-auto-allocation [role="grid"][aria-label="Data table"]',
+      'Automatic Allocation must contain an allocation before the first allocation can be removed.',
+      'The Automatic Allocation grid was displayed before removing its first allocation.',
+    );
+
+    const firstAllocationRemoveButton = this._page
+      .locator(this.allocationGridRows)
+      .first()
+      .locator('button[title="Remove Allocation"]');
+
+    await this.ensureExpectedBusinessElementIsVisible(
+      firstAllocationRemoveButton,
+      'The first Automatic Allocation row must provide the Remove Allocation action.',
+      'The Remove Allocation button is displayed for the first allocation row.',
+      'The first allocation row is visible in the Automatic Allocation grid.',
+    );
+    await this.clickLocator(firstAllocationRemoveButton);
+  }
+
+  /**
    * Opens deletion for an allocation only when its row is currently listed.
    * @param allocationName Exact allocation name to remove.
    * @returns True when the deletion confirmation was opened.
