@@ -266,7 +266,7 @@ Feature: Dashboard Analytics for Super Admin
     Given the "01_13Jan REG - Analytics Dashboard - Action Analytics" page is open
     Then press "Clear all filters" section on the Dashboard filter if available
     Then verify the "Outstanding Actions" chart is displayed
-    And verify the "Outstanding Actions" chart contains the "<segment>" elements
+    And verify the "Outstanding Actions" chart contains the "ACTION OVERDUE;< 30 DAYS TO DEADLINE;> 30 DAYS TO DEADLINE" elements
     And save the value from the "Outstanding Actions" chart
     When press "Filter" button on the Dashboard filter
     When select "In progress" in the "Action Status" filter on the Dashboard filter
@@ -330,7 +330,7 @@ Feature: Dashboard Analytics for Super Admin
     Then verify the "Update Action" modal is displayed
     And verify the "Update Action" modal contains the "Update;Action;User Assigned; Priority; Status; Deadline;Private Action" sections
     And verify the "Update Action" modal contains the "Immg_Prod;AA-Action-20thJan2026-002;Search for user...;Medium;Not Started;22 Jan 2026; Off" values
-    And verify "<UpdateButtons>" buttons are displayed on the "Update Action" popup
+    And verify "Close;Update" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
     Then press "Close" button on the "Update Action" popup
@@ -341,7 +341,7 @@ Feature: Dashboard Analytics for Super Admin
     Then verify the "Update Action" modal is displayed
     And verify the "Update Action" modal contains the "Update;Action;User Assigned; Priority; Status; Deadline;Private Action" sections
     And verify the "Update Action" modal contains the "Immg_Prod;AA-Action-20thJan2026-002;Search for user...;Medium;Not Started;22 Jan 2026; Off" values
-    And verify "<UpdateButtons>" buttons are displayed on the "Update Action" popup
+    And verify "Close;Update" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
     Then press "Close" button on the "Update Action" popup
