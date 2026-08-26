@@ -143,6 +143,7 @@ Feature: Dashboard Actions for Team Leader
 
   @mutable
   Scenario: TC010_05_TeamLeader_DashboardActions - Verify uploading an attachment to an action
+    #Diseñados para fallar
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter

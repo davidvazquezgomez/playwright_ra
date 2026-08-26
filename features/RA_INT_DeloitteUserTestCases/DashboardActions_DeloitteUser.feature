@@ -97,6 +97,32 @@ Feature: Dashboard Actions for Deloitte User
     And verify "satestclientuser1, satestclientuser1" option is selected in the "User Assigned" field on the "Update Action" popup
     And verify "Not Started" option is selected in the "Status" field on the "Update Action" popup
 
+
+  @mutable
+  Scenario: TC010_03_DeloitteUser_DashboardActions - Verify the private action toggle
+    Given the "Actions Dashboard - QA_Test client3" page is open
+    When press "Filter" button on the Dashboard filter
+    And press "Reset Filters" button on the Dashboard filter
+    And double-click "test_portaladmin" option on the Dashboard filter
+    And press "View results" button on the Dashboard filter
+    And search for "04May 2026 Employment Income Brackets test stage" update in the "QA_Test client3 - Actions Dashboard" page
+    Then verify "04May 2026 Employment Income Brackets test stage" update is displayed in the "QA_Test client3 - Actions Dashboard" page
+    When click on the first action in the "QA_Test client3 - Actions Dashboard" page
+    Then the "Update Action" popup is displayed
+    When enable the "Private Action" toggle in the "Update Action" popup
+    And verify the "Private Action" toggle is enabled in the "Update Action" popup
+    And press "Update" button in the "Update Action" popup
+    Then verify "Action updated successfully" toast message is displayed in the "QA_Test client3 - Actions Dashboard" page
+    When click on the first action in the "QA_Test client3 - Actions Dashboard" page
+    Then the "Update Action" popup is displayed
+    And verify the "Private Action" toggle is enabled in the "Update Action" popup
+    When disable the "Private Action" toggle in the "Update Action" popup
+    And press "Update" button in the "Update Action" popup
+    Then verify "Action updated successfully" toast message is displayed in the "QA_Test client3 - Actions Dashboard" page
+    When click on the first action in the "QA_Test client3 - Actions Dashboard" page
+    Then the "Update Action" popup is displayed
+    And verify the "Private Action" toggle is disabled in the "Update Action" popup
+
   @mutable
   Scenario: TC010_04_DeloitteUser_DashboardActions - Verify adding a comment to an action
     Given the "Actions Dashboard - QA_Test client3" page is open
@@ -168,31 +194,7 @@ Feature: Dashboard Actions for Deloitte User
       | txt               | test-data/invalid.txt      |                  | invalid.txt      |
       | xlsx              | test-data/Fichero94MB.xlsx |                  | Fichero94MB.xlsx |
 
-  @mutable
-  Scenario: TC010_03_DeloitteUser_DashboardActions - Verify the private action toggle
-    Given the "Actions Dashboard - QA_Test client3" page is open
-    When press "Filter" button on the Dashboard filter
-    And press "Reset Filters" button on the Dashboard filter
-    And double-click "test_portaladmin" option on the Dashboard filter
-    And press "View results" button on the Dashboard filter
-    And search for "04May 2026 Employment Income Brackets test stage" update in the "QA_Test client3 - Actions Dashboard" page
-    Then verify "04May 2026 Employment Income Brackets test stage" update is displayed in the "QA_Test client3 - Actions Dashboard" page
-    When click on the first action in the "QA_Test client3 - Actions Dashboard" page
-    Then the "Update Action" popup is displayed
-    When enable the "Private Action" toggle in the "Update Action" popup
-    And verify the "Private Action" toggle is enabled in the "Update Action" popup
-    And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "QA_Test client3 - Actions Dashboard" page
-    When click on the first action in the "QA_Test client3 - Actions Dashboard" page
-    Then the "Update Action" popup is displayed
-    And verify the "Private Action" toggle is enabled in the "Update Action" popup
-    When disable the "Private Action" toggle in the "Update Action" popup
-    And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "QA_Test client3 - Actions Dashboard" page
-    When click on the first action in the "QA_Test client3 - Actions Dashboard" page
-    Then the "Update Action" popup is displayed
-    And verify the "Private Action" toggle is disabled in the "Update Action" popup
-
+ 
   @mutable
   Scenario: TC011_01_DeloitteUser_DashboardActions - Verify adding an action from the update details page
     Given the "Updates Dashboard - QA_Test client3" page is open

@@ -322,6 +322,7 @@ Feature: Dashboard Actions for Client Admin
   @mutable
   Scenario Outline: TC011_06_ClientAdmin_DashboardActions - Upload an attachment with unsupported format from the update details page
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    #Diseñado para fallar 
     When search for "24Maximum social security contributions have been proposed" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the "Update Actions" tab on the selected update

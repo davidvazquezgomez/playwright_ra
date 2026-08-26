@@ -112,7 +112,7 @@ Feature: Dashboard Analytics for Super Admin
     And verify the "Update Priority" chart contains the "HIGH PRIORITY UPDATES;MEDIUM PRIORITY UPDATES;LOW PRIORITY UPDATES" elements
     And save the value from the "Update Priority" chart
     When press "Filter" button on the Dashboard filter
-    And select "Awaiting Allocation" in the "Status" filter on the Dashboard filter
+    And select "Update Not Relevant" in the "Status" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify the "Update Priority" chart value is not the same
 
@@ -274,7 +274,7 @@ Feature: Dashboard Analytics for Super Admin
     Then verify the "Outstanding Actions" chart value is not the same
 
   @readOnly
-  Scenario: TC016_07_SuperAdmin_DashboardAnalytics - Verify Outstanding Actions Map controls
+  Scenario: TC016_08_SuperAdmin_DashboardAnalytics - Verify Outstanding Actions Map controls
     Given the "01_13Jan REG - Analytics Dashboard - Action Analytics" page is open
     Then verify the "Outstanding Actions Map" chart is displayed
     And press "Save visuals as PDF" map control
@@ -287,7 +287,7 @@ Feature: Dashboard Analytics for Super Admin
     Then verify the map control contains the "Switch to USA Map" name
 
   @mutable
-  Scenario: TC016_08_SuperAdmin_DashboardAnalytics - Verify Action Priority chart is updated after filtering on the Action Analytics page
+  Scenario: TC016_09_SuperAdmin_DashboardAnalytics - Verify Action Priority chart is updated after filtering on the Action Analytics page
     Given the "01_13Jan REG - Analytics Dashboard - Action Analytics" page is open
     Then press "Clear all filters" section on the Dashboard filter if available
     Then verify the "Action Priority" chart is displayed
@@ -299,7 +299,7 @@ Feature: Dashboard Analytics for Super Admin
     Then verify the "Action Priority" chart value is not the same
 
   @readOnly
-  Scenario: TC016_09_SuperAdmin_DashboardAnalytics - Verify Completed Actions chart is updated after filtering
+  Scenario: TC016_10_SuperAdmin_DashboardAnalytics - Verify Completed Actions chart is updated after filtering
     Given the "01_13Jan REG - Analytics Dashboard - Action Analytics" page is open
     Then press "Clear all filters" section on the Dashboard filter if available
     Then verify the "Completed Actions" chart is displayed

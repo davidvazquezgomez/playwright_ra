@@ -413,6 +413,7 @@ Feature: Dashboard Actions for Team Member
   @readOnly
   Scenario: TC012_05_TeamMember_DashboardActions - Verify resetting the 01_QA_StageTestPortal - Actions Dashboard filters
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
+    #Se han hecho cambios en datos, antes no se reflejaban
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter
