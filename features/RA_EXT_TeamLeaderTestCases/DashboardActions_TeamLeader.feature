@@ -9,7 +9,7 @@ Feature: Dashboard Actions for Team Leader
   Scenario: TC009_01_TeamLeader_DashboardActions - Verify dashboard actions tab
     When click on "01_QA_StageTestPortal" of the portals
     Then the "Overview" page is displayed
-    And verify for client portal name "01_13Jan REG - Overview"
+    And verify for client portal name "01_QA_StageTestPortal - Overview"
     When press "Open Dashboard" button
     Then the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
     And verify "Updates;Actions;Analytics" tabs are displayed in "01_QA_StageTestPortal - Updates Dashboard" page

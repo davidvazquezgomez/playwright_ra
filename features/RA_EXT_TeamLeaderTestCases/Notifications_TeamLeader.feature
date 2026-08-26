@@ -69,8 +69,8 @@ Feature: Notifications for Team Leader
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    And the "01_QA_StageTestPortal- Updates Dashboard" page is displayed
-    Then open the first update in the "01_QA_StageTestPortal- Updates Dashboard" page
+    And the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
+    Then open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
     When select "High" option in the "Priority" field in the "Update Details" subsection

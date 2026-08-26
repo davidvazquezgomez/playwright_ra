@@ -35,7 +35,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
 
   @mutable
   Scenario: TC001_03_PortalAdmin_AutomaticAllocation - Verify warning message validations before creating a new allocation
-    Given the "Automatic Allocation Setup" page is open
+    Given the "Automatic Allocation Setup - 01_13Jan REG" page is open
     And verify "Allocation Name;Impact Area(s);Jurisdiction(s);Allocate Update To;Update Owner;Update Watchlist" form fields are displayed in the Automatic Allocation Setup page
     When press "Save" button
     Then verify "Allocation Name is required; At least one option (Impact Area or Jurisdiction) must be selected.;Update Owner is required." field errors are displayed in the Automatic Allocation Setup page
@@ -53,7 +53,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
 
   @mutable @cleanup
   Scenario: TC001_04_PortalAdmin_AutomaticAllocation - Create and delete an allocation with the Cancel button
-    Given the "Automatic Allocation Setup" page is open
+    Given the "Automatic Allocation Setup - 01_13Jan REG" page is open
     And register cleanup to remove the "QaTest" allocation from portal "01_13Jan REG"
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
@@ -84,7 +84,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
 
   @readOnly
   Scenario: TC001_05_PortalAdmin_AutomaticAllocation - Cancel allocation creation with the "Cancel" button
-    Given the "Automatic Allocation Setup" page is open
+    Given the "Automatic Allocation Setup - 01_13Jan REG" page is open
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
     And select the "Employer tax reporting/filing requirements" option in the "Impact Area(s)" field
@@ -100,7 +100,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
 
   @readOnly
   Scenario: TC001_06_PortalAdmin_AutomaticAllocation - Cancel allocation creation with the "Back" button
-    Given the "Automatic Allocation Setup" page is open
+    Given the "Automatic Allocation Setup - 01_13Jan REG" page is open
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
     And select the "Employer tax reporting/filing requirements" option in the "Impact Area(s)" field
@@ -117,7 +117,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
 
   @mutable @cleanup
   Scenario: TC001_07_PortalAdmin_AutomaticAllocation - Create and delete an allocation with the Back button
-    Given the "Automatic Allocation Setup" page is open
+    Given the "Automatic Allocation Setup - 01_13Jan REG" page is open
     And register cleanup to remove the "QaTest" allocation from portal "01_13Jan REG"
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
@@ -147,7 +147,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
 
   @mutable @cleanup
   Scenario: TC003_01_PortalAdmin_AutomaticAllocation - Use multiple Jurisdiction and Impact Area selections
-    Given the "Automatic Allocation Setup" page is open
+    Given the "Automatic Allocation Setup - 01_13Jan REG" page is open
     And register cleanup to remove the "QaTest" allocation from portal "01_13Jan REG"
     When fill the "Allocation Name" field with "QaTest"
     Then click on the "Impact Area(s)" checkbox
@@ -167,7 +167,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
 
   @mutable @cleanup
   Scenario: TC004_01_PortalAdmin_AutomaticAllocation - Create and delete an allocation using a team
-    Given the "Automatic Allocation Setup" page is open
+    Given the "Automatic Allocation Setup - 01_13Jan REG" page is open
     And register cleanup to remove the "QaTest" allocation from portal "01_13Jan REG"
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox

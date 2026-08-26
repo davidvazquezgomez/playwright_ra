@@ -199,50 +199,68 @@ export class CommonPage extends BasePage {
    */
   async openNamedPage(pageName: string): Promise<void> {
     const pageRoutes: Record<string, string> = {
-      'User Management - 01_13Jan REG': '/user-management/361',
-      'Team Management - 01_13Jan REG': '/teams/361',
-      'Automatic Allocation of Updates - 01_13Jan REG': '/allocation/361',
+      // Shared application pages
       'Manage Impact Areas': '/impact-area-list',
       'Update Privacy Notice': '/update-privacy-notice',
       'RegulatoryAdvantage | Privacy Notice': '/privacy-notice',
-      'Updates Dashboard - 01_13Jan REG': '/project-dashboard/361/Updates/AllUpdates/All',
-      '01_13Jan REG - Updates Dashboard - All Updates': '/project-dashboard/361/Updates/AllUpdates/All',
-      'Updates Dashboard - Global Inc': '/project-dashboard/142/Updates/AllUpdates/All',
-      'Global Inc - Updates Dashboard - All Updates': '/project-dashboard/142/Updates/AllUpdates/All',
-      'Updates Dashboard - QA_Test client3': '/project-dashboard/213/Updates/AllUpdates/All',
-      '1_E2E_Test1 - Updates Dashboard - All Updates': '/project-dashboard/180/Updates/AllUpdates/All',
-      '01_QA_StageTestPortal - Updates Dashboard - All Updates': '/project-dashboard/415/Updates/AllUpdates/All',
-      '01_QA_ClientPortalSetup - Updates Dashboard - All Updates': '/project-dashboard/616/Updates/AllUpdates/All',
-      'ClientPortal_20260209133616 - Updates Dashboard - All Updates': '/project-dashboard/540/Updates/AllUpdates/All',
-      '01_13Jan REG - Analytics Dashboard - Update Analytics': '/project-dashboard/361/Analytics/UpdateAnalytics/All',
-      '01_13Jan REG - Analytics Dashboard - Action Analytics': '/project-dashboard/361/Analytics/ActionsAnalytics/All',
-      '01_QA_ClientPortalSetup - Overview - Update Analytics': '/project-dashboard/616/Analytics/UpdateAnalytics/All',
-      '01_13Jan REG - Analytics Dashboard - UpdateAnalytics': '/project-dashboard/616/Analytics/UpdateAnalytics/All',
-      'QA_Test client3 - Analytics Dashboard - Update Analytics': '/project-dashboard/213/Analytics/UpdateAnalytics/All',
-      'QA_Test client3 - Analytics Dashboard - Action Analytics': '/project-dashboard/213/Analytics/ActionsAnalytics/All',
-      'Global Inc - Analytics Dashboard - Update Analytics': '/project-dashboard/142/Analytics/UpdateAnalytics/All',
-      'Global Inc - Analytics Dashboard - Action Analytics': '/project-dashboard/142/Analytics/ActionsAnalytics/All',
-      'Actions Dashboard - 01_13Jan REG': '/project-dashboard/361/Actions/AllActions/All',
-      'Global Inc - Actions Dashboard': '/project-dashboard/142/Actions/AllActions/All',
-      'Actions Dashboard - QA_Test client3': '/project-dashboard/213/Actions/AllActions/All',
-      'ClientPortal_20260209133616 - Actions Dashboard': '/project-dashboard/540/Actions/AllActions/All',
-      'Updates Dashboard - ClientPortal_20260212191012': '/project-dashboard/553/Updates/AllUpdates/All',
-      'Actions Dashboard - ClientPortal_20260212191012': '/project-dashboard/553/Actions/AllActions/All',
-      'Updates Dashboard - ClientPortal_20260213081718': '/project-dashboard/553/Updates/AllUpdates/All',
-      'Actions Dashboard - ClientPortal_20260213081718': '/project-dashboard/553/Actions/AllActions/All',
-      '01_QA_StageTestPortal - Actions Dashboard': '/project-dashboard/415/Actions/AllActions/All',
-      '01_QA_ClientPortalSetup - Actions Dashboard': '/project-dashboard/616/Actions/AllActions/All',
-      'User Management - Global Inc': '/user-management/142',
-      'User Management - QA_Test client3': '/user-management/213',
-      'User Management - ClientPortal_20260213081718': '/user-management/553',
-      'Team Management - Global Inc': '/teams/142',
-      'Team Management - QA_Test client3': '/teams/213',
-      'Automatic Allocation of Updates - Global Inc': '/allocation/142',
-      'Automatic Allocation Setup - Global Inc': '/allocation-setup/142',
-      'Automatic Allocation of Updates': '/allocation/361',
-      'Automatic Allocation Setup': '/allocation-setup/616',
       'Notification Preferences': '/user-notification-preference',
 
+      // 01_13Jan REG (portal 361)
+      'User Management - 01_13Jan REG': '/user-management/361',
+      'Team Management - 01_13Jan REG': '/teams/361',
+      'Automatic Allocation of Updates - 01_13Jan REG': '/allocation/361',
+      'Automatic Allocation Setup - 01_13Jan REG': '/allocation-setup/361',
+      'Updates Dashboard - 01_13Jan REG': '/project-dashboard/361/Updates/AllUpdates/All',
+      '01_13Jan REG - Updates Dashboard - All Updates': '/project-dashboard/361/Updates/AllUpdates/All',
+      '01_13Jan REG - Analytics Dashboard - Update Analytics': '/project-dashboard/361/Analytics/UpdateAnalytics/All',
+      '01_13Jan REG - Analytics Dashboard - Action Analytics': '/project-dashboard/361/Analytics/ActionsAnalytics/All',
+      'Actions Dashboard - 01_13Jan REG': '/project-dashboard/361/Actions/AllActions/All',
+
+      // Global Inc (portal 142)
+      'User Management - Global Inc': '/user-management/142',
+      'Team Management - Global Inc': '/teams/142',
+      'Automatic Allocation of Updates - Global Inc': '/allocation/142',
+      'Automatic Allocation Setup - Global Inc': '/allocation-setup/142',
+      'Updates Dashboard - Global Inc': '/project-dashboard/142/Updates/AllUpdates/All',
+      'Global Inc - Updates Dashboard - All Updates': '/project-dashboard/142/Updates/AllUpdates/All',
+      'Global Inc - Analytics Dashboard - Update Analytics': '/project-dashboard/142/Analytics/UpdateAnalytics/All',
+      'Global Inc - Analytics Dashboard - Action Analytics': '/project-dashboard/142/Analytics/ActionsAnalytics/All',
+      'Global Inc - Actions Dashboard': '/project-dashboard/142/Actions/AllActions/All',
+
+      // QA_Test client3 (portal 213)
+      'User Management - QA_Test client3': '/user-management/213',
+      'Team Management - QA_Test client3': '/teams/213',
+      'Updates Dashboard - QA_Test client3': '/project-dashboard/213/Updates/AllUpdates/All',
+      'QA_Test client3 - Analytics Dashboard - Update Analytics': '/project-dashboard/213/Analytics/UpdateAnalytics/All',
+      'QA_Test client3 - Analytics Dashboard - Action Analytics': '/project-dashboard/213/Analytics/ActionsAnalytics/All',
+      'Actions Dashboard - QA_Test client3': '/project-dashboard/213/Actions/AllActions/All',
+
+      // 1_E2E_Test1 (portal 180)
+      '1_E2E_Test1 - Updates Dashboard - All Updates': '/project-dashboard/180/Updates/AllUpdates/All',
+
+      // 01_QA_StageTestPortal (portal 415)
+      '01_QA_StageTestPortal - Updates Dashboard - All Updates': '/project-dashboard/415/Updates/AllUpdates/All',
+      '01_QA_StageTestPortal - Actions Dashboard': '/project-dashboard/415/Actions/AllActions/All',
+
+      // 01_QA_ClientPortalSetup (portal 616)
+      '01_QA_ClientPortalSetup - Updates Dashboard - All Updates': '/project-dashboard/616/Updates/AllUpdates/All',
+      '01_QA_ClientPortalSetup - Overview - Update Analytics': '/project-dashboard/616/Analytics/UpdateAnalytics/All',
+      '01_QA_ClientPortalSetup - Actions Dashboard': '/project-dashboard/616/Actions/AllActions/All',
+
+      // ClientPortal_20260209133616 (portal 540)
+      'Automatic Allocation of Updates - ClientPortal_20260209133616': '/dashboard/540',
+      'Automatic Allocation Setup - ClientPortal_20260209133616': '/allocation-setup/540',
+      'ClientPortal_20260209133616 - Updates Dashboard - All Updates': '/project-dashboard/540/Updates/AllUpdates/All',
+      'ClientPortal_20260209133616 - Actions Dashboard': '/project-dashboard/540/Actions/AllActions/All',
+
+      // ClientPortal_20260212191012 (portal 553)
+      'Updates Dashboard - ClientPortal_20260212191012': '/project-dashboard/553/Updates/AllUpdates/All',
+      'Actions Dashboard - ClientPortal_20260212191012': '/project-dashboard/553/Actions/AllActions/All',
+
+      // ClientPortal_20260213081718 (portal 553)
+      'User Management - ClientPortal_20260213081718': '/user-management/553',
+      'Updates Dashboard - ClientPortal_20260213081718': '/project-dashboard/553/Updates/AllUpdates/All',
+      'Actions Dashboard - ClientPortal_20260213081718': '/project-dashboard/553/Actions/AllActions/All',
     };
     const pageRoute = pageRoutes[pageName];
 

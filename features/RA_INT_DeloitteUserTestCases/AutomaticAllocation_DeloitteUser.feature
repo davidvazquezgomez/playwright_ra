@@ -7,7 +7,7 @@ Feature: Automatic Allocation of Updates for Deloitte User
 
   @mutable @cleanup
   Scenario: TC001_07_DeloitteUser_AutomaticAllocation - Create and delete an allocation with the Back button
-    Given the "Automatic Allocation Setup" page is open
+    Given the "Automatic Allocation Setup - 01_13Jan REG" page is open
     And register cleanup to remove the "QaTest" allocation from portal "01_13Jan REG"
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
