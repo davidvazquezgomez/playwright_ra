@@ -101,7 +101,7 @@ Feature: Notifications for Client Admin
     When press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
     When select "High" option in the "Priority" field in the "Update Details" subsection
-    Then select "Not Started" option in the "Status" field in the "Update Details" subsection
+    Then select "Update Allocated" option in the "Status" field in the "Update Details" subsection
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Notifications" button
@@ -137,7 +137,7 @@ Feature: Notifications for Client Admin
     When press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
     When select "High" option in the "Priority" field in the "Update Details" subsection
-    Then select "Not Started" option in the "Status" field in the "Update Details" subsection
+    Then select "Update Allocated" option in the "Status" field in the "Update Details" subsection
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Notifications" button
@@ -213,11 +213,11 @@ Feature: Notifications for Client Admin
     And the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
     Then open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
-    Then the "Update Action" popup is displayed
-    When select "Not Started" option in the "Status" field in the "Update Action" popup
-    Then select "High" option in the "Priority" field in the "Update Action" popup
-    When press "Save" button
-    Then verify "Action Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
+    When select "Update Allocated" option in the "Status" field in the "Update Details" subsection
+    Then select "High" option in the "Priority" field in the "Update Details" subsection
+    And select "satestclientuser2, satestclientuser2" in the "User Assigned" field on the selected update
+    When press "Save" button on the selected update
+    Then verify "Regulatory update updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Notifications" button
     Then the "Notifications" popup is displayed
     When press "View All" button

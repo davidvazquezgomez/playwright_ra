@@ -87,7 +87,7 @@ Feature: Notifications for Team Member
 
   @mutable
   Scenario: TC003_TeamMember_Notifications - Verify enable or disable Notifications Preferences for updates
-    When press "Edit Client" button for the "01_QA_ClientPortalSetup" client portal
+    When press "Edit Client" button for the "01_QA_StageTestPortal" client portal
     Then the "Client Portal Setup" page is displayed
     When press "Save & Continue" button on the "Client Portal Setup" page
     Then the "Knowledge Modules & Impact Areas" page is displayed
@@ -128,7 +128,7 @@ Feature: Notifications for Team Member
 
   @mutable
   Scenario: TC004_TeamMember_Notifications - Verify enable or disable Notifications Preferences for actions
-    When press "Edit Client" button for the "01_QA_ClientPortalSetup" client portal
+    When press "Edit Client" button for the "01_QA_StageTestPortal" client portal
     When press "Save & Continue" button on the "Client Portal Setup" page
     Then the "Knowledge Modules & Impact Areas" page is displayed
     When press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page

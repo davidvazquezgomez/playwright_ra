@@ -31,6 +31,16 @@ export class UpdatesDashboardPage extends BasePage {
     this._page.locator('app-update-details button.btn-unread-read');
   private readonly updateDetailsEditButton = 'button[title="Edit"]';
   private readonly updateDetailsSaveButton = 'button[title="Save"]';
+  private readonly updateDetailsPeoplePickerByField = (fieldName: 'User Assigned' | 'Watch List') =>
+    this.activeUpdateDetailsPanel().locator(
+      `app-people-picker[formcontrolname="${fieldName === 'User Assigned' ? 'userAssigned' : 'watchList'}"] kendo-dropdownlist[role="combobox"]`,
+    );
+  private readonly updateDetailsPeoplePickerSearchInput =
+    'kendo-popup.k-animation-container-shown .k-dropdownlist-popup [role="searchbox"][aria-label="Filter"]';
+  private readonly updateDetailsPeoplePickerOptionByName = (name: string) =>
+    this._page.locator(
+      `kendo-popup.k-animation-container-shown .k-dropdownlist-popup [role="option"]:has-text("${name}")`,
+    ).first();
   private readonly updateDetailsCommentButton = () =>
     this.activeUpdateDetailsPanel().locator('app-comments .comment-input-actions button[type="submit"]');
 
@@ -106,6 +116,21 @@ export class UpdatesDashboardPage extends BasePage {
     await dropdown.click();
     await this._page.getByRole('option', { name: optionName, exact: true }).first().click();
     await expect(dropdown.locator('.k-input-value-text')).toHaveText(optionName);
+  }
+
+  /**
+   * Selects a user in a people-picker field on the selected update.
+   * @param userName Exact user name to select.
+   * @param fieldName Business name of the people-picker field.
+   */
+  async selectUpdateDetailsPerson(
+    userName: string,
+    fieldName: 'User Assigned' | 'Watch List',
+  ): Promise<void> {
+    const peoplePicker = this.updateDetailsPeoplePickerByField(fieldName);
+    await this.clickLocator(peoplePicker);
+    await this.fillInputText(this.updateDetailsPeoplePickerSearchInput, userName);
+    await this.clickLocator(this.updateDetailsPeoplePickerOptionByName(userName));
   }
 
   /**

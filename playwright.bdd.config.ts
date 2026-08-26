@@ -36,10 +36,11 @@ const retries = Number(process.env.RETRIES ?? (process.env.CI ? 2 : 0));
 const traceMode = (process.env.TRACE_MODE as TraceMode | undefined) || 'retain-on-failure';
 const resultsGroup = process.env.RESULTS_GROUP || 'all';
 const authStatePrewarmOnly = process.env.AUTH_STATE_PREWARM_ONLY === 'true';
+const featureGlob = process.env.BDD_FEATURE_GLOB || 'features/**/**/*.feature';
 
 // playwright-bdd configuration: generate tests from .feature files
 const testDir = defineBddConfig({
-  features: 'features/**/**/*.feature',
+  features: featureGlob,
   steps: 'features/steps/**/*.ts',
   missingSteps: missingStepsMode,
 });

@@ -27,6 +27,17 @@ When(
   },
 );
 
+When(
+  'select {string} in the {string} field on the selected update',
+  async ({ updatesDashboardPage }, userName: string, fieldName: 'User Assigned' | 'Watch List') => {
+    if (fieldName !== 'User Assigned' && fieldName !== 'Watch List') {
+      throw new Error(`Update Details people-picker field "${fieldName}" is not supported.`);
+    }
+
+    await updatesDashboardPage.selectUpdateDetailsPerson(userName, fieldName);
+  },
+);
+
 When('open the {string} update from the Updates Dashboard', async ({ updatesDashboardPage }, updateTitle: string) => {
   await updatesDashboardPage.openUpdateByTitle(updateTitle);
 });

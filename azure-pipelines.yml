@@ -120,9 +120,9 @@ jobs:
           artifact: 'auth-states'
           publishLocation: 'pipeline'
 
-  # Read-only and mutable suites run as independent parallel jobs (separate agents) instead of
-  # sequentially in one job. Mutable stays single-worker/serial because scenarios share mutable
-  # state (create/edit/delete on the same records), but it no longer waits for read-only to finish.
+  # Read-only and mutable suites run as independent parallel jobs (separate agents). Mutable
+  # scenarios stay serial within their internal or external data domain, while both domains run
+  # concurrently because they use separate application users and portals.
   - job: RegressionTestsReadOnly
     displayName: 'RA Regression - Read-only (5 workers)'
     dependsOn: PrewarmAuthStates
@@ -278,11 +278,20 @@ jobs:
           publishLocation: 'pipeline'
 
   - job: RegressionTestsMutable
-    displayName: 'RA Regression - Mutable (1 worker, serial)'
+    displayName: 'RA Regression - Mutable ($(MUTABLE_SUITE), 1 worker)'
     dependsOn: PrewarmAuthStates
     timeoutInMinutes: '300'
     pool:
       vmImage: 'ubuntu-latest'
+    strategy:
+      maxParallel: '2'
+      matrix:
+        INT:
+          MUTABLE_SUITE: 'int'
+          BDD_FEATURE_GLOB: 'features/RA_INT_*/**/*.feature'
+        EXT:
+          MUTABLE_SUITE: 'ext'
+          BDD_FEATURE_GLOB: 'features/RA_EXT_*/**/*.feature'
     steps:
       - task: UseNode@1
         displayName: 'Install Node.js'
@@ -339,19 +348,19 @@ jobs:
           CI=true npm run bdd:generate
 
           set +e
-          # Retries are disabled because this serial suite showed persistent failures in the retry run.
-          CI=true RETRIES=0 PARALLEL_RUN=false WORKERS=1 RESULTS_GROUP=mutable PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @mutable --workers=1
+          # Each data domain is serial. INT and EXT execute in separate matrix legs.
+          CI=true RETRIES=0 PARALLEL_RUN=false WORKERS=1 RESULTS_GROUP=mutable-$(MUTABLE_SUITE) PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @mutable --workers=1
           mutable_exit=$?
 
           if [ "$mutable_exit" -ne 0 ]; then
             echo "##vso[task.setvariable variable=bddTestsFailed]true"
-            echo "Mutable BDD tests reported failures (exit: $mutable_exit). Review the Allure report and the Tests tab."
+            echo "Mutable $(MUTABLE_SUITE) BDD tests reported failures (exit: $mutable_exit). Review the Allure report and the Tests tab."
           fi
 
           # The build must stay green even when tests fail; results are reported in the Tests tab and Allure.
           exit 0
         name: ExecuteBddTests
-        displayName: 'Execute mutable BDD group (STAGE / Desktop)'
+        displayName: 'Execute mutable $(MUTABLE_SUITE) BDD group (STAGE / Desktop)'
         env:
           REUSE_AUTH_STATE: 'true'
           SHARED_AUTH_STATES: 'true'
@@ -360,6 +369,7 @@ jobs:
           TEST_TIMEOUT: '120000'
           TRACE_MODE: 'off'
           SCREENSHOT_FOLDER: 'test-results/custom-screenshots'
+          BDD_FEATURE_GLOB: $(BDD_FEATURE_GLOB)
           STAGE_URL: $(STAGE_URL)
           GA_PORTAL_STAGE_URL: $(GA_PORTAL_STAGE_URL)
           USER_SUPERADMIN: $(USER_SUPERADMIN)
@@ -395,7 +405,7 @@ jobs:
             echo "No Allure results were produced; skipping artifact publication."
           fi
         name: DetectAllureResults
-        displayName: 'Detect mutable Allure results'
+        displayName: 'Detect mutable $(MUTABLE_SUITE) Allure results'
         condition: always()
 
       - task: PublishTestResults@2
@@ -409,27 +419,27 @@ jobs:
           failTaskOnFailedTests: false
           failTaskOnMissingResultsFile: false
           publishRunAttachments: false
-          testRunTitle: 'Playwright BDD - STAGE / Desktop - Mutable'
+          testRunTitle: 'Playwright BDD - STAGE / Desktop - Mutable $(MUTABLE_SUITE)'
 
       - script: npm run diagnostics:prepare
         displayName: 'Prepare sanitized Playwright diagnostics'
         condition: always()
 
       - task: PublishPipelineArtifact@1
-        displayName: 'Publish allure-results (mutable)'
+        displayName: 'Publish allure-results (mutable $(MUTABLE_SUITE))'
         condition: and(always(), eq(variables['allureResultsAvailable'], 'true'))
         inputs:
           targetPath: 'allure-results'
-          artifact: 'allure-results-mutable'
+          artifact: 'allure-results-mutable-$(MUTABLE_SUITE)'
           publishLocation: 'pipeline'
 
       - task: PublishPipelineArtifact@1
-        displayName: 'Publish Playwright diagnostics (failed runs)'
+        displayName: 'Publish Playwright diagnostics (mutable $(MUTABLE_SUITE) failures)'
         condition: eq(variables['bddTestsFailed'], 'true')
         continueOnError: true
         inputs:
           targetPath: 'test-results/diagnostics'
-          artifact: 'playwright-test-results-mutable'
+          artifact: 'playwright-test-results-mutable-$(MUTABLE_SUITE)'
           publishLocation: 'pipeline'
 
   - job: PublishResults
@@ -438,7 +448,7 @@ jobs:
       - ValidateContracts
       - RegressionTestsReadOnly
       - RegressionTestsMutable
-    condition: and(succeeded('ValidateContracts'), eq(dependencies.RegressionTestsReadOnly.outputs['DetectAllureResults.allureResultsAvailableForPublish'], 'true'), eq(dependencies.RegressionTestsMutable.outputs['DetectAllureResults.allureResultsAvailableForPublish'], 'true'), always())
+    condition: and(succeeded('ValidateContracts'), always())
     timeoutInMinutes: '30'
     pool:
       vmImage: 'ubuntu-latest'
@@ -474,28 +484,40 @@ jobs:
           path: '$(Pipeline.Workspace)/allure-results-readonly'
 
       - task: DownloadPipelineArtifact@2
-        displayName: 'Download allure-results (mutable)'
+        displayName: 'Download allure-results (mutable INT)'
         condition: always()
         continueOnError: true
         inputs:
           buildType: 'current'
-          artifact: 'allure-results-mutable'
-          path: '$(Pipeline.Workspace)/allure-results-mutable'
+          artifact: 'allure-results-mutable-int'
+          path: '$(Pipeline.Workspace)/allure-results-mutable-int'
+
+      - task: DownloadPipelineArtifact@2
+        displayName: 'Download allure-results (mutable EXT)'
+        condition: always()
+        continueOnError: true
+        inputs:
+          buildType: 'current'
+          artifact: 'allure-results-mutable-ext'
+          path: '$(Pipeline.Workspace)/allure-results-mutable-ext'
 
       - script: |
           mkdir -p allure-results
           if [ -d "$(Pipeline.Workspace)/allure-results-readonly" ]; then
             cp -R "$(Pipeline.Workspace)/allure-results-readonly/." allure-results/
           fi
-          if [ -d "$(Pipeline.Workspace)/allure-results-mutable" ]; then
-            cp -R "$(Pipeline.Workspace)/allure-results-mutable/." allure-results/
+          if [ -d "$(Pipeline.Workspace)/allure-results-mutable-int" ]; then
+            cp -R "$(Pipeline.Workspace)/allure-results-mutable-int/." allure-results/
           fi
-        displayName: 'Merge allure-results from both jobs'
+          if [ -d "$(Pipeline.Workspace)/allure-results-mutable-ext" ]; then
+            cp -R "$(Pipeline.Workspace)/allure-results-mutable-ext/." allure-results/
+          fi
+        displayName: 'Merge allure-results from all regression jobs'
         condition: always()
 
       - script: |
           organization_url="$(System.CollectionUri)"
-          builds_url="${organization_url}$(System.TeamProject)/_apis/build/builds?definitions=$(System.DefinitionId)&branchName=$(Build.SourceBranch)&statusFilter=completed&queryOrder=finishTimeDescending&%24top=50&api-version=7.1"
+          builds_url="${organization_url}$(System.TeamProjectId)/_apis/build/builds?definitions=$(System.DefinitionId)&branchName=$(Build.SourceBranch)&statusFilter=completed&queryOrder=finishTimeDescending&%24top=50&api-version=7.1"
           set +e
           builds=$(curl --fail --silent --show-error \
             --header "Authorization: Bearer $SYSTEM_ACCESSTOKEN" \
@@ -515,7 +537,7 @@ jobs:
               const builds = JSON.parse(body).value || [];
               const token = process.env.SYSTEM_ACCESSTOKEN;
               const baseUrl = process.env.SYSTEM_COLLECTIONURI;
-              const project = process.env.SYSTEM_TEAMPROJECT;
+              const project = process.env.SYSTEM_TEAMPROJECTID;
 
               (async () => {
                 for (const build of builds) {
@@ -544,14 +566,14 @@ jobs:
         env:
           SYSTEM_ACCESSTOKEN: $(System.AccessToken)
           SYSTEM_COLLECTIONURI: $(System.CollectionUri)
-          SYSTEM_TEAMPROJECT: $(System.TeamProject)
+          SYSTEM_TEAMPROJECTID: $(System.TeamProjectId)
 
       - task: DownloadPipelineArtifact@2
         displayName: 'Restore Allure history from the latest branch build'
         condition: and(always(), ne(variables['allureHistoryBuildId'], ''))
         inputs:
           buildType: 'specific'
-          project: '$(System.TeamProject)'
+          project: '$(System.TeamProjectId)'
           pipeline: '$(System.DefinitionId)'
           buildVersionToDownload: 'specific'
           pipelineId: '$(allureHistoryBuildId)'
@@ -594,6 +616,7 @@ jobs:
         inputs:
           testResultsDir: '$(System.DefaultWorkingDirectory)/allure-results'
           reportName: 'Allure Report - Playwright BDD'
+          allureVersion: '2.37.0'
 
       - task: PublishPipelineArtifact@1
         displayName: 'Publish Allure history for the next build'

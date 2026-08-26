@@ -331,17 +331,19 @@ export class BasePage {
     const grid = typeof gridSelector === 'string' ? this._page.locator(gridSelector) : gridSelector;
     const dataRows = grid.locator('tbody tr.k-master-row');
     const noRecordsRow = grid.locator('tbody tr.k-grid-norecords');
+    const waitTimeout = process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000;
     const hasVisibleDataRows = async (): Promise<boolean> =>
       (await dataRows.count()) > 0 && await dataRows.first().isVisible();
     const hasVisibleEmptyState = async (): Promise<boolean> =>
       (await noRecordsRow.count()) > 0 && await noRecordsRow.first().isVisible();
 
-    await expect.poll(async () =>
-      await hasVisibleDataRows() || await hasVisibleEmptyState(),
-    ).toBe(true);
-
-    if (await hasVisibleDataRows()) {
+    try {
+      await expect.poll(hasVisibleDataRows, { timeout: waitTimeout }).toBe(true);
       return;
+    } catch (error) {
+      if (!await hasVisibleEmptyState()) {
+        throw error;
+      }
     }
 
     this.failWithApplicationError(

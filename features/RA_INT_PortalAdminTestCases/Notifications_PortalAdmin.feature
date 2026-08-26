@@ -67,7 +67,7 @@ Feature: Notifications for Portal Admin
 
   @mutable
   Scenario: TC003_1_PortalAdmin_Notifications - Verify enable Notifications Preferences for updates
-    When press "Edit Client" button for the "01_QA_ClientPortalSetup" client portal
+    When press "Edit Client" button for the "Global Inc" client portal
     Then the "Client Portal Setup" page is displayed
     When press "Save & Continue" button on the "Client Portal Setup" page
     Then the "Knowledge Modules & Impact Areas" page is displayed
@@ -81,7 +81,7 @@ Feature: Notifications for Portal Admin
     When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
     Then select the frequency option "Daily" located under "Periodic Summary of Updates and Actions via email?" section
     When press "Update Portal" button
-    Then verify "01_QA_ClientPortalSetup" toast message is displayed in the "Client Portal List" page
+    Then verify "Global Inc updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC003_2_PortalAdmin_Notifications - Verify triggered notifications for updates
@@ -95,15 +95,15 @@ Feature: Notifications for Portal Admin
     And verify all the "Notifications Preferences" are disabled
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
-    Given the "01_QA_ClientPortalSetup - Updates Dashboard - All Updates" page is open
-    And the "01_QA_ClientPortalSetup - Updates Dashboard" page is displayed
-    Then open the first update in the "01_QA_ClientPortalSetup - Updates Dashboard" page
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    And the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
+    Then open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
     When select "High" option in the "Priority" field in the "Update Details" subsection
-    Then select "Not Started" option in the "Status" field in the "Update Details" subsection
+    Then select "Update Allocated" option in the "Status" field in the "Update Details" subsection
     When press "Save" button on the selected update
-    Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_ClientPortalSetup - Updates Dashboard" page
+    Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Notifications" button
     Then the "Notifications" popup is displayed
     When press "View All" button
@@ -112,7 +112,7 @@ Feature: Notifications for Portal Admin
 
   @mutable
   Scenario: TC003_3_PortalAdmin_Notifications - Verify disabled Notifications Preferences for Updates
-    When press "Edit Client" button for the "01_QA_ClientPortalSetup " client portal
+    When press "Edit Client" button for the "Global Inc" client portal
     Then the "Client Portal Setup" page is displayed
     When press "Save & Continue" button on the "Client Portal Setup" page
     Then the "Knowledge Modules & Impact Areas" page is displayed
@@ -125,21 +125,21 @@ Feature: Notifications for Portal Admin
     And check "Select All" Check box under "Lock Settings" option from "Updates" section if it is "checked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
     When press "Update Portal" button
-    Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
+    Then verify "Global Inc updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC003_4_PortalAdmin_Notifications - Verify triggered notifications for updates
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
-    Given the "01_QA_ClientPortalSetup - Updates Dashboard - All Updates" page is open
-    And the "01_QA_ClientPortalSetup - Updates Dashboard" page is displayed
-    Then open the first update in the "01_QA_ClientPortalSetup - Updates Dashboard" page
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    And the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
+    Then open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
     When select "High" option in the "Priority" field in the "Update Details" subsection
-    Then select "Not Started" option in the "Status" field in the "Update Details" subsection
+    Then select "Update Allocated" option in the "Status" field in the "Update Details" subsection
     When press "Save" button on the selected update
-    Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_ClientPortalSetup - Updates Dashboard" page
+    Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Notifications" button
     Then the "Notifications" popup is displayed
     When press "View All" button
@@ -148,7 +148,7 @@ Feature: Notifications for Portal Admin
 
   @mutable
   Scenario: TC004_1_PortalAdmin_Notifications - Verify enable Notifications Preferences for actions
-    When press "Edit Client" button for the "01_QA_ClientPortalSetup" client portal
+    When press "Edit Client" button for the "Global Inc" client portal
     When press "Save & Continue" button on the "Client Portal Setup" page
     Then the "Knowledge Modules & Impact Areas" page is displayed
     When press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page
@@ -160,7 +160,7 @@ Feature: Notifications for Portal Admin
     And check "Select All" Check box under "Lock Settings" option from "Actions" section if it is "unchecked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
     When press "Update Portal" button
-    Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
+    Then verify "Global Inc updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC004_2_PortalAdmin_Notifications - Verify triggered notifications for actions
@@ -174,14 +174,14 @@ Feature: Notifications for Portal Admin
     And verify all the "Notifications Preferences" are disabled
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
-    Given the "01_QA_ClientPortalSetup - Actions Dashboard" page is open
-    When the "01_QA_ClientPortalSetup - Actions Dashboard" page is displayed
-    Then click on the first action in the "01_QA_ClientPortalSetup - Actions Dashboard" page
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
+    When the "01_QA_StageTestPortal - Actions Dashboard" page is displayed
+    Then click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
     And the "Update Action" popup is displayed
     When select "Not Started" option in the "Status" field in the "Update Action" popup
     Then select "High" option in the "Priority" field in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "01_QA_ClientPortalSetup - Actions Dashboard" page
+    Then verify "Action updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When press "Notifications" button
     Then the "Notifications" popup is displayed
     When press "View All" button
@@ -190,7 +190,7 @@ Feature: Notifications for Portal Admin
 
   @mutable
   Scenario: TC004_3_PortalAdmin_Notifications - Verify disabled Notifications Preferences for Actions
-    When press "Edit Client" button for the "01_QA_ClientPortalSetup " client portal
+    When press "Edit Client" button for the "Global Inc" client portal
     Then the "Client Portal Setup" page is displayed
     When press "Save & Continue" button on the "Client Portal Setup" page
     Then the "Knowledge Modules & Impact Areas" page is displayed
@@ -203,21 +203,21 @@ Feature: Notifications for Portal Admin
     And check "Select All" Check box under "Lock Settings" option from "Actions" section if it is "checked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
     When press "Update Portal" button
-    Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
+    Then verify "Global Inc updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC004_4_PortalAdmin_Notifications - Verify triggered notifications for updates
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
-    Given the "01_QA_ClientPortalSetup - Updates Dashboard - All Updates" page is open
-    And the "01_QA_ClientPortalSetup - Updates Dashboard" page is displayed
-    Then open the first update in the "01_QA_ClientPortalSetup - Updates Dashboard" page
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    And the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
+    Then open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
-    Then the "Update Action" popup is displayed
-    When select "Not Started" option in the "Status" field in the "Update Action" popup
-    Then select "High" option in the "Priority" field in the "Update Action" popup
-    When press "Save" button
-    Then verify "Action Updated successfully" toast message is displayed in the "01_QA_ClientPortalSetup - Updates Dashboard" page
+    When select "Update Allocated" option in the "Status" field in the "Update Details" subsection
+    Then select "High" option in the "Priority" field in the "Update Details" subsection
+    And select "satestclientuser2, satestclientuser2" in the "User Assigned" field on the selected update
+    When press "Save" button on the selected update
+    Then verify "Regulatory update updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Notifications" button
     Then the "Notifications" popup is displayed
     When press "View All" button
@@ -226,7 +226,7 @@ Feature: Notifications for Portal Admin
 
   @mutable
   Scenario: TC005_1_PortalAdmin_Notifications - Verify enable Notifications Preferences for teams
-    When press "Edit Client" button for the "01_QA_ClientPortalSetup" client portal
+    When press "Edit Client" button for the "Global Inc" client portal
     When press "Save & Continue" button on the "Client Portal Setup" page
     Then the "Knowledge Modules & Impact Areas" page is displayed
     When press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page
@@ -238,7 +238,7 @@ Feature: Notifications for Portal Admin
     And check "Select All" Check box under "Lock Settings" option from "Teams" section if it is "unchecked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
     When press "Update Portal" button
-    Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
+    Then verify "Global Inc updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC005_2_PortalAdmin_Notifications - Verify triggered notifications for teams
@@ -252,14 +252,14 @@ Feature: Notifications for Portal Admin
     And verify all the "Notifications Preferences" are disabled
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
-    Given the "01_QA_ClientPortalSetup - Updates Dashboard - All Updates" page is open
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     Then click on "Team Management" option from the left navigation
     And the "Team Management" page is displayed
     When press "Edit" button for the first team in the "Team Management" page
     Then the "Create/Edit Team" page is displayed
     When open the Add Team Members dialog
     Then the "Add Team Members" popup is displayed
-    When select "clientadmin1" option in the "Search user" field
+    When select "clientadmin1, satest" option in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
     When save the team from the "Create/Edit Team" page
     Then verify "Team updated successfully" toast message is displayed in the "Team Management" page
@@ -271,7 +271,7 @@ Feature: Notifications for Portal Admin
 
   @mutable
   Scenario: TC005_3_PortalAdmin_Notifications - Verify disabled Notifications Preferences for Teams
-    When press "Edit Client" button for the "01_QA_ClientPortalSetup " client portal
+    When press "Edit Client" button for the "Global Inc" client portal
     Then the "Client Portal Setup" page is displayed
     When press "Save & Continue" button on the "Client Portal Setup" page
     Then the "Knowledge Modules & Impact Areas" page is displayed
@@ -284,14 +284,14 @@ Feature: Notifications for Portal Admin
     And check "Select All" Check box under "Lock Settings" option from "Teams" section if it is "checked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
     When press "Update Portal" button
-    Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
+    Then verify "Global Inc updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC005_4_PortalAdmin_Notifications - Verify triggered notifications for teams
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
-    When click on "01_QA_ClientPortalSetup" of the portals
-    And the "01_QA_ClientPortalSetup - Updates Dashboard" page is displayed
+    When click on "01_QA_StageTestPortal" of the portals
+    And the "01_QA_StageTestPortal - Overview" page is displayed
     Then click on "Team Management" option from the left navigation
     And the "Team Management" page is displayed
     When press "Edit" button for the first team in the "Team Management" page
