@@ -2,7 +2,7 @@
   {
     "name": "APPLICATION DEFECT DETECTED",
     "matchedStatuses": ["failed"],
-    "messageRegex": ".*APPLICATION DEFECT DETECTED.*"
+    "messageRegex": "(?s).*APPLICATION DEFECT DETECTED.*"
   },
   {
     "name": "BDD contract - missing step definitions",

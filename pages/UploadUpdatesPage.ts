@@ -120,8 +120,15 @@ export class UploadUpdatesPage extends BasePage {
    * @param message Expected message text.
    */
   async verifyMessage(message: string): Promise<void> {
+    await this.waitForElement(this.fileUploadSection);
+
     if (!await this.checkIfFieldIsDisplayed(this.expectedErrorMessage(message))) {
-      throw new Error(`The message "${message}" is not displayed.`);
+      this.failWithApplicationError(
+        'The Upload Updates workflow must display the validation or status message expected for the selected file and action.',
+        `Message "${message}" is displayed.`,
+        `Message "${message}" is not displayed.`,
+        `Visible Upload Updates content: "${(await this._page.locator(this.fileUploadSection).innerText()).trim()}".`,
+      );
     }
   }
 
