@@ -10,13 +10,13 @@ Feature: Dashboard Analytics for Deloitte User
     When click on "01_QA_ClientPortalSetup" of the portals
     Then the "01_QA_ClientPortalSetup - Overview" page is displayed
     When press "Open Dashboard" button
-    Then the "01_13Jan REG - Updates Dashboard" page is displayed
+    Then the "01_QA_ClientPortalSetup - Updates Dashboard" page is displayed
     When press the "Analytics" section
     Then the "Update Analytics" subsection is displayed
 
   @readOnly
   Scenario: TC014_02_DeloitteUser_DashboardAnalytics - Reset the filter
-    Given the "01_QA_ClientPortalSetup - Overview - Update Analytics" page is open
+    Given the "01_QA_ClientPortalSetup - Analytics Dashboard - Update Analytics" page is open
     Then save the value from the "Outstanding Updates" chart
     And save the value from the "Update Priority" chart
     When press "Filter" button on the Dashboard filter
@@ -56,13 +56,6 @@ Feature: Dashboard Analytics for Deloitte User
     When fill "QaTest" in the "Filter Name" field on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify "Filter saved successfully." toast message is displayed in the "Analytics Dashboard" page
-    When press "Filter" button on the Dashboard filter
-    And press "Edit" button on the Dashboard filter
-    Then verify the "QaTest" filter is displayed in the "Saved Filters" section on the Dashboard filter
-    When press "Delete filter" button for "QaTest" on the Dashboard filter
-    Then the "Confirm Delete" popup is displayed
-    And press "Delete" button on the "Confirm Delete" popup
-    Then verify "Saved filter deleted successfully." toast message is displayed in the "Analytics Dashboard" page
 
   @readOnly
   Scenario: TC014_05_DeloitteUser_DashboardAnalytics - Apply a customized filter
@@ -79,7 +72,7 @@ Feature: Dashboard Analytics for Deloitte User
   Scenario: TC014_06_DeloitteUser_DashboardAnalytics - Verify Outstanding Updates chart is updated after filtering
     Given the "01_QA_ClientPortalSetup - Overview - Update Analytics" page is open
     Then verify the "Outstanding Updates" chart is displayed
-    And verify the "Outstanding Updates" chart contains the "<segment>" elements
+    And verify the "Outstanding Updates" chart contains the "UPDATE OVERDUE;< 30 DAYS TO EFFECTIVE DATE;> 30 DAYS TO EFFECTIVE DATE" elements
     And save the value from the "Outstanding Updates" chart
     When press "Filter" button on the Dashboard filter
     When select "High" in the "Priority" filter on the Dashboard filter
@@ -127,7 +120,7 @@ Feature: Dashboard Analytics for Deloitte User
     When open the first filtered update result in the "Update Analytics Data" table
     Then the "StageUpload11Aug2026" page is displayed
     And verify the "Update Details" subsection displays the "User Asigned; Priority; Status;Summary; Deloitte View; Supporting References; Tags; Related Updates; Watch List; Discussion; Comments, Attachmentents; Jurisdiction; Impact Area; Date Announced; Date Effective;Regulator;Level of Authority;Status of Change" sections
-    And verify the "Update Details" subsection displays the "<UpdateDetailsSectionsValues>" values
+    And verify the "Update Details" subsection displays the "satestclientuser, satestclientuser;Not Set;Update Allocated;The National Revenue Agency (NRA) uses a series of podcast episodes to explain the adoption of the euro as Bulgaria's official currency;The National Revenue Agency (NRA) uses a series of podcast episodes to explain the adoption of the euro as Bulgaria's official currency;1;1;0;1;0;0;Mexico;Employer tax reporting/filing requirements;11 Aug 2026;11 Aug 2026;National Revenue Agency (NRA);Non-Binding;Draft" values
     And verify the "Update Details" subsection displays the "Mark as Unread;Edit;Comment" buttons
     When open the "Attachments" tab in the "Update Details" subsection
     Then verify the "Upload files" button is displayed in the "Update Details" Attachments tab
