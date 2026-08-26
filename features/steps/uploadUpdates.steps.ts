@@ -32,10 +32,6 @@ Then('verify if error message is displayed for missing fields in the uploaded fi
   await uploadUpdatesPage.verifyUploadedFileError();
 });
 
-Then('a message should get displayed as {string}', async ({ uploadUpdatesPage }, message: string) => {
-  await uploadUpdatesPage.verifyMessage(message);
-});
-
 When('select on option {string} in {string} field', async ({ uploadUpdatesPage }, option: string, field: string) => {
   await uploadUpdatesPage.selectOptionInField(option, field);
 });
