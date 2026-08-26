@@ -250,6 +250,7 @@ export class CommonPage extends BasePage {
 
       // 01_QA_ClientPortalSetup (portal 616; used by DeloitteUser, PortalAdmin, and SuperAdmin)
       '01_QA_ClientPortalSetup - Updates Dashboard - All Updates': '/project-dashboard/616/Updates/AllUpdates/All',
+      '01_QA_ClientPortalSetup - Analytics Dashboard - Update Analytics': '/project-dashboard/616/Analytics/UpdateAnalytics/All',
       '01_QA_ClientPortalSetup - Overview - Update Analytics': '/project-dashboard/616/Analytics/UpdateAnalytics/All',
       '01_QA_ClientPortalSetup - Actions Dashboard': '/project-dashboard/616/Actions/AllActions/All',
 
