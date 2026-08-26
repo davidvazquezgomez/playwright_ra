@@ -5,7 +5,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     Given launch Regulatory Advantage application URL and login as "deloitte" user "SUPERADMIN"
     And verify if applicable portals are displayed
 
-    @mutable
+  @mutable
   Scenario: TC001_01_SuperAdmin_AutomaticAllocation - Navigate to Automatic Allocation Setup
     When click on "01_13Jan REG" of the portals
     And the "01_13Jan REG - Overview" page is displayed
@@ -61,7 +61,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     And click on the "Jurisdiction(s)" checkbox
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
-    Then select the "clientadmin1, satest" option in the "Update Owner" field
+    Then select the "satestclientuser2, satestclientuser2" option in the "Update Owner" field
     Then select the "satestclientadmin, satestclientadmin" option in the "Update Watchlist" field
     And press "Cancel" button
     Then the "Unsaved Changes" popup is displayed
@@ -71,7 +71,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     Then verify the "Impact Area(s)" checkbox is still selected
     And verify the "Jurisdiction(s)" checkbox is still selected
     And verify "AND" is still selected in the "Operator" field
-    And verify "clientadmin1, satest" is still selected in the "Update Owner" field
+    And verify "satestclientuser2, satestclientuser2" is still selected in the "Update Owner" field
     And verify "satestclientadmin, satestclientadmin" is still selected in the "Update Watchlist" field
     When press "Save" button
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation of Updates" page
@@ -91,7 +91,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     And click on the "Jurisdiction(s)" checkbox
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
-    And select the "clientadmin1, satest" option in the "Update Owner" field
+    And select the "satestclientuser2, satestclientuser2" option in the "Update Owner" field
     When press "Cancel" button
     Then the "Unsaved Changes" popup is displayed
     When press "Continue" button on the "Unsaved Changes" popup
@@ -107,7 +107,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     And click on the "Jurisdiction(s)" checkbox
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
-    And select the "clientadmin1, satest" option in the "Update Owner" field
+    And select the "satestclientuser2, satestclientuser2" option in the "Update Owner" field
     When press "Back" button
     Then the "Unsaved Changes" popup is displayed
     And the popup message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
@@ -125,7 +125,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     And click on the "Jurisdiction(s)" checkbox
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
-    And select the "clientadmin1, satest" option in the "Update Owner" field
+    And select the "satestclientuser2, satestclientuser2" option in the "Update Owner" field
     And select the "audit, sonigour" option in the "Update Watchlist" field
     And press "Back" button
     Then the "Unsaved Changes" popup is displayed
@@ -134,7 +134,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     Then verify the "Impact Area(s)" checkbox is still selected
     And verify the "Jurisdiction(s)" checkbox is still selected
     And verify "AND" is still selected in the "Operator" field
-    And verify "clientadmin1, satest" is still selected in the "Update Owner" field
+    And verify "satestclientuser2, satestclientuser2" is still selected in the "Update Owner" field
     And verify "audit, sonigour" is still selected in the "Update Watchlist" field
     When press "Save" button
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation Setup" page
@@ -155,7 +155,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     When click on the "Jurisdiction(s)" checkbox
     Then select the "Select All" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
-    And select the "clientadmin1, satest" option in the "Update Owner" field
+    And select the "satestclientuser2, satestclientuser2" option in the "Update Owner" field
     And press "Save" button
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation Setup" page
     And the "Automatic Allocation of Updates" page is displayed
@@ -177,7 +177,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     And select the "AND" option in the "Operator" field
     And select the "StageTeam11Aug2026" option in the "Update Owner" field
     And verify "StageTeam11Aug2026" is still selected in the "Update Owner" field
-    When select the "clientadmin1, satest" option in the "Update Owner" field
+    When select the "satestclientuser2, satestclientuser2" option in the "Update Owner" field
     And press "Save" button
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation Setup" page
     And the "Automatic Allocation of Updates" page is displayed
@@ -190,7 +190,7 @@ Feature: Automatic Allocation of Updates for Super Admin
   @mutable @cleanup
   Scenario: TC005_SuperAdmin_AutomaticAllocation - Verify warning message for duplicate allocations
     Given the "Automatic Allocation of Updates - 01_13Jan REG" page is open
-    And register cleanup to remove the "QaTest" allocation from portal "01_13Jan REG"
+    And remove the "QaTest2" allocation if it exists
     And register cleanup to remove the "QaTest2" allocation from portal "01_13Jan REG"
     Then press "Create New Allocation" button
     And the "Automatic Allocation Setup" page is displayed
@@ -203,16 +203,12 @@ Feature: Automatic Allocation of Updates for Super Admin
     And select the "satestclientuser2, satestclientuser2" option in the "Update Owner" field
     And press "Save" button
     Then the "Duplicate automatic allocation detected" popup is displayed
-    And the popup message is "Automatic allocation(s) named 'Test Allocation TC005_1783699615807, Test Allocation TC003 1784104916315-520, Test Allocation TC003 1784105354185-722, Test Allocation TC003 Repeat 1784107218326-608, Test Allocation TC003 Repeat 1784115332979-261, Test Allocation TC005_1784120420899, Test Allocation TC005_1784120611896, Test Allocation TC005_1784120891620, TEST AUTO 32, tEST_ALLOCATION_INT and eye' already exists for the same Impact Area(s) and/or Jurisdiction(s).If you continue, the new rule will be created, but matching updates will be allocated according to oldest created rule(s). Do you want to proceed?"
+    And the duplicate automatic allocation warning is displayed
     And verify "Create anyway;Cancel" buttons are displayed on the "Duplicate automatic allocation detected" popup
     When press "Create anyway" button
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation Setup" page
     And the "Automatic Allocation of Updates" page is displayed
-    And verify the "QaTest" allocation is present in the "Automatic Allocation of Updates" page
-    When click on "Remove Allocation" icon from the allocation "QaTest"
-    Then the "Confirm Deletion" popup is displayed
-    And press "Delete" button
-    Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
+    And verify the "QaTest2" allocation is present in the "Automatic Allocation of Updates" page
     When click on "Remove Allocation" icon from the allocation "QaTest2"
     Then the "Confirm Deletion" popup is displayed
     And press "Delete" button

@@ -784,7 +784,7 @@ export class CommonPage extends BasePage {
       case "Yes":
       case "Edit Client":
       case "Reactivate Portal":
-        await this.buttonByName(button).click();
+        await this.buttonByName(button).click({ noWaitAfter: true });
         break;
       case "Attachments":
         await this._page.getByRole('tab', { name: 'Attachments', exact: true }).click();

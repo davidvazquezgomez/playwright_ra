@@ -2,7 +2,7 @@
 Feature: Automatic Allocation of Updates for Deloitte User
 
   Background:
-    Given launch Regulatory Advantage application URL and login as Deloitte "DELOITTEUSER"
+    Given launch Regulatory Advantage application URL and login as "deloitte" user "DELOITTEUSER"
     And verify if applicable portals are displayed
 
   @mutable

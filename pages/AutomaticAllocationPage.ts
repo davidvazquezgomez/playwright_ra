@@ -3,6 +3,8 @@ import { BasePage } from './BasePage';
 
 export class AutomaticAllocationPage extends BasePage {
   private allocationGridRows = 'app-auto-allocation [role="grid"][aria-label="Data table"] tbody tr.k-master-row';
+  private allocationGridNoRecordsRow =
+    'app-auto-allocation [role="grid"][aria-label="Data table"] tbody tr.k-grid-norecords';
   private readonly fieldSelectors: Record<string, string> = {
     'Allocation Name': 'role=columnheader[name="Allocation Name"]',
     Jurisdiction: 'role=columnheader[name="Jurisdiction"]',
@@ -25,6 +27,9 @@ export class AutomaticAllocationPage extends BasePage {
     `${this.allocationRowByName(allocationName)} button[title="Edit Allocation"]`;
   private removeAllocationButtonByName = (allocationName: string) =>
     `${this.allocationRowByName(allocationName)} button[title="Remove Allocation"]`;
+  private duplicateAutomaticAllocationDialogContent =
+    'div[role="dialog"]:visible:has(.k-dialog-title:text-is("Duplicate automatic allocation detected")) .k-dialog-content';
+  private deleteConfirmationButton = 'div[role="dialog"]:visible button[aria-label="Delete"]';
   private allocationRecipientPicker =
     'app-auto-allocation-setup app-people-picker[formcontrolname="allocatedParty"] kendo-dropdownlist';
   private allocationNameInput =
@@ -114,6 +119,11 @@ export class AutomaticAllocationPage extends BasePage {
    * @returns True when the deletion confirmation was opened.
    */
   async removeAllocationIfPresent(allocationName: string): Promise<boolean> {
+    await expect.poll(async () =>
+      (await this._page.locator(this.allocationGridRows).count()) > 0 ||
+      (await this._page.locator(this.allocationGridNoRecordsRow).count()) > 0,
+    ).toBe(true);
+
     const removeButton = this._page.locator(this.removeAllocationButtonByName(allocationName));
     if (await removeButton.count() === 0 || !await removeButton.first().isVisible()) {
       return false;
@@ -121,6 +131,26 @@ export class AutomaticAllocationPage extends BasePage {
 
     await this.clickElement(this.removeAllocationButtonByName(allocationName));
     return true;
+  }
+
+  /**
+   * Deletes an automatic allocation when it is currently listed.
+   * @param allocationName Exact allocation name to delete.
+   */
+  async deleteAllocationIfPresent(allocationName: string): Promise<void> {
+    if (await this.removeAllocationIfPresent(allocationName)) {
+      await this.clickElement(this.deleteConfirmationButton);
+      await this.waitForSelectorStatus(this.allocationRowByName(allocationName), 'hidden');
+    }
+  }
+
+  /**
+   * Verifies that the duplicate-allocation warning explains its business consequence.
+   */
+  async verifyDuplicateAutomaticAllocationWarning(): Promise<void> {
+    await expect(this._page.locator(this.duplicateAutomaticAllocationDialogContent)).toHaveText(
+      /^Automatic allocation\(s\) named '.+' already exists for the same Impact Area\(s\) and\/or Jurisdiction\(s\)\.If you continue, the new rule will be created, but matching updates will be allocated according to oldest created rule\(s\)\. Do you want to proceed\?$/,
+    );
   }
 
   /**

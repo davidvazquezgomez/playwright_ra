@@ -1,4 +1,4 @@
-import { Then, When } from './fixtures';
+import { Given, Then, When } from './fixtures';
 import { registerScenarioCleanup } from './scenarioCleanup.hooks';
 
 Then('verify if {string} are displayed on the Automatic Allocation of Updates page', async ({ automaticAllocationPage }, fields: string) => {
@@ -60,14 +60,20 @@ When('click on "Remove Allocation" icon from the allocation {string}', async ({ 
   await automaticAllocationPage.removeAllocation(allocationName);
 });
 
+Given('remove the {string} allocation if it exists', async ({ automaticAllocationPage }, allocationName: string) => {
+  await automaticAllocationPage.deleteAllocationIfPresent(allocationName);
+});
+
+Then('the duplicate automatic allocation warning is displayed', async ({ automaticAllocationPage }) => {
+  await automaticAllocationPage.verifyDuplicateAutomaticAllocationWarning();
+});
+
 When(
   'register cleanup to remove the {string} allocation from portal {string}',
   async ({ automaticAllocationPage, commonPage, testData }, allocationName: string, portalName: string) => {
     registerScenarioCleanup(testData, async () => {
       await commonPage.openNamedPage(`Automatic Allocation of Updates - ${portalName}`);
-      if (await automaticAllocationPage.removeAllocationIfPresent(allocationName)) {
-        await commonPage.clickButton('Delete');
-      }
+      await automaticAllocationPage.deleteAllocationIfPresent(allocationName);
     });
   },
 );
