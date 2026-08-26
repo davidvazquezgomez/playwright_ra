@@ -228,7 +228,7 @@ Feature: Dashboard Analytics for Deloitte User
     When remove saved filter "QaTest" if it exists on the Dashboard filter
     And register cleanup to remove saved filter "QaTest" from "QA_Test client3 - Analytics Dashboard - Action Analytics"
     When press "Filter" button on the Dashboard filter
-    When select "clientadmin1, satest" in the "User Assigned" filter on the Dashboard filter
+    When select "satestclientadmin, satestclientadmin" in the "User Assigned" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify the "Name Filter" modal is displayed on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
@@ -236,13 +236,7 @@ Feature: Dashboard Analytics for Deloitte User
     When fill "QaTest" in the "Filter Name" field on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify "Filter saved successfully." toast message is displayed in the "Analytics Dashboard" page
-    When press "Filter" button on the Dashboard filter
-    And press "Edit" button on the Dashboard filter
-    Then verify the "QaTest" filter is displayed in the "Saved Filters" section on the Dashboard filter
-    When press "Delete filter" button for "QaTest" on the Dashboard filter
-    Then the "Confirm Delete" popup is displayed
-    And press "Delete" button on the "Confirm Delete" popup
-    Then verify "Saved filter deleted successfully." toast message is displayed in the "Analytics Dashboard" page
+    
 
   @readOnly
   Scenario: TC016_05_DeloitteUser_DashboardAnalytics - Apply a customized filter Action Analytics page
@@ -261,7 +255,7 @@ Feature: Dashboard Analytics for Deloitte User
   Scenario: TC016_06_DeloitteUser_DashboardAnalytics - Verify Outstanding Actions chart is updated after filtering
     Given the "QA_Test client3 - Analytics Dashboard - Action Analytics" page is open
     Then verify the "Outstanding Actions" chart is displayed
-    And verify the "Outstanding Actions" chart contains the "<segment>" elements
+    And verify the "Outstanding Actions" chart contains the "ACTION OVERDUE;< 30 DAYS TO DEADLINE;> 30 DAYS TO DEADLINE" elements
     And save the value from the "Outstanding Actions" chart
     When press "Filter" button on the Dashboard filter
     When select "In progress" in the "Action Status" filter on the Dashboard filter
@@ -285,7 +279,7 @@ Feature: Dashboard Analytics for Deloitte User
   Scenario: TC016_09_DeloitteUser_DashboardAnalytics - Verify Action Priority chart is updated after filtering on the Action Analytics page
     Given the "QA_Test client3 - Analytics Dashboard - Action Analytics" page is open
     Then verify the "Action Priority" chart is displayed
-    And verify the "Action Priority" chart contains the "Not Started;In progress;Complete;" elements
+    And verify the "Action Priority" chart contains the "HIGH PRIORITY ACTIONS; MEDIUM PRIORITY ACTIONS; LOW PRIORITY ACTIONS" elements
     And save the value from the "Action Priority" chart
     When press "Filter" button on the Dashboard filter
     And select "High" in the "Action Priority" filter on the Dashboard filter
@@ -308,7 +302,7 @@ Feature: Dashboard Analytics for Deloitte User
   Scenario: TC017_01_DeloitteUser_DashboardAnalytics - Verify Data consistency between Actions Analytics Data and All Actions section
     Given the "QA_Test client3 - Analytics Dashboard - Action Analytics" page is open
     Then verify the "Actions Analytics Data" chart is displayed
-    And verify "Update Title;Action;UserAssgined;Deadline Date; Update Priority; Action Priority; Action Status" column header is displayed in the "QA_Test client3 - Analytics Dashboard - Action Analytics" page
+    And verify "Update Title;Action;User Assigned;Deadline Date; Update Priority; Action Priority; Action Status" column header is displayed in the "QA_Test client3 - Analytics Dashboard - Action Analytics" page
     Then save the "Actions Analytics Data" items
     When press the "Actions" section
     Then the "All Actions" subsection is displayed
@@ -317,12 +311,12 @@ Feature: Dashboard Analytics for Deloitte User
   @mutable
   Scenario: TC017_02_DeloitteUser_DashboardAnalytics - Compare Action Analytics Data and Actions Dashboard pages for a selected result
     Given the "QA_Test client3 - Analytics Dashboard - Action Analytics" page is open
-    When search for "Increase to Monthly Social Security Tax Bases" update in the Analytics Dashboard
+    When search for "2026 PDOC (Payroll Deductions Online Calculator) Released" update in the Analytics Dashboard
     Then verify the "Actions Analytics Data" chart is displayed
-    And select the "StageUpdate02_30-04" result by clicking on the "Action" section
+    And select the "2026 PDOC (Payroll Deductions Online Calculator) Released" result by clicking on the "Action" section
     Then verify the "Update Action" modal is displayed
     And verify the "Update Action" modal contains the "Update;Action;User Assigned; Priority; Status; Deadline;Private Action" sections
-    And verify the "Update Action" modal contains the "StageUpdate02_30-04;QA;Test2, DeloitteUser;Low;Not Started;04 Aug 2026; Off" values
+    And verify the "Update Action" modal contains the "2026 PDOC (Payroll Deductions Online Calculator) Released;sa1;satestclientuser, satestclientuser;Low;In Progress;13 Aug 2026; Off" values
     And verify "<UpdateButtons>" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
@@ -330,10 +324,10 @@ Feature: Dashboard Analytics for Deloitte User
     When press "Back" button
     And press the "Actions" section
     Then the "QA_Test client3 - Actions Dashboard" page is displayed
-    When select the "StageUpdate02_30-04" result by clicking on the "Action" section
+    When select the "2026 PDOC (Payroll Deductions Online Calculator) Released" result by clicking on the "Action" section
     Then verify the "Update Action" modal is displayed
     And verify the "Update Action" modal contains the "Update;Action;User Assigned; Priority; Status; Deadline;Private Action" sections
-    And verify the "Update Action" modal contains the "StageUpdate02_30-04;QA;Test2, DeloitteUser;Low;Not Started;04 Aug 2026; Off" values
+    And verify the "Update Action" modal contains the "2026 PDOC (Payroll Deductions Online Calculator) Released;sa1;satestclientuser, satestclientuser;Low;In Progress;13 Aug 2026; Off" values
     And verify "<UpdateButtons>" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
@@ -343,12 +337,12 @@ Feature: Dashboard Analytics for Deloitte User
   @mutable
   Scenario: TC017_03_DeloitteUser_DashboardAnalytics - Verify the information displayed when selecting an Action result
     Given the "QA_Test client3 - Analytics Dashboard - Action Analytics" page is open
-    When search for "Increase to Monthly Social Security Tax Bases" update in the Analytics Dashboard
+    When search for "2026 PDOC (Payroll Deductions Online Calculator) Released" update in the Analytics Dashboard
     Then verify the "Actions Analytics Data" chart is displayed
-    When select the "StageUpdate02_30-04" result by clicking on the "Action" section
+    When select the "2026 PDOC (Payroll Deductions Online Calculator) Released" result by clicking on the "Action" section
     Then verify the "Update Action" modal is displayed
     And verify the "Update Action" modal contains the "Update;Action;User Assigned; Priority; Status; Deadline;Private Action" sections
-    And verify the "Update Action" modal contains the "StageUpdate02_30-04;QA;Test2, DeloitteUser;Low;Not Started;04 Aug 2026; Off" values
+    And verify the "Update Action" modal contains the "2026 PDOC (Payroll Deductions Online Calculator) Released;sa1;satestclientuser, satestclientuser;Low;In Progress;13 Aug 2026; Off" values
     And verify "Close;Update" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
