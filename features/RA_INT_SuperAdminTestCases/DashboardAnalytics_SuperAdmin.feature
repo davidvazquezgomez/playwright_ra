@@ -335,6 +335,7 @@ Feature: Dashboard Analytics for Super Admin
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
     Then press "Close" button on the "Update Action" popup
     When press "Back" button
+    When press "Open Dashboard" button
     And press the "Actions" section
     Then the "01_13Jan REG - Actions Dashboard" page is displayed
     When select the "Immg_Prod" result by clicking on the "Action" section
