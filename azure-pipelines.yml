@@ -339,9 +339,8 @@ jobs:
           CI=true npm run bdd:generate
 
           set +e
-          # RETRIES=1: a failing scenario gets a fresh worker/browser context instead of
-          # permanently skipping every Example/Scenario queued after it in this single-worker run.
-          CI=true RETRIES=1 PARALLEL_RUN=false WORKERS=1 RESULTS_GROUP=mutable PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @mutable --workers=1
+          # Retries are disabled because this serial suite showed persistent failures in the retry run.
+          CI=true RETRIES=0 PARALLEL_RUN=false WORKERS=1 RESULTS_GROUP=mutable PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @mutable --workers=1
           mutable_exit=$?
 
           if [ "$mutable_exit" -ne 0 ]; then
