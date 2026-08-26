@@ -112,7 +112,7 @@ Feature: Dashboard Analytics for Super Admin
     And verify the "Update Priority" chart contains the "HIGH PRIORITY UPDATES;MEDIUM PRIORITY UPDATES;LOW PRIORITY UPDATES" elements
     And save the value from the "Update Priority" chart
     When press "Filter" button on the Dashboard filter
-    And select "Update Not Relevant" in the "Status" filter on the Dashboard filter
+    And select "Awaiting Allocation" in the "Status" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify the "Update Priority" chart value is not the same
 
