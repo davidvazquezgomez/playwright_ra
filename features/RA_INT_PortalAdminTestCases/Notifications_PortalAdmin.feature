@@ -20,13 +20,13 @@ Feature: Notifications for Portal Admin
 
   @readOnly
   Scenario: TC001_2_PortalAdmin_Notifications - Verify Notifications Preferences has Actions and Teams Sections Available
-    Given the "Notifications Preference" page is open
+    Given the "Notification Preferences" page is open
     Then verify "Actions" section is visible with notification options for the following "Allocated an Action; Changes to Action Status (where assigned to Action); Changes to Action Priority (where assigned to Action); Action due tomorrow and not yet complete; Action deadline today and not yet complete"
     And verify "Teams" section is visible with notification options for the following "Added to team; Removed from team"
 
   @mutable
   Scenario: TC001_3_PortalAdmin_Notifications - Verify Notifications Preferences for Updates, Actions and Teams
-    Given the "Notifications Preference" page is open
+    Given the "Notification Preferences" page is open
     When toggle "Set as responsible person" System notification option to be "enabled"
     When toggle "Changes to Update Status (where on the team)" System notification option to be "enabled"
     When toggle "Allocated an Action" System notification option to be "enabled"
@@ -42,7 +42,7 @@ Feature: Notifications for Portal Admin
 
   @mutable
   Scenario: TC002_1_PortalAdmin_Notifications - Verify Notifications Preferences at user level
-    Given the "Notifications Preference" page is open
+    Given the "Notification Preferences" page is open
     Then verify "Updates" section is visible with notification options for the following "Set as responsible person;Changes to Update Status (where on the team);Changes to Update Priority (where on the team);Update now within 30 days of effective date and not yet closed;Update now within 7 days of effective date and not yet closed;Update becomes effective today and not yet closed"
     And verify "Actions" section is visible with notification options for the following "Allocated an Action;Changes to Action Status (where assigned to Action);Changes to Action Priority (where assigned to Action);Action due tomorrow and not yet complete;Action deadline today and not yet complete"
     And verify "Teams" section is visible with notification options for the following "Added to team;Removed from team"
@@ -50,7 +50,7 @@ Feature: Notifications for Portal Admin
 
   @mutable
   Scenario: TC002_2_PortalAdmin_Notifications - Verify disable Notifications Preferences at user level
-    Given the "Notifications Preference" page is open
+    Given the "Notification Preferences" page is open
     When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "disabled"
     And press "Cancel" button
     Then the "Unsaved Changes" popup is displayed
@@ -91,9 +91,11 @@ Feature: Notifications for Portal Admin
     And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
     Then the "Default Notifications Settings" page is displayed
+    When disable all user notification preferences
     And verify all the "Notifications Preferences" are disabled
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
+    Given the "01_QA_ClientPortalSetup - Updates Dashboard - All Updates" page is open
     And the "01_QA_ClientPortalSetup - Updates Dashboard" page is displayed
     Then open the first update in the "01_QA_ClientPortalSetup - Updates Dashboard" page
     When press "Edit" button on the selected update
@@ -129,6 +131,7 @@ Feature: Notifications for Portal Admin
   Scenario: TC003_4_PortalAdmin_Notifications - Verify triggered notifications for updates
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
+    Given the "01_QA_ClientPortalSetup - Updates Dashboard - All Updates" page is open
     And the "01_QA_ClientPortalSetup - Updates Dashboard" page is displayed
     Then open the first update in the "01_QA_ClientPortalSetup - Updates Dashboard" page
     When press "Edit" button on the selected update
@@ -167,9 +170,11 @@ Feature: Notifications for Portal Admin
     And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
     Then the "Default Notifications Settings" page is displayed
+    When disable all user notification preferences
     And verify all the "Notifications Preferences" are disabled
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
+    Given the "01_QA_ClientPortalSetup - Actions Dashboard" page is open
     When the "01_QA_ClientPortalSetup - Actions Dashboard" page is displayed
     Then click on the first action in the "01_QA_ClientPortalSetup - Actions Dashboard" page
     And the "Update Action" popup is displayed
@@ -204,6 +209,7 @@ Feature: Notifications for Portal Admin
   Scenario: TC004_4_PortalAdmin_Notifications - Verify triggered notifications for updates
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
+    Given the "01_QA_ClientPortalSetup - Updates Dashboard - All Updates" page is open
     And the "01_QA_ClientPortalSetup - Updates Dashboard" page is displayed
     Then open the first update in the "01_QA_ClientPortalSetup - Updates Dashboard" page
     When press "Edit" button on the selected update
@@ -241,11 +247,12 @@ Feature: Notifications for Portal Admin
     When press "Profile" button
     And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
-    Then the "Notifications Preference" page is displayed
+    Then the "Notification Preferences" page is displayed
+    When disable all user notification preferences
     And verify all the "Notifications Preferences" are disabled
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
-    When click on "01_QA_ClientPortalSetup" of the portals
+    Given the "01_QA_ClientPortalSetup - Updates Dashboard - All Updates" page is open
     Then click on "Team Management" option from the left navigation
     And the "Team Management" page is displayed
     When press "Edit" button for the first team in the "Team Management" page
@@ -283,6 +290,7 @@ Feature: Notifications for Portal Admin
   Scenario: TC005_4_PortalAdmin_Notifications - Verify triggered notifications for teams
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
+    When click on "01_QA_ClientPortalSetup" of the portals
     And the "01_QA_ClientPortalSetup - Updates Dashboard" page is displayed
     Then click on "Team Management" option from the left navigation
     And the "Team Management" page is displayed

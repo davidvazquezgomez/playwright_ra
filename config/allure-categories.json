@@ -1,6 +1,6 @@
 [
   {
-    "name": "Confirmed application defect",
+    "name": "APPLICATION DEFECT DETECTED",
     "matchedStatuses": ["failed"],
     "messageRegex": ".*APPLICATION DEFECT DETECTED.*"
   },
@@ -27,16 +27,21 @@
   {
     "name": "Locator or UI synchronization",
     "matchedStatuses": ["failed", "broken"],
-    "messageRegex": ".*(Can't click element|Can't fill element|strict mode violation|element\\(s\\) not found|resolved to hidden|locator\\.waitFor: Timeout|page\\.waitForSelector: Timeout).*"
+    "messageRegex": ".*(Can't click element|Can't fill element|strict mode violation|element\\(s\\) not found|resolved to hidden|locator\\.(waitFor|click|dblclick|fill|press|selectOption): Timeout|page\\.(waitForSelector|goto): Timeout|expect\\(locator\\).*to(BeVisible|BeHidden|HaveText|ContainText|HaveValue|HaveCount).*failed|TimeoutError:|Timeout \\d+ms exceeded while waiting).*"
   },
   {
-    "name": "Test timeout",
+    "name": "Test timeout - scenario exceeded limit",
     "matchedStatuses": ["broken"],
     "messageRegex": ".*Test timeout of .* exceeded.*"
   },
   {
-    "name": "Business assertion failure",
+    "name": "Assertion mismatch - requires triage",
     "matchedStatuses": ["failed"],
     "messageRegex": ".*(Expected chart|Expected toast message|The message .* is not displayed|Text for element .* is not|expect\\(received\\)\\.toBe).*"
+  },
+  {
+    "name": "Unclassified test failure - triage",
+    "matchedStatuses": ["failed", "broken"],
+    "messageRegex": ".*"
   }
 ]

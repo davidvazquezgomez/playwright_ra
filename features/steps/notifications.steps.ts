@@ -75,3 +75,7 @@ Then(
         await notificationsPage.verifyAllUserNotificationPreferencesAreDisabled(preferenceGroup);
     },
 );
+
+When('disable all user notification preferences', async ({ notificationsPage }) => {
+    await notificationsPage.disableAllUserNotificationPreferences();
+});

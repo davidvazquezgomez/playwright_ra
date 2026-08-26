@@ -34,7 +34,9 @@ export class AnalyticsDashboardPage extends BasePage {
         const chartPanel = this.chartPanelByTitle(chartTitle);
         const worldMap = this.worldMapByTitle(chartTitle);
         const dataTableSection = this.dataTableSectionByTitle(chartTitle);
-        const visualization = chartPanel.or(worldMap).or(dataTableSection);
+        const visualization = chartTitle.endsWith(' Map')
+            ? worldMap
+            : chartPanel.or(dataTableSection);
 
         await expect(visualization).toBeVisible();
     }

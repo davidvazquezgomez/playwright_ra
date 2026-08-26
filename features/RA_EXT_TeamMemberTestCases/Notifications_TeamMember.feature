@@ -21,13 +21,13 @@ Feature: Notifications for Team Member
 
   @readOnly
   Scenario: TC001_2_TeamMember_Notifications - Verify Notifications Preferences has Actions and Teams Sections Available
-    Given the "Notifications Preference" page is open
+    Given the "Notification Preferences" page is open
     Then verify "Actions" section is visible with notification options for the following "Allocated an Action; Changes to Action Status (where assigned to Action); Changes to Action Priority (where assigned to Action); Action due tomorrow and not yet complete; Action deadline today and not yet complete"
     And verify "Teams" section is visible with notification options for the following "Added to team; Removed from team"
 
   @mutable
   Scenario: TC001_3_TeamMember_Notifications - Verify enable or disable Notifications Preferences
-    Given the "Notifications Preference" page is open
+    Given the "Notification Preferences" page is open
     When press "Cancel" button
     Then the "Unsaved Changes" popup is displayed
     When press "Cancel" button on the "Unsaved Changes" popup
@@ -43,7 +43,7 @@ Feature: Notifications for Team Member
 
   @mutable
   Scenario: TC001_4_TeamMember_Notifications - Verify Notifications Preferences for Updates, Actions and Teams
-    Given the "Notifications Preference" page is open
+    Given the "Notification Preferences" page is open
     When toggle "Set as responsible person" System notification option to be "enabled"
     When toggle "Changes to Update Status (where on the team)" System notification option to be "enabled"
     When toggle "Allocated an Action" System notification option to be "enabled"
@@ -55,8 +55,8 @@ Feature: Notifications for Team Member
 
   @mutable
   Scenario: TC002_1_TeamMember_Notifications - Verify Notifications Preferences at user level
-    Given the "Notifications Preference" page is open
-    Then the "Notifications Preferences" page is displayed
+    Given the "Notification Preferences" page is open
+    Then the "Notification Preferences" page is displayed
     And verify "Updates" section is visible with notification options for the following "Set as responsible person;Changes to Update Status (where on the team);Changes to Update Priority (where on the team);Update now within 30 days of effective date and not yet closed;Update now within 7 days of effective date and not yet closed;Update becomes effective today and not yet closed"
     And verify "Actions" section is visible with notification options for the following "Allocated an Action;Changes to Action Status (where assigned to Action);Changes to Action Priority (where assigned to Action);Action due tomorrow and not yet complete;Action deadline today and not yet complete"
     And verify "Teams" section is visible with notification options for the following "Added to team;Removed from team"
@@ -64,7 +64,7 @@ Feature: Notifications for Team Member
 
   @mutable
   Scenario: TC002_2_TeamMember_Notifications - Verify enable or disable Notifications Preferences at user level
-    Given the "Notifications Preference" page is open
+    Given the "Notification Preferences" page is open
     When select one notification type currently disabled
     Then switch the toggle to enable
     And press "Cancel" button

@@ -3,18 +3,39 @@ import { BasePage } from './BasePage';
 
 export class ManageImpactAreasPage extends BasePage {
     private impactAreaRows = '[role="grid"][aria-label="Data table"] tbody tr.k-master-row';
-    private impactAreaNameCells = `${this.impactAreaRows} td[data-kendo-grid-column-index="1"]`;
-    private impactAreaNameCell = (impactAreaName: string) =>
-        `${this.impactAreaNameCells}:text-is("${impactAreaName}")`;
-    private impactAreaRowByName = (impactAreaName: string) =>
-        `${this.impactAreaRows}:has(td[data-kendo-grid-column-index="1"]:text-is("${impactAreaName}"))`;
+    private impactAreaNameCellSelector = 'td[data-kendo-grid-column-index="1"]';
+    private impactAreaNameCells = `${this.impactAreaRows} ${this.impactAreaNameCellSelector}`;
     private noRecordsMessage = '[role="grid"][aria-label="Data table"] tbody tr.k-grid-norecords p';
-    private impactAreaEditButton = (impactAreaName: string) =>
-        `${this.impactAreaRowByName(impactAreaName)} button[title="Edit Impact Area"]`;
     private impactAreaNameFilterInput = 'input[aria-label="Impact Area Name Filter"]';
     private impactAreaNameInput = '#impact-area-name input.k-input-inner';
     private saveButton = 'button:has(.k-button-text:has-text("Save"))';
     private impactAreaUpdatedToast = '.k-notification-content:has-text("Impact Area updated successfully")';
+
+    private impactAreaNameCell(impactAreaName: string) {
+        return this._page.locator(this.impactAreaNameCells).filter({
+            hasText: new RegExp(`^\\s*${this.escapeRegularExpression(impactAreaName)}\\s*$`),
+        });
+    }
+
+    private impactAreaRowByName(impactAreaName: string) {
+        return this._page.locator(this.impactAreaRows).filter({
+            has: this._page.locator(this.impactAreaNameCellSelector).filter({
+                hasText: new RegExp(`^\\s*${this.escapeRegularExpression(impactAreaName)}\\s*$`),
+            }),
+        });
+    }
+
+    private impactAreaEditButton(impactAreaName: string) {
+        return this.impactAreaRowByName(impactAreaName).locator('button[title="Edit Impact Area"]');
+    }
+
+    /**
+     * Escapes an Impact Area Name for use as a literal regular-expression value.
+     * @param value Text to escape.
+     */
+    private escapeRegularExpression(value: string): string {
+        return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
 
     /**
      * Opens the editor for the requested impact area.
@@ -26,14 +47,14 @@ export class ManageImpactAreasPage extends BasePage {
             `Manage Impact Areas must contain an impact area before "${impactAreaName}" can be edited.`,
             'The Manage Impact Areas grid was displayed before searching for the requested impact area.',
         );
-        await expect(this._page.locator(this.impactAreaRowByName(impactAreaName))).toBeVisible();
+        await expect(this.impactAreaRowByName(impactAreaName)).toBeVisible();
         await this.ensureExpectedBusinessElementIsVisible(
-            this._page.locator(this.impactAreaEditButton(impactAreaName)),
+            this.impactAreaEditButton(impactAreaName),
             `The impact area "${impactAreaName}" must provide the Edit Impact Area action.`,
             `The Edit Impact Area button is displayed for "${impactAreaName}".`,
             `The impact area row "${impactAreaName}" is visible in the Manage Impact Areas grid.`,
         );
-        await this.clickElement(this.impactAreaEditButton(impactAreaName));
+        await this.clickLocator(this.impactAreaEditButton(impactAreaName));
     }
 
     /**
@@ -84,7 +105,7 @@ export class ManageImpactAreasPage extends BasePage {
      * @param impactAreaName Exact Impact Area Name expected in the grid.
      */
     async verifyImpactAreaDisplayed(impactAreaName: string): Promise<void> {
-        await expect(this._page.locator(this.impactAreaNameCell(impactAreaName))).toBeVisible();
+        await expect(this.impactAreaNameCell(impactAreaName)).toBeVisible();
     }
 
     /**
@@ -137,7 +158,7 @@ export class ManageImpactAreasPage extends BasePage {
         await this.clearInput(this.impactAreaNameFilterInput);
         await this.fillInputText(this.impactAreaNameFilterInput, impactAreaName);
 
-        const impactArea = this._page.locator(this.impactAreaNameCell(impactAreaName));
+        const impactArea = this.impactAreaNameCell(impactAreaName);
         const impactAreaRows = this._page.locator(this.impactAreaRows);
         await expect.poll(async () =>
             (await impactArea.count()) > 0 || (await impactAreaRows.count()) === 0

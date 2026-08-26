@@ -16,7 +16,8 @@ interface FeatureAuthentication {
 
 const featureLoginStep =
   /^\s*(?:Given|When|Then|And|But)\s+launch Regulatory Advantage application URL and login as "([^"]+)" user "([^"]+)"\s*$/m;
-const authStateDirectory = path.join(process.cwd(), 'test-results', 'auth-state');
+// Kept outside test-results because Playwright deletes the output directory when the run starts.
+const authStateDirectory = path.join(process.cwd(), '.auth-state');
 const lockTimeoutMs = Number(process.env.AUTH_STATE_LOCK_TIMEOUT_MS || 300000);
 const staleLockTimeoutMs = Number(process.env.AUTH_STATE_STALE_LOCK_TIMEOUT_MS || 900000);
 const lockRetryDelayMs = 200;
@@ -101,6 +102,12 @@ export async function prepareFeatureAuthState(browser: Browser, testFile: string
   const statePath = getAuthStatePath(authentication);
   if (await fileExists(statePath)) {
     return statePath;
+  }
+  if (process.env.SHARED_AUTH_STATES === 'true') {
+    throw new Error(
+      `Shared authentication state is missing for ${authentication.userType} user ${authentication.role}: ${statePath}. ` +
+      'Verify that the prewarm artifact was downloaded and that ENV matches the prewarm job.',
+    );
   }
 
   const lockPath = `${statePath}.lock`;
@@ -222,7 +229,7 @@ async function createAuthState(browser: Browser, authentication: FeatureAuthenti
     await context.storageState({ path: statePath });
   } catch (error) {
     await loginPage.takeScreenshot(
-      path.join(process.cwd(), 'test-results', 'auth-state', 'prewarm-failure.png'),
+      path.join(authStateDirectory, 'prewarm-failure.png'),
     ).catch(() => undefined);
     throw new Error(
       `Unable to prewarm authentication state for ${authentication.userType} user ${authentication.role}. ` +

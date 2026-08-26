@@ -82,7 +82,7 @@ jobs:
         displayName: 'Install Playwright browsers'
 
       - script: |
-          npx rimraf test-results/auth-state
+          npx rimraf .auth-state
           CI=true REUSE_AUTH_STATE=true AUTH_STATE_PREWARM_ONLY=true PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop
         displayName: 'Create shared authentication states'
         env:
@@ -116,7 +116,7 @@ jobs:
       - task: PublishPipelineArtifact@1
         displayName: 'Publish shared authentication states'
         inputs:
-          targetPath: 'test-results/auth-state'
+          targetPath: '.auth-state'
           artifact: 'auth-states'
           publishLocation: 'pipeline'
 
@@ -149,7 +149,20 @@ jobs:
         inputs:
           buildType: 'current'
           artifact: 'auth-states'
-          path: '$(System.DefaultWorkingDirectory)/test-results/auth-state'
+          path: '$(System.DefaultWorkingDirectory)/.auth-state'
+
+      - script: |
+          state_directory=".auth-state/$(printf '%s' "$ENV" | tr '[:upper:]' '[:lower:]')"
+          state_count=$(find "$state_directory" -maxdepth 1 -name '*.json' -type f 2>/dev/null | wc -l)
+          if [ "$state_count" -lt 1 ]; then
+            echo "##vso[task.logissue type=error]The shared authentication-state artifact did not contain state files in $state_directory."
+            find .auth-state -type f
+            exit 1
+          fi
+          echo "Using $state_count shared authentication state file(s) from $state_directory."
+        displayName: 'Verify shared authentication states'
+        env:
+          ENV: $(ENV)
 
       - task: Cache@2
         displayName: 'Cache Playwright browsers'
@@ -186,6 +199,8 @@ jobs:
         displayName: 'Execute read-only BDD group (STAGE / Desktop)'
         env:
           REUSE_AUTH_STATE: 'true'
+          SHARED_AUTH_STATES: 'true'
+          ENV: $(ENV)
           TIMEOUT: '15000'
           TEST_TIMEOUT: '120000'
           TRACE_MODE: 'off'
@@ -238,6 +253,7 @@ jobs:
           mergeTestResults: true
           failTaskOnFailedTests: false
           failTaskOnMissingResultsFile: false
+          publishRunAttachments: false
           testRunTitle: 'Playwright BDD - STAGE / Desktop - Read-only'
 
       - script: npm run diagnostics:prepare
@@ -287,7 +303,20 @@ jobs:
         inputs:
           buildType: 'current'
           artifact: 'auth-states'
-          path: '$(System.DefaultWorkingDirectory)/test-results/auth-state'
+          path: '$(System.DefaultWorkingDirectory)/.auth-state'
+
+      - script: |
+          state_directory=".auth-state/$(printf '%s' "$ENV" | tr '[:upper:]' '[:lower:]')"
+          state_count=$(find "$state_directory" -maxdepth 1 -name '*.json' -type f 2>/dev/null | wc -l)
+          if [ "$state_count" -lt 1 ]; then
+            echo "##vso[task.logissue type=error]The shared authentication-state artifact did not contain state files in $state_directory."
+            find .auth-state -type f
+            exit 1
+          fi
+          echo "Using $state_count shared authentication state file(s) from $state_directory."
+        displayName: 'Verify shared authentication states'
+        env:
+          ENV: $(ENV)
 
       - task: Cache@2
         displayName: 'Cache Playwright browsers'
@@ -326,6 +355,8 @@ jobs:
         displayName: 'Execute mutable BDD group (STAGE / Desktop)'
         env:
           REUSE_AUTH_STATE: 'true'
+          SHARED_AUTH_STATES: 'true'
+          ENV: $(ENV)
           TIMEOUT: '15000'
           TEST_TIMEOUT: '120000'
           TRACE_MODE: 'off'
@@ -378,6 +409,7 @@ jobs:
           mergeTestResults: true
           failTaskOnFailedTests: false
           failTaskOnMissingResultsFile: false
+          publishRunAttachments: false
           testRunTitle: 'Playwright BDD - STAGE / Desktop - Mutable'
 
       - script: npm run diagnostics:prepare
@@ -462,16 +494,68 @@ jobs:
         displayName: 'Merge allure-results from both jobs'
         condition: always()
 
+      - script: |
+          organization_url="$(System.CollectionUri)"
+          builds_url="${organization_url}$(System.TeamProject)/_apis/build/builds?definitions=$(System.DefinitionId)&branchName=$(Build.SourceBranch)&statusFilter=completed&queryOrder=finishTimeDescending&%24top=50&api-version=7.1"
+          set +e
+          builds=$(curl --fail --silent --show-error \
+            --header "Authorization: Bearer $SYSTEM_ACCESSTOKEN" \
+            "$builds_url")
+          builds_exit=$?
+          set -e
+
+          if [ "$builds_exit" -ne 0 ]; then
+            echo "Could not query previous builds; generating a fresh Allure history."
+            exit 0
+          fi
+
+          history_build_id=$(printf '%s' "$builds" | node -e '
+            let body = "";
+            process.stdin.on("data", chunk => body += chunk);
+            process.stdin.on("end", () => {
+              const builds = JSON.parse(body).value || [];
+              const token = process.env.SYSTEM_ACCESSTOKEN;
+              const baseUrl = process.env.SYSTEM_COLLECTIONURI;
+              const project = process.env.SYSTEM_TEAMPROJECT;
+
+              (async () => {
+                for (const build of builds) {
+                  const response = await fetch(`${baseUrl}${project}/_apis/build/builds/${build.id}/artifacts?artifactName=allure-history&api-version=7.1`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                  });
+                  if (response.ok) {
+                    process.stdout.write(String(build.id));
+                    return;
+                  }
+                }
+              })().catch(error => {
+                console.error(`Could not inspect Allure history artifacts: ${error.message}`);
+              });
+            });
+          ')
+
+          if [ -n "$history_build_id" ]; then
+            echo "Restoring Allure history from build $history_build_id."
+            echo "##vso[task.setvariable variable=allureHistoryBuildId]$history_build_id"
+          else
+            echo "No Allure history artifact exists for this branch yet; generating a fresh history."
+          fi
+        displayName: 'Find latest branch build with Allure history'
+        condition: always()
+        env:
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+          SYSTEM_COLLECTIONURI: $(System.CollectionUri)
+          SYSTEM_TEAMPROJECT: $(System.TeamProject)
+
       - task: DownloadPipelineArtifact@2
         displayName: 'Restore Allure history from the latest branch build'
-        condition: always()
-        continueOnError: true
+        condition: and(always(), ne(variables['allureHistoryBuildId'], ''))
         inputs:
           buildType: 'specific'
           project: '$(System.TeamProject)'
           pipeline: '$(System.DefinitionId)'
-          buildVersionToDownload: 'latestFromBranch'
-          branchName: '$(Build.SourceBranch)'
+          buildVersionToDownload: 'specific'
+          pipelineId: '$(allureHistoryBuildId)'
           allowPartiallySucceededBuilds: true
           allowFailedBuilds: true
           artifact: 'allure-history'
@@ -495,6 +579,16 @@ jobs:
           PARALLEL_RUN: 'false'
           RETRIES: '0'
 
+      - script: |
+          summary_file="$(System.DefaultWorkingDirectory)/test-results/analysis/allure-quality-summary.md"
+          if [ -f "$summary_file" ]; then
+            echo "##vso[task.uploadsummary]$summary_file"
+          else
+            echo "Allure quality summary was not generated."
+          fi
+        displayName: 'Publish automation and application quality summary'
+        condition: always()
+
       - task: PublishAllureReport@1
         displayName: 'Publish Allure Report tab (BDD)'
         condition: always()
@@ -509,4 +603,13 @@ jobs:
         inputs:
           targetPath: 'allure-report/history'
           artifact: 'allure-history'
+          publishLocation: 'pipeline'
+
+      - task: PublishPipelineArtifact@1
+        displayName: 'Publish Allure quality analysis'
+        condition: always()
+        continueOnError: true
+        inputs:
+          targetPath: 'test-results/analysis'
+          artifact: 'allure-quality-analysis'
           publishLocation: 'pipeline'

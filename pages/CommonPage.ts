@@ -212,6 +212,7 @@ export class CommonPage extends BasePage {
       'Updates Dashboard - QA_Test client3': '/project-dashboard/213/Updates/AllUpdates/All',
       '1_E2E_Test1 - Updates Dashboard - All Updates': '/project-dashboard/180/Updates/AllUpdates/All',
       '01_QA_StageTestPortal - Updates Dashboard - All Updates': '/project-dashboard/415/Updates/AllUpdates/All',
+      '01_QA_ClientPortalSetup - Updates Dashboard - All Updates': '/project-dashboard/616/Updates/AllUpdates/All',
       'ClientPortal_20260209133616 - Updates Dashboard - All Updates': '/project-dashboard/540/Updates/AllUpdates/All',
       '01_13Jan REG - Analytics Dashboard - Update Analytics': '/project-dashboard/361/Analytics/UpdateAnalytics/All',
       '01_13Jan REG - Analytics Dashboard - Action Analytics': '/project-dashboard/361/Analytics/ActionsAnalytics/All',
@@ -230,6 +231,7 @@ export class CommonPage extends BasePage {
       'Updates Dashboard - ClientPortal_20260213081718': '/project-dashboard/553/Updates/AllUpdates/All',
       'Actions Dashboard - ClientPortal_20260213081718': '/project-dashboard/553/Actions/AllActions/All',
       '01_QA_StageTestPortal - Actions Dashboard': '/project-dashboard/415/Actions/AllActions/All',
+      '01_QA_ClientPortalSetup - Actions Dashboard': '/project-dashboard/616/Actions/AllActions/All',
       'User Management - Global Inc': '/user-management/142',
       'User Management - QA_Test client3': '/user-management/213',
       'User Management - ClientPortal_20260213081718': '/user-management/553',
@@ -239,7 +241,7 @@ export class CommonPage extends BasePage {
       'Automatic Allocation Setup - Global Inc': '/allocation-setup/142',
       'Automatic Allocation of Updates': '/allocation/361',
       'Automatic Allocation Setup': '/allocation-setup/616',
-      'Notifications Preference': '/user-notification-preference',
+      'Notification Preferences': '/user-notification-preference',
 
     };
     const pageRoute = pageRoutes[pageName];
@@ -373,12 +375,20 @@ export class CommonPage extends BasePage {
   }
 
   /**
-   * Verifies that a shared Kendo grid column header is visible.
-   * @param columnName Name of the expected column.
+   * Verifies that one or more shared Kendo grid column headers are visible.
+   * @param columnNames Semicolon-delimited names of the expected columns.
    * @param pageName Name of the page that owns the grid.
    */
-  async verifyGridColumnHeaderDisplayed(columnName: string, pageName: string): Promise<void> {
-    await expect(this._page.locator(this.sharedGridColumnHeaderByName(columnName))).toBeVisible();
+  async verifyGridColumnHeaderDisplayed(columnNames: string, pageName: string): Promise<void> {
+    const columnNamesToVerify = columnNames.split(';').map(columnName => columnName.trim()).filter(Boolean);
+
+    if (columnNamesToVerify.length === 0) {
+      throw new Error(`At least one column header must be provided for page "${pageName}".`);
+    }
+
+    for (const columnName of columnNamesToVerify) {
+      await this.verifyElementIsDisplayed(this.sharedGridColumnHeaderByName(columnName));
+    }
   }
 
   /**
@@ -883,7 +893,7 @@ export class CommonPage extends BasePage {
         return this.overviewPageTitle;
       case 'User Management':
         return this.userManagementPageTitle;
-      case 'Notifications Preference':
+      case 'Notification Preferences':
       case 'Default Notifications Settings':
         return this.defaultNotificationSettingsPageTitle;
       case 'RegulatoryAdvantage | Release Notes':

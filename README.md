@@ -174,6 +174,15 @@ The pipeline also supplies account credentials and artifact settings through env
 
 The report displays Gherkin steps (Given/When/Then) natively. `detail: false` hides internal fixture steps. Results are written to `allure-results`; JUnit files and other Playwright artifacts are written under `test-results`.
 
+Confirmed application defects retain the Allure `failed` status and are grouped by the `APPLICATION DEFECT DETECTED` category. Report generation also writes these files to `test-results/analysis`:
+
+| File | Purpose |
+| ---- | ------- |
+| `allure-quality-summary.md` | Azure Pipelines summary with functional compliance, automation health, and failure classification. |
+| `allure-quality-metrics.json` | Machine-readable version of the same metrics. |
+
+Automation health counts a confirmed application defect as a correct automation detection; functional compliance measures only the scenarios whose product behavior could be evaluated. Technical automation failures remain separate from both measures.
+
 
 ```bash
 # Generate and open
@@ -246,7 +255,7 @@ The [`azure-pipelines.yml`](azure-pipelines.yml) pipeline runs BDD tests in Azur
 1. Installs Node.js 22, dependencies, Chromium, and Java 21.
 2. Type-checks TypeScript, audits dependencies, and validates BDD contracts.
 3. Runs STAGE `@readOnly` tests in parallel and `@mutable` tests serially on Desktop Chrome.
-4. Publishes JUnit results, the Allure report, diagnostics for failed runs, and Allure history.
+4. Publishes JUnit results, the Allure report, diagnostics for failed runs, Allure history, and a quality summary that separates confirmed application defects from technical automation failures.
 
 Credentials and URLs are injected from Azure DevOps secret variables, including `STAGE_URL`, `GA_PORTAL_STAGE_URL`, and role-specific `USER_*` variables.
 
