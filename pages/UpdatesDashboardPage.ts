@@ -20,19 +20,19 @@ export class UpdatesDashboardPage extends BasePage {
   private readonly activeUpdateDetailsPanel = () =>
     this._page.locator('kendo-tabstrip > [role="tabpanel"][aria-hidden="false"]').first();
   private readonly updateDetailsSectionLabelByName = (sectionName: string) =>
-    this.activeUpdateDetailsPanel().locator('.form-label').filter({
-      hasText: new RegExp(`^${this.escapeRegularExpression(sectionName)}(?:\\s|$)`),
-    });
+    this.activeUpdateDetailsPanel().locator(
+      `xpath=.//label[contains(concat(' ', normalize-space(@class), ' '), ' form-label ') and normalize-space(text()[1]) = "${sectionName}"]`,
+    );
   private readonly updateDetailsAttachmentsTab = () =>
     this.activeUpdateDetailsPanel().locator('..').getByRole('tab', { name: 'Attachments', exact: true });
   private readonly updateDetailsUploadFilesButton = () =>
     this.activeUpdateDetailsPanel().getByRole('button', { name: 'Upload files', exact: true });
   private readonly updateDetailsMarkAsUnreadButton = () =>
-    this._page.getByRole('button', { name: 'Mark as Unread', exact: true });
+    this._page.locator('app-update-details button.btn-unread-read');
   private readonly updateDetailsEditButton = 'button[title="Edit"]';
   private readonly updateDetailsSaveButton = 'button[title="Save"]';
   private readonly updateDetailsCommentButton = () =>
-    this.activeUpdateDetailsPanel().getByRole('button', { name: 'Comment', exact: true });
+    this.activeUpdateDetailsPanel().locator('app-comments .comment-input-actions button[type="submit"]');
 
   /**
    * Searches the Updates Dashboard for an update title.
@@ -53,16 +53,19 @@ export class UpdatesDashboardPage extends BasePage {
 
   /**
    * Gets the total number of items displayed in the All Updates table.
+   * @param expectedItemCount Optional total that the pager must report before returning.
    * @returns Total item count reported by the All Updates table pager.
    */
-  async getAllUpdatesItemCount(): Promise<number> {
+  async getAllUpdatesItemCount(expectedItemCount?: number): Promise<number> {
     await expect.poll(
       async () => this.getKendoPagerItemCount(this.updatesPagerInfo),
       {
-        message: 'Waiting for the All Updates pager to finish loading.',
+        message: expectedItemCount === undefined
+          ? 'Waiting for the All Updates pager to finish loading.'
+          : `Waiting for the All Updates pager to report ${expectedItemCount} items.`,
         timeout: process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000,
       },
-    ).toBeGreaterThan(0);
+    )[expectedItemCount === undefined ? 'toBeGreaterThan' : 'toBe'](expectedItemCount ?? 0);
 
     return this.getKendoPagerItemCount(this.updatesPagerInfo);
   }

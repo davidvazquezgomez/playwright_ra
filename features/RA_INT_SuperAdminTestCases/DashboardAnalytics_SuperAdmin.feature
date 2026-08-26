@@ -134,7 +134,7 @@ Feature: Dashboard Analytics for Super Admin
     Then the "Withholding tax correction factor" page is displayed
     And press the "Update Details" subsection
     And verify the "Update Details" subsection displays the "User Assigned; Priority; Status;Summary; Deloitte View; Supporting References; Tags; Related updates; Watch List; Discussion; Jurisdiction; Impact Area; Date Announced; Date Effective;Regulator;Level of Authority;Status of Change" sections
-    And verify the "Update Details" subsection displays the "TestLast, TestFirst;Medium;Update in Progress;A correction factor has been introduced with the goal of mitigating the overall cost of various partial exemptions from payment of withholding tax ("wage withholding tax incentives") in order to help to preserve budgetary sustainability without fundamentally altering the exemption system. This factor would limit the total tax cost by applying specific percentage reductions to remuneration subject to these exemptions between 2027 and 2029, with potential adjustments by the King based on fiscal developments. Employers may also provide proof of correct application of this correction factor as regulated by a Royal Decree. The wage withholding tax incentives that could be affected include (but are not limited to): - Night work;- Shift work (bis);- Continuous work (bis);- Overtime; and- Remuneration paid in the for-profit and non-profit sector;Employers may want to consider this when making their budget forecasts for calendar year 2027 onwards;0;3;0;0;0;0;Belgium;Employer tax reporting/filing requirements;04 Mar 2026;01 Jan 2027;Tax Authority;Legislative/Binding;Draft" values
+    And verify the "Update Details" subsection displays the "audit, sonigour;Medium;Update in Progress;A correction factor has been introduced with the goal of mitigating the overall cost of various partial exemptions from payment of withholding tax (\"wage withholding tax incentives\") in order to help to preserve budgetary sustainability without fundamentally altering the exemption system. This factor would limit the total tax cost by applying specific percentage reductions to remuneration subject to these exemptions between 2027 and 2029, with potential adjustments by the King based on fiscal developments. Employers may also provide proof of correct application of this correction factor as regulated by a Royal Decree. The wage withholding tax incentives that could be affected include (but are not limited to): - Night work;- Shift work (bis);- Continuous work (bis);- Overtime; and;- Remuneration paid in the for-profit and non-profit sector;Employers may want to consider this when making their budget forecasts for calendar year 2027 onwards;0;3;0;0;0;0;Belgium;Employer tax reporting/filing requirements;04 Mar 2026;01 Jan 2027;Tax Authority;Legislative/Binding;Draft" values
     And verify the "Update Details" subsection displays the "Mark as Unread;Edit;Comment" buttons
     When open the "Attachments" tab in the "Update Details" subsection
     Then verify the "Upload files" button is displayed in the "Update Details" Attachments tab
@@ -315,7 +315,7 @@ Feature: Dashboard Analytics for Super Admin
   Scenario: TC017_01_SuperAdmin_DashboardAnalytics - Verify Data consistency between Actions Analytics Data and All Actions section
     Given the "01_13Jan REG - Analytics Dashboard - Action Analytics" page is open
     Then verify the "Actions Analytics Data" chart is displayed
-    And verify "Update Title;Action;UserAssigned;Deadline Date; Update Priority; Action Priority; Action Status" column header is displayed in the "01_13Jan REG - Analytics Dashboard - Action Analytics" page
+    And verify "Update Title;Action;User Assigned;Deadline Date; Update Priority; Action Priority; Action Status" column header is displayed in the "01_13Jan REG - Analytics Dashboard - Action Analytics" page
     Then save the "Actions Analytics Data" items
     When press the "Actions" section
     Then the "All Actions" subsection is displayed
@@ -329,7 +329,7 @@ Feature: Dashboard Analytics for Super Admin
     When select the "Immg_Prod" result by clicking on the "Action" section
     Then verify the "Update Action" modal is displayed
     And verify the "Update Action" modal contains the "Update;Action;User Assigned; Priority; Status; Deadline;Private Action" sections
-    And verify the "Update Action" modal contains the "Immg_Prod;AA-Action-20thJan2026-002;;Medium;Not Started;22 Jan 2026; Off" values
+    And verify the "Update Action" modal contains the "Immg_Prod;AA-Action-20thJan2026-002;Search for user...;Medium;Not Started;22 Jan 2026; Off" values
     And verify "<UpdateButtons>" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
@@ -340,7 +340,7 @@ Feature: Dashboard Analytics for Super Admin
     When select the "Immg_Prod" result by clicking on the "Action" section
     Then verify the "Update Action" modal is displayed
     And verify the "Update Action" modal contains the "Update;Action;User Assigned; Priority; Status; Deadline;Private Action" sections
-    And verify the "Update Action" modal contains the "Immg_Prod;AA-Action-20thJan2026-002;;Medium;Not Started;22 Jan 2026; Off" values
+    And verify the "Update Action" modal contains the "Immg_Prod;AA-Action-20thJan2026-002;Search for user...;Medium;Not Started;22 Jan 2026; Off" values
     And verify "<UpdateButtons>" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
@@ -355,7 +355,7 @@ Feature: Dashboard Analytics for Super Admin
     When select the "Immg_Prod" result by clicking on the "Update Title" section
     Then verify the "Update Action" modal is displayed
     And verify the "Update Action" modal contains the "Update;Action;User Assigned; Priority; Status; Deadline;Private Action" sections
-    And verify the "Update Action" modal contains the "Immg_Prod;AA-Action-20thJan2026-002;;Medium;Not Started;22 Jan 2026; Off" values
+    And verify the "Update Action" modal contains the "Immg_Prod;AA-Action-20thJan2026-002;Search for user...;Medium;Not Started;22 Jan 2026; Off" values
     And verify "Close;Update" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab

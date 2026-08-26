@@ -21,6 +21,9 @@ export class ActionsDashboardPage extends BasePage {
     `${this.updateActionDialog} kendo-dropdownlist[formcontrolname="priority"]`;
   private readonly updateActionStatusDropdown =
     `${this.updateActionDialog} kendo-dropdownlist[formcontrolname="status"]`;
+  private readonly updateActionUpdateInput = `${this.updateActionDialog} input[formcontrolname="update"]`;
+  private readonly updateActionInput = `${this.updateActionDialog} input[formcontrolname="action"]`;
+  private readonly updateActionDeadlineInput = `${this.updateActionDialog} kendo-datepicker[formcontrolname="deadline"] input`;
   private readonly updateActionButton = () =>
     this._page.getByRole('button', { name: 'Update', exact: true });
   private readonly privateActionToggle = () =>
@@ -100,9 +103,20 @@ export class ActionsDashboardPage extends BasePage {
 
   /**
    * Gets the total number of items displayed in the All Actions table.
+   * @param expectedItemCount Optional total that the pager must report before returning.
    * @returns Total item count reported by the All Actions table pager.
    */
-  async getAllActionsItemCount(): Promise<number> {
+  async getAllActionsItemCount(expectedItemCount?: number): Promise<number> {
+    await expect.poll(
+      async () => this.getKendoPagerItemCount(this.actionsPagerInfo),
+      {
+        message: expectedItemCount === undefined
+          ? 'Waiting for the All Actions pager to finish loading.'
+          : `Waiting for the All Actions pager to report ${expectedItemCount} items.`,
+        timeout: process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000,
+      },
+    )[expectedItemCount === undefined ? 'toBeGreaterThan' : 'toBe'](expectedItemCount ?? 0);
+
     return this.getKendoPagerItemCount(this.actionsPagerInfo);
   }
 
@@ -367,7 +381,7 @@ export class ActionsDashboardPage extends BasePage {
     await expect(dialog).toBeVisible();
 
     for (const sectionName of sectionNames) {
-      await expect(dialog.getByText(sectionName, { exact: true })).toBeVisible();
+      await expect(dialog.locator('label.k-label').getByText(sectionName, { exact: true })).toBeVisible();
     }
   }
 
@@ -376,24 +390,43 @@ export class ActionsDashboardPage extends BasePage {
    * @param values Semicolon-delimited values expected in the dialog.
    */
   async verifyUpdateActionValuesAreDisplayed(values: string): Promise<void> {
-    const expectedValues = values.split(';').map((value) => value.trim()).filter(Boolean);
-    if (expectedValues.length === 0) {
-      throw new Error('At least one Update Action value must be provided.');
+    const expectedValues = values.split(';').map((value) => value.trim());
+    const fieldNames = ['Update', 'Action', 'User Assigned', 'Priority', 'Status', 'Deadline', 'Private Action'];
+    if (expectedValues.length !== fieldNames.length) {
+      throw new Error(`Expected ${fieldNames.length} Update Action values, but received ${expectedValues.length}.`);
     }
 
     const dialog = this._page.locator(this.updateActionDialog);
+    const getFieldValues = async (): Promise<string[]> => {
+      const [update, action, userAssigned, priority, status, deadline, privateAction] = await Promise.all([
+        this._page.locator(this.updateActionUpdateInput).inputValue(),
+        this._page.locator(this.updateActionInput).inputValue(),
+        this._page.locator(this.updateActionUserAssignedDropdown).innerText(),
+        this._page.locator(this.updateActionPriorityDropdown).locator('.k-input-value-text').innerText(),
+        this._page.locator(this.updateActionStatusDropdown).locator('.k-input-value-text').innerText(),
+        this._page.locator(this.updateActionDeadlineInput).inputValue(),
+        this.privateActionToggle().getAttribute('aria-checked'),
+      ]);
+      return [update, action, userAssigned, priority, status, deadline, privateAction === 'true' ? 'On' : 'Off']
+        .map((value) => value.trim());
+    };
     await expect(dialog).toBeVisible();
 
     try {
-      for (const expectedValue of expectedValues) {
-        await expect(dialog).toContainText(new RegExp(this.escapeRegularExpression(expectedValue), 'i'));
+      for (const [index, expectedValue] of expectedValues.entries()) {
+        const expectedValuePattern = new RegExp(this.escapeRegularExpression(expectedValue), 'i');
+        await expect.poll(
+          async () => expectedValuePattern.test((await getFieldValues())[index]),
+          { message: `Waiting for Update Action ${fieldNames[index]} value "${expectedValue}".` },
+        ).toBe(true);
       }
     } catch {
+      const actualFieldValues = await getFieldValues();
       this.failWithApplicationError(
         'The Update Action dialog must display every expected value.',
-        `[${expectedValues.join(' | ')}]`,
-        (await dialog.innerText()).trim(),
-        'The Update Action dialog was visible and its content was read successfully.',
+        fieldNames.map((fieldName, index) => `${fieldName}: ${expectedValues[index]}`).join('; '),
+        fieldNames.map((fieldName, index) => `${fieldName}: ${actualFieldValues[index]}`).join('; '),
+        'Each Update Action form field was read successfully.',
       );
     }
   }

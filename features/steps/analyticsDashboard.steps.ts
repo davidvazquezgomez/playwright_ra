@@ -67,9 +67,9 @@ Then(
         }
 
         const currentItemCount = tableTitle === 'All Updates'
-            ? await updatesDashboardPage.getAllUpdatesItemCount()
+            ? await updatesDashboardPage.getAllUpdatesItemCount(savedItemCount)
             : tableTitle === 'All Actions'
-                ? await actionsDashboardPage.getAllActionsItemCount()
+                ? await actionsDashboardPage.getAllActionsItemCount(savedItemCount)
                 : undefined;
 
         if (currentItemCount === undefined) {

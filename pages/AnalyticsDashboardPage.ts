@@ -17,11 +17,11 @@ export class AnalyticsDashboardPage extends BasePage {
     private readonly dataTablePagerPageByTitle = (tableTitle: string, pageNumber: string) =>
         this.dataTableSectionByTitle(tableTitle).getByRole('button', { name: `Page ${pageNumber}`, exact: true });
     private readonly visibleDataTablePagerInfo = this._page.locator('app-table .k-pager-info:visible');
-    private readonly firstFilteredUpdateLinkByTableTitle = (tableTitle: string) =>
+    private readonly firstFilteredUpdateCellByTableTitle = (tableTitle: string) =>
         this.dataTableSectionByTitle(tableTitle)
             .locator('tbody tr.k-master-row')
             .first()
-            .locator('td[aria-colindex="1"] a.table_hyperLink');
+            .locator('td[aria-colindex="1"]');
     private readonly updateSearchInput = 'input[placeholder="Select or type update title"][role="combobox"]';
     private readonly mapControlByTitle = (controlTitle: string) =>
         `app-world-map .zoom-controls button[title="${controlTitle}"]`;
@@ -115,14 +115,17 @@ export class AnalyticsDashboardPage extends BasePage {
      */
     async openFirstFilteredUpdateResult(tableTitle: string): Promise<void> {
         const dataTable = this.dataTableSectionByTitle(tableTitle).locator('app-table');
+        const dataRows = dataTable.locator('tbody tr.k-master-row');
+        console.log(`Analytics table "${tableTitle}" rows before waiting: ${await dataRows.count()}`);
         await this.ensureKendoGridHasRows(
             dataTable,
             `The "${tableTitle}" Analytics data table must contain an update before its first result can be opened.`,
             `The "${tableTitle}" Analytics data table was displayed before attempting to open its first result.`,
         );
-        const updateLink = this.firstFilteredUpdateLinkByTableTitle(tableTitle);
-        await expect(updateLink).toBeVisible();
-        await updateLink.click();
+        const updateCell = this.firstFilteredUpdateCellByTableTitle(tableTitle);
+        console.log(`Analytics table "${tableTitle}" first row: ${(await dataRows.first().innerText()).trim()}`);
+        await expect(updateCell).toBeVisible();
+        await updateCell.click();
     }
 
     /**
