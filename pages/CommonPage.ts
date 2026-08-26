@@ -106,6 +106,10 @@ export class CommonPage extends BasePage {
     this._page.getByRole('button', { name: buttonName, exact: true });
   private mandatoryFieldMessageByText = (message: string) =>
     this._page.locator('.k-form-error').filter({ hasText: message });
+  private legacyApplicationMessageByText = (message: string) =>
+    this._page.locator(`text=${message}`);
+  private applicationMessageByText = (message: string) =>
+    this._page.getByText(message, { exact: true });
   private toastMessageByText = (message: string) =>
     this._page.locator('.k-notification-content').filter({ hasText: message });
   private checkboxLabelByName = (checkboxName: string) =>
@@ -569,6 +573,22 @@ export class CommonPage extends BasePage {
 
     for (const message of mandatoryFieldMessages) {
       await expect(this.mandatoryFieldMessageByText(message), `Expected mandatory-field message "${message}" to be visible on the ${pageName} page.`).toBeVisible();
+    }
+  }
+
+  /**
+   * Verifies that an application message is visible.
+   * @param message Exact message expected in the rendered application UI.
+   */
+  async verifyApplicationMessageIsDisplayed(message: string): Promise<void> {
+    if (!message.trim()) {
+      throw new Error('An expected application message must be provided.');
+    }
+
+    try {
+      await expect(this.legacyApplicationMessageByText(message)).toBeVisible({ timeout: 3000 });
+    } catch {
+      await expect(this.applicationMessageByText(message), `Expected application message "${message}" to be visible.`).toBeVisible();
     }
   }
 

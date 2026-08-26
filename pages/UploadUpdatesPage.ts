@@ -22,7 +22,6 @@ export class UploadUpdatesPage extends BasePage {
   private affectedClientsDropdown = `${this.affectedClientsMultiSelect} input[role="combobox"][placeholder="Select clients..."]`;
   private clientDropdownOption = (client: string) =>
     '[role="listbox"] [role="option"]:has-text("' + client + '")';
-  private expectedErrorMessage = (message: string) => `text=${message}`;
   private affectedClientSelection = (client: string) =>
     `${this.affectedClientsMultiSelect} kendo-taglist[role="listbox"] .k-chip[role="option"] .k-chip-label:text-is("${client}")`;
   private fieldSelectors: Record<string, string> = {
@@ -112,23 +111,6 @@ export class UploadUpdatesPage extends BasePage {
   async verifyUploadedFileError(): Promise<void> {
     if (!await this.checkIfFieldIsDisplayed(this.uploadedFileError)) {
       throw new Error('The uploaded file error is not displayed.');
-    }
-  }
-
-  /**
-   * Verifies that the requested application message is visible.
-   * @param message Expected message text.
-   */
-  async verifyMessage(message: string): Promise<void> {
-    await this.waitForElement(this.fileUploadSection);
-
-    if (!await this.checkIfFieldIsDisplayed(this.expectedErrorMessage(message))) {
-      this.failWithApplicationError(
-        'The Upload Updates workflow must display the validation or status message expected for the selected file and action.',
-        `Message "${message}" is displayed.`,
-        `Message "${message}" is not displayed.`,
-        `Visible Upload Updates content: "${(await this._page.locator(this.fileUploadSection).innerText()).trim()}".`,
-      );
     }
   }
 

@@ -200,6 +200,10 @@ Then('the popup message is {string}', async ({ commonPage }, message: string) =>
   await commonPage.verifyPopupMessage(message);
 });
 
+Then('a message should get displayed as {string}', async ({ commonPage }, message: string) => {
+  await commonPage.verifyApplicationMessageIsDisplayed(message);
+});
+
 Then('verify {string} buttons are displayed in the {string} page', async ({ commonPage, userManagementPage }, buttons: string, pageName: string) => {
   if (pageName === 'User Management') {
     await userManagementPage.verifyButtonsAreDisplayed(buttons);
