@@ -7,8 +7,7 @@ Feature: Automatic Allocation of Updates for Client Admin
 
   @mutable
   Scenario: TC001_01_ClientAdmin_AutomaticAllocation - Navigate to Automatic Allocation Setup
-    And verify for client portal name "01_QA_StageTestPortal - Overview"
-    When click on "Automatic Allocation of Updates" option from the left navigation
+    Given the "Automatic Allocation of Updates - 01_QA_StageTestPortal" page is open
     Then the "Automatic Allocation of Updates" page is displayed
     And verify if "Allocation Name; Jurisdiction; Impact Area; Allocate To" are displayed on the Automatic Allocation of Updates page
     When press "Create New Allocation" button

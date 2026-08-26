@@ -239,6 +239,8 @@ export class CommonPage extends BasePage {
       '1_E2E_Test1 - Updates Dashboard - All Updates': '/project-dashboard/180/Updates/AllUpdates/All',
 
       // 01_QA_StageTestPortal (portal 415; used by ClientAdmin, TeamLeader, and TeamMember)
+      'Automatic Allocation of Updates - 01_QA_StageTestPortal': '/allocation/415',
+      'Automatic Allocation Setup - 01_QA_StageTestPortal': '/allocation-setup/415',
       '01_QA_StageTestPortal - Updates Dashboard - All Updates': '/project-dashboard/415/Updates/AllUpdates/All',
       '01_QA_StageTestPortal - Actions Dashboard': '/project-dashboard/415/Actions/AllActions/All',
 
@@ -248,7 +250,7 @@ export class CommonPage extends BasePage {
       '01_QA_ClientPortalSetup - Actions Dashboard': '/project-dashboard/616/Actions/AllActions/All',
 
       // ClientPortal_20260209133616 (portal 540; used by ClientUser)
-      'Automatic Allocation of Updates - ClientPortal_20260209133616': '/dashboard/540',
+      'Automatic Allocation of Updates - ClientPortal_20260209133616': '/allocation/540',
       'Automatic Allocation Setup - ClientPortal_20260209133616': '/allocation-setup/540',
       'ClientPortal_20260209133616 - Updates Dashboard - All Updates': '/project-dashboard/540/Updates/AllUpdates/All',
       'ClientPortal_20260209133616 - Actions Dashboard': '/project-dashboard/540/Actions/AllActions/All',
