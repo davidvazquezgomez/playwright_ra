@@ -1,13 +1,13 @@
-﻿@AutomaticAllocation @AutomaticAllocation_ClientUser
-Feature: Automatic Allocation of Updates for Client User
+﻿@AutomaticAllocation @AutomaticAllocation_ClientAdmin
+Feature: Automatic Allocation of Updates for Client Admin
 
   Background:
-    Given launch Regulatory Advantage application URL and login as "external" user "CLIENTUSER"
+    Given launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     And verify if applicable portals are displayed
 
   @mutable
-  Scenario: TC001_01_ClientUser_AutomaticAllocation - Navigate to Automatic Allocation Setup
-    And verify for client portal name "ClientPortal_20260209133616 - Overview"
+  Scenario: TC001_01_ClientAdmin_AutomaticAllocation - Navigate to Automatic Allocation Setup
+    And verify for client portal name "01_QA_StageTestPortal - Overview"
     When click on "Automatic Allocation of Updates" option from the left navigation
     Then the "Automatic Allocation of Updates" page is displayed
     And verify if "Allocation Name; Jurisdiction; Impact Area; Allocate To" are displayed on the Automatic Allocation of Updates page
@@ -15,8 +15,8 @@ Feature: Automatic Allocation of Updates for Client User
     Then the "Automatic Allocation Setup" page is displayed
 
   @readOnly
-  Scenario Outline: TC001_02_ClientUser_AutomaticAllocation - Apply sorting and verify the table headers
-    Given the "Automatic Allocation of Updates - ClientPortal_20260209133616" page is open
+  Scenario Outline: TC001_02_ClientAdmin_AutomaticAllocation - Apply sorting and verify the table headers
+    Given the "Automatic Allocation of Updates - 01_QA_StageTestPortal" page is open
     Then verify "<column>" column header is displayed in the "Automatic Allocation of Updates" page
     When click on "<column>" column header in the "Automatic Allocation of Updates" page
     Then verify items are sorted in "ascending" order by "<column>" in the "Automatic Allocation of Updates" page
@@ -33,8 +33,8 @@ Feature: Automatic Allocation of Updates for Client User
       | Allocate To     |
 
   @mutable
-  Scenario: TC001_03_ClientUser_AutomaticAllocation - Verify warning message validations before creating a new allocation
-    Given the "Automatic Allocation Setup - ClientPortal_20260209133616" page is open
+  Scenario: TC001_03_ClientAdmin_AutomaticAllocation - Verify warning message validations before creating a new allocation
+    Given the "Automatic Allocation Setup - 01_QA_StageTestPortal" page is open
     And verify "Allocation Name;Impact Area(s);Jurisdiction(s);Allocate Update To;Update Owner;Update Watchlist" form fields are displayed in the Automatic Allocation Setup page
     When press "Save" button
     Then verify "Allocation Name is required; At least one option (Impact Area or Jurisdiction) must be selected.;Update Owner is required." field errors are displayed in the Automatic Allocation Setup page
@@ -51,9 +51,9 @@ Feature: Automatic Allocation of Updates for Client User
     Then verify "Update Owner is required." field errors are displayed in the Automatic Allocation Setup page
 
   @mutable @cleanup
-  Scenario: TC001_04_ClientUser_AutomaticAllocation - Create and delete an allocation with the Cancel button
-    Given the "Automatic Allocation Setup - ClientPortal_20260209133616" page is open
-    And register cleanup to remove the "QaTest" allocation from portal "ClientPortal_20260209133616"
+  Scenario: TC001_04_ClientAdmin_AutomaticAllocation - Create and delete an allocation with the Cancel button
+    Given the "Automatic Allocation Setup - 01_QA_StageTestPortal" page is open
+    And register cleanup to remove the "QaTest" allocation from portal "01_QA_StageTestPortal"
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
     And select the "Employer tax reporting/filing requirements" option in the "Impact Area(s)" field
@@ -82,8 +82,8 @@ Feature: Automatic Allocation of Updates for Client User
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
 
   @readOnly
-  Scenario: TC001_05_ClientUser_AutomaticAllocation - Cancel allocation creation with the "Cancel" button
-    Given the "Automatic Allocation Setup - ClientPortal_20260209133616" page is open
+  Scenario: TC001_05_ClientAdmin_AutomaticAllocation - Cancel allocation creation with the "Cancel" button
+    Given the "Automatic Allocation Setup - 01_QA_StageTestPortal" page is open
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
     And select the "Employer tax reporting/filing requirements" option in the "Impact Area(s)" field
@@ -98,8 +98,8 @@ Feature: Automatic Allocation of Updates for Client User
     And verify the "QaTest" allocation is not in the "Automatic Allocation of Updates" page
 
   @readOnly
-  Scenario: TC001_06_ClientUser_AutomaticAllocation - Cancel allocation creation with the "Back" button
-    Given the "Automatic Allocation Setup - ClientPortal_20260209133616" page is open
+  Scenario: TC001_06_ClientAdmin_AutomaticAllocation - Cancel allocation creation with the "Back" button
+    Given the "Automatic Allocation Setup - 01_QA_StageTestPortal" page is open
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
     And select the "Employer tax reporting/filing requirements" option in the "Impact Area(s)" field
@@ -115,9 +115,9 @@ Feature: Automatic Allocation of Updates for Client User
     And verify the "QaTest" allocation is not in the "Automatic Allocation of Updates" page
 
   @mutable @cleanup
-  Scenario: TC001_07_ClientUser_AutomaticAllocation - Create and delete an allocation with the Back button
-    Given the "Automatic Allocation Setup - ClientPortal_20260209133616" page is open
-    And register cleanup to remove the "QaTest" allocation from portal "ClientPortal_20260209133616"
+  Scenario: TC001_07_ClientAdmin_AutomaticAllocation - Create and delete an allocation with the Back button
+    Given the "Automatic Allocation Setup - 01_QA_StageTestPortal" page is open
+    And register cleanup to remove the "QaTest" allocation from portal "01_QA_StageTestPortal"
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
     And select the "Employer tax reporting/filing requirements" option in the "Impact Area(s)" field
@@ -145,9 +145,9 @@ Feature: Automatic Allocation of Updates for Client User
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
 
   @mutable @cleanup
-  Scenario: TC003_01_ClientUser_AutomaticAllocation - Use multiple Jurisdiction and Impact Area selections
-    Given the "Automatic Allocation Setup - ClientPortal_20260209133616" page is open
-    And register cleanup to remove the "QaTest" allocation from portal "ClientPortal_20260209133616"
+  Scenario: TC003_01_ClientAdmin_AutomaticAllocation - Use multiple Jurisdiction and Impact Area selections
+    Given the "Automatic Allocation Setup - 01_QA_StageTestPortal" page is open
+    And register cleanup to remove the "QaTest" allocation from portal "01_QA_StageTestPortal"
     When fill the "Allocation Name" field with "QaTest"
     Then click on the "Impact Area(s)" checkbox
     And select the "Select All" option in the "Impact Area(s)" field
@@ -165,9 +165,9 @@ Feature: Automatic Allocation of Updates for Client User
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
 
   @mutable @cleanup
-  Scenario: TC004_01_ClientUser_AutomaticAllocation - Create and delete an allocation using a team
-    Given the "Automatic Allocation Setup - ClientPortal_20260209133616" page is open
-    And register cleanup to remove the "QaTest" allocation from portal "ClientPortal_20260209133616"
+  Scenario: TC004_01_ClientAdmin_AutomaticAllocation - Create and delete an allocation using a team
+    Given the "Automatic Allocation Setup - 01_QA_StageTestPortal" page is open
+    And register cleanup to remove the "QaTest" allocation from portal "01_QA_StageTestPortal"
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
     And select the "Employer tax reporting/filing requirements" option in the "Impact Area(s)" field
@@ -187,10 +187,10 @@ Feature: Automatic Allocation of Updates for Client User
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
 
   @mutable @cleanup
-  Scenario: TC005_ClientUser_AutomaticAllocation - Verify warning message for duplicate allocations
-    Given the "Automatic Allocation of Updates - ClientPortal_20260209133616" page is open
+  Scenario: TC005_ClientAdmin_AutomaticAllocation - Verify warning message for duplicate allocations
+    Given the "Automatic Allocation of Updates - 01_QA_StageTestPortal" page is open
     And remove the "QaTest2" allocation if it exists
-    And register cleanup to remove the "QaTest2" allocation from portal "ClientPortal_20260209133616"
+    And register cleanup to remove the "QaTest2" allocation from portal "01_QA_StageTestPortal"
     Then press "Create New Allocation" button
     And the "Automatic Allocation Setup" page is displayed
     When fill the "Allocation Name" field with "QaTest2"
