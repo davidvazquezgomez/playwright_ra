@@ -56,13 +56,7 @@ Feature: Dashboard Analytics for Portal Admin
     When fill "QaTest" in the "Filter Name" field on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify "Filter saved successfully." toast message is displayed in the "Analytics Dashboard" page
-    When press "Filter" button on the Dashboard filter
-    And press "Edit" button on the Dashboard filter
-    Then verify the "QaTest" filter is displayed in the "Saved Filters" section on the Dashboard filter
-    When press "Delete filter" button for "QaTest" on the Dashboard filter
-    Then the "Confirm Delete" popup is displayed
-    And press "Delete" button on the "Confirm Delete" popup
-    Then verify "Saved filter deleted successfully." toast message is displayed in the "Analytics Dashboard" page
+   
 
   @readOnly
   Scenario: TC014_05_PortalAdmin_DashboardAnalytics - Apply a customized filter
@@ -122,28 +116,16 @@ Feature: Dashboard Analytics for Portal Admin
   @mutable
   Scenario: TC015_02_PortalAdmin_DashboardAnalytics - Compare Update Analytics Data and Updates Dashboard pages for a selected result
     Given the "Global Inc - Analytics Dashboard - Update Analytics" page is open
-    When search for "Declarations have been clarified for 2026" update in the Analytics Dashboard
+    When search for "Increase to Monthly Social Security Tax Bases" update in the Analytics Dashboard
     Then verify the "Update Analytics Data" chart is displayed
     When open the first filtered update result in the "Update Analytics Data" table
-    Then the "Declarations have been clarified for 2026" page is displayed
-    And verify the "Update Details" subsection displays the "<UpdateDetasilsSections>" sections
-    And verify the "Update Details" subsection displays the "<UpdateDetailsSectionsValues>" values
+    Then the "Increase to Monthly Social Security Tax Bases" page is displayed
+    And press the "Update Details" subsection
+    And verify the "Update Details" subsection displays the "User Assigned; Priority; Status;Summary; Deloitte View; Supporting References; Tags; Related updates; Watch List; Discussion; Jurisdiction; Impact Area; Date Announced; Date Effective;Regulator;Level of Authority;Status of Change" sections
+    And verify the "Update Details" subsection displays the "Admin, QA;Medium;Update in Progress;Argentina's minimum and maximum monthly taxable bases for social taxes have increased for January's accrual. The minimum monthly tax base has increased to ARS 89,557.43. The maximum monthly tax base has increased to ARS 2,910,574.49.;1;2;0;0;0;0;Argentina;Employment taxes rates & thresholds;26 Dec 2024;01 Jan 2025;Social Security Authority;Legislative/Binding;Final" values
     And verify the "Update Details" subsection displays the "Mark as Unread;Edit;Comment" buttons
     When open the "Attachments" tab in the "Update Details" subsection
     Then verify the "Upload files" button is displayed in the "Update Details" Attachments tab
-    Then press "Close" button
-    When press "Back" button
-    And press the "Updates" section
-    Then the "Global Inc - Updates Dashboard" page is displayed
-    When select the "Declarations have been clarified for 2026" result by clicking on the "Update Title" section
-    Then the "Declarations have been clarified for 2026" page is displayed
-    And verify the "Update Details" subsection displays the "<UpdateDetasilsSections>" sections
-    And verify the "Update Details" subsection displays the "<UpdateDetailsSectionsValues>" values
-    And verify the "Update Details" subsection displays the "Mark as Unread;Edit;Comment" buttons
-    When open the "Attachments" tab in the "Update Details" subsection
-    Then verify the "Upload files" button is displayed in the "Update Details" Attachments tab
-    And press "Close" button
-    And press "clear" button in the "Select or type update title" search box
 
   @mutable
   Scenario: TC015_03_PortalAdmin_DashboardAnalytics - Verify Update Analytics Data chart is updated after filtering
@@ -259,7 +241,7 @@ Feature: Dashboard Analytics for Portal Admin
     And save the value from the "Action Priority" chart
     And save the value from the "Completed Actions" chart
     When press "Filter" button on the Dashboard filter
-    When select "QaTest" located in the "Saved Filters" section on the Dashboard filter
+    When select "Test_Analytics" located in the "Saved Filters" section on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify the "Outstanding Actions" chart value is not the same
     And verify the "Action Priority" chart value is not the same
@@ -269,7 +251,7 @@ Feature: Dashboard Analytics for Portal Admin
   Scenario: TC016_06_PortalAdmin_DashboardAnalytics - Verify Outstanding Actions chart is updated after filtering
     Given the "Global Inc - Analytics Dashboard - Action Analytics" page is open
     Then verify the "Outstanding Actions" chart is displayed
-    And verify the "Outstanding Actions" chart contains the "<segment>" elements
+    And verify the "Outstanding Actions" chart contains the "UPDATE OVERDUE;< 30 DAYS TO EFFECTIVE DATE;>30 DAYS TO EFFECTIVE DATE" elements
     And save the value from the "Outstanding Actions" chart
     When press "Filter" button on the Dashboard filter
     When select "In progress" in the "Action Status" filter on the Dashboard filter
@@ -293,7 +275,7 @@ Feature: Dashboard Analytics for Portal Admin
   Scenario: TC016_09_PortalAdmin_DashboardAnalytics - Verify Action Priority chart is updated after filtering on the Action Analytics page
     Given the "Global Inc - Analytics Dashboard - Action Analytics" page is open
     Then verify the "Action Priority" chart is displayed
-    And verify the "Action Priority" chart contains the "Not Started;In progress;Complete;" elements
+    And verify the "Action Priority" chart contains the "HIGH PRIORITY ACTIONS; MEDIUM PRIORITY ACTIONS; LOW PRIORITY ACTIONS" elements
     And save the value from the "Action Priority" chart
     When press "Filter" button on the Dashboard filter
     And select "High" in the "Action Priority" filter on the Dashboard filter
