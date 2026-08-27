@@ -66,7 +66,7 @@ Snippets.prototype.print = function printFullMissingStepReport() {
         );
     });
 
-    fs.writeFileSync(REPORT_FILE, `${report.join('\n')}\n`);
+    fs.writeFileSync(REPORT_FILE, report.join('\n'));
     console.error(`Informe generado: ${groupsInOrder.length} definiciones, ${missingOccurrences} ocurrencias.`);
 };
 

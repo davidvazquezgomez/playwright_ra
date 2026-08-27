@@ -92,7 +92,7 @@ Feature: Dashboard Updates for Super Admin
     And verify "Continue;Cancel" buttons are displayed on the "Unsaved Changes" popup
     When press "Cancel" button
     Then verify "ca, test" value is displayed in the "User Assigned" field
-    And verify "High" value is displayed in the "Priority" field
+    Then verify "High" value is displayed in the "Priority" field
     And verify "Update Closed" value is displayed in the "Status" field
     And verify "ECA, test" value is displayed in the "Watch List" field
 

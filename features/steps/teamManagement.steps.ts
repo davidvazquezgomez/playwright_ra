@@ -21,6 +21,10 @@ When('save the team from the "Create/Edit Team" page', async ({ teamManagementPa
   await teamManagementPage.saveTeam();
 });
 
+When('leave the current team from the "Create/Edit Team" page', async ({ teamManagementPage }) => {
+  await teamManagementPage.leaveCurrentTeam();
+});
+
 When('click on {string} button for the {string} team', async ({ teamManagementPage }, buttonName: string, teamName: string) => {
   if (buttonName !== 'Edit') {
     throw new Error(`Team Management button "${buttonName}" is not supported.`);

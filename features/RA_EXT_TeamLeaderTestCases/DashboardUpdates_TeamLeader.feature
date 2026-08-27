@@ -92,7 +92,7 @@ Feature: Dashboard page for Team Leader
     And verify "Continue;Cancel" buttons are displayed on the "Unsaved Changes" popup
     When press "Cancel" button
     Then verify "Alam, Asjad" value is displayed in the "User Assigned" field
-    And verify "High" value is displayed in the "Priority" field
+    Then verify "High" value is displayed in the "Priority" field
     And verify "Update Closed" value is displayed in the "Status" field
     And verify "satestclientuser3, satestclientuser3" value is displayed in the "Watch List" field
 

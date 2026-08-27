@@ -6,8 +6,8 @@ Fecha de analisis: 2026-08-27
 
 - Features analizados: 77
 - Archivos de definicion revisados: 18 (`features/steps/**/*.ts`)
-- Definiciones Gherkin unicas sin binding: 93
-- Ocurrencias sin resolver: 740
+- Definiciones Gherkin unicas sin binding: 73
+- Ocurrencias sin resolver: 685
 
 El inventario se obtuvo ejecutando `playwright-bdd` con `BDD_MISSING_STEPS_MODE=fail-on-gen`. Cada entrada representa una definicion que el generador no pudo asociar a ningun step existente.
 
@@ -17,19 +17,7 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
 
 ## Definiciones Pendientes
 
-### 1. `Then verify the page is redirected to Updates Dashboard`
-
-- **Binding sugerido:** `Then('verify the page is redirected to Updates Dashboard', async ({}) => {`
-- **Ocurrencias (7):**
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:14:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:14:5`
-  - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:14:5`
-  - `features/RA_EXT_TeamLeaderTestCases/DashboardOptions_TeamLeader.feature:14:5`
-  - `features/RA_INT_DeloitteUserTestCases/DashboardOptions_DeloitteUser.feature:14:5`
-  - `features/RA_INT_PortalAdminTestCases/DashboardOptions_PortalAdmin.feature:14:5`
-  - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:14:5`
-
-### 2. `Then verify the dashboard dropdown default value is "Updates"`
+### 1. `Then verify the dashboard dropdown default value is "Updates"`
 
 - **Binding sugerido:** `Then('verify the dashboard dropdown default value is {string}', async ({}, arg: string) => {`
 - **Ocurrencias (7):**
@@ -41,14 +29,14 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_PortalAdminTestCases/DashboardOptions_PortalAdmin.feature:19:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:19:5`
 
-### 3. `And verify the "Update Title;Jurisdiction;Impact Area;Date Announced;Date Effective;Priority;Status;Last Updated" columns are selected in the Dashboard Options popup`
+### 2. `And verify the "Update Title;Jurisdiction;Impact Area;Date Announced;Date Effective;Priority;Status;Last Updated" columns are selected in the Dashboard Options popup`
 
 - **Binding sugerido:** `Then('verify the {string} columns are selected in the Dashboard Options popup', async ({}, arg: string) => {`
 - **Ocurrencias (14):**
   - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:20:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:59:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:57:5`
   - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:20:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:59:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:57:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:20:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:57:5`
   - `features/RA_EXT_TeamLeaderTestCases/DashboardOptions_TeamLeader.feature:20:5`
@@ -60,18 +48,18 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:20:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:58:5`
 
-### 4. `Then wait for the download completion notification`
+### 3. `Then wait for the download completion notification`
 
 - **Binding sugerido:** `Then('wait for the download completion notification', async ({}) => {`
 - **Ocurrencias (28):**
   - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:23:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:44:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:61:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:82:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:43:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:59:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:79:5`
   - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:23:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:44:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:61:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:82:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:43:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:59:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:79:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:23:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:43:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:59:5`
@@ -93,26 +81,26 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:60:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:80:5`
 
-### 5. `And verify the downloaded file name format is "ClientPortal_20260213081718_Updates_Report_" with current date and time`
+### 4. `And verify the downloaded file name format is "ClientPortal_20260213081718_Updates_Report_" with current date and time`
 
 - **Binding sugerido:** `Then('verify the downloaded file name format is {string} with current date and time', async ({}, arg: string) => {`
 - **Ocurrencias (56):**
   - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:24:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:45:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:62:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:83:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:101:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:119:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:137:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:154:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:44:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:60:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:80:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:97:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:114:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:131:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:148:5`
   - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:24:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:45:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:62:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:83:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:101:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:119:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:137:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:155:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:44:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:60:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:80:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:97:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:114:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:131:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:148:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:24:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:44:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:60:5`
@@ -154,26 +142,26 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:132:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:149:5`
 
-### 6. `When read the downloaded excel file content`
+### 5. `When read the downloaded excel file content`
 
 - **Binding sugerido:** `When('read the downloaded excel file content', async ({}) => {`
 - **Ocurrencias (56):**
   - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:25:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:46:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:63:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:84:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:102:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:120:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:138:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:155:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:45:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:61:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:81:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:98:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:115:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:132:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:149:5`
   - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:25:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:46:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:63:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:84:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:102:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:120:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:138:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:156:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:45:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:61:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:81:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:98:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:115:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:132:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:149:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:25:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:45:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:61:5`
@@ -215,26 +203,26 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:133:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:150:5`
 
-### 7. `Then verify the excel file contains the "Title;AnnouncementDateDisplay;EffectiveDateDisplay;LastUpdated;Priority;Status;Jurisdiction;ImpactArea" column headers`
+### 6. `Then verify the excel file contains the "Title;AnnouncementDateDisplay;EffectiveDateDisplay;LastUpdated;Priority;Status;Jurisdiction;ImpactArea" column headers`
 
 - **Binding sugerido:** `Then('verify the excel file contains the {string} column headers', async ({}, arg: string) => {`
 - **Ocurrencias (56):**
   - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:26:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:47:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:64:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:85:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:103:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:121:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:139:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:156:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:46:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:62:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:82:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:99:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:116:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:133:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:150:5`
   - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:26:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:47:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:64:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:85:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:103:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:121:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:139:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:157:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:46:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:62:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:82:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:99:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:116:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:133:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:150:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:26:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:46:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:62:5`
@@ -276,18 +264,18 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:134:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:151:5`
 
-### 8. `Then verify the data is updated to show the applied filter records in the "Updates" dashboard`
+### 7. `Then verify the data is updated to show the applied filter records in the "Updates" dashboard`
 
 - **Binding sugerido:** `Then('verify the data is updated to show the applied filter records in the {string} dashboard', async ({}, arg: string) => {`
 - **Ocurrencias (27):**
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:36:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:74:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:113:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:148:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:36:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:74:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:113:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:149:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:35:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:71:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:108:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:142:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:35:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:71:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:108:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:142:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:35:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:71:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:108:5`
@@ -308,16 +296,16 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:109:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:143:5`
 
-### 9. `And verify "Generate Report" is displayed in the Dashboard Options popup and clickable in the Dashboard options`
+### 8. `And verify "Generate Report" is displayed in the Dashboard Options popup and clickable in the Dashboard options`
 
 - **Binding sugerido:** `Then('verify {string} is displayed in the Dashboard Options popup and clickable in the Dashboard options', async ({}, arg: string) => {`
 - **Ocurrencias (21):**
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:39:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:56:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:77:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:39:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:56:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:77:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:38:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:54:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:74:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:38:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:54:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:74:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:38:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:54:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:74:5`
@@ -334,42 +322,42 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:55:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:75:5`
 
-### 10. `Then verify the dashboard dropdown value is "Updates"`
+### 9. `Then verify the dashboard dropdown value is "Updates"`
 
 - **Binding sugerido:** `Then('verify the dashboard dropdown value is {string}', async ({}, arg: string) => {`
 - **Ocurrencias (7):**
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:41:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:41:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:40:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:40:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:40:5`
   - `features/RA_EXT_TeamLeaderTestCases/DashboardOptions_TeamLeader.feature:40:5`
   - `features/RA_INT_DeloitteUserTestCases/DashboardOptions_DeloitteUser.feature:40:5`
   - `features/RA_INT_PortalAdminTestCases/DashboardOptions_PortalAdmin.feature:40:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:41:5`
 
-### 11. `And verify the filters applied in the Updates dashboard are prechecked in the Generate Report options`
+### 10. `And verify the filters applied in the Updates dashboard are prechecked in the Generate Report options`
 
 - **Binding sugerido:** `Then('verify the filters applied in the Updates dashboard are prechecked in the Generate Report options', async ({}) => {`
 - **Ocurrencias (7):**
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:42:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:42:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:41:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:41:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:41:5`
   - `features/RA_EXT_TeamLeaderTestCases/DashboardOptions_TeamLeader.feature:41:5`
   - `features/RA_INT_DeloitteUserTestCases/DashboardOptions_DeloitteUser.feature:41:5`
   - `features/RA_INT_PortalAdminTestCases/DashboardOptions_PortalAdmin.feature:41:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:42:5`
 
-### 12. `And verify the report is generated with the same filters and options applied in the "Updates" dashboard`
+### 11. `And verify the report is generated with the same filters and options applied in the "Updates" dashboard`
 
 - **Binding sugerido:** `Then('verify the report is generated with the same filters and options applied in the {string} dashboard', async ({}, arg: string) => {`
 - **Ocurrencias (28):**
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:48:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:86:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:122:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:157:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:48:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:86:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:122:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:158:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:47:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:83:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:117:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:151:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:47:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:83:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:117:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:151:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:47:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:83:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:117:5`
@@ -391,14 +379,14 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:118:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:152:5`
 
-### 13. `And select "Actions" from the "Generate report for" dropdown`
+### 12. `And select "Actions" from the "Generate report for" dropdown`
 
 - **Binding sugerido:** `When('select {string} from the {string} dropdown', async ({}, arg: string, arg1: string) => {`
 - **Ocurrencias (14):**
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:58:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:79:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:58:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:79:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:56:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:76:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:56:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:76:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:56:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:76:5`
   - `features/RA_EXT_TeamLeaderTestCases/DashboardOptions_TeamLeader.feature:56:5`
@@ -410,64 +398,26 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:57:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:77:5`
 
-### 14. `Then verify the filters applied in the Actions dashboard are prechecked in the Generate Report options`
+### 13. `Then verify the filters applied in the Actions dashboard are prechecked in the Generate Report options`
 
 - **Binding sugerido:** `Then('verify the filters applied in the Actions dashboard are prechecked in the Generate Report options', async ({}) => {`
 - **Ocurrencias (7):**
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:80:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:80:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:77:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:77:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:77:5`
   - `features/RA_EXT_TeamLeaderTestCases/DashboardOptions_TeamLeader.feature:77:5`
   - `features/RA_INT_DeloitteUserTestCases/DashboardOptions_DeloitteUser.feature:77:5`
   - `features/RA_INT_PortalAdminTestCases/DashboardOptions_PortalAdmin.feature:77:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:78:5`
 
-### 15. `Then verify the page is redirected to "Updates Dashboard"`
-
-- **Binding sugerido:** `Then('verify the page is redirected to {string}', async ({}, arg: string) => {`
-- **Ocurrencias (7):**
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:92:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:92:5`
-  - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:88:5`
-  - `features/RA_EXT_TeamLeaderTestCases/DashboardOptions_TeamLeader.feature:88:5`
-  - `features/RA_INT_DeloitteUserTestCases/DashboardOptions_DeloitteUser.feature:88:5`
-  - `features/RA_INT_PortalAdminTestCases/DashboardOptions_PortalAdmin.feature:88:5`
-  - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:89:5`
-
-### 16. `When click on "Generate Audit Trail" option from the Dashboard options`
-
-- **Binding sugerido:** `When('click on {string} option from the Dashboard options', async ({}, arg: string) => {`
-- **Ocurrencias (21):**
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:96:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:116:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:132:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:96:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:116:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:132:5`
-  - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:92:5`
-  - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:111:5`
-  - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:126:5`
-  - `features/RA_EXT_TeamLeaderTestCases/DashboardOptions_TeamLeader.feature:92:5`
-  - `features/RA_EXT_TeamLeaderTestCases/DashboardOptions_TeamLeader.feature:111:5`
-  - `features/RA_EXT_TeamLeaderTestCases/DashboardOptions_TeamLeader.feature:126:5`
-  - `features/RA_INT_DeloitteUserTestCases/DashboardOptions_DeloitteUser.feature:92:5`
-  - `features/RA_INT_DeloitteUserTestCases/DashboardOptions_DeloitteUser.feature:111:5`
-  - `features/RA_INT_DeloitteUserTestCases/DashboardOptions_DeloitteUser.feature:126:5`
-  - `features/RA_INT_PortalAdminTestCases/DashboardOptions_PortalAdmin.feature:92:5`
-  - `features/RA_INT_PortalAdminTestCases/DashboardOptions_PortalAdmin.feature:111:5`
-  - `features/RA_INT_PortalAdminTestCases/DashboardOptions_PortalAdmin.feature:126:5`
-  - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:93:5`
-  - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:112:5`
-  - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:127:5`
-
-### 17. `Then verify the "Update allocated to responsible person;User added to Update Watchlist;User removed from Update Watchlist;Update status changed;Update priority changed;Action added;User added to Action;User removed from Action;Action status Changed;Action priority Changed" audit trail change area parameters are displayed`
+### 14. `Then verify the "Update allocated to responsible person;User added to Update Watchlist;User removed from Update Watchlist;Update status changed;Update priority changed;Action added;User added to Action;User removed from Action;Action status Changed;Action priority Changed" audit trail change area parameters are displayed`
 
 - **Binding sugerido:** `Then('verify the {string} audit trail change area parameters are displayed', async ({}, arg: string) => {`
 - **Ocurrencias (14):**
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:97:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:133:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:97:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:133:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:93:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:127:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:93:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:127:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:93:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:127:5`
   - `features/RA_EXT_TeamLeaderTestCases/DashboardOptions_TeamLeader.feature:93:5`
@@ -479,14 +429,14 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:94:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:128:5`
 
-### 18. `When select different audit trail parameters`
+### 15. `When select different audit trail parameters`
 
 - **Binding sugerido:** `When('select different audit trail parameters', async ({}) => {`
 - **Ocurrencias (14):**
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:98:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:134:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:98:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:134:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:94:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:128:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:94:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:128:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:94:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:128:5`
   - `features/RA_EXT_TeamLeaderTestCases/DashboardOptions_TeamLeader.feature:94:5`
@@ -498,18 +448,18 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:95:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:129:5`
 
-### 19. `Then verify the notification area displays the report generation status`
+### 16. `Then verify the notification area displays the report generation status`
 
 - **Binding sugerido:** `Then('verify the notification area displays the report generation status', async ({}) => {`
 - **Ocurrencias (28):**
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:100:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:118:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:136:5`
-  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:153:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:100:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:118:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:136:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:154:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:96:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:113:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:130:5`
+  - `features/RA_EXT_ClientAdminTestCases/DashboardOptions_ClientAdmin.feature:147:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:96:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:113:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:130:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardOptions_ClientUser.feature:147:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:96:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:113:5`
   - `features/RA_EXT_TeamMemberTestCases/DashboardOptions_TeamMember.feature:130:5`
@@ -531,7 +481,7 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:131:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardOptions_SuperAdmin.feature:148:5`
 
-### 20. `And press "clear" in the "Watch List" field`
+### 17. `And press "clear" in the "Watch List" field`
 
 - **Binding sugerido:** `Then('press {string} in the {string} field', async ({}, arg: string, arg1: string) => {`
 - **Ocurrencias (6):**
@@ -542,14 +492,18 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_PortalAdminTestCases/DashboardUpdates_PortalAdmin.feature:75:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:75:5`
 
-### 21. `Then verify "satestclientuser2, satestclientuser2" value is displayed in the "User Assigned" field`
+### 18. `Then verify "satestclientuser2, satestclientuser2" value is displayed in the "User Assigned" field`
 
 - **Binding sugerido:** `Then('verify {string} value is displayed in the {string} field', async ({}, arg: string, arg1: string) => {`
-- **Ocurrencias (20):**
+- **Ocurrencias (24):**
   - `features/RA_EXT_ClientAdminTestCases/DashboardUpdates_ClientAdmin.feature:94:5`
   - `features/RA_EXT_ClientAdminTestCases/DashboardUpdates_ClientAdmin.feature:95:5`
   - `features/RA_EXT_ClientAdminTestCases/DashboardUpdates_ClientAdmin.feature:96:5`
   - `features/RA_EXT_ClientAdminTestCases/DashboardUpdates_ClientAdmin.feature:97:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardUpdates_ClientUser.feature:88:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardUpdates_ClientUser.feature:89:5`
+  - `features/RA_EXT_TeamMemberTestCases/DashboardUpdates_TeamMember.feature:70:5`
+  - `features/RA_EXT_TeamMemberTestCases/DashboardUpdates_TeamMember.feature:71:5`
   - `features/RA_EXT_TeamLeaderTestCases/DashboardUpdates_TeamLeader.feature:94:5`
   - `features/RA_EXT_TeamLeaderTestCases/DashboardUpdates_TeamLeader.feature:95:5`
   - `features/RA_EXT_TeamLeaderTestCases/DashboardUpdates_TeamLeader.feature:96:5`
@@ -567,7 +521,7 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:96:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:97:5`
 
-### 22. `And verify the "User Assigned" field does not display "satestclientuser2, satestclientuser2"`
+### 19. `And verify the "User Assigned" field does not display "satestclientuser2, satestclientuser2"`
 
 - **Binding sugerido:** `Then('verify the {string} field does not display {string}', async ({}, arg: string, arg1: string) => {`
 - **Ocurrencias (24):**
@@ -596,7 +550,7 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:116:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:117:5`
 
-### 23. `Then verify the posted comment is seen along with timestamp and edit, reply and delete option`
+### 20. `Then verify the posted comment is seen along with timestamp and edit, reply and delete option`
 
 - **Binding sugerido:** `Then('verify the posted comment is seen along with timestamp and edit, reply and delete option', async ({}) => {`
 - **Ocurrencias (7):**
@@ -608,7 +562,7 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_PortalAdminTestCases/DashboardUpdates_PortalAdmin.feature:126:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:126:5`
 
-### 24. `Then verify the comment is not displayed in the "Comments" field`
+### 21. `Then verify the comment is not displayed in the "Comments" field`
 
 - **Binding sugerido:** `Then('verify the comment is not displayed in the {string} field', async ({}, arg: string) => {`
 - **Ocurrencias (7):**
@@ -620,7 +574,7 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_PortalAdminTestCases/DashboardUpdates_PortalAdmin.feature:129:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:129:5`
 
-### 25. `And click on "Upload files" option from the "Test_11-5_01" page`
+### 22. `And click on "Upload files" option from the "Test_11-5_01" page`
 
 - **Binding sugerido:** `When('click on {string} option from the {string} page', async ({}, arg: string, arg1: string) => {`
 - **Ocurrencias (14):**
@@ -639,7 +593,7 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:137:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:159:5`
 
-### 26. `And verify the "valid.pdf" attachment is displayed in the "Attachments" section`
+### 23. `And verify the "valid.pdf" attachment is displayed in the "Attachments" section`
 
 - **Binding sugerido:** `Then('verify the {string} attachment is displayed in the {string} section', async ({}, arg: string, arg1: string) => {`
 - **Ocurrencias (6):**
@@ -650,7 +604,7 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_DeloitteUserTestCases/DashboardUpdates_DeloitteUser.feature:139:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:139:5`
 
-### 27. `Then verify the attachment is not displayed in the "Attachments" section`
+### 24. `Then verify the attachment is not displayed in the "Attachments" section`
 
 - **Binding sugerido:** `Then('verify the attachment is not displayed in the {string} section', async ({}, arg: string) => {`
 - **Ocurrencias (8):**
@@ -663,7 +617,7 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_PortalAdminTestCases/DashboardUpdates_PortalAdmin.feature:161:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:142:5`
 
-### 28. `And verify the "valid.xls" attachment is not displayed in the "Attachments" section`
+### 25. `And verify the "valid.xls" attachment is not displayed in the "Attachments" section`
 
 - **Binding sugerido:** `Then('verify the {string} attachment is not displayed in the {string} section', async ({}, arg: string, arg1: string) => {`
 - **Ocurrencias (6):**
@@ -674,13 +628,18 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_DeloitteUserTestCases/DashboardUpdates_DeloitteUser.feature:162:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:162:5`
 
-### 29. `Then verify only updates that contain "Income" in the title are displayed in the "01_QA_StageTestPortal - Updates Dashboard" page`
+### 26. `Then verify only updates that contain "Income" in the title are displayed`
 
-- **Binding sugerido:** `Then('verify only updates that contain {string} in the title are displayed in the {string} page', async ({}, arg: string, arg1: string) => {`
-- **Ocurrencias (1):**
+- **Binding sugerido:** `Then('verify only updates that contain {string} in the title are displayed', async ({}, arg: string) => {`
+- **Ocurrencias (6):**
   - `features/RA_EXT_ClientAdminTestCases/DashboardUpdates_ClientAdmin.feature:178:5`
+  - `features/RA_EXT_ClientUserTestCases/DashboardUpdates_ClientUser.feature:166:5`
+  - `features/RA_EXT_TeamMemberTestCases/DashboardUpdates_TeamMember.feature:148:5`
+  - `features/RA_EXT_TeamLeaderTestCases/DashboardUpdates_TeamLeader.feature:178:5`
+  - `features/RA_INT_DeloitteUserTestCases/DashboardUpdates_DeloitteUser.feature:178:5`
+  - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:178:5`
 
-### 30. `When press "Enter" key on the keyboard`
+### 27. `When press "Enter" key on the keyboard`
 
 - **Binding sugerido:** `When('press {string} key on the keyboard', async ({}, arg: string) => {`
 - **Ocurrencias (12):**
@@ -697,7 +656,7 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:179:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:190:5`
 
-### 31. `Then verify the "01_QA_StageTestPortal - Updates Dashboard" item count is not the same`
+### 28. `Then verify the "01_QA_StageTestPortal - Updates Dashboard" item count is not the same`
 
 - **Binding sugerido:** `Then('verify the {string} item count is not the same', async ({}, arg: string) => {`
 - **Ocurrencias (54):**
@@ -756,7 +715,7 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:291:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:295:5`
 
-### 32. `Then verify no updates are displayed`
+### 29. `Then verify no updates are displayed`
 
 - **Binding sugerido:** `Then('verify no updates are displayed', async ({}) => {`
 - **Ocurrencias (6):**
@@ -767,7 +726,7 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_DeloitteUserTestCases/DashboardUpdates_DeloitteUser.feature:189:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:189:5`
 
-### 33. `Then select "Date Announced" on the Dashboard filter`
+### 30. `Then select "Date Announced" on the Dashboard filter`
 
 - **Binding sugerido:** `Then('select {string} on the Dashboard filter', async ({}, arg: string) => {`
 - **Ocurrencias (7):**
@@ -779,7 +738,7 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_PortalAdminTestCases/DashboardUpdates_PortalAdmin.feature:193:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:219:5`
 
-### 34. `Then press "Save as favourite" button for "Test_ClientAdmin" on the Dashboard filter`
+### 31. `Then press "Save as favourite" button for "Test_ClientAdmin" on the Dashboard filter`
 
 - **Binding sugerido:** `Then('press {string} button for {string} on the Dashboard filter', async ({}, arg: string, arg1: string) => {`
 - **Ocurrencias (7):**
@@ -791,7 +750,7 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_PortalAdminTestCases/DashboardUpdates_PortalAdmin.feature:236:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:264:5`
 
-### 35. `When press "Remove as favourite" button for "Test_ClientAdmin" on the Dashboard filter`
+### 32. `When press "Remove as favourite" button for "Test_ClientAdmin" on the Dashboard filter`
 
 - **Binding sugerido:** `When('press {string} button for {string} on the Dashboard filter', async ({}, arg: string, arg1: string) => {`
 - **Ocurrencias (7):**
@@ -803,7 +762,7 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_PortalAdminTestCases/DashboardUpdates_PortalAdmin.feature:242:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:270:5`
 
-### 36. `And verify the "Updates Dashboard" tab is selected in the Dashboard Options popup`
+### 33. `And verify the "Updates Dashboard" tab is selected in the Dashboard Options popup`
 
 - **Binding sugerido:** `When('verify the {string} tab is selected in the Dashboard Options popup', async ({}, arg: string) => {`
 - **Ocurrencias (7):**
@@ -815,16 +774,16 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_PortalAdminTestCases/DashboardUpdates_PortalAdmin.feature:300:5`
   - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:328:5`
 
-### 37. `When save the team from the "Create/Edit Team" page`
+### 34. `When save the team from the "Create/Edit Team" page`
 
 - **Binding sugerido:** `When('save the team from the {string} page', async ({}, arg: string) => {`
 - **Ocurrencias (27):**
   - `features/RA_EXT_ClientAdminTestCases/Notifications_ClientAdmin.feature:264:5`
   - `features/RA_EXT_ClientAdminTestCases/Notifications_ClientAdmin.feature:303:5`
   - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:21:5`
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:48:5`
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:63:5`
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:73:5`
+  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:49:5`
+  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:64:5`
+  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:74:5`
   - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:19:5`
   - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:41:5`
   - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:51:5`
@@ -847,269 +806,177 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_SuperAdminTestCases/TeamManagement_SuperAdmin.feature:71:5`
   - `features/RA_INT_SuperAdminTestCases/TeamManagement_SuperAdmin.feature:80:5`
 
-### 38. `When click on "ClientPortal_20260213081718" Client Portal from the client portal list`
+### 35. `When click on "ClientPortal_20260213081718" Client Portal from the client portal list`
 
 - **Binding sugerido:** `When('click on {string} Client Portal from the client portal list', async ({}, arg: string) => {`
 - **Ocurrencias (2):**
   - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:7:5`
   - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:10:5`
 
-### 39. `And verify "Create Team" button is available`
+### 36. `Then verify the following column headings are displayed and sortable in the Teams table:`
 
-- **Binding sugerido:** `Then('verify {string} button is available', async ({}, arg: string) => {`
-- **Ocurrencias (3):**
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:14:5`
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:35:5`
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:47:5`
-
-### 40. `And verify the following column headings are displayed and sortable in the Teams table:`
-
-- **Binding sugerido:** `When('verify the following column headings are displayed and sortable in the Teams table:', async ({}, dataTable: DataTable) => {`
-- **Ocurrencias (1):**
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:16:5`
-
-### 41. `And try saving the allocation without Team Name`
-
-- **Binding sugerido:** `When('try saving the allocation without Team Name', async ({}) => {`
-- **Ocurrencias (1):**
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:22:5`
-
-### 42. `Then verify warning message displayed as "Team name is required"`
-
-- **Binding sugerido:** `Then('verify warning message displayed as {string}', async ({}, arg: string) => {`
+- **Binding sugerido:** `Then('verify the following column headings are displayed and sortable in the Teams table:', async ({}, dataTable: DataTable) => {`
 - **Ocurrencias (2):**
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:23:5`
-  - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:21:5`
+  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:16:5`
+  - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:14:5`
 
-### 43. `And try saving the allocation without Team Leader`
+### 37. `And try saving the allocation without "Team Name"`
 
-- **Binding sugerido:** `When('try saving the allocation without Team Leader', async ({}) => {`
-- **Ocurrencias (1):**
+- **Binding sugerido:** `When('try saving the allocation without {string}', async ({}, arg: string) => {`
+- **Ocurrencias (2):**
   - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:22:5`
+  - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:20:5`
 
-### 44. `And try saving the allocation without Team Member`
-
-- **Binding sugerido:** `When('try saving the allocation without Team Member', async ({}) => {`
-- **Ocurrencias (1):**
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:22:5`
-
-### 45. `And enter a unique name in the "Team Name" field`
+### 38. `And enter a unique name in the "Team Name" field`
 
 - **Binding sugerido:** `When('enter a unique name in the {string} field', async ({}, arg: string) => {`
 - **Ocurrencias (1):**
   - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:37:5`
 
-### 46. `Then verify the "TeamMemberRA@outlook.com" Team Member is added to the team member table`
+### 39. `Then verify the "TeamMemberRA@outlook.com" Team Member is added to the team member table`
 
 - **Binding sugerido:** `Then('verify the {string} Team Member is added to the team member table', async ({}, arg: string) => {`
 - **Ocurrencias (1):**
   - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:43:5`
 
-### 47. `Then verify a warning pop up appears with "continue" and "cancel" buttons`
-
-- **Binding sugerido:** `Then('verify a warning pop up appears with {string} and {string} buttons', async ({}, arg: string, arg1: string) => {`
-- **Ocurrencias (2):**
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:45:5`
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:76:5`
-
-### 48. `When click on "Cancel" button in the confirmation pop up`
-
-- **Binding sugerido:** `When('click on {string} button in the confirmation pop up', async ({}, arg: string) => {`
-- **Ocurrencias (2):**
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:46:5`
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:77:5`
-
-### 49. `Then verify the success message is displayed after saving the team`
-
-- **Binding sugerido:** `Then('verify the success message is displayed after saving the team', async ({}) => {`
-- **Ocurrencias (5):**
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:49:5`
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:64:5`
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:74:5`
-  - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:42:5`
-  - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:52:5`
-
-### 50. `And verify the created team details are added to the "Team Management" table`
+### 40. `And verify the created team details are added to the "Team Management" table`
 
 - **Binding sugerido:** `Then('verify the created team details are added to the {string} table', async ({}, arg: string) => {`
 - **Ocurrencias (1):**
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:50:5`
+  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:51:5`
 
-### 51. `When click on "Edit" button of the created team in the Teams table`
+### 41. `When click on "Edit" button of the created team in the Teams table`
 
 - **Binding sugerido:** `When('click on {string} button of the created team in the Teams table', async ({}, arg: string) => {`
 - **Ocurrencias (2):**
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:51:5`
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:75:5`
+  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:52:5`
+  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:76:5`
 
-### 52. `And add the following Team Members on the "Search user" field:`
+### 42. `And add the following Team Members on the "Search user" field:`
 
 - **Binding sugerido:** `When('add the following Team Members on the {string} field:', async ({}, arg: string, dataTable: DataTable) => {`
 - **Ocurrencias (1):**
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:54:5`
+  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:55:5`
 
-### 53. `Then verify the following Team Members are added to the team member table:`
+### 43. `Then verify the following Team Members are added to the team member table:`
 
 - **Binding sugerido:** `Then('verify the following Team Members are added to the team member table:', async ({}, dataTable: DataTable) => {`
 - **Ocurrencias (1):**
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:59:5`
+  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:60:5`
 
-### 54. `And verify the new "Client, User" Team Leader is added to the team`
+### 44. `And verify the new "Client, User" Team Leader is added to the team`
 
 - **Binding sugerido:** `Then('verify the new {string} Team Leader is added to the team', async ({}, arg: string) => {`
 - **Ocurrencias (1):**
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:65:5`
+  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:66:5`
 
-### 55. `And verify the saved changes are reflected in the team`
+### 45. `And verify the saved changes are reflected in the team`
 
 - **Binding sugerido:** `Then('verify the saved changes are reflected in the team', async ({}) => {`
 - **Ocurrencias (2):**
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:66:5`
+  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:67:5`
   - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:44:5`
 
-### 56. `When search for "test.user.1784145920996@gmail.com" in the Team Members table email field`
+### 46. `When search for "test.user.1784145920996@gmail.com" in the Team Members table email field`
 
 - **Binding sugerido:** `When('search for {string} in the Team Members table email field', async ({}, arg: string) => {`
-- **Ocurrencias (4):**
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:67:5`
+- **Ocurrencias (5):**
+  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:68:5`
+  - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:45:5`
   - `features/RA_INT_DeloitteUserTestCases/TeamManagement_DeloitteUser.feature:74:5`
   - `features/RA_INT_PortalAdminTestCases/TeamManagement_PortalAdmin.feature:74:5`
   - `features/RA_INT_SuperAdminTestCases/TeamManagement_SuperAdmin.feature:74:5`
 
-### 57. `Then verify if filters applied`
+### 47. `Then verify filters are applied`
 
-- **Binding sugerido:** `Then('verify if filters applied', async ({}) => {`
-- **Ocurrencias (4):**
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:68:5`
+- **Binding sugerido:** `Then('verify filters are applied', async ({}) => {`
+- **Ocurrencias (5):**
+  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:69:5`
+  - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:46:5`
   - `features/RA_INT_DeloitteUserTestCases/TeamManagement_DeloitteUser.feature:75:5`
   - `features/RA_INT_PortalAdminTestCases/TeamManagement_PortalAdmin.feature:75:5`
   - `features/RA_INT_SuperAdminTestCases/TeamManagement_SuperAdmin.feature:75:5`
 
-### 58. `When click on "filter" button from the Team Members table email field`
+### 48. `When click on "filter" button from the Team Members table email field`
 
 - **Binding sugerido:** `When('click on {string} button from the Team Members table email field', async ({}, arg: string) => {`
 - **Ocurrencias (4):**
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:69:5`
+  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:70:5`
   - `features/RA_INT_DeloitteUserTestCases/TeamManagement_DeloitteUser.feature:76:5`
   - `features/RA_INT_PortalAdminTestCases/TeamManagement_PortalAdmin.feature:76:5`
   - `features/RA_INT_SuperAdminTestCases/TeamManagement_SuperAdmin.feature:76:5`
 
-### 59. `When click on "Delete" icon against the team member "TeamMemberRA@outlook.com"`
+### 49. `When click on "Delete" icon against the team member "TeamMemberRA@outlook.com"`
 
 - **Binding sugerido:** `When('click on {string} icon against the team member {string}', async ({}, arg: string, arg1: string) => {`
-- **Ocurrencias (1):**
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:71:5`
+- **Ocurrencias (5):**
+  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:72:5`
+  - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:49:5`
+  - `features/RA_INT_DeloitteUserTestCases/TeamManagement_DeloitteUser.feature:78:5`
+  - `features/RA_INT_PortalAdminTestCases/TeamManagement_PortalAdmin.feature:78:5`
+  - `features/RA_INT_SuperAdminTestCases/TeamManagement_SuperAdmin.feature:78:5`
 
-### 60. `Then verify the deleted team details are not available in the "Team Management" page`
+### 50. `Then verify the deleted team details are not available in the "Team Management" page`
 
 - **Binding sugerido:** `Then('verify the deleted team details are not available in the {string} page', async ({}, arg: string) => {`
 - **Ocurrencias (1):**
-  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:78:5`
+  - `features/RA_EXT_ClientAdminTestCases/TeamManagement_ClientAdmin.feature:80:5`
 
-### 61. `And verify "Update Closed" value is displayed in the "Status" field`
-
-- **Binding sugerido:** `When('verify {string} value is displayed in the {string} field', async ({}, arg: string, arg1: string) => {`
-- **Ocurrencias (4):**
-  - `features/RA_EXT_ClientUserTestCases/DashboardUpdates_ClientUser.feature:88:5`
-  - `features/RA_EXT_ClientUserTestCases/DashboardUpdates_ClientUser.feature:89:5`
-  - `features/RA_EXT_TeamMemberTestCases/DashboardUpdates_TeamMember.feature:70:5`
-  - `features/RA_EXT_TeamMemberTestCases/DashboardUpdates_TeamMember.feature:71:5`
-
-### 62. `Then verify only updates that contain "Income" in the title are displayed`
-
-- **Binding sugerido:** `Then('verify only updates that contain {string} in the title are displayed', async ({}, arg: string) => {`
-- **Ocurrencias (5):**
-  - `features/RA_EXT_ClientUserTestCases/DashboardUpdates_ClientUser.feature:166:5`
-  - `features/RA_EXT_TeamMemberTestCases/DashboardUpdates_TeamMember.feature:148:5`
-  - `features/RA_EXT_TeamLeaderTestCases/DashboardUpdates_TeamLeader.feature:178:5`
-  - `features/RA_INT_DeloitteUserTestCases/DashboardUpdates_DeloitteUser.feature:178:5`
-  - `features/RA_INT_SuperAdminTestCases/DashboardUpdates_SuperAdmin.feature:178:5`
-
-### 63. `And verify the following column headings are displayed and sortable in the Teams table:`
-
-- **Binding sugerido:** `Then('verify the following column headings are displayed and sortable in the Teams table:', async ({}, dataTable: DataTable) => {`
-- **Ocurrencias (1):**
-  - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:14:5`
-
-### 64. `And try saving the allocation without "Team Name"`
-
-- **Binding sugerido:** `When('try saving the allocation without {string}', async ({}, arg: string) => {`
-- **Ocurrencias (1):**
-  - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:20:5`
-
-### 65. `When click on "Edit" icon for an existing team`
+### 51. `When click on "Edit" icon for an existing team`
 
 - **Binding sugerido:** `When('click on {string} icon for an existing team', async ({}, arg: string) => {`
 - **Ocurrencias (1):**
   - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:35:5`
 
-### 66. `And add the following Team Members:`
+### 52. `And add the following Team Members:`
 
 - **Binding sugerido:** `When('add the following Team Members:', async ({}, dataTable: DataTable) => {`
 - **Ocurrencias (1):**
   - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:37:5`
 
-### 67. `And verify the new Team Leader is added to the team`
+### 53. `And verify the new Team Leader is added to the team`
 
 - **Binding sugerido:** `Then('verify the new Team Leader is added to the team', async ({}) => {`
 - **Ocurrencias (1):**
   - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:43:5`
 
-### 68. `When search for "test.user.1784145920996@gmail.com" in the Team Members table`
-
-- **Binding sugerido:** `When('search for {string} in the Team Members table', async ({}, arg: string) => {`
-- **Ocurrencias (1):**
-  - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:45:5`
-
-### 69. `Then verify filters are applied`
-
-- **Binding sugerido:** `Then('verify filters are applied', async ({}) => {`
-- **Ocurrencias (1):**
-  - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:46:5`
-
-### 70. `When click on "clear filter" or "filter" button`
+### 54. `When click on "clear filter" or "filter" button`
 
 - **Binding sugerido:** `When('click on {string} or {string} button', async ({}, arg: string, arg1: string) => {`
 - **Ocurrencias (1):**
   - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:47:5`
 
-### 71. `Then verify the filter is removed and full results are shown`
+### 55. `Then verify the filter is removed and full results are shown`
 
 - **Binding sugerido:** `Then('verify the filter is removed and full results are shown', async ({}) => {`
 - **Ocurrencias (1):**
   - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:48:5`
 
-### 72. `When click on delete icon against the team member "TeamMemberRA@outlook.com"`
-
-- **Binding sugerido:** `When('click on delete icon against the team member {string}', async ({}, arg: string) => {`
-- **Ocurrencias (1):**
-  - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:49:5`
-
-### 73. `When click on "Edit" icon for the team`
+### 56. `When click on "Edit" icon for the team`
 
 - **Binding sugerido:** `When('click on {string} icon for the team', async ({}, arg: string) => {`
 - **Ocurrencias (1):**
   - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:53:5`
 
-### 74. `And click on "Leave Team"`
+### 57. `When leave the current team from the "Create/Edit Team" page`
 
-- **Binding sugerido:** `When('click on {string}', async ({}, arg: string) => {`
+- **Binding sugerido:** `When('leave the current team from the {string} page', async ({}, arg: string) => {`
 - **Ocurrencias (1):**
   - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:54:5`
 
-### 75. `Then confirm the leave action in the confirmation pop up`
+### 58. `Then confirm the leave action in the confirmation pop up`
 
 - **Binding sugerido:** `Then('confirm the leave action in the confirmation pop up', async ({}) => {`
 - **Ocurrencias (1):**
   - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:55:5`
 
-### 76. `Then verify the user is removed from the team (or appropriate confirmation is shown)`
+### 59. `Then verify the user is removed from the team (or appropriate confirmation is shown)`
 
 - **Binding sugerido:** `Then('verify the user is removed from the team \\(or appropriate confirmation is shown)', async ({}) => {`
 - **Ocurrencias (1):**
   - `features/RA_EXT_TeamLeaderTestCases/TeamManagement_TeamLeader.feature:56:5`
 
-### 77. `Then verify the user "ra.grewspec@gmail.com" is available in the team leaders`
+### 60. `Then verify the user "ra.grewspec@gmail.com" is available in the team leaders`
 
 - **Binding sugerido:** `Then('verify the user {string} is available in the team leaders', async ({}, arg: string) => {`
 - **Ocurrencias (3):**
@@ -1117,15 +984,7 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_PortalAdminTestCases/TeamManagement_PortalAdmin.feature:73:5`
   - `features/RA_INT_SuperAdminTestCases/TeamManagement_SuperAdmin.feature:73:5`
 
-### 78. `When click on "Delete" icon for the team member "DeloitteUserTest@gmail.com"`
-
-- **Binding sugerido:** `When('click on {string} icon for the team member {string}', async ({}, arg: string, arg1: string) => {`
-- **Ocurrencias (3):**
-  - `features/RA_INT_DeloitteUserTestCases/TeamManagement_DeloitteUser.feature:78:5`
-  - `features/RA_INT_PortalAdminTestCases/TeamManagement_PortalAdmin.feature:78:5`
-  - `features/RA_INT_SuperAdminTestCases/TeamManagement_SuperAdmin.feature:78:5`
-
-### 79. `Then verify the deleted team "QA_TEST_01" is not available in the "Team Management" page`
+### 61. `Then verify the deleted team "QA_TEST_01" is not available in the "Team Management" page`
 
 - **Binding sugerido:** `Then('verify the deleted team {string} is not available in the {string} page', async ({}, arg: string, arg1: string) => {`
 - **Ocurrencias (3):**
@@ -1133,7 +992,7 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_PortalAdminTestCases/TeamManagement_PortalAdmin.feature:92:5`
   - `features/RA_INT_SuperAdminTestCases/TeamManagement_SuperAdmin.feature:92:5`
 
-### 80. `Then verify "Portal Test" value is displayed in the "Client Portal Name" field on the "Client Portal Setup" page`
+### 62. `Then verify "Portal Test" value is displayed in the "Client Portal Name" field on the "Client Portal Setup" page`
 
 - **Binding sugerido:** `Then('verify {string} value is displayed in the {string} field on the {string} page', async ({}, arg: string, arg1: string, arg2: string) => {`
 - **Ocurrencias (4):**
@@ -1142,83 +1001,68 @@ Cada item debe implementarse como una definicion fina en `features/steps/`, dele
   - `features/RA_INT_SuperAdminTestCases/ClientPortalSetUp_SuperAdmin.feature:25:5`
   - `features/RA_INT_SuperAdminTestCases/ClientPortalSetUp_SuperAdmin.feature:26:5`
 
-### 81. `Then verify the page is navigated to the "Client Portal Setup" step`
-
-- **Binding sugerido:** `Then('verify the page is navigated to the {string} step', async ({}, arg: string) => {`
-- **Ocurrencias (3):**
-  - `features/RA_INT_SuperAdminTestCases/ClientPortalSetUp_SuperAdmin.feature:36:5`
-  - `features/RA_INT_SuperAdminTestCases/ClientPortalSetUp_SuperAdmin.feature:38:5`
-  - `features/RA_INT_SuperAdminTestCases/ClientPortalSetUp_SuperAdmin.feature:41:5`
-
-### 82. `When update the Knowledge Modules & Impact Areas using check-box or "Select All"`
+### 63. `When update the Knowledge Modules & Impact Areas using check-box or "Select All"`
 
 - **Binding sugerido:** `When('update the Knowledge Modules & Impact Areas using check-box or {string}', async ({}, arg: string) => {`
 - **Ocurrencias (1):**
   - `features/RA_INT_SuperAdminTestCases/ClientPortalSetUp_SuperAdmin.feature:39:5`
 
-### 83. `When update the Jurisdictions selection by removing specific items and making selective configurations`
+### 64. `When update the Jurisdictions selection by removing specific items and making selective configurations`
 
 - **Binding sugerido:** `When('update the Jurisdictions selection by removing specific items and making selective configurations', async ({}) => {`
 - **Ocurrencias (1):**
   - `features/RA_INT_SuperAdminTestCases/ClientPortalSetUp_SuperAdmin.feature:42:5`
 
-### 84. `Then verify the "Deactivate Portal" button is displayed on the client portal setup page toolbar`
-
-- **Binding sugerido:** `Then('verify the {string} button is displayed on the client portal setup page toolbar', async ({}, arg: string) => {`
-- **Ocurrencias (1):**
-  - `features/RA_INT_SuperAdminTestCases/ClientPortalSetUp_SuperAdmin.feature:49:5`
-
-### 85. `And navigate to the deactivated client list at the end of the portal listing`
+### 65. `And navigate to the deactivated client list at the end of the portal listing`
 
 - **Binding sugerido:** `When('navigate to the deactivated client list at the end of the portal listing', async ({}) => {`
 - **Ocurrencias (1):**
   - `features/RA_INT_SuperAdminTestCases/ClientPortalSetUp_SuperAdmin.feature:54:5`
 
-### 86. `Then verify the deactivated client portal details are displayed`
+### 66. `Then verify the deactivated client portal details are displayed`
 
 - **Binding sugerido:** `Then('verify the deactivated client portal details are displayed', async ({}) => {`
 - **Ocurrencias (1):**
   - `features/RA_INT_SuperAdminTestCases/ClientPortalSetUp_SuperAdmin.feature:55:5`
 
-### 87. `And click on the deactivated client portal name in the client portal listing`
+### 67. `And click on the deactivated client portal name in the client portal listing`
 
 - **Binding sugerido:** `Then('click on the deactivated client portal name in the client portal listing', async ({}) => {`
 - **Ocurrencias (1):**
   - `features/RA_INT_SuperAdminTestCases/ClientPortalSetUp_SuperAdmin.feature:56:5`
 
-### 88. `Then verify the error message is displayed on the client portal listing`
+### 68. `Then verify the error message is displayed on the client portal listing`
 
 - **Binding sugerido:** `Then('verify the error message is displayed on the client portal listing', async ({}) => {`
 - **Ocurrencias (1):**
   - `features/RA_INT_SuperAdminTestCases/ClientPortalSetUp_SuperAdmin.feature:57:5`
 
-### 89. `And verify the portal is displayed in the list and shows status as "Enabled"`
+### 69. `And verify the portal is displayed in the list and shows status as "Enabled"`
 
 - **Binding sugerido:** `Then('verify the portal is displayed in the list and shows status as {string}', async ({}, arg: string) => {`
 - **Ocurrencias (1):**
   - `features/RA_INT_SuperAdminTestCases/ClientPortalSetUp_SuperAdmin.feature:62:5`
 
-### 90. `And select the Knowledge Modules & Impact Areas using check-box or "Select All"`
+### 70. `And select the Knowledge Modules & Impact Areas using check-box or "Select All"`
 
 - **Binding sugerido:** `When('select the Knowledge Modules & Impact Areas using check-box or {string}', async ({}, arg: string) => {`
 - **Ocurrencias (1):**
   - `features/RA_INT_SuperAdminTestCases/ClientPortalSetUp_SuperAdmin.feature:69:5`
 
-### 91. `And select the Jurisdictions by searching a particular state or using check-box`
+### 71. `And select the Jurisdictions by searching a particular state or using check-box`
 
 - **Binding sugerido:** `When('select the Jurisdictions by searching a particular state or using check-box', async ({}) => {`
 - **Ocurrencias (1):**
   - `features/RA_INT_SuperAdminTestCases/ClientPortalSetUp_SuperAdmin.feature:71:5`
 
-### 92. `And click on the "01_QA_ClientPortalSetup" client portal name in the client portal listing`
+### 72. `And click on the "01_QA_ClientPortalSetup" client portal name in the client portal listing`
 
 - **Binding sugerido:** `When('click on the {string} client portal name in the client portal listing', async ({}, arg: string) => {`
 - **Ocurrencias (1):**
   - `features/RA_INT_SuperAdminTestCases/ClientPortalSetUp_SuperAdmin.feature:76:5`
 
-### 93. `Then verify the "Add Action" button is "enabled"`
+### 73. `Then verify the "Add Action" button is "enabled"`
 
 - **Binding sugerido:** `Then('verify the {string} button is {string}', async ({}, arg: string, arg1: string) => {`
 - **Ocurrencias (1):**
   - `features/RA_INT_SuperAdminTestCases/ClientPortalSetUp_SuperAdmin.feature:79:5`
-

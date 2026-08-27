@@ -11,16 +11,16 @@ Feature: Team Management for Client Admin
   Scenario Outline: TC001_ClientAdmin_TeamManagement - Verify UI validations for team set up, mandatory field validations and column sorting
     When click on "Team Management" option from the left navigation
     Then the "Team Management" page is displayed
-    And verify "Create Team" button is available
+    Then verify "Create Team" buttons are displayed in the "Team Management" page
     When press "Create Team" button
-    And verify the following column headings are displayed and sortable in the Teams table:
+    Then verify the following column headings are displayed and sortable in the Teams table:
       | Team Name    |
       | Team Leaders |
       | Created Date |
       | Updated Date |
     When save the team from the "Create/Edit Team" page
-    And try saving the allocation without <mandatory field>
-    Then verify warning message displayed as "<warning message>"
+    And try saving the allocation without "<mandatory field>"
+    Then verify "<warning message>" are displayed in the "Team Management" page
 
     Examples:
       | mandatory field | warning message                      |
@@ -32,7 +32,7 @@ Feature: Team Management for Client Admin
   Scenario: TC002_ClientAdmin_TeamManagement - Verify user is able to add, edit and leave team
     When click on "Team Management" option from the left navigation
     Then the "Team Management" page is displayed
-    And verify "Create Team" button is available
+    Then verify "Create Team" buttons are displayed in the "Team Management" page
     When press "Create Team" button
     And enter a unique name in the "Team Name" field
     And enter "Additional information for the QA team" in the "Additional Information" field
@@ -42,11 +42,12 @@ Feature: Team Management for Client Admin
     And press "Add User" button in the "Add Team Members" popup
     Then verify the "TeamMemberRA@outlook.com" Team Member is added to the team member table
     When click on "Home" option from the left navigation
-    Then verify a warning pop up appears with "continue" and "cancel" buttons
-    When click on "Cancel" button in the confirmation pop up
-    Then verify "Save" button is available
+    Then the "Warning" popup is displayed
+    And verify "Continue;Cancel" buttons are displayed on the "Warning" popup
+    When press "Cancel" button on the "Warning" popup
+    Then verify "Save" buttons are displayed in the "Create/Edit Team" page
     When save the team from the "Create/Edit Team" page
-    Then verify the success message is displayed after saving the team
+    Then verify "Team created successfully." toast message is displayed in the "Team Management" page
     And verify the created team details are added to the "Team Management" table
     When click on "Edit" button of the created team in the Teams table
     And add "ndaextuser@outlook.com" in the "Team Leader" field
@@ -61,19 +62,20 @@ Feature: Team Management for Client Admin
       | test.user.1783697990969@gmail.com |
       | test.user.1782906153337@gmail.com |
     When save the team from the "Create/Edit Team" page
-    Then verify the success message is displayed after saving the team
+    Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
     And verify the new "Client, User" Team Leader is added to the team
     And verify the saved changes are reflected in the team
     When search for "test.user.1784145920996@gmail.com" in the Team Members table email field
-    Then verify if filters applied
+    Then verify filters are applied
     When click on "filter" button from the Team Members table email field
     Then verify the filter is removed
     When click on "Delete" icon against the team member "TeamMemberRA@outlook.com"
     And press "Remove user" button
     When save the team from the "Create/Edit Team" page
-    Then verify the success message is displayed after saving the team
+    Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
     When click on "Remove" button of the created team in the Teams table
-    Then verify a warning pop up appears with "Delete" and "Cancel" buttons
-    When click on "Delete" button in the confirmation pop up
+    Then the "Warning" popup is displayed
+    And verify "Delete;Cancel" buttons are displayed on the "Warning" popup
+    When press "Delete" button on the "Warning" popup
     Then verify the deleted team details are not available in the "Team Management" page
     And logout from the application

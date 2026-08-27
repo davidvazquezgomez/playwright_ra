@@ -11,14 +11,14 @@ Feature: Team Management for Team Leader
     Then the "Overview" page is displayed
     When click on "Team Management" option from the left navigation
     Then the "Team Management" page is displayed
-    And verify the following column headings are displayed and sortable in the Teams table:
+    Then verify the following column headings are displayed and sortable in the Teams table:
       | Team Name    |
       | Team Leaders |
       | Created Date |
       | Updated Date |
     When save the team from the "Create/Edit Team" page
     And try saving the allocation without "<mandatory field>"
-    Then verify warning message displayed as "<warning message>"
+    Then verify "<warning message>" are displayed in the "Team Management" page
     And logout from the application
 
     Examples:
@@ -39,19 +39,19 @@ Feature: Team Management for Team Leader
       | test.user.1783697990969@gmail.com |
       | test.user.1782906153337@gmail.com |
     When save the team from the "Create/Edit Team" page
-    Then verify the success message is displayed after saving the team
+    Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
     And verify the new Team Leader is added to the team
     And verify the saved changes are reflected in the team
-    When search for "test.user.1784145920996@gmail.com" in the Team Members table
+    When search for "test.user.1784145920996@gmail.com" in the Team Members table email field
     Then verify filters are applied
     When click on "clear filter" or "filter" button
     Then verify the filter is removed and full results are shown
-    When click on delete icon against the team member "TeamMemberRA@outlook.com"
+    When click on "Delete" icon against the team member "TeamMemberRA@outlook.com"
     And press "Remove user" button
     When save the team from the "Create/Edit Team" page
-    Then verify the success message is displayed after saving the team
+    Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
     When click on "Edit" icon for the team
-    When press "Leave Team" button
+    When leave the current team from the "Create/Edit Team" page
     Then confirm the leave action in the confirmation pop up
     Then verify the user is removed from the team (or appropriate confirmation is shown)
     And logout from the application

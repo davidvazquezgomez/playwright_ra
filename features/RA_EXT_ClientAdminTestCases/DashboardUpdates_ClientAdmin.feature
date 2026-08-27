@@ -92,7 +92,7 @@ Feature: Dashboard Updates for Client Admin
     And verify "Continue;Cancel" buttons are displayed on the "Unsaved Changes" popup
     When press "Cancel" button
     Then verify "satestclientuser2, satestclientuser2" value is displayed in the "User Assigned" field
-    And verify "High" value is displayed in the "Priority" field
+    Then verify "High" value is displayed in the "Priority" field
     And verify "Update Closed" value is displayed in the "Status" field
     And verify "satestclientuser4, satestclientuser4" value is displayed in the "Watch List" field
 
@@ -175,7 +175,7 @@ Feature: Dashboard Updates for Client Admin
     And press "Clear all filters" section on the Dashboard filter if available
     And save the "01_QA_StageTestPortal - Updates Dashboard" items
     When search for "Income" update from the "01_QA_StageTestPortal - Updates Dashboard" page
-    Then verify only updates that contain "Income" in the title are displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
+    Then verify only updates that contain "Income" in the title are displayed
     When press "Enter" key on the keyboard
     Then verify the "01_QA_StageTestPortal - Updates Dashboard" item count is not the same
 

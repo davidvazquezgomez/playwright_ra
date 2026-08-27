@@ -5,7 +5,7 @@ Feature: Team Management for Deloitte User
     Given launch Regulatory Advantage application URL and login as "deloitte" user "DELOITTEUSER"
     And verify if applicable portals are displayed
 
-    @mutable
+  @mutable
   Scenario Outline: TC001_01_DeloitteUser_TeamManagement - Verify mandatory field validations for team setup
     When click on "QA_Test client3" of the portals
     Then the "Overview" page is displayed
@@ -72,10 +72,10 @@ Feature: Team Management for Deloitte User
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
     Then verify the user "ra.grewspec@gmail.com" is available in the team leaders
     When search for "DeloitteUserTest2@gmail.com" in the Team Members table email field
-    Then verify if filters applied
+    Then verify filters are applied
     When click on "filter" button from the Team Members table email field
     Then verify the filter is removed
-    When click on "Delete" icon for the team member "DeloitteUserTest@gmail.com"
+    When click on "Delete" icon against the team member "DeloitteUserTest@gmail.com"
     And press "Remove user" button
     When save the team from the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page

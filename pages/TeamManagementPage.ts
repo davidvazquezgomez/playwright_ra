@@ -13,6 +13,7 @@ export class TeamManagementPage extends BasePage {
     `kendo-popup.k-animation-container-shown:visible li[role="option"]:has(.person-name:text-is("${userName}"))`;
   private addUserButton = `${this.addTeamMembersDialog} button[aria-label="Add User"]`;
   private saveTeamButton = 'button[form="teamForm"]:has(.k-button-text:text-is("Save"))';
+  private leaveTeamButton = 'button:has(.k-button-text:text-is("Leave Team"))';
   private teamNameInput = '#teamForm kendo-textbox[formcontrolname="teamName"] input.k-input-inner';
   private teamNameFilter = 'input[aria-label="Team Name Filter"]';
   private teamLeaderSearchInput = '#teamForm app-people-picker[formcontrolname="teamLeaders"] input[role="combobox"]';
@@ -82,6 +83,13 @@ export class TeamManagementPage extends BasePage {
    */
   async saveTeam(): Promise<void> {
     await this.clickElement(this.saveTeamButton);
+  }
+
+  /**
+   * Starts the leave action for the currently edited team.
+   */
+  async leaveCurrentTeam(): Promise<void> {
+    await this.clickElement(this.leaveTeamButton);
   }
 
   /**

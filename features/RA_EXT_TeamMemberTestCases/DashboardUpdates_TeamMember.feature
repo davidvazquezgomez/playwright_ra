@@ -67,7 +67,7 @@ Feature: Dashboard page for Team Member
     And the popup message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
     And verify "Continue;Cancel" buttons are displayed on the "Unsaved Changes" popup
     When press "Cancel" button
-    And verify "Update Closed" value is displayed in the "Status" field
+    Then verify "Update Closed" value is displayed in the "Status" field
     And verify "satestclientuser3, satestclientuser3" value is displayed in the "Watch List" field
 
   @mutable

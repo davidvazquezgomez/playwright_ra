@@ -33,12 +33,12 @@ Feature: Client Portal Setup for Super Admin
   @mutable
   Scenario: TC002_01_SuperAdmin_ClientPortalSetup - Verify editing the existing client portal
     When press "Edit Client" button for the "01_QA_ClientPortalSetup" client portal
-    Then verify the page is navigated to the "Client Portal Setup" step
+    Then the "Client Portal Setup" page is displayed
     When press "Save & Continue" button on the "Client Portal Setup" page
-    Then verify the page is navigated to the "Knowledge Modules & Impact Areas" step
+    Then the "Knowledge Modules & Impact Areas" page is displayed
     When update the Knowledge Modules & Impact Areas using check-box or "Select All"
     And press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page
-    Then verify the page is navigated to the "Jurisdictions" step
+    Then the "Jurisdictions" page is displayed
     When update the Jurisdictions selection by removing specific items and making selective configurations
     And press "Update Portal Now" button
     Then a message should get displayed as "updated successfully"
@@ -46,7 +46,7 @@ Feature: Client Portal Setup for Super Admin
   @mutable
   Scenario: TC002_02_SuperAdmin_ClientPortalSetup - Verify activation or deactivation of the existing portal
     When press "Edit Client" button for the "01_QA_ClientPortalSetup" client portal
-    Then verify the "Deactivate Portal" button is displayed on the client portal setup page toolbar
+    Then verify "Deactivate Portal" buttons are displayed in the "Client Portal Setup" page
     When press "Deactivate Portal" button
     And press "Yes" button
     Then a message should get displayed as "updated successfully"

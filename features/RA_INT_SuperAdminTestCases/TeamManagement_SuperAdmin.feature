@@ -5,7 +5,7 @@ Feature: Team Management for Super Admin
     Given launch Regulatory Advantage application URL and login as "deloitte" user "SUPERADMIN"
     And verify if applicable portals are displayed
 
-    @mutable
+  @mutable
   Scenario Outline: TC001_01_SuperAdmin_TeamManagement - Verify mandatory field validations for team setup
     When click on "01_13Jan REG" of the portals
     Then the "Overview" page is displayed
@@ -72,10 +72,10 @@ Feature: Team Management for Super Admin
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
     Then verify the user "naidu, smriti" is available in the team leaders
     When search for "test.user.1784145920996@gmail.com" in the Team Members table email field
-    Then verify if filters applied
+    Then verify filters are applied
     When click on "filter" button from the Team Members table email field
     Then verify the filter is removed
-    When click on "Delete" icon for the team member "smoke@gmail.com"
+    When click on "Delete" icon against the team member "smoke@gmail.com"
     And press "Remove user" button
     When save the team from the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
