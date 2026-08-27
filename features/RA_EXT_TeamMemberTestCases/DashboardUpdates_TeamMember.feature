@@ -103,7 +103,7 @@ Feature: Dashboard page for Team Member
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When search for "32Increase of maximum meal voucher vaalue" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     Then open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
-    When open the "Attachments" tab in the "32Increase of maximum meal voucher vaalue" popup
+    When open the "Attachments" tab in the "Update Details" subsection
     And click on "Upload files" option from the "32Increase of maximum meal voucher vaalue" page
     Then select a "<valid extension>" format file from "<file path>" and upload it
     And verify the "<name>" attachment is displayed in the "Attachments" section
@@ -159,7 +159,7 @@ Feature: Dashboard page for Team Member
     Then verify no updates are displayed
     When press "Enter" key on the keyboard
     Then verify the "01_QA_StageTestPortal - Updates Dashboard" item count is not the same
-    And the "There is no data to display." message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
+    And a message should get displayed as "There is no data to display."
     And press "Clear" button in the search field
     Then verify the "01_QA_StageTestPortal - Updates Dashboard" item count is the same
 

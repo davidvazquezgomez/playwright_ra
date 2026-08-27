@@ -121,7 +121,7 @@ Feature: Dashboard Updates for Client User
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
     Then open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
-    When open the "Attachments" tab in the "Test_11-5_01" popup
+    When open the "Attachments" tab in the "Update Details" subsection
     And click on "Upload files" option from the "Test_11-5_01" page
     Then select a "<valid extension>" format file from "<file path>" and upload it
     And verify the "<name>" attachment is displayed in the "Attachments" section
@@ -177,7 +177,7 @@ Feature: Dashboard Updates for Client User
     Then verify no updates are displayed
     When press "Enter" key on the keyboard
     Then verify the "ClientPortal_20260209133616 - Updates Dashboard" item count is not the same
-    And the "There is no data to display." message is displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page
+    And a message should get displayed as "There is no data to display."
     And press "Clear" button in the search field
     Then verify the "ClientPortal_20260209133616 - Updates Dashboard" item count is the same
 

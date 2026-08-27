@@ -1,4 +1,4 @@
-﻿@TeamManagement @TeamManagement_SuperAdmin
+@TeamManagement @TeamManagement_SuperAdmin
 Feature: Team Management for Super Admin
 
   Background:
@@ -12,7 +12,7 @@ Feature: Team Management for Super Admin
     When click on "Team Management" option from the left navigation
     Then the "Team Management" page is displayed
     When press "Create Team" button
-    And save the team from the "Create/Edit Team" page
+    When save the team from the "Create/Edit Team" page
     Then verify the warning message "First name is required;Last name is required;Email is required" for fields "First Name;Last Name;Email" is displayed
 
     Examples:
@@ -68,7 +68,7 @@ Feature: Team Management for Super Admin
     And open the Add Team Members dialog
     And add "test.user.1784145920996@gmail.com;test.user.1782906153337@gmail.com" in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
-    And save the team from the "Create/Edit Team" page
+    When save the team from the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
     Then verify the user "naidu, smriti" is available in the team leaders
     When search for "test.user.1784145920996@gmail.com" in the Team Members table email field
@@ -77,7 +77,7 @@ Feature: Team Management for Super Admin
     Then verify the filter is removed
     When click on "Delete" icon for the team member "smoke@gmail.com"
     And press "Remove user" button
-    And save the team from the "Create/Edit Team" page
+    When save the team from the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
 
   @mutable @cleanup

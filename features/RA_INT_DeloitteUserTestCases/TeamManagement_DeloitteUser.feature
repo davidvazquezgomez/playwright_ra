@@ -1,4 +1,4 @@
-﻿@TeamManagement @TeamManagement_DeloitteUser
+@TeamManagement @TeamManagement_DeloitteUser
 Feature: Team Management for Deloitte User
 
   Background:
@@ -12,7 +12,7 @@ Feature: Team Management for Deloitte User
     When click on "Team Management" option from the left navigation
     Then the "Team Management" page is displayed
     When press "Create Team" button
-    And save the team from the "Create/Edit Team" page
+    When save the team from the "Create/Edit Team" page
     Then verify "<warning message>" toast message is displayed in the "Team Management" page
 
     Examples:
@@ -68,7 +68,7 @@ Feature: Team Management for Deloitte User
     And open the Add Team Members dialog
     And add "DeloitteUserTest2@gmail.com;TestDeloitteUserTest2@gmail.com;NonDeloitteUserTest@gmail.com" in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
-    And save the team from the "Create/Edit Team" page
+    When save the team from the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
     Then verify the user "ra.grewspec@gmail.com" is available in the team leaders
     When search for "DeloitteUserTest2@gmail.com" in the Team Members table email field
@@ -77,7 +77,7 @@ Feature: Team Management for Deloitte User
     Then verify the filter is removed
     When click on "Delete" icon for the team member "DeloitteUserTest@gmail.com"
     And press "Remove user" button
-    And save the team from the "Create/Edit Team" page
+    When save the team from the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
 
   @mutable @cleanup

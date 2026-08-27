@@ -1,4 +1,4 @@
-﻿@TeamManagement @TeamManagement_TeamLeader
+@TeamManagement @TeamManagement_TeamLeader
 Feature: Team Management for Team Leader
 
   Background:
@@ -29,16 +29,16 @@ Feature: Team Management for Team Leader
 
   @mutable
   Scenario: TC002_TeamLeader_TeamManagement - Verify user is able to edit and leave team
-    Given verify Team Management option is available on the left menu
+    Then verify it displays "Team Management" option from the left navigation
     When click on "Team Management" option from the left navigation
     Then the "Team Management" page is displayed
     When click on "Edit" icon for an existing team
-    And add "ndaextuser@outlook.com" under Team Leader
+    And add "ndaextuser@outlook.com" in the "Team Leader" field
     And add the following Team Members:
       | test.user.1784145920996@gmail.com |
       | test.user.1783697990969@gmail.com |
       | test.user.1782906153337@gmail.com |
-    And save the team from the "Create/Edit Team" page
+    When save the team from the "Create/Edit Team" page
     Then verify the success message is displayed after saving the team
     And verify the new Team Leader is added to the team
     And verify the saved changes are reflected in the team
@@ -48,7 +48,7 @@ Feature: Team Management for Team Leader
     Then verify the filter is removed and full results are shown
     When click on delete icon against the team member "TeamMemberRA@outlook.com"
     And press "Remove user" button
-    And save the team from the "Create/Edit Team" page
+    When save the team from the "Create/Edit Team" page
     Then verify the success message is displayed after saving the team
     When click on "Edit" icon for the team
     And click on "Leave Team"

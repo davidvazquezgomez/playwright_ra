@@ -1,4 +1,4 @@
-﻿@DashboardUpdate @DashboardUpdate_DeloitteUser
+@DashboardUpdate @DashboardUpdate_DeloitteUser
 Feature: Dashboard Updates for Deloitte User
 
   Background:
@@ -133,7 +133,7 @@ Feature: Dashboard Updates for Deloitte User
     Given the "01_13Jan REG - Updates Dashboard - All Updates" page is open
     When search for "Occupational Illness Trust Fund" update from the "01_13Jan REG - Updates Dashboard" page
     Then open the first update in the "01_13Jan REG - Updates Dashboard" page
-    When open the "Attachments" tab in the "Occupational Illness Trust Fund" popup
+    When open the "Attachments" tab in the "Update Details" subsection
     And click on "Upload files" option from the "Occupational Illness Trust Fund" page
     Then select a "<valid extension>" format file from "<file path>" and upload it
     And verify the "<name>" attachment is displayed in the "Attachments" section
@@ -189,7 +189,7 @@ Feature: Dashboard Updates for Deloitte User
     Then verify no updates are displayed
     When press "Enter" key on the keyboard
     Then verify the "01_13Jan REG - Updates Dashboard" item count is not the same
-    And the "There is no data to display." message is displayed in the "01_13Jan REG - Updates Dashboard" page
+    And a message should get displayed as "There is no data to display."
     And press "Clear" button in the search field
     Then verify the "01_13Jan REG - Updates Dashboard" item count is the same
 

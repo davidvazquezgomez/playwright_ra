@@ -1,4 +1,4 @@
-﻿@TeamManagement @TeamManagement_ClientAdmin
+@TeamManagement @TeamManagement_ClientAdmin
 Feature: Team Management for Client Admin
 
   Background:
@@ -36,7 +36,7 @@ Feature: Team Management for Client Admin
     When press "Create Team" button
     And enter a unique name in the "Team Name" field
     And enter "Additional information for the QA team" in the "Additional Information" field
-    And add "TeamLeaderRA@outlook.com" as a new Team Leader
+    And add "TeamLeaderRA@outlook.com" in the "Team Leader" field
     And open the Add Team Members dialog
     And add "TeamMemberRA@outlook.com" on the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
@@ -49,7 +49,7 @@ Feature: Team Management for Client Admin
     Then verify the success message is displayed after saving the team
     And verify the created team details are added to the "Team Management" table
     When click on "Edit" button of the created team in the Teams table
-    And add "ndaextuser@outlook.com" as a new Team Leader
+    And add "ndaextuser@outlook.com" in the "Team Leader" field
     And open the Add Team Members dialog
     And add the following Team Members on the "Search user" field:
       | test.user.1784145920996@gmail.com |
@@ -60,7 +60,7 @@ Feature: Team Management for Client Admin
       | test.user.1784145920996@gmail.com |
       | test.user.1783697990969@gmail.com |
       | test.user.1782906153337@gmail.com |
-    And save the team from the "Create/Edit Team" page
+    When save the team from the "Create/Edit Team" page
     Then verify the success message is displayed after saving the team
     And verify the new "Client, User" Team Leader is added to the team
     And verify the saved changes are reflected in the team
@@ -70,7 +70,7 @@ Feature: Team Management for Client Admin
     Then verify the filter is removed
     When click on "Delete" icon against the team member "TeamMemberRA@outlook.com"
     And press "Remove user" button
-    And save the team from the "Create/Edit Team" page
+    When save the team from the "Create/Edit Team" page
     Then verify the success message is displayed after saving the team
     When click on "Remove" button of the created team in the Teams table
     Then verify a warning pop up appears with "Delete" and "Cancel" buttons

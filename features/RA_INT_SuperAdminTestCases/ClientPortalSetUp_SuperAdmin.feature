@@ -1,4 +1,4 @@
-﻿@ClientPortalSetUp @ClientPortalSetUp_SuperAdmin
+@ClientPortalSetUp @ClientPortalSetUp_SuperAdmin
 Feature: Client Portal Setup for Super Admin
 
   Background:
@@ -41,7 +41,7 @@ Feature: Client Portal Setup for Super Admin
     Then verify the page is navigated to the "Jurisdictions" step
     When update the Jurisdictions selection by removing specific items and making selective configurations
     And press "Update Portal Now" button
-    Then verify the confirmation message "updated successfully" is displayed
+    Then a message should get displayed as "updated successfully"
 
   @mutable
   Scenario: TC002_02_SuperAdmin_ClientPortalSetup - Verify activation or deactivation of the existing portal
@@ -49,7 +49,7 @@ Feature: Client Portal Setup for Super Admin
     Then verify the "Deactivate Portal" button is displayed on the client portal setup page toolbar
     When press "Deactivate Portal" button
     And press "Yes" button
-    Then verify the confirmation message "updated successfully" is displayed
+    Then a message should get displayed as "updated successfully"
     When click on "Home" option from the left navigation
     And navigate to the deactivated client list at the end of the portal listing
     Then verify the deactivated client portal details are displayed
@@ -58,21 +58,21 @@ Feature: Client Portal Setup for Super Admin
     When press "Edit Client" button
     And press "Reactivate Portal" button
     When press "Yes" button
-    Then verify the confirmation message "updated successfully" is displayed
+    Then a message should get displayed as "updated successfully"
     And verify the portal is displayed in the list and shows status as "Enabled"
 
   @mutable
   Scenario Outline: TC003_SuperAdmin_ClientPortalSetup - Verify Actions Enabled/Actions Disabled toggle for the existing portal
     When press "Edit Client" button for the "01_QA_ClientPortalSetup" client portal
-    And select "<actionsState>" checkbox
+    And click on the "<actionsState>" checkbox
     And press "Save & Continue" button on the "Client Portal Setup" page
     And select the Knowledge Modules & Impact Areas using check-box or "Select All"
     And press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page
     And select the Jurisdictions by searching a particular state or using check-box
     And press "Update Portal Now" button
-    Then verify the confirmation message "updated successfully" is displayed
+    Then a message should get displayed as "updated successfully"
     When click on "Home" option from the left navigation
-    And select "Enabled" option from the Status filter
+    And select "Enabled" in the "Status" filter on the "Client Portal List" page
     And click on the "01_QA_ClientPortalSetup" client portal name in the client portal listing
     And press "Open Dashboard" button for the "01_QA_ClientPortalSetup" client portal
     And press "Actions" button

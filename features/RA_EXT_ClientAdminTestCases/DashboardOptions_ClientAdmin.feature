@@ -1,4 +1,4 @@
-﻿@DashboardOptions @DashboardOptions_ClientAdmin
+@DashboardOptions @DashboardOptions_ClientAdmin
 Feature: Dashboard Options for Client Admin
 
   Background:
@@ -13,11 +13,11 @@ Scenario: TC019_01_ClientAdmin_DashboardOptions - Generate an unfiltered Updates
     When press "Open Dashboard" button
     Then verify the page is redirected to Updates Dashboard
     When press "Dashboard Options" button
-    Then verify "Dashboard Options" panel is opened
+    Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Report" option is displayed
     When click on "Generate Report" option from the Dashboard options
     Then verify the dashboard dropdown default value is "Updates"
-    And verify the "Update Title;Jurisdiction;Impact Area;Date Announced;Date Effective;Priority;Status;Last Updated" columns are selected by default
+    And verify the "Update Title;Jurisdiction;Impact Area;Date Announced;Date Effective;Priority;Status;Last Updated" columns are selected in the Dashboard Options popup
     And verify "Generate Report" button is displayed in the pop up
     When press "Generate Report" button
     Then wait for the download completion notification
@@ -35,7 +35,7 @@ Scenario: TC019_02_ClientAdmin_DashboardOptions - Generate a filtered Updates re
     And press "View results" button on the Dashboard filter
     Then verify the data is updated to show the applied filter records in the "Updates" dashboard
     When press "Dashboard Options" button
-    Then verify "Dashboard Options" panel is opened
+    Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Report" option is displayed and clickable in the Dashboard options
     When click on "Generate Report" option from the Dashboard options
     Then verify the dashboard dropdown value is "Updates"
@@ -52,11 +52,11 @@ Scenario: TC019_02_ClientAdmin_DashboardOptions - Generate a filtered Updates re
 Scenario: TC019_03_ClientAdmin_DashboardOptions - Generate an unfiltered Actions report
     Given the "Actions Dashboard - ClientPortal_20260213081718" page is open
     When press "Dashboard Options" button
-    Then verify "Dashboard Options" panel is opened
+    Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Report" option is displayed and clickable in the Dashboard options
     When click on "Generate Report" option from the Dashboard options
     And select "Actions" from the "Generate report for" dropdown
-    Then verify the "Update Title;Action;User Assigned;Deadline Date;Update Priority;Action Priority;Action Status" columns are selected by default
+    Then verify the "Update Title;Action;User Assigned;Deadline Date;Update Priority;Action Priority;Action Status" columns are selected in the Dashboard Options popup
     When press "Generate Report" button
     Then wait for the download completion notification
     And verify the downloaded file name format is "ClientPortal_20260213081718_Actions_Report_" with current date and time
@@ -73,7 +73,7 @@ Scenario: TC019_04_ClientAdmin_DashboardOptions - Generate a filtered Actions re
     And press "View results" button on the Dashboard filter
     Then verify the data is updated to show the applied filter records in the "Actions" dashboard
     When press "Dashboard Options" button
-    Then verify "Dashboard Options" panel is opened
+    Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Report" option is displayed and clickable in the Dashboard options
     When click on "Generate Report" option from the Dashboard options
     And select "Actions" from the "Generate report for" dropdown
@@ -91,7 +91,7 @@ Scenario: TC020_01_ClientAdmin_DashboardOptions - Generate an unfiltered Updates
     Given the "Updates Dashboard - ClientPortal_20260213081718" page is open
     Then verify the page is redirected to "Updates Dashboard"
     When press "Dashboard Options" button
-    Then verify "Dashboard Options" panel is opened
+    Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Audit Trail" option is displayed in the Dashboard options
     When click on "Generate Audit Trail" option from the Dashboard options
     Then verify the "Update allocated to responsible person;User added to Update Watchlist;User removed from Update Watchlist;Update status changed;Update priority changed;Action added;User added to Action;User removed from Action;Action status Changed;Action priority Changed" audit trail change area parameters are displayed
@@ -112,7 +112,7 @@ Scenario: TC020_02_ClientAdmin_DashboardOptions - Generate a filtered Updates au
     And press "View results" button on the Dashboard filter
     Then verify the data is updated to show the applied filter records in the "Updates" dashboard
     When press "Dashboard Options" button
-    Then verify "Dashboard Options" panel is opened
+    Then verify the "Dashboard Options" popup is displayed on the Dashboard
     When click on "Generate Audit Trail" option from the Dashboard options
     And press "Generate Audit Trail" button
     Then verify the notification area displays the report generation status
@@ -127,7 +127,7 @@ Scenario: TC020_03_ClientAdmin_DashboardOptions - Generate an unfiltered Actions
     Given the "Actions Dashboard - ClientPortal_20260213081718" page is open
     Then verify for "Dashboard Options" button is visible
     When press "Dashboard Options" button
-    Then verify "Dashboard Options" panel is opened
+    Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Audit Trail" option is displayed in the Dashboard options
     When click on "Generate Audit Trail" option from the Dashboard options
     Then verify the "Update allocated to responsible person;User added to Update Watchlist;User removed from Update Watchlist;Update status changed;Update priority changed;Action added;User added to Action;User removed from Action;Action status Changed;Action priority Changed" audit trail change area parameters are displayed
@@ -148,7 +148,7 @@ Scenario: TC020_04_ClientAdmin_DashboardOptions - Generate a filtered Actions au
     Then verify the data is updated to show the applied filter records in the "Actions" dashboard
     And verify for "Dashboard Options" button is visible
     When press "Dashboard Options" button
-    Then verify "Dashboard Options" panel is opened
+    Then verify the "Dashboard Options" popup is displayed on the Dashboard
     When press "Generate Audit Trail" button
     Then verify the notification area displays the report generation status
     And verify the downloaded file name format is "ClientPortal_20260213081718_AuditTrail_Report_" with current date and time
