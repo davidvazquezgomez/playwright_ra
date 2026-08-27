@@ -236,7 +236,6 @@ Feature: Dashboard Analytics for Deloitte User
     When fill "QaTest" in the "Filter Name" field on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify "Filter saved successfully." toast message is displayed in the "Analytics Dashboard" page
-    
 
   @readOnly
   Scenario: TC016_05_DeloitteUser_DashboardAnalytics - Apply a customized filter Action Analytics page
