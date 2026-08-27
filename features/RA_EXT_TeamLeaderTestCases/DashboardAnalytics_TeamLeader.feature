@@ -2,7 +2,7 @@
 Feature: Dashboard Analytics for Team Leader
 
   Background:
-    Given launch Regulatory Advantage application URL and login as "deloitte" user "TEAMLEADER"
+    Given launch Regulatory Advantage application URL and login as "external" user "TEAMLEADER"
     And verify if applicable portals are displayed
 
   @readOnly

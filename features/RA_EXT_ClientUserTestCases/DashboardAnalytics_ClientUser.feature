@@ -2,7 +2,7 @@
 Feature: Dashboard Analytics for Client User
 
   Background:
-    Given launch Regulatory Advantage application URL and login as "deloitte" user "CLIENTUSER"
+    Given launch Regulatory Advantage application URL and login as "external" user "CLIENTUSER"
     And verify if applicable portals are displayed
 
   @readOnly
