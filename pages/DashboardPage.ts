@@ -741,7 +741,7 @@ export class DashboardPage extends BasePage {
     async appendToSavedFilterName(text: string): Promise<void> {
         const input = this._page.locator(this.filterNameInput);
         await expect(input).toBeVisible();
-        await this.fillInputText(this.filterNameInput, `${await input.inputValue()}${text}`);
+        await this.appendInputText(this.filterNameInput, text);
     }
 
     /**

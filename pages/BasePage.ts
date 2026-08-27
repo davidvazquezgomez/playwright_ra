@@ -562,6 +562,17 @@ export class BasePage {
   }
 
   /**
+   * Appends text to the end of an input element's current value.
+   * @param selector Input selector.
+   * @param text Text to append.
+   */
+  async appendInputText(selector: string, text: string): Promise<void> {
+    const element = await this.waitForElement(selector);
+    await element.press('End');
+    await element.type(text);
+  }
+
+  /**
    * Presses a key on an element.
    * @param selector Element selector.
    * @param key Key to press.
