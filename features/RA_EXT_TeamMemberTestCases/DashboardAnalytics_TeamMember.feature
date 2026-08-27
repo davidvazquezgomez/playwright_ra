@@ -68,7 +68,7 @@ Feature: Dashboard Analytics for Team Member
     Then save the value from the "Outstanding Updates" chart
     And save the value from the "Update Priority" chart
     When press "Filter" button on the Dashboard filter
-    When select "Test_TeamMember" located in the "Saved Filters" section on the Dashboard filter
+    When select "Test_TeamMember_4" located in the "Saved Filters" section on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify the "Outstanding Updates" chart value is not the same
     And verify the "Update Priority" chart value is not the same
@@ -81,7 +81,7 @@ Feature: Dashboard Analytics for Team Member
     And verify the "Outstanding Updates" chart contains the "UPDATE OVERDUE;< 30 DAYS TO EFFECTIVE DATE;> 30 DAYS TO EFFECTIVE DATE" elements
     And save the value from the "Outstanding Updates" chart
     When press "Filter" button on the Dashboard filter
-    When select "Employment Taxes" in the "Knowledge Module" filter on the Dashboard filter
+    When select "People Law" in the "Knowledge Module" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify the "Outstanding Updates" chart value is not the same
 
