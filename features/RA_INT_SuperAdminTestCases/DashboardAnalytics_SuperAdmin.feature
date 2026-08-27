@@ -346,7 +346,7 @@ Feature: Dashboard Analytics for Super Admin
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
     Then press "Close" button on the "Update Action" popup
-    And press "clear" button in the "Select or type update title" search box
+    And press "Clear" button in the search field
 
   @mutable
   Scenario: TC017_03_SuperAdmin_DashboardAnalytics - Verify the information displayed when selecting an Action result

@@ -100,6 +100,14 @@ Then('press "Clear all filters" section on the Dashboard filter if available', a
     await dashboardPage.clearAllFiltersIfAvailable();
 });
 
+When('press "Clear" button in the search field', async ({ dashboardPage }) => {
+    await dashboardPage.clearUpdateSearch();
+});
+
+When('press "Clear" button in the search field if available', async ({ dashboardPage }) => {
+    await dashboardPage.clearUpdateSearch(true);
+});
+
 When('double-click {string} option on the Dashboard filter', async ({ dashboardPage }, optionName: string) => {
     await dashboardPage.doubleClickFilterOption(optionName);
 });

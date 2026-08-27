@@ -3,6 +3,10 @@ import { BasePage } from './BasePage';
 
 export class DashboardPage extends BasePage {
     private readonly dashboardFilterButton = 'button[title="Filter"]';
+    private readonly updateSearchInput =
+        'input[placeholder="Select or type update title"][role="combobox"]';
+    private readonly updateSearchClearButton =
+        'kendo-autocomplete:has(input[placeholder="Select or type update title"]) .k-clear-value[title="clear"]';
     private readonly dashboardOptionsButton =
         'button[data-title="Dashboard options"], button[title="Dashboard Options"], button[aria-label="Dashboard Options"], button:has(.k-i-more-horizontal), button:has(.fa-ellipsis-v), button:has(.fa-ellipsis-h), button:has(kendo-svgicon.k-svg-i-more-horizontal)';
     private readonly dashboardOptionsDialog = 'div[role="dialog"]:has(.k-dialog-title:text-is("Dashboard Options"))';
@@ -94,6 +98,21 @@ export class DashboardPage extends BasePage {
     private selectedDeadlineEndDate?: Date;
     private jurisdictionSelectionBeforeActionStatus?: string[];
     private dashboardColumnExpectedToBeHidden?: string;
+
+    /**
+     * Clears the selected update from a dashboard search control.
+     * @param isClearButtonOptional Whether the absence of the clear button is allowed.
+     */
+    async clearUpdateSearch(isClearButtonOptional: boolean = false): Promise<void> {
+        const clearButton = this._page.locator(this.updateSearchClearButton);
+
+        if (isClearButtonOptional && !await clearButton.isVisible()) {
+            return;
+        }
+
+        await this.clickElement(this.updateSearchClearButton);
+        await expect(this._page.locator(this.updateSearchInput)).toHaveValue('');
+    }
 
     /**
      * Opens the Dashboard filter panel.

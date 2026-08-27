@@ -41,6 +41,8 @@ export class UpdatesDashboardPage extends BasePage {
     this._page.locator(
       `kendo-popup.k-animation-container-shown .k-dropdownlist-popup [role="option"]:has-text("${name}")`,
     ).first();
+  private readonly updateDetailsSelectedPersonByField = (fieldName: 'User Assigned' | 'Watch List') =>
+    this.updateDetailsPeoplePickerByField(fieldName).locator('.selected-person-name');
   private readonly updateDetailsCommentButton = () =>
     this.activeUpdateDetailsPanel().locator('app-comments .comment-input-actions button[type="submit"]');
 
@@ -59,6 +61,14 @@ export class UpdatesDashboardPage extends BasePage {
    */
   async verifyUpdateIsDisplayed(updateTitle: string): Promise<void> {
     await expect(this.updatesGrid().getByRole('row').filter({ hasText: updateTitle }).first()).toBeVisible();
+  }
+
+  /**
+   * Verifies that an update title is absent from the active Updates Dashboard grid.
+   * @param updateTitle The update title expected not to be displayed.
+   */
+  async verifyUpdateIsNotDisplayed(updateTitle: string): Promise<void> {
+    await expect(this.updateRowByTitle(updateTitle)).toHaveCount(0);
   }
 
   /**
@@ -107,14 +117,29 @@ export class UpdatesDashboardPage extends BasePage {
   }
 
   /**
+   * Marks the selected update as unread.
+   */
+  async markSelectedUpdateAsUnread(): Promise<void> {
+    await this.clickLocator(this.updateDetailsMarkAsUnreadButton());
+  }
+
+  /**
+   * Verifies that the selected update is already marked as unread.
+   */
+  async verifyMarkAsUnreadIsDisabled(): Promise<void> {
+    await expect(this.updateDetailsMarkAsUnreadButton()).toBeDisabled();
+  }
+
+  /**
    * Selects and verifies an option in a supported dropdown within Update Details.
    * @param optionName Exact visible option to select.
    * @param fieldName Business name of the Update Details field.
    */
   async selectUpdateDetailsOption(optionName: string, fieldName: string): Promise<void> {
     const dropdown = this.getUpdateDetailsDropdown(fieldName);
-    await dropdown.click();
-    await this._page.getByRole('option', { name: optionName, exact: true }).first().click();
+    const option = this._page.getByRole('option', { name: optionName, exact: true }).first();
+    await this.clickLocator(dropdown);
+    await this.clickLocator(option);
     await expect(dropdown.locator('.k-input-value-text')).toHaveText(optionName);
   }
 
@@ -130,7 +155,10 @@ export class UpdatesDashboardPage extends BasePage {
     const peoplePicker = this.updateDetailsPeoplePickerByField(fieldName);
     await this.clickLocator(peoplePicker);
     await this.fillInputText(this.updateDetailsPeoplePickerSearchInput, userName);
-    await this.clickLocator(this.updateDetailsPeoplePickerOptionByName(userName));
+    const matchingUser = this.updateDetailsPeoplePickerOptionByName(userName);
+    await matchingUser.waitFor({ state: 'visible' });
+    await this.clickLocator(matchingUser);
+    await expect(this.updateDetailsSelectedPersonByField(fieldName)).toHaveText(userName);
   }
 
   /**

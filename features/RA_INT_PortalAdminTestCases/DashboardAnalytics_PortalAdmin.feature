@@ -56,7 +56,6 @@ Feature: Dashboard Analytics for Portal Admin
     When fill "QaTest" in the "Filter Name" field on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify "Filter saved successfully." toast message is displayed in the "Analytics Dashboard" page
-   
 
   @readOnly
   Scenario: TC014_05_PortalAdmin_DashboardAnalytics - Apply a customized filter
@@ -328,7 +327,7 @@ Feature: Dashboard Analytics for Portal Admin
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
     Then press "Close" button on the "Update Action" popup
-    And press "clear" button in the "Select or type update title" search box
+    And press "Clear" button in the search field
 
   @mutable
   Scenario: TC017_03_PortalAdmin_DashboardAnalytics - Verify the information displayed when selecting an Action result

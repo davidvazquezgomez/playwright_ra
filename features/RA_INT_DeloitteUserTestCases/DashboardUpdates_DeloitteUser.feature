@@ -44,11 +44,12 @@ Feature: Dashboard Updates for Deloitte User
     When search for "Occupational Illness Trust Fund" update from the "01_13Jan REG - Updates Dashboard" page
     Then open the first update in the "01_13Jan REG - Updates Dashboard" page
     And the "Occupational Illness Trust Fund" page is displayed
-    When press "Mark as Unread" button
-    Then verify the "Mark as Unread" button is disabled
+    When press "Mark as Unread" button on the selected update
+    Then verify the "Mark as Unread" button is disabled on the selected update
     When press "Back" button
     Then the "01_13Jan REG - Updates Dashboard - All Updates" page is displayed
     When press the "Unread Updates" subsection
+    And press "Clear" button in the search field
     Then open the first update in the "01_13Jan REG - Updates Dashboard" page
     And press "Back" button
     And verify the "Occupational Illness Trust Fund" update is not displayed
@@ -59,19 +60,16 @@ Feature: Dashboard Updates for Deloitte User
     When search for "Occupational Illness Trust Fund" update from the "01_13Jan REG - Updates Dashboard" page
     Then open the first update in the "01_13Jan REG - Updates Dashboard" page
     When press "Edit" button on the selected update
-    Then enter "naidu, smriti" in the "User Assigned" field
-    And select "naidu, smriti" from the search results
+    Then select "naidu, smriti" in the "User Assigned" field on the selected update
     And select "High" option in the "Priority" field in the "Update Details" subsection
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
-    And enter "audit, sonigour" in the "Watch List" field
-    And select "audit, sonigour" from the search results
+    And select "audit, sonigour" in the "Watch List" field on the selected update
     When press "Save" button on the selected update
     Then verify "Regulatory update updated successfully" toast message is displayed in the "Occupational Illness Trust Fund" page
   #Rectifico para restaurar los datos 
     When open the first update in the "01_13Jan REG - Updates Dashboard" page
     When press "Edit" button on the selected update
-    Then enter "User, TestAP" in the "User Assigned" field
-    And select "User, TestAP" from the search results
+    Then select "User, TestAP" in the "User Assigned" field on the selected update
     And select "Low" option in the "Priority" field in the "Update Details" subsection
     And select "Update Allocated" option in the "Status" field in the "Update Details" subsection
     And press "clear" in the "Watch List" field
@@ -84,12 +82,10 @@ Feature: Dashboard Updates for Deloitte User
     When search for "Test_11-5_01" update from the "01_13Jan REG - Updates Dashboard" page
     Then open the first update in the "01_13Jan REG - Updates Dashboard" page
     When press "Edit" button on the selected update
-    Then enter "naidu, smriti" in the "User Assigned" field
-    And select "naidu, smriti" from the search results
+    Then select "naidu, smriti" in the "User Assigned" field on the selected update
     And select "High" option in the "Priority" field in the "Update Details" subsection
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
-    And enter "audit, sonigour" in the "Watch List" field
-    And select "audit, sonigour" from the search results
+    And select "audit, sonigour" in the "Watch List" field on the selected update
     When press "Back" button
     Then the "Unsaved Changes" popup is displayed
     And the popup message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
@@ -106,12 +102,10 @@ Feature: Dashboard Updates for Deloitte User
     When search for "Test_11-5_01" update from the "01_13Jan REG - Updates Dashboard" page
     Then open the first update in the "01_13Jan REG - Updates Dashboard" page
     When press "Edit" button on the selected update
-    Then enter "naidu, smriti" in the "User Assigned" field
-    And select "naidu, smriti" from the search results
+    Then select "naidu, smriti" in the "User Assigned" field on the selected update
     And select "High" option in the "Priority" field in the "Update Details" subsection
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
-    And enter "audit, sonigour" in the "Watch List" field
-    And select "audit, sonigour" from the search results
+    And select "audit, sonigour" in the "Watch List" field on the selected update
     When press "Back" button
     Then the "Unsaved Changes" popup is displayed
     When press "Continue" button
@@ -189,14 +183,14 @@ Feature: Dashboard Updates for Deloitte User
   Scenario: TC005_DeloitteUser_DashboardUpdates - Verify auto suggestions for updates
     Given the "01_13Jan REG - Updates Dashboard - All Updates" page is open
     And press "Clear all filters" section on the Dashboard filter if available
-    And press "Clear" button on the search field if available
+    And press "Clear" button in the search field if available
     And save the "01_13Jan REG - Updates Dashboard" items
     When search for "zz" update from the "01_13Jan REG - Updates Dashboard" page
     Then verify no updates are displayed
     When press "Enter" key on the keyboard
     Then verify the "01_13Jan REG - Updates Dashboard" item count is not the same
     And the "There is no data to display." message is displayed in the "01_13Jan REG - Updates Dashboard" page
-    And press "Clear" button on the search field
+    And press "Clear" button in the search field
     Then verify the "01_13Jan REG - Updates Dashboard" item count is the same
 
   @readOnly

@@ -161,6 +161,10 @@ When('press {string} button', async ({ commonPage }, button: string) => {
   await commonPage.clickButton(button);
 });
 
+Then('verify the {string} button is disabled', async ({ commonPage }, buttonName: string) => {
+  await commonPage.verifyButtonIsDisabled(buttonName);
+});
+
 When('press "Save & Continue" button on the {string} page', async ({ commonPage }, pageName: string) => {
   await commonPage.continuePortalConfiguration(pageName);
 });

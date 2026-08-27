@@ -136,7 +136,7 @@ Feature: Dashboard Analytics for Deloitte User
     When open the "Attachments" tab in the "Update Details" subsection
     Then verify the "Upload files" button is displayed in the "Update Details" Attachments tab
     And press "Close" button
-    And press "clear" button in the "Select or type update title" search box
+    And press "Clear" button in the search field
 
   @mutable
   Scenario: TC015_03_DeloitteUser_DashboardAnalytics - Verify Update Analytics Data chart is updated after filtering
@@ -331,7 +331,7 @@ Feature: Dashboard Analytics for Deloitte User
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
     Then press "Close" button on the "Update Action" popup
-    And press "clear" button in the "Select or type update title" search box
+    And press "Clear" button in the search field
 
   @mutable
   Scenario: TC017_03_DeloitteUser_DashboardAnalytics - Verify the information displayed when selecting an Action result

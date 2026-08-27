@@ -85,10 +85,6 @@ When('search for {string} update in the {string} page', async ({ actionsDashboar
   await actionsDashboardPage.searchForUpdate(updateTitle);
 });
 
-When('press "clear" button in the "Select or type update title" search box', async ({ actionsDashboardPage }) => {
-  await actionsDashboardPage.clearUpdateSearch();
-});
-
 Then('verify {string} update is displayed in the {string} page', async ({ actionsDashboardPage }, updateTitle: string, _pageName: string) => {
   await actionsDashboardPage.verifyUpdateIsDisplayed(updateTitle);
 });

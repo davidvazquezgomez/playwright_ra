@@ -20,6 +20,7 @@
     "test:bdd:ui": "npm run bdd:generate && npx playwright test --config playwright.bdd.config.ts --ui",
     "test:bdd:ui:watch": "npm run bdd:generate && concurrently --kill-others \"chokidar \\\"features/**/*.feature\\\" -c \\\"npm run bdd:generate\\\"\" \"npx playwright test --config playwright.bdd.config.ts --ui\"",
     "test:bdd:debug": "npm run bdd:generate && npx playwright test --config playwright.bdd.config.ts --project=desktop --debug",
+    "report:test-results": "node scripts/append-test-results.js",
     "allure:enhance": "node scripts/allure-bdd-enhance.js",
     "allure:generate": "node scripts/allure-report.js generate",
     "allure:open": "node scripts/allure-report.js open",
@@ -35,6 +36,7 @@
     "allure-playwright": "^3.4.3",
     "chokidar-cli": "^3.0.0",
     "concurrently": "^10.0.4",
+    "exceljs": "^4.4.0",
     "playwright-bdd": "^9.2.0",
     "rimraf": "^6.1.2",
     "typescript": "^5.9.3"

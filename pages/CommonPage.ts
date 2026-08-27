@@ -565,6 +565,14 @@ export class CommonPage extends BasePage {
   }
 
   /**
+   * Verifies that a named application button is disabled.
+   * @param buttonName Accessible name of the button to verify.
+   */
+  async verifyButtonIsDisabled(buttonName: string): Promise<void> {
+    await expect(this.buttonByName(buttonName), `Expected "${buttonName}" button to be disabled.`).toBeDisabled();
+  }
+
+  /**
    * Verifies that every requested mandatory-field validation message is visible.
    * @param messages Semicolon-delimited mandatory-field validation messages.
    * @param pageName Page name used in assertion messages.
@@ -815,7 +823,6 @@ export class CommonPage extends BasePage {
         break;
       case "Generate Report":
       case "Generate Audit Trail":
-      case "Mark as Unread":
       case "Comment":
       case "Delete":
       case "More Filters":

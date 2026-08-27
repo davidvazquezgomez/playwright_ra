@@ -11,8 +11,6 @@ export class ActionsDashboardPage extends BasePage {
     'div[role="dialog"]:has(.k-dialog-title:text-is("Update Action"))';
   private readonly dashboardUpdateSearchInput =
     'input[placeholder="Select or type update title"][role="combobox"]';
-  private readonly dashboardUpdateSearchClearButton =
-    'kendo-autocomplete:has(input[placeholder="Select or type update title"]) .k-clear-value[title="clear"]';
   private readonly dashboardUpdateSearchResultByTitle = (title: string) =>
     this._page.getByRole('option', { name: title, exact: true }).first();
   private readonly updateActionUserAssignedDropdown =
@@ -303,16 +301,6 @@ export class ActionsDashboardPage extends BasePage {
   async searchForUpdate(updateTitle: string): Promise<void> {
     await this.fillInputText(this.dashboardUpdateSearchInput, updateTitle);
     await this.clickLocator(this.dashboardUpdateSearchResultByTitle(updateTitle));
-  }
-
-  /**
-   * Clears the selected update from the Actions Dashboard search control.
-   */
-  async clearUpdateSearch(): Promise<void> {
-    const clearButton = this._page.locator(this.dashboardUpdateSearchClearButton);
-    await expect(clearButton).toBeVisible();
-    await clearButton.click();
-    await expect(this._page.locator(this.dashboardUpdateSearchInput)).toHaveValue('');
   }
 
   /**

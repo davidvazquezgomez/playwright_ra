@@ -44,11 +44,12 @@ Feature: Dashboard Updates for Portal Admin
     When search for "Increase to Industrial Accident Insurance Contribution Rate" update from the "Global Inc - Updates Dashboard" page
     Then open the first update in the "Global Inc - Updates Dashboard" page
     And the "Increase to Industrial Accident Insurance Contribution Rate" page is displayed
-    When press "Mark as Unread" button
-    Then verify the "Mark as Unread" button is disabled
+    When press "Mark as Unread" button on the selected update
+    Then verify the "Mark as Unread" button is disabled on the selected update
     When press "Back" button
     Then the "Global Inc - Updates Dashboard - All Updates" page is displayed
     When press the "Unread Updates" subsection
+    And press "Clear" button in the search field
     Then open the first update in the "Global Inc - Updates Dashboard" page
     And press "Back" button
     And verify the "Increase to Industrial Accident Insurance Contribution Rate" update is not displayed
@@ -59,19 +60,16 @@ Feature: Dashboard Updates for Portal Admin
     When search for "Increase to Industrial Accident Insurance Contribution Rate" update from the "Global Inc - Updates Dashboard" page
     Then open the first update in the "Global Inc - Updates Dashboard" page
     When press "Edit" button on the selected update
-    Then enter "User5, External" in the "User Assigned" field
-    And select "User5, External" from the search results
+    Then select "User5, External" in the "User Assigned" field on the selected update
     And select "High" option in the "Priority" field in the "Update Details" subsection
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
-    And enter "Ben Chris" in the "Watch List" field
-    And select "Ben Chris" from the search results
+    And select "Ben Chris" in the "Watch List" field on the selected update
     When press "Save" button on the selected update
     Then verify "Regulatory update updated successfully" toast message is displayed in the "Increase to Industrial Accident Insurance Contribution Rate" page
   #Rectifico para restaurar los datos 
     When open the first update in the "Global Inc - Updates Dashboard" page
     When press "Edit" button on the selected update
-    Then enter "Emea, Celina" in the "User Assigned" field
-    And select "Emea, Celina" from the search results
+    Then select "Emea, Celina" in the "User Assigned" field on the selected update
     And select "Low" option in the "Priority" field in the "Update Details" subsection
     And select "Update Allocated" option in the "Status" field in the "Update Details" subsection
     And press "clear" in the "Watch List" field
@@ -84,12 +82,10 @@ Feature: Dashboard Updates for Portal Admin
     When search for "Increase to Industrial Accident Insurance Contribution Rate" update from the "Global Inc - Updates Dashboard" page
     Then open the first update in the "Global Inc - Updates Dashboard" page
     When press "Edit" button on the selected update
-    Then enter "User5, External" in the "User Assigned" field
-    And select "User5, External" from the search results
+    Then select "User5, External" in the "User Assigned" field on the selected update
     And select "High" option in the "Priority" field in the "Update Details" subsection
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
-    And enter "Ben Chris" in the "Watch List" field
-    And select "Ben Chris" from the search results
+    And select "Ben Chris" in the "Watch List" field on the selected update
     When press "Back" button
     Then the "Unsaved Changes" popup is displayed
     And the popup message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
@@ -106,12 +102,10 @@ Feature: Dashboard Updates for Portal Admin
     When search for "Increase to Industrial Accident Insurance Contribution Rate" update from the "Global Inc - Updates Dashboard" page
     Then open the first update in the "Global Inc - Updates Dashboard" page
     When press "Edit" button on the selected update
-    Then enter "User5, External" in the "User Assigned" field
-    And select "User5, External" from the search results
+    Then select "User5, External" in the "User Assigned" field on the selected update
     And select "High" option in the "Priority" field in the "Update Details" subsection
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
-    And enter "Ben Chris" in the "Watch List" field
-    And select "Ben Chris" from the search results
+    And select "Ben Chris" in the "Watch List" field on the selected update
     When press "Back" button
     Then the "Unsaved Changes" popup is displayed
     When press "Continue" button

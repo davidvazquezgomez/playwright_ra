@@ -8,6 +8,10 @@ Then('verify {string} update is displayed from the {string} page', async ({ upda
   await updatesDashboardPage.verifyUpdateIsDisplayed(updateTitle);
 });
 
+Then('verify the {string} update is not displayed', async ({ updatesDashboardPage }, updateTitle: string) => {
+  await updatesDashboardPage.verifyUpdateIsNotDisplayed(updateTitle);
+});
+
 When('open the first update in the {string} page', async ({ updatesDashboardPage }, _pageName: string) => {
   await updatesDashboardPage.openFirstUpdate();
 });
@@ -18,6 +22,14 @@ When('press "Edit" button on the selected update', async ({ updatesDashboardPage
 
 When('press "Save" button on the selected update', async ({ updatesDashboardPage }) => {
   await updatesDashboardPage.saveSelectedUpdate();
+});
+
+When('press "Mark as Unread" button on the selected update', async ({ updatesDashboardPage }) => {
+  await updatesDashboardPage.markSelectedUpdateAsUnread();
+});
+
+Then('verify the "Mark as Unread" button is disabled on the selected update', async ({ updatesDashboardPage }) => {
+  await updatesDashboardPage.verifyMarkAsUnreadIsDisabled();
 });
 
 When(
