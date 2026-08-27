@@ -89,7 +89,7 @@ Feature: Dashboard Options for Client User
     When press "Dashboard Options" button
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Audit Trail" is displayed in the Dashboard Options popup
-    When click on "Generate Audit Trail" option from the Dashboard options
+    When click on "Generate Audit Trail" option from the "Dashboard Options" popup
     Then verify the "Update allocated to responsible person;User added to Update Watchlist;User removed from Update Watchlist;Update status changed;Update priority changed;Action added;User added to Action;User removed from Action;Action status Changed;Action priority Changed" audit trail change area parameters are displayed
     When select different audit trail parameters
     And press "Generate Audit Trail" button
@@ -108,7 +108,7 @@ Feature: Dashboard Options for Client User
     Then verify the data is updated to show the applied filter records in the "Updates" dashboard
     When press "Dashboard Options" button
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
-    When click on "Generate Audit Trail" option from the Dashboard options
+    When click on "Generate Audit Trail" option from the "Dashboard Options" popup
     And press "Generate Audit Trail" button
     Then verify the notification area displays the report generation status
     And verify the downloaded file name format is "ClientPortal_20260213081718_AuditTrail_Report_" with current date and time
@@ -123,7 +123,7 @@ Feature: Dashboard Options for Client User
     When press "Dashboard Options" button
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Audit Trail" is displayed in the Dashboard Options popup
-    When click on "Generate Audit Trail" option from the Dashboard options
+    When click on "Generate Audit Trail" option from the "Dashboard Options" popup
     Then verify the "Update allocated to responsible person;User added to Update Watchlist;User removed from Update Watchlist;Update status changed;Update priority changed;Action added;User added to Action;User removed from Action;Action status Changed;Action priority Changed" audit trail change area parameters are displayed
     When select different audit trail parameters
     And press "Generate Audit Trail" button
