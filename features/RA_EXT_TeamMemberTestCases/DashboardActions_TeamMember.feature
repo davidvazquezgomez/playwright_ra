@@ -146,7 +146,7 @@ Feature: Dashboard Actions for Team Member
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    And double-click "Test_TeamMember" option on the Dashboard filter
+    And double-click "Test_TeamMember_4" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
     And search for "LINK TEST 3" update in the "01_QA_StageTestPortal - Actions Dashboard" page
     Then verify "LINK TEST 3" update is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page

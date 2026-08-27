@@ -51,7 +51,7 @@ Feature: Dashboard Analytics for Team Member
     And register cleanup to remove saved filter "QaTest" from "01_QA_StageTestPortal - Analytics Dashboard - Update Analytics"
     When press "Filter" button on the Dashboard filter
     Then verify the "Saved Filters;My Updates;Knowledge Module;Jurisdiction;Impact Areas;Priority;Status" option is displayed in the Dashboard filter
-    When select "Updated Allocated" in the "Status" filter on the Dashboard filter
+    When select "Update Allocated" in the "Status" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify the "Name Filter" modal is displayed on the Dashboard filter
     And press "Save filter" button on the Dashboard filter

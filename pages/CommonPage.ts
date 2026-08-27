@@ -246,6 +246,8 @@ export class CommonPage extends BasePage {
       'Automatic Allocation of Updates - 01_QA_StageTestPortal': '/allocation/415',
       'Automatic Allocation Setup - 01_QA_StageTestPortal': '/allocation-setup/415',
       '01_QA_StageTestPortal - Updates Dashboard - All Updates': '/project-dashboard/415/Updates/AllUpdates/All',
+      '01_QA_StageTestPortal - Analytics Dashboard - Update Analytics': '/project-dashboard/415/Analytics/UpdateAnalytics/All',
+      '01_QA_StageTestPortal - Analytics Dashboard - Action Analytics': '/project-dashboard/415/Analytics/ActionsAnalytics/All',
       '01_QA_StageTestPortal - Actions Dashboard': '/project-dashboard/415/Actions/AllActions/All',
 
       // 01_QA_ClientPortalSetup (portal 616; used by DeloitteUser, PortalAdmin, and SuperAdmin)
@@ -258,6 +260,8 @@ export class CommonPage extends BasePage {
       'Automatic Allocation of Updates - ClientPortal_20260209133616': '/allocation/540',
       'Automatic Allocation Setup - ClientPortal_20260209133616': '/allocation-setup/540',
       'ClientPortal_20260209133616 - Updates Dashboard - All Updates': '/project-dashboard/540/Updates/AllUpdates/All',
+      'ClientPortal_20260209133616 - Analytics Dashboard - Update Analytics': '/project-dashboard/540/Analytics/UpdateAnalytics/All',
+      'ClientPortal_20260209133616 - Analytics Dashboard - Action Analytics': '/project-dashboard/540/Analytics/ActionsAnalytics/All',
       'ClientPortal_20260209133616 - Actions Dashboard': '/project-dashboard/540/Actions/AllActions/All',
 
       // ClientPortal_20260212191012 (portal 548; used by TeamLeader and TeamMember)

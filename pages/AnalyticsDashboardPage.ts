@@ -2,6 +2,7 @@ import { expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class AnalyticsDashboardPage extends BasePage {
+    private readonly chartRefreshTimeout = 60000;
     private readonly chartPanelByTitle = (chartTitle: string) =>
         this._page.locator('.stats-panel').filter({
             has: this._page.locator('.donut-header').getByText(chartTitle, { exact: true }),
@@ -208,6 +209,18 @@ export class AnalyticsDashboardPage extends BasePage {
         expectedValues: Record<string, number>,
         shouldMatch: boolean,
     ): Promise<void> {
+        if (!shouldMatch) {
+            await expect.poll(
+                async () => JSON.stringify(await this.getChartValues(chartTitle)),
+                {
+                    message: `Waiting for chart "${chartTitle}" to refresh after applying the filter.`,
+                    timeout: this.chartRefreshTimeout,
+                    intervals: [250, 500, 1000],
+                },
+            ).not.toBe(JSON.stringify(expectedValues));
+            return;
+        }
+
         const currentValues = await this.getChartValues(chartTitle);
         const valuesMatch = JSON.stringify(currentValues) === JSON.stringify(expectedValues);
 
