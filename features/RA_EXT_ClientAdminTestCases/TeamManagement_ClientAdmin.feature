@@ -38,7 +38,7 @@ Feature: Team Management for Client Admin
     And enter "Additional information for the QA team" in the "Additional Information" field
     And add "TeamLeaderRA@outlook.com" in the "Team Leader" field
     And open the Add Team Members dialog
-    And add "TeamMemberRA@outlook.com" on the "Search user" field
+    And select "TeamMemberRA@outlook.com" option in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
     Then verify the "TeamMemberRA@outlook.com" Team Member is added to the team member table
     When click on "Home" option from the left navigation

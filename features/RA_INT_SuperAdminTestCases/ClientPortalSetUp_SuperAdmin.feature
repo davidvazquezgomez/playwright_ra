@@ -74,7 +74,7 @@ Feature: Client Portal Setup for Super Admin
     When click on "Home" option from the left navigation
     And select "Enabled" in the "Status" filter on the "Client Portal List" page
     And click on the "01_QA_ClientPortalSetup" client portal name in the client portal listing
-    And press "Open Dashboard" button for the "01_QA_ClientPortalSetup" client portal
+    When press "Open Dashboard" button
     And press "Actions" button
     Then verify the "Add Action" button is "<expectedAddActionState>"
     And logout from the application

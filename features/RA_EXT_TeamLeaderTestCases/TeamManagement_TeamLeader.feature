@@ -51,7 +51,7 @@ Feature: Team Management for Team Leader
     When save the team from the "Create/Edit Team" page
     Then verify the success message is displayed after saving the team
     When click on "Edit" icon for the team
-    And click on "Leave Team"
+    When press "Leave Team" button
     Then confirm the leave action in the confirmation pop up
     Then verify the user is removed from the team (or appropriate confirmation is shown)
     And logout from the application

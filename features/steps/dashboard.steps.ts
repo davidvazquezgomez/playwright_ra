@@ -242,6 +242,6 @@ Then('verify all filters are reset to their default values on the Dashboard filt
 });
 
 
-Then('click on {string} option from the {string} popup', async ({ dashboardPage }, option: string, popupName: string) => {
+When('click on {string} option from the {string} popup', async ({ dashboardPage }, option: string, popupName: string) => {
     await dashboardPage.clickButton(option, popupName);
 });
