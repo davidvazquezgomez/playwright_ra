@@ -11,7 +11,7 @@ Feature: Dashboard Options for Team Member
     Then the "Overview" page is displayed
     And verify for client portal name "ClientPortal_20260212191012"
     When press "Open Dashboard" button
-    Then verify the page is redirected to Updates Dashboard
+    Then the "Updates Dashboard" page is displayed
     When press "Dashboard Options" button
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Report" is displayed in the Dashboard Options popup
@@ -85,7 +85,7 @@ Feature: Dashboard Options for Team Member
   @mutable
   Scenario: TC020_01_TeamMember_DashboardOptions - Generate an unfiltered Updates audit trail
     Given the "Updates Dashboard - ClientPortal_20260212191012" page is open
-    Then verify the page is redirected to "Updates Dashboard"
+    Then the "Updates Dashboard" page is displayed
     When press "Dashboard Options" button
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Audit Trail" is displayed in the Dashboard Options popup

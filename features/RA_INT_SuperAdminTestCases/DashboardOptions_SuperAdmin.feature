@@ -5,13 +5,13 @@ Feature: Dashboard Options for Super Admin
     Given launch Regulatory Advantage application URL and login as "deloitte" user "SUPERADMIN"
     And verify if applicable portals are displayed
 
-@mutable
-Scenario: TC019_01_SuperAdmin_DashboardOptions - Generate an unfiltered Updates report
+  @mutable
+  Scenario: TC019_01_SuperAdmin_DashboardOptions - Generate an unfiltered Updates report
     When click on "01_13Jan REG" of the portals
     Then the "Overview" page is displayed
     And verify for client portal name "01_13Jan REG"
     When press "Open Dashboard" button
-    Then verify the page is redirected to Updates Dashboard
+    Then the "Updates Dashboard" page is displayed
     When press "Dashboard Options" button
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Report" is displayed in the Dashboard Options popup
@@ -25,8 +25,8 @@ Scenario: TC019_01_SuperAdmin_DashboardOptions - Generate an unfiltered Updates 
     When read the downloaded excel file content
     Then verify the excel file contains the "Title;AnnouncementDateDisplay;EffectiveDateDisplay;LastUpdated;Priority;Status;Jurisdiction;ImpactArea" column headers
 
-@readOnly
-Scenario: TC019_02_SuperAdmin_DashboardOptions - Generate a filtered Updates report
+  @readOnly
+  Scenario: TC019_02_SuperAdmin_DashboardOptions - Generate a filtered Updates report
     Given the "Updates Dashboard - 01_13Jan REG" page is open
     When press "Filter" button on the Dashboard filter
     And select "Belgium" in the "Jurisdiction" filter on the Dashboard filter
@@ -47,8 +47,8 @@ Scenario: TC019_02_SuperAdmin_DashboardOptions - Generate a filtered Updates rep
     Then verify the excel file contains the "Title;AnnouncementDateDisplay;EffectiveDateDisplay;LastUpdated;Priority;Status;Jurisdiction;ImpactArea" column headers
     And verify the report is generated with the same filters and options applied in the "Updates" dashboard
 
-@mutable
-Scenario: TC019_03_SuperAdmin_DashboardOptions - Generate an unfiltered Actions report
+  @mutable
+  Scenario: TC019_03_SuperAdmin_DashboardOptions - Generate an unfiltered Actions report
     Given the "Actions Dashboard - 01_13Jan REG" page is open
     When press "Dashboard Options" button
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
@@ -62,8 +62,8 @@ Scenario: TC019_03_SuperAdmin_DashboardOptions - Generate an unfiltered Actions 
     When read the downloaded excel file content
     Then verify the excel file contains the "UpdateTitle;Action;UserAssigned;DeadlineDate;UpdatePriority;ActionPriority;ActionStatus" column headers
 
-@readOnly
-Scenario: TC019_04_SuperAdmin_DashboardOptions - Generate a filtered Actions report
+  @readOnly
+  Scenario: TC019_04_SuperAdmin_DashboardOptions - Generate a filtered Actions report
     Given the "Actions Dashboard - 01_13Jan REG" page is open
     When press "Filter" button on the Dashboard filter
     And select "Belgium" in the "Jurisdiction" filter on the Dashboard filter
@@ -83,10 +83,10 @@ Scenario: TC019_04_SuperAdmin_DashboardOptions - Generate a filtered Actions rep
     Then verify the excel file contains the "UpdateTitle;Action;UserAssigned;DeadlineDate;UpdatePriority;ActionPriority;ActionStatus" column headers
     And verify the report is generated with the same filters and options applied in the "Actions" dashboard
 
-@mutable
-Scenario: TC020_01_SuperAdmin_DashboardOptions - Generate an unfiltered Updates audit trail
+  @mutable
+  Scenario: TC020_01_SuperAdmin_DashboardOptions - Generate an unfiltered Updates audit trail
     Given the "Updates Dashboard - 01_13Jan REG" page is open
-    Then verify the page is redirected to "Updates Dashboard"
+    Then the "Updates Dashboard" page is displayed
     When press "Dashboard Options" button
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Audit Trail" is displayed in the Dashboard Options popup
@@ -99,8 +99,8 @@ Scenario: TC020_01_SuperAdmin_DashboardOptions - Generate an unfiltered Updates 
     When read the downloaded excel file content
     Then verify the excel file contains the "Update Title;Action;Jurisdiction;Change Area;Previous Value;Current Value;Modified By;Date Modified" column headers
 
-@mutable
-Scenario: TC020_02_SuperAdmin_DashboardOptions - Generate a filtered Updates audit trail
+  @mutable
+  Scenario: TC020_02_SuperAdmin_DashboardOptions - Generate a filtered Updates audit trail
     Given the "Updates Dashboard - 01_13Jan REG" page is open
     When press "Filter" button on the Dashboard filter
     And select "Belgium" in the "Jurisdiction" filter on the Dashboard filter
@@ -117,8 +117,8 @@ Scenario: TC020_02_SuperAdmin_DashboardOptions - Generate a filtered Updates aud
     Then verify the excel file contains the "Update Title;Action;Jurisdiction;Change Area;Previous Value;Current Value;Modified By;Date Modified" column headers
     And verify the report is generated with the same filters and options applied in the "Updates" dashboard
 
-@mutable
-Scenario: TC020_03_SuperAdmin_DashboardOptions - Generate an unfiltered Actions audit trail
+  @mutable
+  Scenario: TC020_03_SuperAdmin_DashboardOptions - Generate an unfiltered Actions audit trail
     Given the "Actions Dashboard - 01_13Jan REG" page is open
     Then verify for "Dashboard Options" button is visible
     When press "Dashboard Options" button
@@ -133,8 +133,8 @@ Scenario: TC020_03_SuperAdmin_DashboardOptions - Generate an unfiltered Actions 
     When read the downloaded excel file content
     Then verify the excel file contains the "Update Title;Action;Jurisdiction;Change Area;Previous Value;Current Value;Modified By;Date Modified" column headers
 
-@mutable
-Scenario: TC020_04_SuperAdmin_DashboardOptions - Generate a filtered Actions audit trail
+  @mutable
+  Scenario: TC020_04_SuperAdmin_DashboardOptions - Generate a filtered Actions audit trail
     Given the "Actions Dashboard - 01_13Jan REG" page is open
     When press "Filter" button on the Dashboard filter
     And select "Belgium" in the "Jurisdiction" filter on the Dashboard filter
@@ -151,4 +151,3 @@ Scenario: TC020_04_SuperAdmin_DashboardOptions - Generate a filtered Actions aud
     Then verify the excel file contains the "Update Title;Action;Jurisdiction;Change Area;Previous Value;Current Value;Modified By;Date Modified" column headers
     And verify the report is generated with the same filters and options applied in the "Actions" dashboard
     When logout from the application
-
