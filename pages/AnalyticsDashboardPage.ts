@@ -6,6 +6,8 @@ export class AnalyticsDashboardPage extends BasePage {
         this._page.locator('.stats-panel').filter({
             has: this._page.locator('.donut-header').getByText(chartTitle, { exact: true }),
         });
+    private readonly chartItemsByTitle = (chartTitle: string) =>
+        this.chartPanelByTitle(chartTitle).locator('.stats-list .stat-item');
     private readonly worldMapByTitle = (mapTitle: string) =>
         this._page.locator('app-world-map').filter({ hasText: mapTitle });
     private readonly dataTableSectionByTitle = (chartTitle: string) =>
@@ -171,9 +173,11 @@ export class AnalyticsDashboardPage extends BasePage {
      */
     async getChartValues(chartTitle: string): Promise<Record<string, number>> {
         const chartPanel = this.chartPanelByTitle(chartTitle);
+        const chartItems = this.chartItemsByTitle(chartTitle);
         await expect(chartPanel).toBeVisible();
+        await expect(chartItems).not.toHaveCount(0);
 
-        const chartValues = await chartPanel.locator('.stats-list .stat-item').evaluateAll((items) =>
+        const chartValues = await chartItems.evaluateAll((items) =>
             items.map((item) => {
                 const label = item.querySelector('.stat-label')?.textContent?.trim();
                 const value = item.querySelector('.stat-value')?.textContent?.trim();
