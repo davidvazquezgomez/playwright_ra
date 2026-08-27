@@ -94,54 +94,58 @@ export class ClientPortalListPage extends BasePage {
 
   /**
    * Opens the edit page for the first client portal in the list.
+   * Restricted to administrator roles.
    */
   async editFirstClientPortal(): Promise<void> {
-    await this.ensureKendoGridHasRows(
-      this.clientPortalTable,
-      'The Client Portal List must contain a client portal before the first portal can be edited.',
-      'The Client Portal List grid was displayed before attempting to edit its first row.',
-    );
+    this.requireAdministratorRole('Click on the Edit button of the Client Portal List');
     const editButton = this._page.locator(this.firstClientPortalEditButton);
-    if (await editButton.count() === 0) {
+    const isEditButtonAvailable = await this.retryWithReload(async () => {
+      await this.ensureClientPortalListPage();
+      return await editButton.count() > 0 && await editButton.first().isVisible();
+    });
+
+    if (!isEditButtonAvailable) {
+      await this.ensureKendoGridHasRows(
+        this.clientPortalTable,
+        'The Client Portal List must contain a client portal before the first portal can be edited.',
+        'The Client Portal List grid was displayed before attempting to edit its first row.',
+      );
       this.failWithApplicationError(
         'A displayed client portal must provide the Edit action to an authorized user.',
         'The Edit Client button is displayed for the first client portal row.',
-        'The Edit Client button is not displayed for the first client portal row.',
-        'At least one Client Portal List data row is visible.',
+        'The Edit Client button is not displayed for the first client portal row after reloading the Client Portal List.',
+        `The authenticated role is "${this.getAuthenticatedRole()}" and at least one Client Portal List data row is visible.`,
       );
     }
-    await this.ensureExpectedBusinessElementIsVisible(
-      editButton,
-      'A displayed client portal must provide the Edit action to an authorized user.',
-      'The Edit Client button is displayed for the first client portal row.',
-      'At least one Client Portal List data row is visible.',
-    );
+
     await this.clickElement(this.firstClientPortalEditButton);
   }
 
   /**
    * Opens the edit page for the requested client portal.
+   * Restricted to administrator roles.
    * @param portalName Exact client portal name displayed in the Client Portal List.
    */
   async editClientPortal(portalName: string): Promise<void> {
+    this.requireAdministratorRole('Press the Edit Client button of the Client Portal List');
     const normalizedPortalName = portalName.trim();
-    await this.fillInputText(this.clientPortalNameFilter, normalizedPortalName);
-    await this.verifyClientPortalDisplayed(normalizedPortalName);
     const editButton = this._page.locator(this.editClientButtonByPortalName(normalizedPortalName));
-    if (await editButton.count() === 0) {
+    const isEditButtonAvailable = await this.retryWithReload(async () => {
+      await this.ensureClientPortalListPage();
+      await this.fillInputText(this.clientPortalNameFilter, normalizedPortalName);
+      await this.verifyClientPortalDisplayed(normalizedPortalName);
+      return await editButton.count() > 0 && await editButton.first().isVisible();
+    });
+
+    if (!isEditButtonAvailable) {
       this.failWithApplicationError(
         'A displayed client portal must provide the Edit Client action to an authorized user.',
         `The Edit Client button is displayed for client portal "${normalizedPortalName}".`,
-        `The Edit Client button is not displayed for client portal "${normalizedPortalName}".`,
-        `The Client Portal List was filtered to client portal "${normalizedPortalName}".`,
+        `The Edit Client button is not displayed for client portal "${normalizedPortalName}" after reloading the Client Portal List.`,
+        `The authenticated role is "${this.getAuthenticatedRole()}" and the Client Portal List was filtered to client portal "${normalizedPortalName}".`,
       );
     }
-    await this.ensureExpectedBusinessElementIsVisible(
-      editButton,
-      'A displayed client portal must provide the Edit Client action to an authorized user.',
-      `The Edit Client button is displayed for client portal "${normalizedPortalName}".`,
-      `The Client Portal List was filtered to client portal "${normalizedPortalName}".`,
-    );
+
     await this.clickElement(this.editClientButtonByPortalName(normalizedPortalName));
   }
 

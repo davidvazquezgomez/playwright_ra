@@ -16,6 +16,8 @@ applyTo: "features/steps/**/*.ts"
 - Refactor existing equivalent bindings from page-specific step files into `common.steps.ts`; update affected features and remove the retired bindings rather than retaining duplicate step definitions or page-specific wrappers.
 - Keep a step in a page-specific step file only when the business behavior or UI entity is unique to that page.
 - When a page-object action uses `BasePage.clickElement`, do not introduce a separate `waitForElement` for that same selector: `clickElement` performs that wait itself.
+- The login step in `common.steps.ts` calls `commonPage.recordAuthenticatedRole(rol)` before any session-reuse shortcut. Keep that call so role-restricted page-object actions can validate the current role; do not duplicate the role check in a step definition.
+- Enforce role restrictions inside the owning page object with `BasePage.requireAdministratorRole(action)`, not with conditional logic in a step definition.
 - Do not place Playwright selectors or actions in this folder.
 - Do not import `expect` from `@playwright/test` in step definitions for UI assertions.
 - Do not access `page` directly from a step definition.

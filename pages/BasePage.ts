@@ -9,10 +9,74 @@ import * as allure from 'allure-js-commons';
 export class BasePage {
   protected _page: Page;
   private context: BrowserContext;
+  // Shared across page objects because every fixture wraps the same browser page.
+  private static authenticatedRolesByPage = new WeakMap<Page, string>();
 
   constructor(page: Page, context: any) {
     this._page = page;
     this.context = context;
+  }
+
+  /**
+   * Associates the authenticated role with the current browser page so role-restricted actions can validate it.
+   * @param role Role used to log in, such as CLIENTADMIN or TEAMLEADER.
+   */
+  recordAuthenticatedRole(role: string): void {
+    BasePage.authenticatedRolesByPage.set(this._page, role.trim().toUpperCase());
+  }
+
+  /**
+   * Returns the role recorded for the current browser page.
+   */
+  protected getAuthenticatedRole(): string | undefined {
+    return BasePage.authenticatedRolesByPage.get(this._page);
+  }
+
+  /**
+   * Restricts a business action to administrator roles.
+   * @param action Business action being protected.
+   */
+  protected requireAdministratorRole(action: string): void {
+    const role = this.getAuthenticatedRole();
+    if (!role) {
+      throw new Error(
+        `"${action}" is restricted to administrator roles, but no authenticated role was recorded for this scenario. ` +
+        'Log in through the "launch Regulatory Advantage application URL and login as ... user ..." step before using it.',
+      );
+    }
+
+    if (!role.includes('ADMIN')) {
+      throw new Error(
+        `"${action}" is restricted to administrator roles. The authenticated role "${role}" is not allowed to perform it.`,
+      );
+    }
+  }
+
+  /**
+   * Retries a condition, reloading the page between attempts, until it succeeds or the attempts are exhausted.
+   * Errors raised by the condition are retried; the last attempt propagates them as technical failures.
+   * @param condition Condition evaluated on each attempt.
+   * @param attempts Maximum number of attempts, including the first one.
+   */
+  protected async retryWithReload(condition: () => Promise<boolean>, attempts: number = 3): Promise<boolean> {
+    for (let attempt = 1; attempt <= attempts; attempt++) {
+      const isLastAttempt = attempt === attempts;
+      try {
+        if (await condition()) {
+          return true;
+        }
+      } catch (error) {
+        if (isLastAttempt) {
+          throw error;
+        }
+      }
+
+      if (!isLastAttempt) {
+        await this.reload();
+      }
+    }
+
+    return false;
   }
 
   /**

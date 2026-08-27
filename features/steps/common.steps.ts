@@ -12,6 +12,7 @@ Given('launch Regulatory Advantage application URL and login as {string} user {s
   }
 
   await commonPage.launchApplication(url);
+  commonPage.recordAuthenticatedRole(rol);
 
   if (authSession.shouldSkipInitialLogin(normalizedUserType, rol)) {
     await commonPage.dismissCookieConsent();
