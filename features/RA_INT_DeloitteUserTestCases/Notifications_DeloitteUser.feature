@@ -6,19 +6,6 @@ Feature: Notifications for Deloitte User
     Then the "Client Portal List" page is displayed
     And verify if applicable portals are displayed
 
-  @mutable
-  Scenario: TC001_DeloitteUser_Notifications - Verify that when you access notification preferences by clicking the Edit button, the available frequency sections are displayed
-    When click on "Edit" button on one of the portals list
-    When press "Save & Continue" button on the "Client Portal Setup" page
-    Then the "Knowledge Modules & Impact Areas" page is displayed
-    When press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page
-    Then the "Jurisdictions selection" page is displayed
-    When press "Set Notifications Preferences" button
-    Then the "Default Notifications Settings" page is displayed
-    And verify "Periodic Summary Emails" section is available
-    And verify "Frequency" section is visible with radio button options for the following "Daily; Weekly; Every 2 weeks; Quarterly"
-    And verify "Updates" section is visible with notification options for the following "Set as responsible person; Changes to Update Status (where on the team); Changes to Update Priority (where on the team); Update now within 30 days of effective date and not yet closed; Update now within 7 days of effective date and not yet closed; Update becomes effective today and not yet closed"
-
   @readOnly
   Scenario: TC001_2_DeloitteUser_Notifications - Verify Notifications Preferences has Actions and Teams Sections Available
     Given the "Notification Preferences" page is open
@@ -67,24 +54,6 @@ Feature: Notifications for Deloitte User
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
 
   @mutable
-  Scenario: TC003_1_DeloitteUser_Notifications - Verify enable Notifications Preferences for updates
-    When press "Edit Client" button for the "01_QA_ClientPortalSetup" client portal
-    Then the "Client Portal Setup" page is displayed
-    When press "Save & Continue" button on the "Client Portal Setup" page
-    Then the "Knowledge Modules & Impact Areas" page is displayed
-    When press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page
-    Then the "Jurisdictions selection" page is displayed
-    When press "Set Notifications Preferences" button
-    Then the "Default Notifications Settings" page is displayed
-    When check "Select All" Check box under "System" option from "Updates" section if it is "unchecked"
-    And check "Select All" Check box under "Email" option from "Updates" section if it is "unchecked"
-    And check "Select All" Check box under "Lock Settings" option from "Updates" section if it is "unchecked"
-    When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
-    Then select the frequency option "Daily" located under "Periodic Summary of Updates and Actions via email?" section
-    When press "Update Portal" button
-    Then verify "01_QA_ClientPortalSetup" toast message is displayed in the "Client Portal List" page
-
-  @mutable
   Scenario: TC003_2_DeloitteUser_Notifications - Verify triggered notifications for updates
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
@@ -112,23 +81,6 @@ Feature: Notifications for Deloitte User
     And verify the Systems notifications triggered
 
   @mutable
-  Scenario: TC003_3_DeloitteUser_Notifications - Verify disabled Notifications Preferences for Updates
-    When press "Edit Client" button for the "01_QA_ClientPortalSetup " client portal
-    Then the "Client Portal Setup" page is displayed
-    When press "Save & Continue" button on the "Client Portal Setup" page
-    Then the "Knowledge Modules & Impact Areas" page is displayed
-    When press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page
-    Then the "Jurisdictions selection" page is displayed
-    When press "Set Notifications Preferences" button
-    Then the "Default Notifications Settings" page is displayed
-    When check "Select All" Check box under "System" option from "Updates" section if it is "checked"
-    And check "Select All" Check box under "Email" option from "Updates" section if it is "checked"
-    And check "Select All" Check box under "Lock Settings" option from "Updates" section if it is "checked"
-    And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
-    When press "Update Portal" button
-    Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
-
-  @mutable
   Scenario: TC003_4_DeloitteUser_Notifications - Verify triggered notifications for updates
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
@@ -146,22 +98,6 @@ Feature: Notifications for Deloitte User
     When press "View All" button
     Then the "Notification Listing" page is displayed
     And verify there are no system notifications
-
-  @mutable
-  Scenario: TC004_1_DeloitteUser_Notifications - Verify enable Notifications Preferences for actions
-    When press "Edit Client" button for the "01_QA_ClientPortalSetup" client portal
-    When press "Save & Continue" button on the "Client Portal Setup" page
-    Then the "Knowledge Modules & Impact Areas" page is displayed
-    When press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page
-    Then the "Jurisdictions selection" page is displayed
-    When press "Set Notifications Preferences" button
-    Then the "Default Notifications Settings" page is displayed
-    When check "Select All" Check box under "System" option from "Actions" section if it is "unchecked"
-    And check "Select All" Check box under "Email" option from "Actions" section if it is "unchecked"
-    And check "Select All" Check box under "Lock Settings" option from "Actions" section if it is "unchecked"
-    And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
-    When press "Update Portal" button
-    Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC004_2_DeloitteUser_Notifications - Verify triggered notifications for actions
@@ -190,23 +126,6 @@ Feature: Notifications for Deloitte User
     And verify the Systems notifications triggered
 
   @mutable
-  Scenario: TC004_3_DeloitteUser_Notifications - Verify disabled Notifications Preferences for Actions
-    When press "Edit Client" button for the "01_QA_ClientPortalSetup " client portal
-    Then the "Client Portal Setup" page is displayed
-    When press "Save & Continue" button on the "Client Portal Setup" page
-    Then the "Knowledge Modules & Impact Areas" page is displayed
-    When press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page
-    Then the "Jurisdictions selection" page is displayed
-    When press "Set Notifications Preferences" button
-    Then the "Default Notifications Settings" page is displayed
-    When check "Select All" Check box under "System" option from "Actions" section if it is "checked"
-    And check "Select All" Check box under "Email" option from "Actions" section if it is "checked"
-    And check "Select All" Check box under "Lock Settings" option from "Actions" section if it is "checked"
-    And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
-    When press "Update Portal" button
-    Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
-
-  @mutable
   Scenario: TC004_4_DeloitteUser_Notifications - Verify triggered notifications for updates
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
@@ -224,22 +143,6 @@ Feature: Notifications for Deloitte User
     When press "View All" button
     Then the "Notification Listing" page is displayed
     And verify there are no system notifications
-
-  @mutable
-  Scenario: TC005_1_DeloitteUser_Notifications - Verify enable Notifications Preferences for teams
-    When press "Edit Client" button for the "01_QA_ClientPortalSetup" client portal
-    When press "Save & Continue" button on the "Client Portal Setup" page
-    Then the "Knowledge Modules & Impact Areas" page is displayed
-    When press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page
-    Then the "Jurisdictions selection" page is displayed
-    When press "Set Notifications Preferences" button
-    Then the "Default Notifications Settings" page is displayed
-    When check "Select All" Check box under "System" option from "Teams" section if it is "unchecked"
-    And check "Select All" Check box under "Email" option from "Teams" section if it is "unchecked"
-    And check "Select All" Check box under "Lock Settings" option from "Teams" section if it is "unchecked"
-    And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
-    When press "Update Portal" button
-    Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC005_2_DeloitteUser_Notifications - Verify triggered notifications for teams
@@ -269,23 +172,6 @@ Feature: Notifications for Deloitte User
     When press "View All" button
     Then the "Notification Listing" page is displayed
     And verify the Systems notifications triggered
-
-  @mutable
-  Scenario: TC005_3_DeloitteUser_Notifications - Verify disabled Notifications Preferences for Teams
-    When press "Edit Client" button for the "01_QA_ClientPortalSetup " client portal
-    Then the "Client Portal Setup" page is displayed
-    When press "Save & Continue" button on the "Client Portal Setup" page
-    Then the "Knowledge Modules & Impact Areas" page is displayed
-    When press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page
-    Then the "Jurisdictions selection" page is displayed
-    When press "Set Notifications Preferences" button
-    Then the "Default Notifications Settings" page is displayed
-    When check "Select All" Check box under "System" option from "Teams" section if it is "checked"
-    And check "Select All" Check box under "Email" option from "Teams" section if it is "checked"
-    And check "Select All" Check box under "Lock Settings" option from "Teams" section if it is "checked"
-    And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
-    When press "Update Portal" button
-    Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC005_4_DeloitteUser_Notifications - Verify triggered notifications for teams

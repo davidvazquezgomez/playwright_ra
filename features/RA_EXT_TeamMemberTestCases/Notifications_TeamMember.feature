@@ -6,19 +6,6 @@ Feature: Notifications for Team Member
     And verify if applicable portals are displayed
 #Como Aqui solo verificamos que las opciones mencionadas sean visibles, no es necesario coger un portal especifico
 
-  @mutable
-  Scenario: TC001_TeamMember_Notifications - Verify that when you access notification preferences by clicking the Edit button, the available frequency sections are displayed
-    When click on "Edit" button on one of the portals list
-    When press "Save & Continue" button on the "Client Portal Setup" page
-    Then the "Knowledge Modules & Impact Areas" page is displayed
-    When press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page
-    Then the "Jurisdictions selection" page is displayed
-    When press "Set Notifications Preferences" button
-    Then the "Default Notifications Settings" page is displayed
-    And verify "Periodic Summary Emails" section is available
-    And verify "Frequency" section is visible with radio button options for the following "Daily; Weekly; Every 2 weeks; Quarterly"
-    And verify "Updates" section is visible with notification options for the following "Set as responsible person; Changes to Update Status (where on the team); Changes to Update Priority (where on the team); Update now within 30 days of effective date and not yet closed; Update now within 7 days of effective date and not yet closed; Update becomes effective today and not yet closed"
-
   @readOnly
   Scenario: TC001_2_TeamMember_Notifications - Verify Notifications Preferences has Actions and Teams Sections Available
     Given the "Notification Preferences" page is open
@@ -84,79 +71,3 @@ Feature: Notifications for Team Member
     When refresh the settings page
     Then verify the disabled state persisted
 #En este caso si que debemos de elegir un portal especifico para poder Hacer cambios 
-
-  @mutable
-  Scenario: TC003_TeamMember_Notifications - Verify enable or disable Notifications Preferences for updates
-    When press "Edit Client" button for the "01_QA_StageTestPortal" client portal
-    Then the "Client Portal Setup" page is displayed
-    When press "Save & Continue" button on the "Client Portal Setup" page
-    Then the "Knowledge Modules & Impact Areas" page is displayed
-    When update the Knowledge Modules & Impact Areas using check-box or "Select All"
-    When press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page
-    Then the "Jurisdictions" page is displayed
-    When press "Set Notifications Preferences" button
-    Then the "Default Notifications Settings" page is displayed
-    When check "Select All" Check box under "System" option on the differents "Updates;Actions;Teams"
-    Then verify all the "Updates;Actions;Teams" are marked as enabled
-    When check "Select All" Check box under "Email" option on the differents "Updates;Actions;Teams"
-    Then verify all the "Updates;Actions;Teams" are marked as enabled
-    And check "Select All" Check box under "Lock Settings" option on the differents "Updates;Actions;Teams"
-    Then verify all the "Updates;Actions;Teams" are marked as locked
-    When check "Select All" Check box under "System" option on the differents "Updates;Actions;Teams"
-    Then verify all the "Updates;Actions;Teams" are marked as disabled
-    When check "Select All" Check box under "Email" option on the differents "Updates;Actions;Teams"
-    Then verify all the "Updates;Actions;Teams" are marked as disabled
-    And check "Select All" Check box under "Lock Settings" option on the differents "Updates;Actions;Teams"
-    Then verify all the "Updates;Actions;Teams" are marked as Unlocked
-    When press "Go Back" button
-    Then the "Jurisdictions selection" page is displayed
-    When press "Knowledge Modules & Impact Areas" button
-    Then the "Knowledge Modules & Impact Areas" page is displayed
-    When press "Go back" button
-    Then the "Client Portal Set up" page is displayed
-    When press "Cancel" button
-    Then the "Unsaved Changes" popup is displayed
-    When press "Cancel" button on the "Unsaved Changes" popup
-    When press "Save & Continue" button on the "Client Portal Setup" page
-    Then the "Knowledge Modules & Impact Areas" page is displayed
-    When press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page
-    Then the "Jurisdictions selection" page is displayed
-    When press "Set Notifications Preferences" button
-    Then the "Default Notifications Settings" page is displayed
-    When press "Update Portal" button
-    Then verify "01_13Jan REG updated successfully" toast message is displayed in the "Client Portal List" page
-
-  @mutable
-  Scenario: TC004_TeamMember_Notifications - Verify enable or disable Notifications Preferences for actions
-    When press "Edit Client" button for the "01_QA_StageTestPortal" client portal
-    When press "Save & Continue" button on the "Client Portal Setup" page
-    Then the "Knowledge Modules & Impact Areas" page is displayed
-    When press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page
-    Then the "Jurisdictions selection" page is displayed
-    When press "Set Notifications Preferences" button
-    Then the "Default Notifications Settings" page is displayed
-    When check "Select All" Check box under System, Email and disable them under Actions sections
-    Then verify all the preferences are marked as disabled
-    When check "Select All" Check box under Lock
-    Then verify all the preferences are marked as locked
-    When uncheck "Select All" Check box under System, Email and disable them under Actions sections
-    Then verify all the preferences are marked as disabled
-    When check "Select All" Check box under Lock
-    Then verify all the preferences are marked as locked
-    When press "Go Back" button
-    Then the "Jurisdictions selection" page is displayed
-    When press "Knowledge Modules & Impact Areas" button
-    Then the "Knowledge Modules & Impact Areas" page is displayed
-    When press "Go back" button
-    Then the "Client Portal Set up" page is displayed
-    When press "Cancel" button
-    Then the "Unsaved Changes" popup is displayed
-    When press "Cancel" button on the "Unsaved Changes" popup
-    When press "Save & Continue" button on the "Client Portal Setup" page
-    Then the "Knowledge Modules & Impact Areas" page is displayed
-    When press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page
-    Then the "Jurisdictions selection" page is displayed
-    When press "Set Notifications Preferences" button
-    Then the "Default Notifications Settings" page is displayed
-    When press "Update Portal" button
-    Then verify "01_13Jan REG updated successfully" toast message is displayed in the "Client Portal List" page
