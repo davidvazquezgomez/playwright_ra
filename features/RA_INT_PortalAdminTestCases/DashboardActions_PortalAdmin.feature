@@ -186,12 +186,12 @@ Feature: Dashboard Actions for Portal Admin
     And verify "Test Action" action is not displayed in the "Global Inc - Actions Dashboard" page
 
     Examples:
-      | invalid extension | file path                  | expected message | name             |
-      | xls               | test-data/valid.xls        |                  | valid.xls        |
-      | jpg               | test-data/invalid.jpg      |                  | invalid.jpg      |
-      | csv               | test-data/invalid.csv      |                  | invalid.csv      |
-      | txt               | test-data/invalid.txt      |                  | invalid.txt      |
-      | xlsx              | test-data/Fichero94MB.xlsx |                  | Fichero94MB.xlsx |
+      | invalid extension | file path                  | expected message                                                         | name             |
+      | xls               | test-data/valid.xls        | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx.  | valid.xls        |
+      | jpg               | test-data/invalid.jpg      | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.jpg      |
+      | csv               | test-data/invalid.csv      | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.csv      |
+      | txt               | test-data/invalid.txt      | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.txt      |
+      | xlsx              | test-data/Fichero94MB.xlsx | Invalid file type \\".xlsx\\". Allowed types: pdf, xlsx, svg, png, docx. | Fichero94MB.xlsx |
 
   @mutable
   Scenario: TC011_01_PortalAdmin_DashboardActions - Verify adding an action from the update details page
@@ -332,12 +332,12 @@ Feature: Dashboard Actions for Portal Admin
     And verify "<name>" attachment is not displayed in the "Update Action" popup
 
     Examples:
-      | invalid extension | file path                  | expected message | name             |
-      | xls               | test-data/valid.xls        |                  | valid.xls        |
-      | jpg               | test-data/invalid.jpg      |                  | invalid.jpg      |
-      | csv               | test-data/invalid.csv      |                  | invalid.csv      |
-      | txt               | test-data/invalid.txt      |                  | invalid.txt      |
-      | xlsx              | test-data/Fichero94MB.xlsx |                  | Fichero94MB.xlsx |
+      | invalid extension | file path                  | expected message                                                         | name             |
+      | xls               | test-data/valid.xls        | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx.  | valid.xls        |
+      | jpg               | test-data/invalid.jpg      | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.jpg      |
+      | csv               | test-data/invalid.csv      | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.csv      |
+      | txt               | test-data/invalid.txt      | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.txt      |
+      | xlsx              | test-data/Fichero94MB.xlsx | Invalid file type \\".xlsx\\". Allowed types: pdf, xlsx, svg, png, docx. | Fichero94MB.xlsx |
 
   @readOnly
   Scenario Outline: TC012_01_PortalAdmin_DashboardActions - Verify filtering the actions dashboard by

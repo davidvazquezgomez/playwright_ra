@@ -161,12 +161,12 @@ Feature: Dashboard Updates for Portal Admin
     Then verify the attachment is not displayed in the "Attachments" section
 
     Examples:
-      | invalid extension | file path                  | expected message |
-      | xls               | test-data/valid.xls        |                  |
-      | jpg               | test-data/invalid.jpg      |                  |
-      | csv               | test-data/invalid.csv      |                  |
-      | txt               | test-data/invalid.txt      |                  |
-      | xlsx              | test-data/Fichero94MB.xlsx |                  |
+      | invalid extension | file path                  | expected message                                                         | name             |
+      | xls               | test-data/valid.xls        | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx.  | valid.xls        |
+      | jpg               | test-data/invalid.jpg      | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.jpg      |
+      | csv               | test-data/invalid.csv      | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.csv      |
+      | txt               | test-data/invalid.txt      | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.txt      |
+      | xlsx              | test-data/Fichero94MB.xlsx | Invalid file type \\".xlsx\\". Allowed types: pdf, xlsx, svg, png, docx. | Fichero94MB.xlsx |
 
   @readOnly
   Scenario: TC006_01_PortalAdmin_DashboardUpdates - Reset the filter

@@ -185,14 +185,13 @@ Feature: Dashboard Actions for Team Leader
     Then verify "Action updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     And verify "Test Action" action is not displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
 
-    Examples:
-      | invalid extension | file path                  | expected message | name             |
-      | xls               | test-data/valid.xls        |                  | valid.xls        |
-      | jpg               | test-data/invalid.jpg      |                  | invalid.jpg      |
-      | csv               | test-data/invalid.csv      |                  | invalid.csv      |
-      | txt               | test-data/invalid.txt      |                  | invalid.txt      |
-      | xlsx              | test-data/Fichero94MB.xlsx |                  | Fichero94MB.xlsx |
-
+   Examples:
+      | invalid extension | file path                  | expected message                                                         | name             |
+      | xls               | test-data/valid.xls        | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx.  | valid.xls        |
+      | jpg               | test-data/invalid.jpg      | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.jpg      |
+      | csv               | test-data/invalid.csv      | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.csv      |
+      | txt               | test-data/invalid.txt      | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.txt      |
+      | xlsx              | test-data/Fichero94MB.xlsx | Invalid file type \\".xlsx\\". Allowed types: pdf, xlsx, svg, png, docx. | Fichero94MB.xlsx |
   @mutable
   Scenario: TC011_01_TeamLeader_DashboardActions - Verify adding an action from the update details page
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
@@ -336,14 +335,13 @@ Feature: Dashboard Actions for Team Leader
     Then a message should get displayed as "<expected message>"
     And verify "<name>" attachment is not displayed in the "Update Action" popup
 
-    Examples:
-      | invalid extension | file path                  | expected message | name             |
-      | xls               | test-data/valid.xls        |                  | valid.xls        |
-      | jpg               | test-data/invalid.jpg      |                  | invalid.jpg      |
-      | csv               | test-data/invalid.csv      |                  | invalid.csv      |
-      | txt               | test-data/invalid.txt      |                  | invalid.txt      |
-      | xlsx              | test-data/Fichero94MB.xlsx |                  | Fichero94MB.xlsx |
-
+     Examples:
+      | invalid extension | file path                  | expected message                                                         | name             |
+      | xls               | test-data/valid.xls        | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx.  | valid.xls        |
+      | jpg               | test-data/invalid.jpg      | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.jpg      |
+      | csv               | test-data/invalid.csv      | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.csv      |
+      | txt               | test-data/invalid.txt      | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.txt      |
+      | xlsx              | test-data/Fichero94MB.xlsx | Invalid file type \\".xlsx\\". Allowed types: pdf, xlsx, svg, png, docx. | Fichero94MB.xlsx |
   @readOnly
   Scenario Outline: TC012_01_TeamLeader_DashboardActions - Verify filtering the 01_QA_StageTestPortal - Actions Dashboard by
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open

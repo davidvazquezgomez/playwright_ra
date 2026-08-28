@@ -124,6 +124,7 @@ Feature: Dashboard Actions for Deloitte User
 
   @mutable
   Scenario: TC010_04_DeloitteUser_DashboardActions - Verify adding a comment to an action
+  #Nuevo Filtro Añadido
     Given the "Actions Dashboard - QA_Test client3" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
@@ -144,6 +145,7 @@ Feature: Dashboard Actions for Deloitte User
 
   @mutable
   Scenario: TC010_05_DeloitteUser_DashboardActions - Verify uploading an attachment to an action
+    #Nuevo Filtro añadido
     Given the "Actions Dashboard - QA_Test client3" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
@@ -171,7 +173,7 @@ Feature: Dashboard Actions for Deloitte User
     Given the "Actions Dashboard - QA_Test client3" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    And double-click "SelectAll_Test_1784288008539" option on the Dashboard filter
+    And double-click "test_portaladmin" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
     And search for "Migration_test" update in the "QA_Test client3 - Actions Dashboard" page
     When click on the first action in the "QA_Test client3 - Actions Dashboard" page
@@ -186,12 +188,12 @@ Feature: Dashboard Actions for Deloitte User
     And verify "Test Action" action is not displayed in the "QA_Test client3 - Actions Dashboard" page
 
     Examples:
-      | invalid extension | file path                  | expected message | name             |
-      | xls               | test-data/valid.xls        |                  | valid.xls        |
-      | jpg               | test-data/invalid.jpg      |                  | invalid.jpg      |
-      | csv               | test-data/invalid.csv      |                  | invalid.csv      |
-      | txt               | test-data/invalid.txt      |                  | invalid.txt      |
-      | xlsx              | test-data/Fichero94MB.xlsx |                  | Fichero94MB.xlsx |
+      | invalid extension | file path                  | expected message                                                         | name             |
+      | xls               | test-data/valid.xls        | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx.  | valid.xls        |
+      | jpg               | test-data/invalid.jpg      | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.jpg      |
+      | csv               | test-data/invalid.csv      | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.csv      |
+      | txt               | test-data/invalid.txt      | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.txt      |
+      | xlsx              | test-data/Fichero94MB.xlsx | Invalid file type \\".xlsx\\". Allowed types: pdf, xlsx, svg, png, docx. | Fichero94MB.xlsx |
 
   @mutable
   Scenario: TC011_01_DeloitteUser_DashboardActions - Verify adding an action from the update details page
@@ -332,12 +334,12 @@ Feature: Dashboard Actions for Deloitte User
     And verify "<name>" attachment is not displayed in the "Update Action" popup
 
     Examples:
-      | invalid extension | file path                  | expected message | name             |
-      | xls               | test-data/valid.xls        |                  | valid.xls        |
-      | jpg               | test-data/invalid.jpg      |                  | invalid.jpg      |
-      | csv               | test-data/invalid.csv      |                  | invalid.csv      |
-      | txt               | test-data/invalid.txt      |                  | invalid.txt      |
-      | xlsx              | test-data/Fichero94MB.xlsx |                  | Fichero94MB.xlsx |
+      | invalid extension | file path                  | expected message                                                         | name             |
+      | xls               | test-data/valid.xls        | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx.  | valid.xls        |
+      | jpg               | test-data/invalid.jpg      | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.jpg      |
+      | csv               | test-data/invalid.csv      | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.csv      |
+      | txt               | test-data/invalid.txt      | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.txt      |
+      | xlsx              | test-data/Fichero94MB.xlsx | Invalid file type \\".xlsx\\". Allowed types: pdf, xlsx, svg, png, docx. | Fichero94MB.xlsx |
 
   @readOnly
   Scenario Outline: TC012_01_DeloitteUser_DashboardActions - Verify filtering the actions dashboard by
