@@ -124,6 +124,10 @@ When('press "Edit" button on the Dashboard filter', async ({ dashboardPage }) =>
     await dashboardPage.editDashboardFilters();
 });
 
+When('press "Edit filter" button for {string} on the Dashboard filter', async ({ dashboardPage }, filterName: string) => {
+    await dashboardPage.editSavedFilter(filterName);
+});
+
 When('remove saved filter {string} if it exists on the Dashboard filter', async ({ dashboardPage }, filterName: string) => {
     await dashboardPage.removeSavedFilterIfExists(filterName);
 });

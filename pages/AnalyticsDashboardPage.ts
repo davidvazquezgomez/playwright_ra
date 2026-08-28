@@ -45,11 +45,12 @@ export class AnalyticsDashboardPage extends BasePage {
     }
 
     /**
-     * Gets the total number of items displayed by an Analytics Dashboard data table.
+     * Waits for an Analytics Dashboard data table to refresh, then gets its total item count.
      * @param tableTitle Visible title of the data table.
      * @returns Total item count reported by the table pager.
      */
     async getDataTableItemCount(tableTitle: string): Promise<number> {
+        await this.waitImplicit(2000);
         return this.getKendoPagerItemCount(this.dataTablePagerInfoByTitle(tableTitle));
     }
 

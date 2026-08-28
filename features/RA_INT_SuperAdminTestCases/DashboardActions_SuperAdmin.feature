@@ -394,6 +394,7 @@ Feature: Dashboard Actions for Super Admin
     And verify the "Test DashboardAction" filter is displayed in the "Saved Filters" section on the Dashboard filter
     When select "Test DashboardAction" located in the "Saved Filters" section on the Dashboard filter
     And press "Edit" button on the Dashboard filter
+    And press "Edit filter" button for "Test DashboardAction" on the Dashboard filter
     And deselect "Low" in the "Action   Priority" filter on the Dashboard filter
     And select "High" in the "Action   Priority" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter

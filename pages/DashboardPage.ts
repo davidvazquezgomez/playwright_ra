@@ -89,6 +89,10 @@ export class DashboardPage extends BasePage {
         this._page.locator(this.filterDialog).locator('.saved-filter-item', {
             has: this._page.locator('.saved-filter-name').getByText(filterName, { exact: true }),
         }).getByRole('button', { name: 'Delete filter', exact: true });
+    private readonly savedFilterEditButtonByName = (filterName: string) =>
+        this._page.locator(this.filterDialog).locator('.saved-filter-item', {
+            has: this._page.locator('.saved-filter-name').getByText(filterName, { exact: true }),
+        }).getByRole('button', { name: 'Edit filter', exact: true });
     private readonly confirmDeleteFilterButton = () =>
         this._page.locator(this.confirmDeleteDialog).getByRole('button', { name: 'Delete', exact: true });
     private readonly deadlineDatePickerSelector = (calendarName: 'Start Date' | 'End Date') =>
@@ -325,6 +329,14 @@ export class DashboardPage extends BasePage {
      */
     async editDashboardFilters(): Promise<void> {
         await this.editDashboardFilterButton().click();
+    }
+
+    /**
+     * Opens edit mode for the requested saved filter.
+     * @param filterName Exact saved-filter name to edit.
+     */
+    async editSavedFilter(filterName: string): Promise<void> {
+        await this.savedFilterEditButtonByName(filterName).click();
     }
 
     /**
