@@ -172,7 +172,7 @@ Feature: Dashboard Actions for Super Admin
     And press "Reset Filters" button on the Dashboard filter
     And double-click "SelectAll_Test_1784288008539" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    And search for "Migration_test" update in the "01_13Jan REG - Actions Dashboard" page
+    And search for "Withholding tax correction factor" update in the "01_13Jan REG - Actions Dashboard" page
     When click on the first action in the "01_13Jan REG - Actions Dashboard" page
     Then the "Update Action" popup is displayed
     When open the "Attachments" tab in the "Update Action" popup
