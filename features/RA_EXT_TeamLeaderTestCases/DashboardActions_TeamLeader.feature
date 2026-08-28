@@ -374,7 +374,7 @@ Feature: Dashboard Actions for Team Leader
 
   @mutable
   Scenario: TC012_03_TeamLeader_DashboardActions - Verify saving a filter
-    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When remove saved filter "Test DashboardAction" if it exists on the Dashboard filter
     When press "Filter" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter
