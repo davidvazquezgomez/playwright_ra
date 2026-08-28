@@ -234,12 +234,11 @@ export class BasePage {
   }
 
   /**
-   * Verifies that an element is not visible on the current page.
+   * Verifies that an element is hidden or absent from the current page.
    * @param selector Element selector.
    */
   async verifyElementIsNotDisplayed(selector: string): Promise<void> {
-    await expect(this._page.locator(selector)).not.toHaveCount(0);
-    await expect(this._page.locator(selector)).not.toBeVisible();
+    await expect(this._page.locator(selector)).toBeHidden();
   }
 
   /**
@@ -509,28 +508,34 @@ export class BasePage {
   }
 
   /**
-   * Opens a Kendo DatePicker and selects the current local calendar day.
-   * @param datePickerSelector Selector for the Kendo DatePicker component.
+  * Opens a Kendo DatePicker and selects the current local calendar day.
+  * @param datePickerSelector Selector for the Kendo DatePicker component.
    */
   async selectTodayFromKendoDatePicker(datePickerSelector: string): Promise<void> {
     const datePicker = this._page.locator(datePickerSelector);
     const today = new Date();
     const currentDay = String(today.getDate());
 
+    await datePicker.scrollIntoViewIfNeeded();
     await datePicker.locator('button.k-input-button').click();
-    await this._page
-      .locator('.k-calendar .k-calendar-td:not(.k-other-month)')
-      .getByText(currentDay, { exact: true })
-      .click();
+    await expect(datePicker.locator('input[role="combobox"]')).toHaveAttribute('aria-expanded', 'true');
+    const todayCell = this._page
+      .locator('.k-calendar:visible')
+      .last()
+      .locator('.k-calendar-td:not(.k-other-month)')
+      .getByText(currentDay, { exact: true });
+    await todayCell.scrollIntoViewIfNeeded();
+    // Kendo can render the popup partly below the viewport; force bypasses that clipping.
+    await todayCell.click({ force: true });
     await expect(datePicker.locator('input[role="combobox"]')).toHaveValue(/\d/);
   }
 
   /**
-   * Opens a Kendo DatePicker and selects a date in DD/MM/YYYY format.
-   * @param datePickerSelector Selector for the Kendo DatePicker component.
+  * Opens a Kendo DatePicker and selects a date in DD/MM/YYYY format.
+  * @param datePickerSelector Selector or locator for the Kendo DatePicker component.
    * @param dateValue Date to select in DD/MM/YYYY format.
    */
-  async selectDateFromKendoDatePicker(datePickerSelector: string, dateValue: string): Promise<void> {
+  async selectDateFromKendoDatePicker(datePickerSelector: string | Locator, dateValue: string): Promise<void> {
     const dateParts = dateValue.split('/').map(Number);
     const [day, month, year] = dateParts;
     const targetDate = new Date(year, month - 1, day);
@@ -547,14 +552,18 @@ export class BasePage {
       throw new Error(`Date "${dateValue}" must use the DD/MM/YYYY format.`);
     }
 
-    const datePicker = this._page.locator(datePickerSelector);
-    const calendar = this._page.locator('.k-calendar').last();
+    const datePicker = typeof datePickerSelector === 'string'
+      ? this._page.locator(datePickerSelector)
+      : datePickerSelector;
     const monthAbbreviations = [
       'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
     ];
     const displayedDate = `${day} ${monthAbbreviations[month - 1]} ${year}`;
+    await datePicker.scrollIntoViewIfNeeded();
     await datePicker.locator('button.k-input-button').click();
+    await expect(datePicker.locator('input[role="combobox"]')).toHaveAttribute('aria-expanded', 'true');
+    const calendar = this._page.locator('.k-calendar:visible').last();
     await expect(calendar).toBeVisible();
 
     const monthNames = [
@@ -573,7 +582,8 @@ export class BasePage {
           .locator('.k-calendar-td:not(.k-other-month)')
           .getByText(String(day), { exact: true });
         await targetDay.scrollIntoViewIfNeeded();
-        await targetDay.click();
+        // Kendo can render the popup partly below the viewport; force bypasses that clipping.
+        await targetDay.click({ force: true });
         await expect(datePicker.locator('input[role="combobox"]')).toHaveValue(displayedDate);
         return;
       }
