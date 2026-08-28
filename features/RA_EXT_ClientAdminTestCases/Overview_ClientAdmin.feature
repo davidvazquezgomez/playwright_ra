@@ -67,7 +67,6 @@ Feature: Overview for Client Admin
     And verify for view as grid or card is displayed and save as favorite option is visible
     And is selected and the star is "" filled by default
     When restore the initial overview view
-    And logout from the application
 
   @readOnly
   Scenario: TC005_ClientAdmin_Overview - Verify navigation from Open Dashboard to Updates Dashboard and vice versa
@@ -78,4 +77,3 @@ Feature: Overview for Client Admin
     And verify if "Actions;Analytics" are displayed on the Overview page
     When press "back" button
     Then the "Overview" page is displayed
-    And logout from the application

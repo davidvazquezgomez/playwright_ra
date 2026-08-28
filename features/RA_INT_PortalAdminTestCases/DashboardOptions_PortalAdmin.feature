@@ -149,4 +149,3 @@ Feature: Dashboard Options for Portal Admin
     When read the downloaded excel file content
     Then verify the excel file contains the "Update Title;Action;Jurisdiction;Change Area;Previous Value;Current Value;Modified By;Date Modified" column headers
     And verify the report is generated with the same filters and options applied in the "Actions" dashboard
-    When logout from the application

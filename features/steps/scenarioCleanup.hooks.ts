@@ -16,15 +16,25 @@ export function registerScenarioCleanup(
   testData[cleanupActionsKey] = cleanupActions;
 }
 
-After({ name: 'Clean up scenario resources', tags: '@cleanup' }, async ({ testData }) => {
+After({ name: 'Clean up scenario resources', tags: '@cleanup' }, async ({ commonPage, loginPage, authSession, testData }) => {
   const cleanupActions = (testData[cleanupActionsKey] as CleanupAction[] | undefined) ?? [];
   const cleanupErrors: Error[] = [];
 
-  for (const cleanupAction of [...cleanupActions].reverse()) {
+  if (cleanupActions.length > 0) {
     try {
-      await cleanupAction();
+      await authSession.restoreAuthentication(commonPage, loginPage);
     } catch (error) {
       cleanupErrors.push(error instanceof Error ? error : new Error(String(error)));
+    }
+  }
+
+  if (cleanupErrors.length === 0) {
+    for (const cleanupAction of [...cleanupActions].reverse()) {
+      try {
+        await cleanupAction();
+      } catch (error) {
+        cleanupErrors.push(error instanceof Error ? error : new Error(String(error)));
+      }
     }
   }
 

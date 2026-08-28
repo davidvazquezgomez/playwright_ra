@@ -221,7 +221,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     And the duplicate automatic allocation warning is displayed
     And verify "Create anyway;Cancel" buttons are displayed on the "Duplicate automatic allocation detected" popup
     When press "Create anyway" button
-    Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation Setup" page
+    Then the duplicate automatic allocation is created
     And the "Automatic Allocation of Updates" page is displayed
     And verify the "QaTest2" allocation is present in the "Automatic Allocation of Updates" page
     When click on "Remove Allocation" icon from the allocation "QaTest2"

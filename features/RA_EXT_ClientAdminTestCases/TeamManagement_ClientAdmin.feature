@@ -78,4 +78,3 @@ Feature: Team Management for Client Admin
     And verify "Delete;Cancel" buttons are displayed on the "Warning" popup
     When press "Delete" button on the "Warning" popup
     Then verify the deleted team details are not available in the "Team Management" page
-    And logout from the application

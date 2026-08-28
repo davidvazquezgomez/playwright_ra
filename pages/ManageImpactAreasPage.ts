@@ -161,7 +161,7 @@ export class ManageImpactAreasPage extends BasePage {
         const impactArea = this.impactAreaNameCell(impactAreaName);
         const impactAreaRows = this._page.locator(this.impactAreaRows);
         await expect.poll(async () =>
-            (await impactArea.count()) > 0 || (await impactAreaRows.count()) === 0
+            (await impactArea.count()) > 0 || (await impactAreaRows.count()) <= 1
         ).toBe(true);
 
         return await impactArea.count() > 0;

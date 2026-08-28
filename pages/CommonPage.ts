@@ -830,13 +830,15 @@ export class CommonPage extends BasePage {
       case "Remove user":
       case "Go Back":
       case "Go back":
-      case "Create anyway":
       case "Update Portal Now":
       case "Deactivate Portal":
       case "Yes":
       case "Edit Client":
       case "Reactivate Portal":
         await this.buttonByName(button).click({ noWaitAfter: true });
+        break;
+      case "Create anyway":
+        await this.confirmDuplicateAutomaticAllocation();
         break;
       case "Attachments":
         await this._page.getByRole('tab', { name: 'Attachments', exact: true }).click();
@@ -1031,9 +1033,18 @@ export class CommonPage extends BasePage {
       return;
     }
 
+    await this.confirmDuplicateAutomaticAllocation();
+  }
+
+  /**
+   * Confirms creation from the duplicate automatic-allocation dialog and waits for it to close.
+   */
+  private async confirmDuplicateAutomaticAllocation(): Promise<void> {
+    const duplicateDialog = this.kendoDialogByTitle('Duplicate automatic allocation detected');
     await this.clickElement(
       this.kendoDialogButtonByName('Duplicate automatic allocation detected', 'Create anyway'),
     );
+    await this.waitForSelectorStatus(duplicateDialog, 'hidden');
   }
 
   /**

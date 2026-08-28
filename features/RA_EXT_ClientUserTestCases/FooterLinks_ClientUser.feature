@@ -30,4 +30,3 @@ Feature: Footer Links for Client User
       """
       RegulatoryAdvantage is provided solely as a tool for tracking and managing regulatory and employment tax updates. It does not provide legal or tax advice, customized regulatory content for your specific circumstances, or make determinations regarding your compliance obligations. Deloitte does not guarantee the completeness, accuracy, or timeliness of the information presented, nor the validity or impact of any assessments performed by you or your authorized users. Use of RegulatoryAdvantage and its output does not constitute professional advice, an audit, or any form of assurance. Users remain solely responsible for their own legal and tax compliance decisions. Deloitte has no responsibility for external links or third-party content.
       """
-    And logout from the application

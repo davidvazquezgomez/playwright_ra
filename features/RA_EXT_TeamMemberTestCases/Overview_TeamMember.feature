@@ -54,4 +54,3 @@ Feature: Overview for Team Member
     And verify for view as grid or card is displayed and save as favorite option is visible
     And is selected and the star is "" filled by default
     When restore the initial overview view
-    And logout from the application

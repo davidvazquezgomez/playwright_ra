@@ -26,6 +26,7 @@ export interface AuthSession {
   shouldSkipInitialLogin(userType: string, role: string): boolean;
   recordLogin(): void;
   recordLogout(): void;
+  restoreAuthentication(commonPage: CommonPage, loginPage: LoginPage): Promise<void>;
 }
 
 export function isAuthStateReuseEnabled(): boolean {
@@ -64,9 +65,9 @@ export async function prewarmAuthStates(browser: Browser): Promise<void> {
 }
 
 export async function createAuthSession(testFile: string): Promise<AuthSession> {
-  const authentication = isAuthStateReuseEnabled() ? await getFeatureAuthentication(testFile) : undefined;
+  const authentication = await getFeatureAuthentication(testFile);
   let initialLoginHandled = false;
-  let isAuthenticated = Boolean(authentication);
+  let isAuthenticated = isAuthStateReuseEnabled() && Boolean(authentication);
 
   return {
     shouldSkipInitialLogin(userType: string, role: string): boolean {
@@ -85,6 +86,31 @@ export async function createAuthSession(testFile: string): Promise<AuthSession> 
     },
     recordLogout(): void {
       isAuthenticated = false;
+    },
+    async restoreAuthentication(commonPage: CommonPage, loginPage: LoginPage): Promise<void> {
+      if (isAuthenticated) {
+        return;
+      }
+      if (!authentication) {
+        throw new Error('Cannot restore authentication for cleanup because the feature has no Regulatory Advantage login background.');
+      }
+      if (!authentication.username || !authentication.password) {
+        throw new Error(
+          `Cannot restore authentication for cleanup because credentials are missing for "${authentication.role}". ` +
+          `Configure USER_${authentication.role.toUpperCase()} and USER_${authentication.role.toUpperCase()}_PASSWORD.`,
+        );
+      }
+      if (authentication.userType === 'external' && !authentication.totpSecret) {
+        throw new Error(
+          `Cannot restore authentication for cleanup because USER_${authentication.role.toUpperCase()}_TOTP_SECRET is not configured.`,
+        );
+      }
+
+      await commonPage.launchApplication(authentication.url);
+      commonPage.recordAuthenticatedRole(authentication.role);
+      await loginPage.login(authentication.username, authentication.password, authentication.totpSecret);
+      await commonPage.dismissCookieConsent();
+      isAuthenticated = true;
     },
   };
 }

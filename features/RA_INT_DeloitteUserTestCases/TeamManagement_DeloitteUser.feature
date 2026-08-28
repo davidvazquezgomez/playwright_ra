@@ -90,4 +90,3 @@ Feature: Team Management for Deloitte User
     And verify "Delete;Cancel" buttons are displayed on the "Warning" popup
     When press "Delete" button on the "Warning" popup
     Then verify the deleted team "QA_TEST_01" is not available in the "Team Management" page
-    And logout from the application

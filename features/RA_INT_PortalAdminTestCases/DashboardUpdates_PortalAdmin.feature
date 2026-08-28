@@ -306,4 +306,3 @@ Feature: Dashboard Updates for Portal Admin
     When press "Save" button in the Dashboard Options popup
     Then verify the "Dashboard Options" popup is closed on the Dashboard
     And verify "Status" column header is not displayed in the "Global Inc - Updates Dashboard" page
-    And logout from the application

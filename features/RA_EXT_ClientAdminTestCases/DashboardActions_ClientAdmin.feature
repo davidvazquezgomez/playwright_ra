@@ -467,4 +467,3 @@ Feature: Dashboard Actions for Client Admin
     When press "Save" button in the Dashboard Options popup
     Then verify the "Dashboard Options" popup is closed on the Dashboard
     And verify "Action Status" column header is not displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
-    And logout from the application

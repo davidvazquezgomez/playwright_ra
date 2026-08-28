@@ -295,7 +295,6 @@ Feature: Dashboard Analytics for Team Leader
     And select "Medium" in the "Action Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify the "Completed Actions" chart value is not the same
-    And logout from the application
 
   @mutable
   Scenario: TC017_01_TeamLeader_DashboardAnalytics - Verify Data consistency between Actions Analytics Data and All Actions section

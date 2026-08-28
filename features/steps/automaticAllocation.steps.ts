@@ -72,6 +72,10 @@ Then('the duplicate automatic allocation warning is displayed', async ({ automat
   await automaticAllocationPage.verifyDuplicateAutomaticAllocationWarning();
 });
 
+Then('the duplicate automatic allocation is created', async ({ automaticAllocationPage }) => {
+  await automaticAllocationPage.verifyDuplicateAutomaticAllocationIsCreated();
+});
+
 When(
   'register cleanup to remove the {string} allocation from portal {string}',
   async ({ automaticAllocationPage, commonPage, testData }, allocationName: string, portalName: string) => {

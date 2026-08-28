@@ -193,7 +193,6 @@ Feature: Dashboard Actions for Portal Admin
       | txt               | test-data/invalid.txt      |                  | invalid.txt      |
       | xlsx              | test-data/Fichero94MB.xlsx |                  | Fichero94MB.xlsx |
 
-
   @mutable
   Scenario: TC011_01_PortalAdmin_DashboardActions - Verify adding an action from the update details page
     Given the "Updates Dashboard - Global Inc" page is open
@@ -463,4 +462,3 @@ Feature: Dashboard Actions for Portal Admin
     When press "Save" button in the Dashboard Options popup
     Then verify the "Dashboard Options" popup is closed on the Dashboard
     And verify "Action Status" column header is not displayed in the "Global Inc - Actions Dashboard" page
-    And logout from the application
