@@ -3,13 +3,17 @@ import { BasePage } from "./BasePage";
 
 export class CommonPage extends BasePage {
   private sideNavigation = '.side-navigation';
+  private deloitteLogo = '#headerTile[aria-label="Deloitte Logo"][href="/"]';
   private navigationRenderTimeout = 5000;
+  private navigationReloadAttempts = 5;
   private cookieConsentModal = '#onetrust-banner-sdk';
   private closeCookieConsentButton = '#onetrust-banner-sdk #onetrust-close-btn-container button, #onetrust-banner-sdk button[aria-label="Close"]';
 
   // Main navigation items
   private menuLinkByText = (item: string) =>
-    `${this.sideNavigation} a.menu-link[title="${item}"], ${this.sideNavigation} a.menu-link[data-title="${item}"], ${this.sideNavigation} a.menu-link:has(.menu-text:text-is("${item}"))`;
+    item === 'Home'
+      ? `${this.sideNavigation} a.menu-link[href="/home"]`
+      : `${this.sideNavigation} a.menu-link[title="${item}"], ${this.sideNavigation} a.menu-link[data-title="${item}"], ${this.sideNavigation} a.menu-link:has(.menu-text:text-is("${item}"))`;
 
   // Submenu items
   private submenuLinkByText = (item: string) =>
@@ -341,40 +345,45 @@ export class CommonPage extends BasePage {
    * @returns A promise that resolves when the navigation option has been clicked.
    */
   async clickNavigationOption(option: string): Promise<void> {
-    for (let attempt = 1; attempt <= 3; attempt += 1) {
-      try {
-        await this.waitForSelectorStatus(
-          this.sideNavigation,
-          'visible',
-          this.navigationRenderTimeout,
-        );
-
-        const submenuLink = this.submenuLinkByText(option);
-        const mainMenuLink = this.menuLinkByText(option);
-        await this.waitForSelectorStatus(
-          `${submenuLink}, ${mainMenuLink}`,
-          'attached',
-          this.navigationRenderTimeout,
-        );
-
-        if (await this._page.locator(submenuLink).count() > 0) {
-          if (!await this.checkIfFieldIsDisplayed(submenuLink)) {
-            await this.clickElement(this.menuWithSubmenu, 5000);
-          }
-
-          await this.clickElement(submenuLink, 5000);
-          return;
-        }
-
-        await this.clickElement(mainMenuLink, 5000);
-        return;
-      } catch (error) {
-        if (attempt === 3) {
-          throw error;
-        }
-
-        await this.reload();
+    const navigationWasAvailable = await this.retryWithReload(async () => {
+      const sideNavigation = this._page.locator(this.sideNavigation);
+      if (!await sideNavigation.isVisible({ timeout: this.navigationRenderTimeout }).catch(() => false)) {
+        await this.clickElement(this.deloitteLogo, this.navigationRenderTimeout);
       }
+
+      if (!await sideNavigation.isVisible({ timeout: this.navigationRenderTimeout }).catch(() => false)) {
+        return false;
+      }
+
+      const submenuLink = this.submenuLinkByText(option);
+      const mainMenuLink = this.menuLinkByText(option);
+      await this.waitForSelectorStatus(
+        `${submenuLink}, ${mainMenuLink}`,
+        'attached',
+        this.navigationRenderTimeout,
+      );
+
+      if (await this._page.locator(submenuLink).count() > 0) {
+        if (!await this.checkIfFieldIsDisplayed(submenuLink)) {
+          await this.clickElement(this.menuWithSubmenu, 5000);
+        }
+
+        await this.clickElement(submenuLink, 5000);
+        return true;
+      }
+
+      await this.clickElement(mainMenuLink, 5000);
+      return true;
+    }, this.navigationReloadAttempts);
+
+    if (!navigationWasAvailable) {
+      const sideNavigation = this._page.locator(this.sideNavigation);
+      this.failWithApplicationError(
+        'The left navigation must be displayed after returning to the application root and reloading.',
+        `The left navigation is visible and provides the "${option}" option.`,
+        'The left navigation remained hidden after the configured recovery attempts.',
+        `Recovery attempts: ${this.navigationReloadAttempts}. Side navigation elements: ${await sideNavigation.count()}. Visible: ${await sideNavigation.isVisible().catch(() => false)}. Deloitte logo was available at "${this._page.url()}".`,
+      );
     }
   }
 

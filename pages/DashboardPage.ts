@@ -95,8 +95,10 @@ export class DashboardPage extends BasePage {
         }).getByRole('button', { name: 'Edit filter', exact: true });
     private readonly confirmDeleteFilterButton = () =>
         this._page.locator(this.confirmDeleteDialog).getByRole('button', { name: 'Delete', exact: true });
-    private readonly deadlineDatePickerSelector = (calendarName: 'Start Date' | 'End Date') =>
-        `app-dashboard-filters kendo-datepicker[formcontrolname="${calendarName === 'Start Date' ? 'startDate' : 'endDate'}"]`;
+    private readonly deadlineDatePicker = (calendarName: 'Start Date' | 'End Date') =>
+        this.filterSectionByName('Deadline Range').locator(
+            `kendo-datepicker[formcontrolname="${calendarName === 'Start Date' ? 'startDate' : 'endDate'}"]`,
+        );
     private readonly actionsGrid = () => this._page.getByRole('grid', { name: 'Data table', exact: true });
     private selectedDeadlineStartDate?: Date;
     private selectedDeadlineEndDate?: Date;
@@ -682,7 +684,7 @@ export class DashboardPage extends BasePage {
         if (await deadlineRangeSection.getAttribute('aria-expanded') !== 'true') {
             await deadlineRangeSection.locator(':scope > .k-link').click();
         }
-        await this.selectDateFromKendoDatePicker(this.deadlineDatePickerSelector(calendarName), dateValue);
+        await this.selectDateFromKendoDatePicker(this.deadlineDatePicker(calendarName), dateValue);
         if (calendarName === 'Start Date') {
             this.selectedDeadlineStartDate = targetDate;
         } else {
