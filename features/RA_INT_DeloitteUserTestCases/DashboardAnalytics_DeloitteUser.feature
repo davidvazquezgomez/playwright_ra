@@ -22,9 +22,9 @@ Feature: Dashboard Analytics for Deloitte User
     When press "Filter" button on the Dashboard filter
     Then verify the "Saved Filters;My Updates;Knowledge Module;Jurisdiction;Impact Areas;Priority;Status" option is displayed in the Dashboard filter
     When press "More Filters" button on the Dashboard filter
-    Then verify the "<MoreFilters>" option is displayed in the Dashboard filter
+    Then verify the "Tags;Date Announced;Date Effective;Last Updated" option is displayed in the Dashboard filter
     When press "Less Filters" button on the Dashboard filter
-    Then verify the "<MoreFilters>" option is not displayed in the Dashboard filter
+    Then verify the "Tags;Date Announced;Date Effective;Last Updated" option is not displayed in the Dashboard filter
     When select "Canada" in the "Jurisdiction" filter on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     When press "Close" button on the Dashboard filter
