@@ -172,7 +172,7 @@ Feature: Dashboard Actions for Super Admin
     And press "Reset Filters" button on the Dashboard filter
     And double-click "SelectAll_Test_1784288008539" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    And search for "Migration_test" update in the "01_13Jan REG - Actions Dashboard" page
+    And search for "Withholding tax correction factor" update in the "01_13Jan REG - Actions Dashboard" page
     When click on the first action in the "01_13Jan REG - Actions Dashboard" page
     Then the "Update Action" popup is displayed
     When open the "Attachments" tab in the "Update Action" popup
@@ -185,12 +185,12 @@ Feature: Dashboard Actions for Super Admin
     And verify "Test Action" action is not displayed in the "01_13Jan REG - Actions Dashboard" page
 
     Examples:
-      | invalid extension | file path                  | expected message                                                      | name             |
-      | xls               | test-data/valid.xls        | Invalid file type \".xls\". Allowed types: pdf, xlsx, svg, png, docx. | valid.xls        |
-      | jpg               | test-data/invalid.jpg      | Invalid file type \".jpg\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.jpg      |
-      | csv               | test-data/invalid.csv      | Invalid file type \".csv\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.csv      |
-      | txt               | test-data/invalid.txt      | Invalid file type \".txt\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.txt      |
-      | xlsx              | test-data/Fichero94MB.xlsx | Invalid file type \".xlsx\". Allowed types: pdf, xlsx, svg, png, docx. | Fichero94MB.xlsx |
+      | invalid extension | file path                  | expected message                                                         | name             |
+      | xls               | test-data/valid.xls        | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx.  | valid.xls        |
+      | jpg               | test-data/invalid.jpg      | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.jpg      |
+      | csv               | test-data/invalid.csv      | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.csv      |
+      | txt               | test-data/invalid.txt      | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.txt      |
+      | xlsx              | test-data/Fichero94MB.xlsx | Invalid file type \\".xlsx\\". Allowed types: pdf, xlsx, svg, png, docx. | Fichero94MB.xlsx |
 
   @mutable
   Scenario: TC011_01_SuperAdmin_DashboardActions - Verify adding an action from the update details page
@@ -337,12 +337,12 @@ Feature: Dashboard Actions for Super Admin
     And verify "<name>" attachment is not displayed in the "Update Action" popup
 
     Examples:
-      | invalid extension | file path                  | expected message                                                    | name             |
-      | xls               | test-data/valid.xls        | Invalid file type \".xls\". Allowed types: pdf, xlsx, svg, png, docx. | valid.xls        |
-      | jpg               | test-data/invalid.jpg      | Invalid file type \".jpg\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.jpg      |
-      | csv               | test-data/invalid.csv      | Invalid file type \".csv\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.csv      |
-      | txt               | test-data/invalid.txt      | Invalid file type \".txt\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.txt      |
-      | xlsx              | test-data/Fichero94MB.xlsx | Invalid file type \".xlsx\". Allowed types: pdf, xlsx, svg, png, docx. | Fichero94MB.xlsx |
+      | invalid extension | file path                  | expected message                                                         | name             |
+      | xls               | test-data/valid.xls        | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx.  | valid.xls        |
+      | jpg               | test-data/invalid.jpg      | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.jpg      |
+      | csv               | test-data/invalid.csv      | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.csv      |
+      | txt               | test-data/invalid.txt      | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.txt      |
+      | xlsx              | test-data/Fichero94MB.xlsx | Invalid file type \\".xlsx\\". Allowed types: pdf, xlsx, svg, png, docx. | Fichero94MB.xlsx |
 
   @readOnly
   Scenario Outline: TC012_01_SuperAdmin_DashboardActions - Verify filtering the 01_13Jan REG - Actions Dashboard by
@@ -466,4 +466,3 @@ Feature: Dashboard Actions for Super Admin
     When press "Save" button in the Dashboard Options popup
     Then verify the "Dashboard Options" popup is closed on the Dashboard
     And verify "Action Status" column header is not displayed in the "01_13Jan REG - Actions Dashboard" page
-    And logout from the application

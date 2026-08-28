@@ -19,7 +19,6 @@ Feature: Team Management for Team Leader
     When save the team from the "Create/Edit Team" page
     And try saving the allocation without "<mandatory field>"
     Then verify "<warning message>" are displayed in the "Team Management" page
-    And logout from the application
 
     Examples:
       | mandatory field | warning message                      |
@@ -54,4 +53,3 @@ Feature: Team Management for Team Leader
     When leave the current team from the "Create/Edit Team" page
     Then confirm the leave action in the confirmation pop up
     Then verify the user is removed from the team (or appropriate confirmation is shown)
-    And logout from the application

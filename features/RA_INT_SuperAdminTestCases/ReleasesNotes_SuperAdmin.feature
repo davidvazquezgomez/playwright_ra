@@ -38,4 +38,3 @@ Feature: Release Notes for Super Admin
     Then verify generated release note details are displayed
     When click on the generated release note
     Then verify generated release note details are not displayed
-    And logout from the application

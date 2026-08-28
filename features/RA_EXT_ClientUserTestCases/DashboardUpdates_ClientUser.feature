@@ -322,4 +322,3 @@ Feature: Dashboard Updates for Client User
     When press "Save" button in the Dashboard Options popup
     Then verify the "Dashboard Options" popup is closed on the Dashboard
     And verify "Status" column header is not displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page
-    And logout from the application

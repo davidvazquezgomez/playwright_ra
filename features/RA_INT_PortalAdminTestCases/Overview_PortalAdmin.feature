@@ -77,4 +77,3 @@ Feature: Overview for Portal Admin
     And verify if "Actions;Analytics" are displayed on the Overview page
     When press "back" button
     Then the "Overview" page is displayed
-    And logout from the application

@@ -29,6 +29,10 @@ export class AutomaticAllocationPage extends BasePage {
     `${this.allocationRowByName(allocationName)} button[title="Remove Allocation"]`;
   private duplicateAutomaticAllocationDialogContent =
     'div[role="dialog"]:visible:has(.k-dialog-title:text-is("Duplicate automatic allocation detected")) .k-dialog-content';
+  private duplicateAllocationOutcomeToast = this._page
+    .locator('.k-notification-content')
+    .filter({ hasText: /Allocation created successfully\.|Allocation name is already exists\./ })
+    .first();
   private deleteConfirmationButton = 'div[role="dialog"]:visible button[aria-label="Delete"]';
   private allocationRecipientPicker =
     'app-auto-allocation-setup app-people-picker[formcontrolname="allocatedParty"] kendo-dropdownlist';
@@ -175,6 +179,27 @@ export class AutomaticAllocationPage extends BasePage {
     await expect(this._page.locator(this.duplicateAutomaticAllocationDialogContent)).toHaveText(
       /^Automatic allocation\(s\) named '.+' already exists for the same Impact Area\(s\) and\/or Jurisdiction\(s\)\.If you continue, the new rule will be created, but matching updates will be allocated according to oldest created rule\(s\)\. Do you want to proceed\?$/,
     );
+  }
+
+  /**
+   * Verifies that confirming a duplicate automatic allocation creates the rule rather than rejecting its name.
+   */
+  async verifyDuplicateAutomaticAllocationIsCreated(): Promise<void> {
+    await expect(this.duplicateAllocationOutcomeToast).toBeVisible();
+    const actualOutcome = (await this.duplicateAllocationOutcomeToast.innerText()).trim();
+
+    if (actualOutcome === 'Allocation name is already exists.') {
+      this.failWithApplicationError(
+        'Confirming a duplicate automatic allocation must create the new rule as described by the warning dialog.',
+        'The application creates the duplicate rule and displays "Allocation created successfully.".',
+        `The application rejects the rule and displays "${actualOutcome}".`,
+        'The duplicate-allocation warning was displayed and its "Create anyway" action was selected before the outcome toast was read.',
+      );
+    }
+
+    if (actualOutcome !== 'Allocation created successfully.') {
+      throw new Error(`Unexpected duplicate automatic-allocation outcome toast: "${actualOutcome}".`);
+    }
   }
 
   /**

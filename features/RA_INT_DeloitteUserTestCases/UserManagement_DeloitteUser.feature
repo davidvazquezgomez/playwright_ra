@@ -5,8 +5,8 @@ Feature: User Management for Deloitte User
     Given launch Regulatory Advantage application URL and login as "deloitte" user "DELOITTEUSER"
     And verify if applicable portals are displayed
 
-@mutable
-Scenario: TC001_01_DeloitteUser_UserManagement - Verify User Management UI
+  @mutable
+  Scenario: TC001_01_DeloitteUser_UserManagement - Verify User Management UI
     When click on "QA_Test client3" of the portals
     Then the "Overview" page is displayed
     When click on "User Management" option from the left navigation
@@ -51,7 +51,6 @@ Scenario: TC001_01_DeloitteUser_UserManagement - Verify User Management UI
     Then verify the user "<user>" is displayed in the table
     When click on "Clear" button from the User Management table "<column>" field
     Then verify the filter is removed
-    And logout from the application
 
     Examples:
       | column    | searchText          | user                |

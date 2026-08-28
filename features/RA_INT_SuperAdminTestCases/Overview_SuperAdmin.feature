@@ -5,8 +5,8 @@ Feature: Overview for Super Admin
     Given launch Regulatory Advantage application URL and login as "deloitte" user "SUPERADMIN"
     And verify if applicable portals are displayed
 
-@readOnly
-Scenario: TC001_SuperAdmin_Overview - Verify overview page loads with all the fields and buttons visible
+  @readOnly
+  Scenario: TC001_SuperAdmin_Overview - Verify overview page loads with all the fields and buttons visible
     When click on "01_13Jan REG" of the portals
     Then the "Overview" page is displayed
     And verify for client portal name "01_13Jan REG"
@@ -85,8 +85,8 @@ Scenario: TC001_SuperAdmin_Overview - Verify overview page loads with all the fi
     And is selected and the star is "" filled by default
     When restore the initial overview view
 
-@readOnly
-Scenario: TC005_SuperAdmin_Overview - Verify navigation from Open Dashboard to Updates Dashboard and vice versa
+  @readOnly
+  Scenario: TC005_SuperAdmin_Overview - Verify navigation from Open Dashboard to Updates Dashboard and vice versa
     When click on "01_13Jan REG" of the portals
     Then the "Overview" page is displayed
     When press "Open Dashboard" button
@@ -94,5 +94,3 @@ Scenario: TC005_SuperAdmin_Overview - Verify navigation from Open Dashboard to U
     And verify if "Actions;Analytics" are displayed on the Overview page
     When press "back" button
     Then the "Overview" page is displayed
-    And logout from the application
-

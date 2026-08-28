@@ -264,4 +264,3 @@ Feature: User Management for Portal Admin
     Then verify "Selected user deleted successfully" toast message is displayed in the "User Management" page
     And search for "qa.allocation@example.com" in the User Management table "Email" field
     And verify the user "qa.allocation@example.com" is not displayed in the table
-    And logout from the application

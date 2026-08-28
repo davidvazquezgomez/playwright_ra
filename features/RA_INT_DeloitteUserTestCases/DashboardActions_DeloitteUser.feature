@@ -97,7 +97,6 @@ Feature: Dashboard Actions for Deloitte User
     And verify "satestclientuser1, satestclientuser1" option is selected in the "User Assigned" field on the "Update Action" popup
     And verify "Not Started" option is selected in the "Status" field on the "Update Action" popup
 
-
   @mutable
   Scenario: TC010_03_DeloitteUser_DashboardActions - Verify the private action toggle
     Given the "Actions Dashboard - QA_Test client3" page is open
@@ -194,7 +193,6 @@ Feature: Dashboard Actions for Deloitte User
       | txt               | test-data/invalid.txt      |                  | invalid.txt      |
       | xlsx              | test-data/Fichero94MB.xlsx |                  | Fichero94MB.xlsx |
 
- 
   @mutable
   Scenario: TC011_01_DeloitteUser_DashboardActions - Verify adding an action from the update details page
     Given the "Updates Dashboard - QA_Test client3" page is open
@@ -465,4 +463,3 @@ Feature: Dashboard Actions for Deloitte User
     When press "Save" button in the Dashboard Options popup
     Then verify the "Dashboard Options" popup is closed on the Dashboard
     And verify "Action Status" column header is not displayed in the "QA_Test client3 - Actions Dashboard" page
-    And logout from the application
