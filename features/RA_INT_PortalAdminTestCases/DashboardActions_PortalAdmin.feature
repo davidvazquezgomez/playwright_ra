@@ -102,7 +102,7 @@ Feature: Dashboard Actions for Portal Admin
     Given the "Global Inc - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    And double-click "SelectAll_Test_1784288008539" option on the Dashboard filter
+    And double-click "test_portaladmin" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
     And search for "04May 2026 Employment Income Brackets test stage sp multiple" update in the "Global Inc - Actions Dashboard" page
     Then verify "04May 2026 Employment Income Brackets test stage sp multiple" update is displayed in the "Global Inc - Actions Dashboard" page
@@ -127,7 +127,7 @@ Feature: Dashboard Actions for Portal Admin
     Given the "Global Inc - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    And double-click "SelectAll_Test_1784288008539" option on the Dashboard filter
+    And double-click "test_portaladmin" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
     And search for "04May 2026 Employment Income Brackets test stage sp multiple" update in the "Global Inc - Actions Dashboard" page
     Then verify "04May 2026 Employment Income Brackets test stage sp multiple" update is displayed in the "Global Inc - Actions Dashboard" page
@@ -147,7 +147,7 @@ Feature: Dashboard Actions for Portal Admin
     Given the "Global Inc - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    And double-click "SelectAll_Test_1784288008539" option on the Dashboard filter
+    And double-click "test_portaladmin" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
     And search for "04May 2026 Employment Income Brackets test stage sp multiple" update in the "Global Inc - Actions Dashboard" page
     Then verify "04May 2026 Employment Income Brackets test stage sp multiple" update is displayed in the "Global Inc - Actions Dashboard" page
@@ -171,7 +171,7 @@ Feature: Dashboard Actions for Portal Admin
     Given the "Global Inc - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    And double-click "SelectAll_Test_1784288008539" option on the Dashboard filter
+    And double-click "test_portaladmin" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
     And search for "04May 2026 Employment Income Brackets test stage sp multiple" update in the "Global Inc - Actions Dashboard" page
     When click on the first action in the "Global Inc - Actions Dashboard" page
@@ -349,12 +349,12 @@ Feature: Dashboard Actions for Portal Admin
     Then verify filtered actions are displayed for "<filter>" with value "<value>"
 
     Examples:
-      | filter          | value       |
-      | Jurisdiction    | Italy       |
-      | Update Priority | Low         |
-      | Action Priority | High        |
-      | Action Status   | In Progress |
-      | User Assigned   | Alam, Asjad |
+      | filter          | value            |
+      | Jurisdiction    | Argentina        |
+      | Update Priority | Low              |
+      | Action Priority | Medium           |
+      | Action Status   | Not Started      |
+      | User Assigned   | Salodkar, Mugdha |
 
   @readOnly
   Scenario: TC012_02_PortalAdmin_DashboardActions - Verify filtering the actions dashboard by deadline range
