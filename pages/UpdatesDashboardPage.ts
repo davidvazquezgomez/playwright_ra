@@ -77,6 +77,8 @@ export class UpdatesDashboardPage extends BasePage {
    * @returns Total item count reported by the All Updates table pager.
    */
   async getAllUpdatesItemCount(expectedItemCount?: number): Promise<number> {
+    await this.waitImplicit(5000);
+
     await expect.poll(
       async () => this.getKendoPagerItemCount(this.updatesPagerInfo),
       {

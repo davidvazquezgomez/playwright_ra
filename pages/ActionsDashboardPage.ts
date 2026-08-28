@@ -105,6 +105,8 @@ export class ActionsDashboardPage extends BasePage {
    * @returns Total item count reported by the All Actions table pager.
    */
   async getAllActionsItemCount(expectedItemCount?: number): Promise<number> {
+    await this.waitImplicit(5000);
+
     await expect.poll(
       async () => this.getKendoPagerItemCount(this.actionsPagerInfo),
       {

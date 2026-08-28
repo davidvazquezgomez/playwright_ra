@@ -193,7 +193,7 @@ Feature: Dashboard Analytics for Deloitte User
     When press the "Analytics" section
     Then the "Update Analytics" subsection is displayed
     When press the "Actions Analytics" subsection
-    Then the "Action Analytics" subsection is displayed
+    Then the "Actions Analytics" subsection is displayed
 
   @readOnly
   Scenario: TC016_02_DeloitteUser_DashboardAnalytics - Reset the filter Action Analytics page

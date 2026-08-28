@@ -63,7 +63,7 @@ Feature: Dashboard Analytics for Portal Admin
     Then save the value from the "Outstanding Updates" chart
     And save the value from the "Update Priority" chart
     When press "Filter" button on the Dashboard filter
-    When select "QaTest" located in the "Saved Filters" section on the Dashboard filter
+    When select "Test_Analytics" located in the "Saved Filters" section on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify the "Outstanding Updates" chart value is not the same
     And verify the "Update Priority" chart value is not the same
@@ -72,7 +72,7 @@ Feature: Dashboard Analytics for Portal Admin
   Scenario: TC014_06_PortalAdmin_DashboardAnalytics - Verify Outstanding Updates chart is updated after filtering
     Given the "Global Inc - Analytics Dashboard - Update Analytics" page is open
     Then verify the "Outstanding Updates" chart is displayed
-    And verify the "Outstanding Updates" chart contains the "<segment>" elements
+    And verify the "Outstanding Updates" chart contains the "UPDATE OVERDUE;< 30 DAYS TO EFFECTIVE DATE;> 30 DAYS TO EFFECTIVE DATE" elements
     And save the value from the "Outstanding Updates" chart
     When press "Filter" button on the Dashboard filter
     When select "High" in the "Priority" filter on the Dashboard filter
@@ -181,7 +181,7 @@ Feature: Dashboard Analytics for Portal Admin
     When press the "Analytics" section
     Then the "Update Analytics" subsection is displayed
     When press the "Actions Analytics" subsection
-    Then the "Action Analytics" subsection is displayed
+    Then the "Actions Analytics" subsection is displayed
 
   @readOnly
   Scenario: TC016_02_PortalAdmin_DashboardAnalytics - Reset the filter Action Analytics page
@@ -250,7 +250,7 @@ Feature: Dashboard Analytics for Portal Admin
   Scenario: TC016_06_PortalAdmin_DashboardAnalytics - Verify Outstanding Actions chart is updated after filtering
     Given the "Global Inc - Analytics Dashboard - Action Analytics" page is open
     Then verify the "Outstanding Actions" chart is displayed
-    And verify the "Outstanding Actions" chart contains the "UPDATE OVERDUE;< 30 DAYS TO EFFECTIVE DATE;>30 DAYS TO EFFECTIVE DATE" elements
+    And verify the "Outstanding Actions" chart contains the "ACTION OVERDUE;< 30 DAYS TO DEADLINE;> 30 DAYS TO DEADLINE" elements
     And save the value from the "Outstanding Actions" chart
     When press "Filter" button on the Dashboard filter
     When select "In progress" in the "Action Status" filter on the Dashboard filter
@@ -296,7 +296,7 @@ Feature: Dashboard Analytics for Portal Admin
   Scenario: TC017_01_PortalAdmin_DashboardAnalytics - Verify Data consistency between Actions Analytics Data and All Actions section
     Given the "Global Inc - Analytics Dashboard - Action Analytics" page is open
     Then verify the "Actions Analytics Data" chart is displayed
-    And verify "Update Title;Action;UserAssigned;Deadline Date; Update Priority; Action Priority; Action Status" column header is displayed in the "Global Inc - Analytics Dashboard - Action Analytics" page
+    And verify "Update Title;Action;User Assigned;Deadline Date; Update Priority; Action Priority; Action Status" column header is displayed in the "Global Inc - Analytics Dashboard - Action Analytics" page
     Then save the "Actions Analytics Data" items
     When press the "Actions" section
     Then the "All Actions" subsection is displayed
