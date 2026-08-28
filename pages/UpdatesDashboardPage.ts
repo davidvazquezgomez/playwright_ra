@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 
@@ -27,6 +28,17 @@ export class UpdatesDashboardPage extends BasePage {
     this.activeUpdateDetailsPanel().locator('..').getByRole('tab', { name: 'Attachments', exact: true });
   private readonly updateDetailsUploadFilesButton = () =>
     this.activeUpdateDetailsPanel().getByRole('button', { name: 'Upload files', exact: true });
+  private readonly updateDetailsAttachmentFileInput =
+    'kendo-tabstrip > [role="tabpanel"][aria-hidden="false"] app-attachments input[type="file"]';
+  private readonly updateDetailsAttachmentsGrid = () =>
+    this.activeUpdateDetailsPanel().locator('app-attachments').getByRole('grid', { name: 'Data table', exact: true });
+  private readonly updateDetailsAttachmentDocumentNameCell = (fileName: string) =>
+    this.updateDetailsAttachmentsGrid().locator('td[aria-colindex="1"]').getByText(fileName, { exact: true });
+  private readonly updateDetailsFirstAttachmentRemoveButton = () =>
+    this.updateDetailsAttachmentsGrid()
+      .locator('tbody tr.k-master-row')
+      .first()
+      .locator('button[title="Remove "]');
   private readonly updateDetailsMarkAsUnreadButton = () =>
     this._page.locator('app-update-details button.btn-unread-read');
   private readonly updateDetailsEditButton = 'button[title="Edit"]';
@@ -278,6 +290,36 @@ export class UpdatesDashboardPage extends BasePage {
    */
   async verifyUpdateDetailsUploadFilesButtonIsDisplayed(): Promise<void> {
     await expect(this.updateDetailsUploadFilesButton()).toBeVisible();
+  }
+
+  /**
+   * Uploads an attachment to the selected update.
+   * @param filePath Project-relative attachment path.
+   */
+  async uploadUpdateDetailsAttachment(filePath: string): Promise<void> {
+    await this.uploadFileFromHiddenInput(this.updateDetailsAttachmentFileInput, path.resolve(filePath));
+  }
+
+  /**
+   * Verifies whether an attachment is displayed in the selected update's Attachments tab.
+   * @param fileName Expected attachment file name.
+   * @param displayed Whether the attachment should be displayed.
+   */
+  async verifyUpdateDetailsAttachmentIsDisplayed(fileName: string, displayed: boolean): Promise<void> {
+    const attachment = this.updateDetailsAttachmentDocumentNameCell(fileName);
+    if (displayed) {
+      await expect(attachment.first()).toBeVisible();
+      return;
+    }
+
+    await expect(attachment).toHaveCount(0);
+  }
+
+  /**
+   * Removes the first attachment displayed in the selected update's Attachments tab.
+   */
+  async removeFirstUpdateDetailsAttachment(): Promise<void> {
+    await this.clickLocator(this.updateDetailsFirstAttachmentRemoveButton());
   }
 
   /**

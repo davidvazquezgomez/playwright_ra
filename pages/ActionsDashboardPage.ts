@@ -46,8 +46,6 @@ export class ActionsDashboardPage extends BasePage {
     this._page.locator(this.updateActionDialog).locator('app-attachments').getByRole('grid', { name: 'Data table', exact: true });
   private readonly attachmentDocumentNameCell = (fileName: string) =>
     this.attachmentsGrid().locator('td[aria-colindex="1"]').getByText(fileName, { exact: true });
-  private readonly firstAttachmentRow = () =>
-    this.attachmentsGrid().getByRole('row').nth(1);
   private readonly updateSearchResultByTitle = (title: string) =>
     this._page.getByRole('option', { name: title, exact: true }).first();
   private readonly userAssignedDropdown = `${this.addActionDialog} app-people-picker[formcontrolname="userAssigned"] kendo-dropdownlist[role="combobox"]`;
@@ -71,15 +69,6 @@ export class ActionsDashboardPage extends BasePage {
       .locator('tbody tr.k-master-row')
       .filter({
         has: this._page.locator('td[aria-colindex="1"]').getByText(updateTitle, { exact: true }),
-      })
-      .first()
-      .locator('td[aria-colindex="2"]');
-  private readonly updateTitleCellByUpdateTitle = (updateTitle: string) =>
-    this.actionsGrid()
-      .locator('tbody tr.k-master-row')
-      .filter({
-        has: this._page.locator('td[aria-colindex="1"]').getByText(updateTitle, { exact: true }),
-      })
       .first()
       .locator('td[aria-colindex="1"]');
   private readonly actionsPagerInfo = '.k-grid .k-pager-info';

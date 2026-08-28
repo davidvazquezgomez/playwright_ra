@@ -82,6 +82,22 @@ Then('verify the "Upload files" button is displayed in the "Update Details" Atta
   await updatesDashboardPage.verifyUpdateDetailsUploadFilesButtonIsDisplayed();
 });
 
+When('upload {string} attachment in the "Update Details" Attachments tab', async ({ updatesDashboardPage }, filePath: string) => {
+  await updatesDashboardPage.uploadUpdateDetailsAttachment(filePath);
+});
+
+Then('verify the {string} attachment is displayed in the "Attachments" section', async ({ updatesDashboardPage }, fileName: string) => {
+  await updatesDashboardPage.verifyUpdateDetailsAttachmentIsDisplayed(fileName, true);
+});
+
+When('press "Remove" button on the attachment', async ({ updatesDashboardPage }) => {
+  await updatesDashboardPage.removeFirstUpdateDetailsAttachment();
+});
+
+Then('verify the {string} attachment is not displayed in the "Attachments" section', async ({ updatesDashboardPage }, fileName: string) => {
+  await updatesDashboardPage.verifyUpdateDetailsAttachmentIsDisplayed(fileName, false);
+});
+
 When('open the "Update Actions" tab on the selected update', async ({ updatesDashboardPage }) => {
   await updatesDashboardPage.openUpdateActionsTab();
 });

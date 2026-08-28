@@ -331,7 +331,6 @@ Feature: Dashboard Actions for Client Admin
     And click on the first action in the "Update Actions" page
     Then the "Update Action" popup is displayed
     When open the "Attachments" tab in the "Update Action" popup
-    When open the "Attachments" tab in the "Update Action" popup
     When upload "<file path>" attachment in the "Update Action" popup
     Then a message should get displayed as "<expected message>"
     And verify "<name>" attachment is not displayed in the "Update Action" popup

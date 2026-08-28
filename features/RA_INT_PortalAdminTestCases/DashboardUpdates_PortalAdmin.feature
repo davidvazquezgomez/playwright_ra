@@ -134,12 +134,12 @@ Feature: Dashboard Updates for Portal Admin
     When search for "Increase to Industrial Accident Insurance Contribution Rate" update from the "Global Inc - Updates Dashboard" page
     Then open the first update in the "Global Inc - Updates Dashboard" page
     When press "Attachments" button
-    And click on "Upload files" option from the "Global Inc - Updates Dashboard" page
+    And upload "<file path>" attachment in the "Update Details" Attachments tab
     Then select a "<valid extension>" format file from "<file path>" and upload it
     And no upload error message is displayed
   #Borramos el attachment 
     When press "Remove" button on the attachment
-    Then verify the attachment is not displayed in the "Attachments" section
+    Then verify the "<name>" attachment is not displayed in the "Attachments" section
 
     Examples:
       | valid extension | file path              |
@@ -155,10 +155,10 @@ Feature: Dashboard Updates for Portal Admin
     When search for "Increase to Industrial Accident Insurance Contribution Rate" update from the "Global Inc - Updates Dashboard" page
     Then open the first update in the "Global Inc - Updates Dashboard" page
     When press "Attachments" button
-    And click on "Upload files" option from the "Global Inc - Updates Dashboard" page
+    And upload "<file path>" attachment in the "Update Details" Attachments tab
     When select a "<invalid extension>" format file from "<file path>" and upload it
     Then a message should get displayed as "<expected message>"
-    Then verify the attachment is not displayed in the "Attachments" section
+    Then verify the "<name>" attachment is not displayed in the "Attachments" section
 
     Examples:
       | invalid extension | file path                  | expected message                                                         | name             |

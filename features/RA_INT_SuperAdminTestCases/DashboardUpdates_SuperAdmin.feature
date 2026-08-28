@@ -134,12 +134,11 @@ Feature: Dashboard Updates for Super Admin
     When search for "Test_11-5_01" update from the "1_E2E_Test1 - Updates Dashboard" page
     Then open the first update in the "1_E2E_Test1 - Updates Dashboard" page
     When open the "Attachments" tab in the "Update Details" subsection
-    And click on "Upload files" option from the "Test_11-5_01" page
-    Then select a "<valid extension>" format file from "<file path>" and upload it
+    And upload "<file path>" attachment in the "Update Details" Attachments tab
     And verify the "<name>" attachment is displayed in the "Attachments" section
   #Borramos el attachment 
     When press "Remove" button on the attachment
-    Then verify the attachment is not displayed in the "Attachments" section
+    Then verify the "<name>" attachment is not displayed in the "Attachments" section
 
     Examples:
       | valid extension | file path              | name         |
@@ -156,7 +155,7 @@ Feature: Dashboard Updates for Super Admin
     When search for "Test_11-5_01" update from the "1_E2E_Test1 - Updates Dashboard" page
     Then open the first update in the "1_E2E_Test1 - Updates Dashboard" page
     When press "Attachments" button
-    And click on "Upload files" option from the "1_E2E_Test1 - Updates Dashboard" page
+    And upload "<file path>" attachment in the "Update Details" Attachments tab
     When select a "<invalid extension>" format file from "<file path>" and upload it
     Then a message should get displayed as "<expected message>"
     And verify the "<name>" attachment is not displayed in the "Attachments" section

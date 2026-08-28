@@ -176,10 +176,6 @@ When('upload {string} attachment in the "Update Action" popup', async ({ actions
   await actionsDashboardPage.uploadAttachment(filePath);
 });
 
-When('press "Remove" button on the attachment', async ({ actionsDashboardPage }) => {
-  await actionsDashboardPage.removeFirstAttachment();
-});
-
 Then('verify {string} attachment is displayed in the "Update Action" popup', async ({ actionsDashboardPage }, fileName: string) => {
   await actionsDashboardPage.verifyAttachmentIsDisplayed(fileName, true);
 });
