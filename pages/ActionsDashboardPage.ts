@@ -44,6 +44,8 @@ export class ActionsDashboardPage extends BasePage {
     `${this.updateActionDialog} app-attachments input[type="file"]`;
   private readonly attachmentsGrid = () =>
     this._page.locator(this.updateActionDialog).locator('app-attachments').getByRole('grid', { name: 'Data table', exact: true });
+  private readonly firstAttachmentRow = () =>
+    this.attachmentsGrid().locator('tbody tr.k-master-row').first();
   private readonly attachmentDocumentNameCell = (fileName: string) =>
     this.attachmentsGrid().locator('td[aria-colindex="1"]').getByText(fileName, { exact: true });
   private readonly updateSearchResultByTitle = (title: string) =>
@@ -69,8 +71,17 @@ export class ActionsDashboardPage extends BasePage {
       .locator('tbody tr.k-master-row')
       .filter({
         has: this._page.locator('td[aria-colindex="1"]').getByText(updateTitle, { exact: true }),
+      })
       .first()
       .locator('td[aria-colindex="1"]');
+  private readonly updateTitleCellByUpdateTitle = (updateTitle: string) =>
+    this.actionsGrid()
+      .locator('tbody tr.k-master-row')
+      .filter({
+        has: this._page.locator('td[aria-colindex="2"]').getByText(updateTitle, { exact: true }),
+      })
+      .first()
+      .locator('td[aria-colindex="2"]');
   private readonly actionsPagerInfo = '.k-grid .k-pager-info';
 
   /**
