@@ -74,7 +74,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
     Then verify the "Impact Area(s)" checkbox is still selected
     And verify the "Jurisdiction(s)" checkbox is still selected
     And verify "AND" is still selected in the "Operator" field
-    And verify "Allocation, QA" is still selected in the "Update Owner" field
+    And verify "Admin, QA" is still selected in the "Update Owner" field
     And verify "Admin, QA" is still selected in the "Update Watchlist" field
     When press "Save" button
     And confirm the duplicate automatic allocation if displayed
@@ -132,7 +132,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
     And click on the "Jurisdiction(s)" checkbox
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
-    And select the "Allocation, QA" option in the "Update Owner" field
+    And select the "Admin, QA" option in the "Update Owner" field
     And select the "Admin, QA" option in the "Update Watchlist" field
     And press "Back" button
     Then the "Unsaved Changes" popup is displayed
@@ -141,13 +141,13 @@ Feature: Automatic Allocation of Updates for Portal Admin
     Then verify the "Impact Area(s)" checkbox is still selected
     And verify the "Jurisdiction(s)" checkbox is still selected
     And verify "AND" is still selected in the "Operator" field
-    And verify "Allocation, QA" is still selected in the "Update Owner" field
+    And verify "Admin, QA" is still selected in the "Update Owner" field
     And verify "Admin, QA" is still selected in the "Update Watchlist" field
     When press "Save" button
     And confirm the duplicate automatic allocation if displayed
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation Setup" page
     And the "Automatic Allocation of Updates" page is displayed
-    And verify the "QaTest" allocation is present in the "Automatic Allocation of Updates" page
+    And verify the "Admin, QA" allocation is present in the "Automatic Allocation of Updates" page
     When click on "Remove Allocation" icon from the allocation "QaTest"
     Then the "Confirm Deletion" popup is displayed
     And press "Delete" button
