@@ -5,7 +5,6 @@ Feature: Notifications for Client User
     Given launch Regulatory Advantage application URL and login as "external" user "CLIENTUSER"
     And verify if applicable portals are displayed
 
-
   @mutable
   Scenario: TC002_1_ClientUser_Notifications - Verify Notifications Preferences at user level
     Given the "Notification Preferences" page is open
@@ -20,11 +19,11 @@ Feature: Notifications for Client User
     When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "disabled"
     And press "Cancel" button
     Then the "Unsaved Changes" popup is displayed
-    And press "Cancel" button on the "Unsaved Changes" popup
+    When press "Cancel" button on the "Unsaved Changes" popup
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
     When press "Profile" button
-    And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
+    Then verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
     Then the "Default Notifications Settings" page is displayed
     When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "enabled"
@@ -36,9 +35,8 @@ Feature: Notifications for Client User
     Given the "Notification Preferences" page is open
     When check "Select All" Check box under "System" option from "Updates" section if it is "unchecked"
     And check "Select All" Check box under "Email" option from "Updates" section if it is "unchecked"
-    And check "Select All" Check box under "Lock Settings" option from "Updates" section if it is "unchecked"
     When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
-    Then select the frequency option "Daily" located under "Periodic Summary of Updates and Actions via email?" section
+    And select the frequency option "Daily" located under "Periodic Summary of Updates and Actions via email?" section
     When press "Update Portal" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
 
@@ -46,10 +44,12 @@ Feature: Notifications for Client User
   Scenario: TC003_2_ClientUser_Notifications - Verify triggered notifications for updates
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "Updates Dashboard - ClientPortal_20260209133616" page
-    Then open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
-    When press "Edit" button on the selected update
+    And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
+    And press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
-    Then select "Awaiting Allocation" option in the "Status" field in the "Update Details" subsection
+    When select "Awaiting Allocation" option in the "Status" field in the "Update Details" subsection
+    And select "ECA, test" in the "User Assigned" field on the selected update
+    And toggle the selected update priority between "High" and "Medium"
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Notifications" button
@@ -63,19 +63,19 @@ Feature: Notifications for Client User
     Given the "Notification Preferences" page is open
     When check "Select All" Check box under "System" option from "Updates" section if it is "checked"
     And check "Select All" Check box under "Email" option from "Updates" section if it is "checked"
-    And check "Select All" Check box under "Lock Settings" option from "Updates" section if it is "checked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
-    When press "Update Portal" button
+    And press "Update Portal" button
     Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC003_4_ClientUser_Notifications - Verify triggered notifications for updates
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "Updates Dashboard - ClientPortal_20260209133616" page
-    Then open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
-    When press "Edit" button on the selected update
+    And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
+    And press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
-    And select "Update Allocated" option in the "Status" field in the "Update Details" subsection
+    When select "Update Allocated" option in the "Status" field in the "Update Details" subsection
+    And toggle the selected update priority between "High" and "Medium"
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Notifications" button
@@ -89,19 +89,18 @@ Feature: Notifications for Client User
     Given the "Notification Preferences" page is open
     When check "Select All" Check box under "System" option from "Actions" section if it is "unchecked"
     And check "Select All" Check box under "Email" option from "Actions" section if it is "unchecked"
-    And check "Select All" Check box under "Lock Settings" option from "Actions" section if it is "unchecked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
-    When press "Update Portal" button
+    And press "Update Portal" button
     Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC004_2_ClientUser_Notifications - Verify triggered notifications for actions
     Given the "ClientPortal_20260209133616 - Actions Dashboard" page is open
     When search for "People Law" update from the "Updates Dashboard - ClientPortal_20260209133616" page
-    Then open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
-    And the "Update Action" popup is displayed
+    And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
+    Then the "Update Action" popup is displayed
     When select "Not Started" option in the "Status" field in the "Update Action" popup
-    Then select "High" option in the "Priority" field in the "Update Action" popup
+    And toggle the selected action priority between "High" and "Medium"
     And press "Update" button in the "Update Action" popup
     Then verify "Action updated successfully" toast message is displayed in the "ClientPortal_20260209133616 - Actions Dashboard" page
     When press "Notifications" button
@@ -115,20 +114,20 @@ Feature: Notifications for Client User
     Given the "Notification Preferences" page is open
     When check "Select All" Check box under "System" option from "Actions" section if it is "checked"
     And check "Select All" Check box under "Email" option from "Actions" section if it is "checked"
-    And check "Select All" Check box under "Lock Settings" option from "Actions" section if it is "checked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
-    When press "Update Portal" button
+    And press "Update Portal" button
     Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC004_4_ClientUser_Notifications - Verify triggered notifications for Actions
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
-    And the "ClientPortal_20260209133616 - Updates Dashboard" page is displayed
+    Then the "ClientPortal_20260209133616 - Updates Dashboard" page is displayed
     When search for "People Law" update from the "Updates Dashboard - ClientPortal_20260209133616" page
-    Then open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
-    When press "Edit" button on the selected update
-    When select "In Progress" option in the "Status" field in the "Update Details" subsection
-    Then select "Medium" option in the "Priority" field in the "Update Details" subsection
+    And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
+    And press "Edit" button on the selected update
+    And select "ECA, test" in the "User Assigned" field on the selected update
+    And select "In Progress" option in the "Status" field in the "Update Details" subsection
+    And toggle the selected update priority between "High" and "Medium"
     When press "Save" button on the selected update
     Then verify "Action updated successfully" toast message is displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Notifications" button
@@ -136,5 +135,3 @@ Feature: Notifications for Client User
     When press "View All" button
     Then the "Notification Listing" page is displayed
     And verify there are no system notifications
-
- 

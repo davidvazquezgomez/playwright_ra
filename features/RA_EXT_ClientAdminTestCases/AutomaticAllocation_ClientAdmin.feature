@@ -1,4 +1,4 @@
-﻿@AutomaticAllocation @AutomaticAllocation_ClientAdmin
+@AutomaticAllocation @AutomaticAllocation_ClientAdmin
 Feature: Automatic Allocation of Updates for Client Admin
 
   Background:
@@ -34,7 +34,7 @@ Feature: Automatic Allocation of Updates for Client Admin
   @mutable
   Scenario: TC001_03_ClientAdmin_AutomaticAllocation - Verify warning message validations before creating a new allocation
     Given the "Automatic Allocation Setup - 01_QA_StageTestPortal" page is open
-    And verify "Allocation Name;Impact Area(s);Jurisdiction(s);Allocate Update To;Update Owner;Update Watchlist" form fields are displayed in the Automatic Allocation Setup page
+    Then verify "Allocation Name;Impact Area(s);Jurisdiction(s);Allocate Update To;Update Owner;Update Watchlist" form fields are displayed in the Automatic Allocation Setup page
     When press "Save" button
     Then verify "Allocation Name is required; At least one option (Impact Area or Jurisdiction) must be selected.;Update Owner is required." field errors are displayed in the Automatic Allocation Setup page
     When fill the "Allocation Name" field with "QaTest"
@@ -52,9 +52,9 @@ Feature: Automatic Allocation of Updates for Client Admin
   @mutable @cleanup
   Scenario: TC001_04_ClientAdmin_AutomaticAllocation - Create and delete an allocation with the Cancel button
     Given the "Automatic Allocation of Updates - 01_QA_StageTestPortal" page is open
-    And remove the "QaTest" allocation if it exists
+    When remove the "QaTest" allocation if it exists
     And register cleanup to remove the "QaTest" allocation from portal "01_QA_StageTestPortal"
-    Then press "Create New Allocation" button
+    And press "Create New Allocation" button
     And the "Automatic Allocation Setup" page is displayed
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
@@ -62,8 +62,8 @@ Feature: Automatic Allocation of Updates for Client Admin
     And click on the "Jurisdiction(s)" checkbox
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
-    Then select the "satestclientuser2, satestclientuser2" option in the "Update Owner" field
-    Then select the "satestclientuser2, satestclientuser2" option in the "Update Watchlist" field
+    And select the "satestclientuser2, satestclientuser2" option in the "Update Owner" field
+    When select the "satestclientuser2, satestclientuser2" option in the "Update Watchlist" field
     And press "Cancel" button
     Then the "Unsaved Changes" popup is displayed
     And the popup message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
@@ -81,7 +81,7 @@ Feature: Automatic Allocation of Updates for Client Admin
     And verify the "QaTest" allocation is present in the "Automatic Allocation of Updates" page
     When click on "Remove Allocation" icon from the allocation "QaTest"
     Then the "Confirm Deletion" popup is displayed
-    And press "Delete" button
+    When press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
 
   @readOnly
@@ -120,9 +120,9 @@ Feature: Automatic Allocation of Updates for Client Admin
   @mutable @cleanup
   Scenario: TC001_07_ClientAdmin_AutomaticAllocation - Create and delete an allocation with the Back button
     Given the "Automatic Allocation of Updates - 01_QA_StageTestPortal" page is open
-    And remove the "QaTest" allocation if it exists
+    When remove the "QaTest" allocation if it exists
     And register cleanup to remove the "QaTest" allocation from portal "01_QA_StageTestPortal"
-    Then press "Create New Allocation" button
+    And press "Create New Allocation" button
     And the "Automatic Allocation Setup" page is displayed
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
@@ -148,22 +148,22 @@ Feature: Automatic Allocation of Updates for Client Admin
     And verify the "QaTest" allocation is present in the "Automatic Allocation of Updates" page
     When click on "Remove Allocation" icon from the allocation "QaTest"
     Then the "Confirm Deletion" popup is displayed
-    And press "Delete" button
+    When press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
 
   @mutable @cleanup
   Scenario: TC003_01_ClientAdmin_AutomaticAllocation - Use multiple Jurisdiction and Impact Area selections
     Given the "Automatic Allocation of Updates - 01_QA_StageTestPortal" page is open
-    And remove the "QaTest" allocation if it exists
+    When remove the "QaTest" allocation if it exists
     And register cleanup to remove the "QaTest" allocation from portal "01_QA_StageTestPortal"
-    Then press "Create New Allocation" button
+    And press "Create New Allocation" button
     And the "Automatic Allocation Setup" page is displayed
     When fill the "Allocation Name" field with "QaTest"
-    Then click on the "Impact Area(s)" checkbox
-    And select the "Select All" option in the "Impact Area(s)" field
+    And click on the "Impact Area(s)" checkbox
+    When select the "Select All" option in the "Impact Area(s)" field
     When click on the "Jurisdiction(s)" checkbox
-    Then select the "Select All" option in the "Jurisdiction(s)" field
-    And select the "AND" option in the "Operator" field
+    And select the "Select All" option in the "Jurisdiction(s)" field
+    When select the "AND" option in the "Operator" field
     And select the "satestclientuser2, satestclientuser2" option in the "Update Owner" field
     And press "Save" button
     And confirm the duplicate automatic allocation if displayed
@@ -172,15 +172,15 @@ Feature: Automatic Allocation of Updates for Client Admin
     And verify the "QaTest" allocation is present in the "Automatic Allocation of Updates" page
     When click on "Remove Allocation" icon from the allocation "QaTest"
     Then the "Confirm Deletion" popup is displayed
-    And press "Delete" button
+    When press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
 
   @mutable @cleanup
   Scenario: TC004_01_ClientAdmin_AutomaticAllocation - Create and delete an allocation using a team
     Given the "Automatic Allocation of Updates - 01_QA_StageTestPortal" page is open
-    And remove the "QaTest" allocation if it exists
+    When remove the "QaTest" allocation if it exists
     And register cleanup to remove the "QaTest" allocation from portal "01_QA_StageTestPortal"
-    Then press "Create New Allocation" button
+    And press "Create New Allocation" button
     And the "Automatic Allocation Setup" page is displayed
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
@@ -189,7 +189,7 @@ Feature: Automatic Allocation of Updates for Client Admin
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
     And select the "satestclientuser2, satestclientuser2" option in the "Update Owner" field
-    And verify "satestclientuser2, satestclientuser2" is still selected in the "Update Owner" field
+    Then verify "satestclientuser2, satestclientuser2" is still selected in the "Update Owner" field
     When select the "satestclientuser2, satestclientuser2" option in the "Update Owner" field
     And press "Save" button
     And confirm the duplicate automatic allocation if displayed
@@ -198,15 +198,15 @@ Feature: Automatic Allocation of Updates for Client Admin
     And verify the "QaTest" allocation is present in the "Automatic Allocation of Updates" page
     When click on "Remove Allocation" icon from the allocation "QaTest"
     Then the "Confirm Deletion" popup is displayed
-    And press "Delete" button
+    When press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
 
   @mutable @cleanup
   Scenario: TC005_ClientAdmin_AutomaticAllocation - Verify warning message for duplicate allocations
     Given the "Automatic Allocation of Updates - 01_QA_StageTestPortal" page is open
-    And remove the "QaTest2" allocation if it exists
+    When remove the "QaTest2" allocation if it exists
     And register cleanup to remove the "QaTest2" allocation from portal "01_QA_StageTestPortal"
-    Then press "Create New Allocation" button
+    And press "Create New Allocation" button
     And the "Automatic Allocation Setup" page is displayed
     When fill the "Allocation Name" field with "QaTest2"
     And click on the "Impact Area(s)" checkbox
@@ -225,5 +225,5 @@ Feature: Automatic Allocation of Updates for Client Admin
     And verify the "QaTest2" allocation is present in the "Automatic Allocation of Updates" page
     When click on "Remove Allocation" icon from the allocation "QaTest2"
     Then the "Confirm Deletion" popup is displayed
-    And press "Delete" button
+    When press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page

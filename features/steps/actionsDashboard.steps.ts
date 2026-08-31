@@ -116,6 +116,13 @@ When('select {string} option in the {string} field in the "Update Action" popup'
   await actionsDashboardPage.selectUpdateActionOption(option, fieldName);
 });
 
+When(
+  'toggle the selected action priority between {string} and {string}',
+  async ({ actionsDashboardPage }, firstPriority: string, secondPriority: string) => {
+    await actionsDashboardPage.toggleSelectedActionPriority(firstPriority, secondPriority);
+  },
+);
+
 When('press "Update" button in the "Update Action" popup', async ({ actionsDashboardPage }) => {
   await actionsDashboardPage.updateAction();
 });

@@ -1,4 +1,4 @@
-﻿@Overview @Overview_TeamMember
+@Overview @Overview_TeamMember
 Feature: Overview for Team Member
 
   Background:
@@ -17,7 +17,7 @@ Feature: Overview for Team Member
     When click on view as grid or card and verify view as grid or card
     Then verify for view as grid or card is displayed and save as favorite option is visible
     When restore the initial overview view
-    And verify for "open dashboard" button is visible
+    Then verify for "open dashboard" button is visible
     And verify if "Deloitte label;Application Name;Ask Deloitte;Notifications bell;Profile" are displayed on the Overview page
     And verify if "Disclaimer;Privacy;Terms of use;OSS Attribution;Cookie;Cookie Settings" are displayed on the Overview page
 
@@ -51,6 +51,6 @@ Feature: Overview for Team Member
     And verify for view as grid or card is displayed and save as favorite option is visible
     And is selected and the star is "not" filled by default
     When press "favorite icon" button
-    And verify for view as grid or card is displayed and save as favorite option is visible
+    Then verify for view as grid or card is displayed and save as favorite option is visible
     And is selected and the star is "" filled by default
     When restore the initial overview view

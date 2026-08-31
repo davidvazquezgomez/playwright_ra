@@ -1,4 +1,4 @@
-﻿@UploadUpdates @UploadUpdates_SuperAdmin
+@UploadUpdates @UploadUpdates_SuperAdmin
 Feature: Upload Updates for Super Admin
 
   Background:
@@ -28,7 +28,7 @@ Feature: Upload Updates for Super Admin
     When click on "Upload files" option from the Upload Updates page
     When select a "xlsx" format file from "test-data/valid.xlsx" and upload it
     And select on option "No" in "Show updates to all applicable clients?" field
-    And a message should get displayed as "Affected Clients"
+    Then a message should get displayed as "Affected Clients"
     When user click over the "Select Client" dropdown list
     And user select "Global Inc" client from the dropdown list by clicking on the check-box
     Then the selected client "Global Inc" must get added in the Affected clients list
@@ -49,7 +49,7 @@ Feature: Upload Updates for Super Admin
       | xls             | test-data/valid.xls  |
       | xlsx            | test-data/valid.xlsx |
 
-  @readOnly
+    @mutable
   Scenario Outline: TC004_SuperAdmin_UploadUpdates - Verify validation messages for invalid XLSX content
     When click on "Menu" option from the left navigation
     Then verify it displays "Upload Updates" option from the left navigation
@@ -57,7 +57,7 @@ Feature: Upload Updates for Super Admin
     When click on "Upload files" option from the Upload Updates page
     When select a "xlsx" format file from "<wrong content file>" and upload it
     And select on option "No" in "Show updates to all applicable clients?" field
-    And a message should get displayed as "Affected Clients"
+    Then a message should get displayed as "Affected Clients"
     When user click over the "Select Client" dropdown list
     Then user select "01_13Jan REG" client from the dropdown list by clicking on the check-box
     And the selected client "01_13Jan REG" must get added in the Affected clients list
@@ -94,10 +94,10 @@ Feature: Upload Updates for Super Admin
     When click on "Menu" option from the left navigation
     Then verify it displays "Upload Updates" option from the left navigation
     When click on "Upload Updates" option from the left navigation
-    Then click on "Upload files" option from the Upload Updates page
-    And select a "xlsx" format file from "<wrong content file>" and upload it
+    And click on "Upload files" option from the Upload Updates page
+    When select a "xlsx" format file from "<wrong content file>" and upload it
     And select on option "No" in "Show updates to all applicable clients?" field
-    And a message should get displayed as "Affected Clients"
+    Then a message should get displayed as "Affected Clients"
     When user click over the "Select Client" dropdown list
     Then user select "01_13Jan REG" client from the dropdown list by clicking on the check-box
     And the selected client "01_13Jan REG" must get added in the Affected clients list

@@ -1,4 +1,4 @@
-﻿@UserManagement @UserManagement_PortalAdmin
+@UserManagement @UserManagement_PortalAdmin
 Feature: User Management for Portal Admin
 
   Background:
@@ -12,9 +12,9 @@ Feature: User Management for Portal Admin
     When click on "User Management" option from the left navigation
     Then the "User Management" page is displayed
     And verify "<sections>" tabs are displayed in "User Management" page
-    And press the "<sections>" section
-    And verify "<buttons>" buttons are displayed in the User Management page
-    # MÃ©todo especÃ­fico en User Management por la casuÃ­stica de que el botÃ³n EXPORT USERS tiene un espacio inicial
+    When press the "<sections>" section
+    Then verify "<buttons>" buttons are displayed in the User Management page
+    # MÃƒÂ©todo especÃƒÂ­fico en User Management por la casuÃƒÂ­stica de que el botÃƒÂ³n EXPORT USERS tiene un espacio inicial
     Then verify items are sorted in "ascending" order by "User Name" in the "User Management" page by default
 
     Examples:
@@ -136,17 +136,17 @@ Feature: User Management for Portal Admin
     When press the "Non-Deloitte Users" section
     When press "Add New Users" button
     Then the "Add Non-Deloitte User" pop up is displayed with the title "Add Non-Deloitte User"
-    And enter ",.-Â´Ã§`+'Â¡" in the "First Name" field
-    And enter ",.-Â´Ã§`+'Â¡" in the "Last Name" field
+    When enter ",.-Ã‚Â´ÃƒÂ§`+'Ã‚Â¡" in the "First Name" field
+    And enter ",.-Ã‚Â´ÃƒÂ§`+'Ã‚Â¡" in the "Last Name" field
     And enter "invalid-email" in the "Email" field
     When press "Save" button
     Then verify the warning message "Please enter a valid email address" for fields "Email" is displayed
-    And enter "example@example.com" in the "Email" field
-    And enter ",.-Â´Ã§`+'Â¡" in the "Company Name" field
+    When enter "example@example.com" in the "Email" field
+    And enter ",.-Ã‚Â´ÃƒÂ§`+'Ã‚Â¡" in the "Company Name" field
     When press "Save" button
     Then verify "Error inviting external user. Given Name contains invalid characters. Only letters, numbers, spaces, apostrophes (straight/curly/backtick), hyphens, periods, and square brackets are allowed" toast message is displayed in the "User Management" page
-    And search for "example@example.com" in the User Management table "Email" field
-    And verify the user "example@example.com" is not displayed in the table
+    When search for "example@example.com" in the User Management table "Email" field
+    Then verify the user "example@example.com" is not displayed in the table
 
   @readOnly
   Scenario Outline: TC002_07_PortalAdmin_UserManagement - Verify user is able to export Non-Deloitte Users and Admins
@@ -185,8 +185,8 @@ Feature: User Management for Portal Admin
     When press "Delete Selected Users" button
     And press "Confirm" button
     Then verify "Selected user deleted successfully" toast message is displayed in the "User Management" page
-    And search for "br.dtt@deloitte.com" in the User Management table "Email" field
-    And verify the user "br.dtt@deloitte.com" is not displayed in the table
+    When search for "br.dtt@deloitte.com" in the User Management table "Email" field
+    Then verify the user "br.dtt@deloitte.com" is not displayed in the table
 
   @mutable @cleanup
   Scenario: TC003_02_PortalAdmin_UserManagement - Delete the Non-Deloitte User without associations
@@ -197,8 +197,8 @@ Feature: User Management for Portal Admin
     When press "Delete Selected Users" button
     And press "Confirm" button
     Then verify "Selected user deleted successfully" toast message is displayed in the "User Management" page
-    And search for "qa.user@example.com" in the User Management table "Email" field
-    And verify the user "qa.user@example.com" is not displayed in the table
+    When search for "qa.user@example.com" in the User Management table "Email" field
+    Then verify the user "qa.user@example.com" is not displayed in the table
 
   @mutable @cleanup
   Scenario: TC003_03_PortalAdmin_UserManagement - Delete the Non-Deloitte Admin assigned to an existing team
@@ -219,17 +219,17 @@ Feature: User Management for Portal Admin
     When press "Delete Selected User" button
     Then the "Delete User" pop up is displayed with the title "Delete User"
     When press "Cancel" button
-    Then search for "qa.admin@example.com" in the User Management table "Email" field
-    And verify the user "qa.admin@example.com" is displayed in the table
-    And select the user "qa.admin@example.com" from the table
+    And search for "qa.admin@example.com" in the User Management table "Email" field
+    Then verify the user "qa.admin@example.com" is displayed in the table
+    When select the user "qa.admin@example.com" from the table
     When press "Delete Selected User" button
     And select "sonigour, audit" as the replacement user
     And press "Next" button
     And press "Reassign" button
     And press "Confirm Deletion" button
     Then verify "Selected user deleted successfully" toast message is displayed in the "User Management" page
-    And search for "qa.admin@example.com" in the User Management table "Email" field
-    And verify the user "qa.admin@example.com" is not displayed in the table
+    When search for "qa.admin@example.com" in the User Management table "Email" field
+    Then verify the user "qa.admin@example.com" is not displayed in the table
     When click on "Team Management" option from the left navigation
     And search for "01_QA_UserManagement" in the Team Name field
     Then verify the user "QA, Admin" is not available in the team leaders
@@ -253,14 +253,14 @@ Feature: User Management for Portal Admin
     When press "Delete Selected Users" button
     Then the "Delete User" pop up is displayed with the title "Delete User"
     When press "Cancel" button
-    Then search for "qa.allocation@example.com" in the User Management table "Email" field
-    And verify the user "qa.allocation@example.com" is displayed in the table
-    And select the user "qa.allocation@example.com" from the table
+    And search for "qa.allocation@example.com" in the User Management table "Email" field
+    Then verify the user "qa.allocation@example.com" is displayed in the table
+    When select the user "qa.allocation@example.com" from the table
     When press "Delete Selected Users" button
     And select "sonigour, audit" as the replacement user
     And press "Next" button
     And press "Reassign" button
     And press "Confirm Deletion" button
     Then verify "Selected user deleted successfully" toast message is displayed in the "User Management" page
-    And search for "qa.allocation@example.com" in the User Management table "Email" field
-    And verify the user "qa.allocation@example.com" is not displayed in the table
+    When search for "qa.allocation@example.com" in the User Management table "Email" field
+    Then verify the user "qa.allocation@example.com" is not displayed in the table

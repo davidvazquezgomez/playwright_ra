@@ -131,6 +131,19 @@ export class UpdatesDashboardPage extends BasePage {
   }
 
   /**
+   * Alternates the selected update priority between two values to guarantee a form change.
+   * @param firstPriority One of the two priority values to alternate.
+   * @param secondPriority The other priority value to alternate.
+   */
+  async toggleSelectedUpdatePriority(firstPriority: string, secondPriority: string): Promise<void> {
+    const priorityDropdown = this.getUpdateDetailsDropdown('Priority');
+    const currentPriority = (await priorityDropdown.locator('.k-input-value-text').innerText()).trim();
+    const nextPriority = currentPriority === firstPriority ? secondPriority : firstPriority;
+
+    await this.selectUpdateDetailsOption(nextPriority, 'Priority');
+  }
+
+  /**
    * Marks the selected update as unread.
    */
   async markSelectedUpdateAsUnread(): Promise<void> {

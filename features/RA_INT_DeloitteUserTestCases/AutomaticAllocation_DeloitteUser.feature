@@ -1,4 +1,4 @@
-﻿@AutomaticAllocation @AutomaticAllocation_DeloitteUser
+@AutomaticAllocation @AutomaticAllocation_DeloitteUser
 Feature: Automatic Allocation of Updates for Deloitte User
 
   Background:
@@ -10,5 +10,5 @@ Feature: Automatic Allocation of Updates for Deloitte User
     Given the "Automatic Allocation of Updates - 01_13Jan REG" page is open
     When click on "Remove Allocation" icon from the first allocation
     Then the "Confirm Deletion" popup is displayed
-    And press "Delete" button
+    When press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page

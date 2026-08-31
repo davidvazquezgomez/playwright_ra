@@ -24,6 +24,13 @@ When('press "Save" button on the selected update', async ({ updatesDashboardPage
   await updatesDashboardPage.saveSelectedUpdate();
 });
 
+When(
+  'toggle the selected update priority between {string} and {string}',
+  async ({ updatesDashboardPage }, firstPriority: string, secondPriority: string) => {
+    await updatesDashboardPage.toggleSelectedUpdatePriority(firstPriority, secondPriority);
+  },
+);
+
 When('press "Mark as Unread" button on the selected update', async ({ updatesDashboardPage }) => {
   await updatesDashboardPage.markSelectedUpdateAsUnread();
 });

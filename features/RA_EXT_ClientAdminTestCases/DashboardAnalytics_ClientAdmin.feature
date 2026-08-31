@@ -34,7 +34,7 @@ Feature: Dashboard Analytics for Client Admin
   @readOnly
   Scenario: TC014_03_ClientAdmin_DashboardAnalytics - Apply a predefined filter
     Given the "01_QA_StageTestPortal - Analytics Dashboard - Update Analytics" page is open
-    Then press "Clear all filters" section on the Dashboard filter if available
+    When press "Clear all filters" section on the Dashboard filter if available
     Then save the value from the "Outstanding Updates" chart
     And save the value from the "Update Priority" chart
     When press "Filter" button on the Dashboard filter
@@ -54,8 +54,8 @@ Feature: Dashboard Analytics for Client Admin
     When select "Update Allocated" in the "Status" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify the "Name Filter" modal is displayed on the Dashboard filter
-    And press "Save filter" button on the Dashboard filter
-    And verify "Filter Name is required." error message appears on the Dashboard filter
+    When press "Save filter" button on the Dashboard filter
+    Then verify "Filter Name is required." error message appears on the Dashboard filter
     When fill "QaTest" in the "Filter Name" field on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify "Filter saved successfully." toast message is displayed in the "Analytics Dashboard" page
@@ -63,7 +63,7 @@ Feature: Dashboard Analytics for Client Admin
   @readOnly
   Scenario: TC014_05_ClientAdmin_DashboardAnalytics - Apply a customized filter
     Given the "01_QA_StageTestPortal - Analytics Dashboard - Update Analytics" page is open
-    Then press "Clear all filters" section on the Dashboard filter if available
+    When press "Clear all filters" section on the Dashboard filter if available
     Then save the value from the "Outstanding Updates" chart
     And save the value from the "Update Priority" chart
     When press "Filter" button on the Dashboard filter
@@ -75,7 +75,7 @@ Feature: Dashboard Analytics for Client Admin
   @readOnly
   Scenario: TC014_06_ClientAdmin_DashboardAnalytics - Verify Outstanding Updates chart is updated after filtering
     Given the "01_QA_StageTestPortal - Analytics Dashboard - Update Analytics" page is open
-    Then press "Clear all filters" section on the Dashboard filter if available
+    When press "Clear all filters" section on the Dashboard filter if available
     Then verify the "Outstanding Updates" chart is displayed
     And verify the "Outstanding Updates" chart contains the "UPDATE OVERDUE;< 30 DAYS TO EFFECTIVE DATE;> 30 DAYS TO EFFECTIVE DATE" elements
     And save the value from the "Outstanding Updates" chart
@@ -100,7 +100,7 @@ Feature: Dashboard Analytics for Client Admin
   @mutable
   Scenario: TC014_09_ClientAdmin_DashboardAnalytics - Verify Update Priority chart is updated after filtering
     Given the "01_QA_StageTestPortal - Analytics Dashboard - Update Analytics" page is open
-    Then press "Clear all filters" section on the Dashboard filter if available
+    When press "Clear all filters" section on the Dashboard filter if available
     Then verify the "Update Priority" chart is displayed
     And verify the "Update Priority" chart contains the "HIGH PRIORITY UPDATES;MEDIUM PRIORITY UPDATES;LOW PRIORITY UPDATES" elements
     And save the value from the "Update Priority" chart
@@ -125,8 +125,8 @@ Feature: Dashboard Analytics for Client Admin
     Then verify the "Update Analytics Data" chart is displayed
     When open the first filtered update result in the "Update Analytics Data" table
     Then the "People Law" page is displayed
-    And press the "Update Details" subsection
-    And verify the "Update Details" subsection displays the "User Assigned; Priority; Status;Summary; Deloitte View; Supporting References; Tags; Related updates; Watch List; Discussion; Jurisdiction; Impact Area; Date Announced; Date Effective;Regulator;Level of Authority;Status of Change" sections
+    When press the "Update Details" subsection
+    Then verify the "Update Details" subsection displays the "User Assigned; Priority; Status;Summary; Deloitte View; Supporting References; Tags; Related updates; Watch List; Discussion; Jurisdiction; Impact Area; Date Announced; Date Effective;Regulator;Level of Authority;Status of Change" sections
     And verify the "Update Details" subsection displays the "satestclientuser2, satestclientuser2;High;Update Allocated;;Annual social security rates and wage limits were updated for the 2025 tax year. Employers should review their payroll systems to ensure that the new rates and caps are being properly applied.;1;1;0;2;0;0;Brazil;Employer tax reporting/filing requirements;01 Jul 2028;01 Sep 2028;Tax;Legislative/Binding;Final" values
     And verify the "Update Details" subsection displays the "Mark as Unread;Edit;Comment" buttons
     When open the "Attachments" tab in the "Update Details" subsection
@@ -135,14 +135,14 @@ Feature: Dashboard Analytics for Client Admin
   @mutable
   Scenario: TC015_03_ClientAdmin_DashboardAnalytics - Verify Update Analytics Data chart is updated after filtering
     Given the "01_QA_StageTestPortal - Analytics Dashboard - Update Analytics" page is open
-    Then press "Clear all filters" section on the Dashboard filter if available
+    When press "Clear all filters" section on the Dashboard filter if available
     Then verify the "Update Analytics Data" chart is displayed
     When press "Filter" button on the Dashboard filter
     And select "High" in the "Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then save the "Update Analytics Data" items
     When press the "Updates" section
-    And the "All Updates" subsection is displayed
+    Then the "All Updates" subsection is displayed
     Then verify the "All Updates" table contains the same number of items as the "Update Analytics Data" chart
 
   @readOnly
@@ -176,8 +176,8 @@ Feature: Dashboard Analytics for Client Admin
     When navigate to page "4" in the "Update Analytics Data" table
     Then verify that the first result that appears is number "31"
     When press the "Updates" section
-    Then press the "Analytics" section
-    And verify that the first result that appears is number "31"
+    And press the "Analytics" section
+    Then verify that the first result that appears is number "31"
 
   @readOnly
   Scenario: TC016_01_ClientAdmin_DashboardAnalytics - Navigate to Action Analytics page
@@ -207,7 +207,7 @@ Feature: Dashboard Analytics for Client Admin
   @readOnly
   Scenario: TC016_03_ClientAdmin_DashboardAnalytics - Apply a predefined filter Action Analytics page
     Given the "01_QA_StageTestPortal - Analytics Dashboard - Action Analytics" page is open
-    Then press "Clear all filters" section on the Dashboard filter if available
+    When press "Clear all filters" section on the Dashboard filter if available
     Then save the value from the "Outstanding Actions" chart
     And save the value from the "Action Priority" chart
     And save the value from the "Completed Actions" chart
@@ -227,8 +227,8 @@ Feature: Dashboard Analytics for Client Admin
     When select "Alam, Asjad" in the "User Assigned" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify the "Name Filter" modal is displayed on the Dashboard filter
-    And press "Save filter" button on the Dashboard filter
-    And verify "Filter Name is required." error message appears on the Dashboard filter
+    When press "Save filter" button on the Dashboard filter
+    Then verify "Filter Name is required." error message appears on the Dashboard filter
     When fill "QaTest" in the "Filter Name" field on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify "Filter saved successfully." toast message is displayed in the "Analytics Dashboard" page
@@ -236,7 +236,7 @@ Feature: Dashboard Analytics for Client Admin
   @readOnly
   Scenario: TC016_05_ClientAdmin_DashboardAnalytics - Apply a customized filter Action Analytics page
     Given the "01_QA_StageTestPortal - Analytics Dashboard - Action Analytics" page is open
-    Then press "Clear all filters" section on the Dashboard filter if available
+    When press "Clear all filters" section on the Dashboard filter if available
     Then save the value from the "Outstanding Actions" chart
     And save the value from the "Action Priority" chart
     And save the value from the "Completed Actions" chart
@@ -250,7 +250,7 @@ Feature: Dashboard Analytics for Client Admin
   @readOnly
   Scenario: TC016_06_ClientAdmin_DashboardAnalytics - Verify Outstanding Actions chart is updated after filtering
     Given the "01_QA_StageTestPortal - Analytics Dashboard - Action Analytics" page is open
-    Then press "Clear all filters" section on the Dashboard filter if available
+    When press "Clear all filters" section on the Dashboard filter if available
     Then verify the "Outstanding Actions" chart is displayed
     And verify the "Outstanding Actions" chart contains the "ACTION OVERDUE;< 30 DAYS TO DEADLINE;> 30 DAYS TO DEADLINE" elements
     And save the value from the "Outstanding Actions" chart
@@ -263,7 +263,7 @@ Feature: Dashboard Analytics for Client Admin
   Scenario: TC016_08_ClientAdmin_DashboardAnalytics - Verify Outstanding Actions Map controls
     Given the "01_QA_StageTestPortal - Analytics Dashboard - Action Analytics" page is open
     Then verify the "Outstanding Actions Map" chart is displayed
-    And press "Save visuals as PDF" map control
+    When press "Save visuals as PDF" map control
     When press "Reset Zoom" map control
     When press "Zoom In" map control
     When press "Zoom Out" map control
@@ -275,7 +275,7 @@ Feature: Dashboard Analytics for Client Admin
   @mutable
   Scenario: TC016_09_ClientAdmin_DashboardAnalytics - Verify Action Priority chart is updated after filtering on the Action Analytics page
     Given the "01_QA_StageTestPortal - Analytics Dashboard - Action Analytics" page is open
-    Then press "Clear all filters" section on the Dashboard filter if available
+    When press "Clear all filters" section on the Dashboard filter if available
     Then verify the "Action Priority" chart is displayed
     And verify the "Action Priority" chart contains the "HIGH PRIORITY ACTIONS; MEDIUM PRIORITY ACTIONS; LOW PRIORITY ACTIONS" elements
     And save the value from the "Action Priority" chart
@@ -287,7 +287,7 @@ Feature: Dashboard Analytics for Client Admin
   @readOnly
   Scenario: TC016_10_ClientAdmin_DashboardAnalytics - Verify Completed Actions chart is updated after filtering
     Given the "01_QA_StageTestPortal - Analytics Dashboard - Action Analytics" page is open
-    Then press "Clear all filters" section on the Dashboard filter if available
+    When press "Clear all filters" section on the Dashboard filter if available
     Then verify the "Completed Actions" chart is displayed
     And verify the "Completed Actions" chart contains the "ACTION ADDRESSED AFTER DEADLINE; ACTION ADDRESSED BEFORE/ON DEADLINE" elements
     And save the value from the "Completed Actions" chart
@@ -318,7 +318,7 @@ Feature: Dashboard Analytics for Client Admin
     And verify "Close;Update" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
-    Then press "Close" button on the "Update Action" popup
+    When press "Close" button on the "Update Action" popup
     When press "Back" button
     When press "Open Dashboard" button
     And press the "Actions" section
@@ -330,7 +330,7 @@ Feature: Dashboard Analytics for Client Admin
     And verify "Close;Update" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
-    Then press "Close" button on the "Update Action" popup
+    When press "Close" button on the "Update Action" popup
     And press "Clear" button in the search field
 
   @mutable
@@ -345,12 +345,12 @@ Feature: Dashboard Analytics for Client Admin
     And verify "Close;Update" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
-    And press "Close" button on the "Update Action" popup
+    When press "Close" button on the "Update Action" popup
 
   @readOnly
   Scenario: TC017_04_ClientAdmin_DashboardAnalytics - Verify Action Analytics Data chart is updated after filtering
     Given the "01_QA_StageTestPortal - Analytics Dashboard - Action Analytics" page is open
-    Then press "Clear all filters" section on the Dashboard filter if available
+    When press "Clear all filters" section on the Dashboard filter if available
     Then verify the "Actions Analytics Data" chart is displayed
     When press "Filter" button on the Dashboard filter
     And select "High" in the "Update Priority" filter on the Dashboard filter
@@ -359,9 +359,9 @@ Feature: Dashboard Analytics for Client Admin
     When press the "Updates" section
     Then the "All Updates" subsection is displayed
     When press the "Analytics" section
-    And the "Update Analytics" subsection is displayed
-    Then press the "Actions Analytics" subsection
-    And verify the "Actions Analytics Data" item count is the same
+    Then the "Update Analytics" subsection is displayed
+    When press the "Actions Analytics" subsection
+    Then verify the "Actions Analytics Data" item count is the same
 
   @readOnly
   Scenario Outline: TC017_05_ClientAdmin_DashboardAnalytics - Verify sort order is retained after navigating away
@@ -394,6 +394,6 @@ Feature: Dashboard Analytics for Client Admin
     When navigate to page "3" in the "Actions Analytics Data" table
     Then verify that the first result that appears is number "21"
     When press the "Updates" section
-    Then press the "Analytics" section
-    And press the "Actions Analytics" subsection
-    And verify that the first result that appears is number "21"
+    And press the "Analytics" section
+    When press the "Actions Analytics" subsection
+    Then verify that the first result that appears is number "21"

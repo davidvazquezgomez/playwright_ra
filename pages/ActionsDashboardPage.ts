@@ -439,6 +439,19 @@ export class ActionsDashboardPage extends BasePage {
   }
 
   /**
+   * Alternates the selected action priority between two values to guarantee a form change.
+   * @param firstPriority One of the two priority values to alternate.
+   * @param secondPriority The other priority value to alternate.
+   */
+  async toggleSelectedActionPriority(firstPriority: string, secondPriority: string): Promise<void> {
+    const priorityDropdown = this._page.locator(this.updateActionPriorityDropdown);
+    const currentPriority = (await priorityDropdown.locator('.k-input-value-text').innerText()).trim();
+    const nextPriority = currentPriority === firstPriority ? secondPriority : firstPriority;
+
+    await this.selectUpdateActionOption(nextPriority, 'Priority');
+  }
+
+  /**
    * Saves the changes in the Update Action dialog.
    */
   async updateAction(): Promise<void> {

@@ -1,4 +1,4 @@
-﻿@UserManagement @UserManagement_DeloitteUser
+@UserManagement @UserManagement_DeloitteUser
 Feature: User Management for Deloitte User
 
   Background:
@@ -34,7 +34,7 @@ Feature: User Management for Deloitte User
   @mutable
   Scenario: TC002_01_DeloitteUser_UserManagement - Verify the Add Deloitte User dialog and export
     Given the "User Management - QA_Test client3" page is open
-    And the "Deloitte Users" section is displayed
+    Then the "Deloitte Users" section is displayed
     When press "Add New User" button
     Then the "Add Deloitte User" pop up is displayed with the title "Add Deloitte User"
     When enter "br.dtt@deloitte.com" in the search user field
@@ -47,7 +47,7 @@ Feature: User Management for Deloitte User
   @readOnly
   Scenario Outline: TC002_02_DeloitteUser_UserManagement - Verify user is able to search and filter the users in the table
     Given the "User Management - QA_Test client3" page is open
-    And search for "<searchText>" in the User Management table "<column>" field
+    When search for "<searchText>" in the User Management table "<column>" field
     Then verify the user "<user>" is displayed in the table
     When click on "Clear" button from the User Management table "<column>" field
     Then verify the filter is removed

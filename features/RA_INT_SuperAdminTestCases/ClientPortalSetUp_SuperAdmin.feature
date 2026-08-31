@@ -53,7 +53,7 @@ Feature: Client Portal Setup for Super Admin
     When click on "Home" option from the left navigation
     And navigate to the deactivated client list at the end of the portal listing
     Then verify the deactivated client portal details are displayed
-    And click on the deactivated client portal name in the client portal listing
+    When click on the deactivated client portal name in the client portal listing
     Then verify the error message is displayed on the client portal listing
     When press "Edit Client" button
     And press "Reactivate Portal" button
