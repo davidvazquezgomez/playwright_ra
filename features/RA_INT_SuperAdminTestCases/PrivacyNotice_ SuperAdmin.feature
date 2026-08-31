@@ -5,7 +5,7 @@ Feature: Privacy Notice for Super Admin
     Given launch Regulatory Advantage application URL and login as "deloitte" user "SUPERADMIN"
     And verify if applicable portals are displayed
 
-    @mutable
+  @mutable
   Scenario: TC001_01_SuperAdmin_PrivacyNotice - Navigate to Update Privacy Notice page
     When click on "Menu" option from the left navigation
     Then verify it displays "Update Privacy Notice" option from the left navigation
@@ -55,7 +55,6 @@ Feature: Privacy Notice for Super Admin
     And verify the "Update Privacy Notice" content does not contain the "QaTest" word added to the end
 
   @readOnly
-  # Bloqueo este caso temporalmente porque el contenido de la página Privacy Notice ha sido modificado. Sundarya debe realizar los cambios.
   Scenario Outline: TC001_05_SuperAdmin_PrivacyNotice - Verify links located in the "RegulatoryAdvantage | Privacy Notice" page
     Given the "RegulatoryAdvantage | Privacy Notice" page is open
     Then the "<link>" word is displayed in the "RegulatoryAdvantage | Privacy Notice" page
@@ -65,7 +64,7 @@ Feature: Privacy Notice for Super Admin
     Examples:
       | link                           | url                                                                                                                              |
       | Deloitte Network               | https://www.deloitte.com/global/en/about/governance/network-brand-alliances/about-the-network.html?icid=bottom_about-the-network |
-      | DTTLPrivacy@deloitte.com.      | mailto:DTTLPrivacy@deloitte.com                                                                                                  |
+      | DTTLPrivacy@deloitte.com       | mailto:DTTLPrivacy@deloitte.com?subject=Hello                                                                                        |
       | Privacy Notice                 | https://www.deloitte.com/global/en/legal/privacy.html?icid=bn_privacy                                                            |
-      | DTTLPrivacyEU@deloitte.com.    | mailto:DTTLPrivacyEU@deloitte.com                                                                                                |
-      | DeloitteGlobalDPO@deloitte.com | mailto:DeloitteGlobalDPO@deloitte.com                                                                                            |
+      | DTTLPrivacyEU@deloitte.com     | mailto:DTTLPrivacyEU@deloitte.com?subject=Hello                                                                                    |
+      | DeloitteGlobalDPO@deloitte.com | mailto:DeloitteGlobalDPO@deloitte.com                                                                                 |
