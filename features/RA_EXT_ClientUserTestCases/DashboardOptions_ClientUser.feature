@@ -29,8 +29,8 @@ Feature: Dashboard Options for Clinet User
     And select "Canada" in the "Jurisdiction" filter on the Dashboard filter
     And select "High" in the "Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    Then verify filtered actions are displayed for "Jurisdiction" with value "Canada"
-    Then verify filtered actions are displayed for "Priority" with value "High"
+    Then verify filtered updates are displayed for "Jurisdiction" with value "Canada"
+    Then verify filtered updates are displayed for "Priority" with value "High"
     When press "Dashboard Options" button
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Report" is displayed in the Dashboard Options popup
@@ -38,7 +38,7 @@ Feature: Dashboard Options for Clinet User
     Then verify the dashboard dropdown value is "Updates"
     When press "Generate Report" button
     Then verify "Report generated and downloaded successfully" toast message is displayed in the "01_QA_StageTestPortal  - Updates Dashboard" page
-    And verify the downloaded file name format is "01_QA_StageTestPortal _Updates_Report_" with current date and time
+    And verify the downloaded file name format is "01_QA_StageTestPortal_Updates_Report_" with current date and time
     
 
 
@@ -52,8 +52,8 @@ Feature: Dashboard Options for Clinet User
     And select "Actions" from the "Generate report for" dropdown
     Then verify the "Update Title;Action;User Assigned;Deadline Date;Update Priority;Action Priority;Action Status" columns are selected in the Dashboard Options popup
     When press "Generate Report" button
-    Then verify "Report generated and downloaded successfully" toast message is displayed in the "ClientPortal_20260209133616  - Actions Dashboard" page
-    And verify the downloaded file name format is "ClientPortal_20260209133616 _Actions_Report_" with current date and time
+    Then verify "Report generated and downloaded successfully" toast message is displayed in the "ClientPortal_20260209133616 - Actions Dashboard" page
+    And verify the downloaded file name format is "ClientPortal_20260209133616_Actions_Report_" with current date and time
    
   @readOnly
   Scenario: TC019_04_ClientUser_DashboardOptions - Generate a filtered Actions report
@@ -69,7 +69,7 @@ Feature: Dashboard Options for Clinet User
     When click on "Generate Report" option from the "Dashboard Options" popup
     And select "Actions" from the "Generate report for" dropdown
     When press "Generate Report" button
-    Then verify "Report generated and downloaded successfully" toast message is displayed in the "ClientPortal_20260209133616  - Actions Dashboard" page
+    Then verify "Report generated and downloaded successfully" toast message is displayed in the "ClientPortal_20260209133616 - Actions Dashboard" page
     And verify the downloaded file name format is "ClientPortal_20260209133616 _Actions_Report_" with current date and time
     
    
