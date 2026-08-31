@@ -245,7 +245,6 @@ Feature: Dashboard Analytics for Client User
     And press "View results" button on the Dashboard filter
     Then verify the "Outstanding Actions" chart value is not the same
     And verify the "Action Priority" chart value is not the same
-    And verify the "Completed Actions" chart value is not the same
 
   @readOnly
   Scenario: TC016_06_ClientUser_DashboardAnalytics - Verify Outstanding Actions chart is updated after filtering

@@ -351,7 +351,7 @@ Feature: Dashboard Actions for Portal Admin
     Examples:
       | filter          | value            |
       | Jurisdiction    | Argentina        |
-      | Update Priority | Low              |
+      | Update Priority | Medium           |
       | Action Priority | Medium           |
       | Action Status   | Not Started      |
       | User Assigned   | Salodkar, Mugdha |
