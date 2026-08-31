@@ -123,7 +123,6 @@ Feature: Dashboard Updates for Client User
     Then open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When open the "Attachments" tab in the "Update Details" subsection
     And upload "<file path>" attachment in the "Update Details" Attachments tab
-    Then select a "<valid extension>" format file from "<file path>" and upload it
     And verify the "<name>" attachment is displayed in the "Attachments" section
   #Borramos el attachment 
     When press "Remove" button on the attachment
