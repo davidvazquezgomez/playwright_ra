@@ -56,15 +56,22 @@ Feature: Upload Updates for Super Admin
     When click on "Upload Updates" option from the left navigation
     When click on "Upload files" option from the Upload Updates page
     When select a "xlsx" format file from "<wrong content file>" and upload it
+    And select on option "No" in "Show updates to all applicable clients?" field
+    And a message should get displayed as "Affected Clients"
+    When user click over the "Select Client" dropdown list
+    Then user select "01_13Jan REG" client from the dropdown list by clicking on the check-box
+    And the selected client "01_13Jan REG" must get added in the Affected clients list
+    When press "Continue" button
+    Then a message should get displayed as "Upload cannot proceed. One or more errors were found in the uploaded file. Please correct the data issues listed below and re-upload. No updates will be saved until all errors are resolved."
     Then a message should get displayed as "<expected message>"
 
     Examples:
-      | wrong content file                                              | expected message        |
-      | test-data/spellingErrorsInHeader.xlsx                           | Invalid entry error     |
-      | test-data/differentHeaderCaseFormats.xlsx                       | Invalid entry error     |
-      | test-data/fileWithIncompleteDetailsUnderValidHeaderColumns.xlsx | Missing entries error   |
-      | test-data/fileWithNoRowsUnderValidHeaderColumns.xlsx            | Blank file upload error |
-      | test-data/withRecordsAlreadyPresentInTheApplication.xlsx        | Duplicate upload error  |
+      | wrong content file                                              | expected message           |
+      | test-data/TemplatespellingErrorsInHeader.xlsx                   | Missing required field: ID |
+      | test-data/differentHeaderCaseFormats.xlsx                       | Missing required field: ID |
+      | test-data/fileWithIncompleteDetailsUnderValidHeaderColumns.xlsx | Missing entries error      |
+      | test-data/fileWithNoRowsUnderValidHeaderColumns.xlsx            | Blank file upload error    |
+      | test-data/withRecordsAlreadyPresentInTheApplication.xlsx        | Duplicate upload error     |
 
   @readOnly
   Scenario Outline: TC005_SuperAdmin_UploadUpdates - Verify unsupported file formats are rejected
