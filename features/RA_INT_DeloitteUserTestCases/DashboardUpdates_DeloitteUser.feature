@@ -135,7 +135,6 @@ Feature: Dashboard Updates for Deloitte User
     Then open the first update in the "01_13Jan REG - Updates Dashboard" page
     When open the "Attachments" tab in the "Update Details" subsection
     And upload "<file path>" attachment in the "Update Details" Attachments tab
-    Then select a "<valid extension>" format file from "<file path>" and upload it
     And verify the "<name>" attachment is displayed in the "Attachments" section
   #Borramos el attachment 
     When press "Remove" button on the attachment

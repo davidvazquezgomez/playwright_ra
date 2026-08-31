@@ -133,21 +133,21 @@ Feature: Dashboard Updates for Portal Admin
     Given the "Global Inc - Updates Dashboard - All Updates" page is open
     When search for "Increase to Industrial Accident Insurance Contribution Rate" update from the "Global Inc - Updates Dashboard" page
     Then open the first update in the "Global Inc - Updates Dashboard" page
-    When press "Attachments" button
+    When open the "Attachments" tab in the "Update Details" subsection
     And upload "<file path>" attachment in the "Update Details" Attachments tab
-    Then select a "<valid extension>" format file from "<file path>" and upload it
-    And no upload error message is displayed
+    And verify the "<name>" attachment is displayed in the "Attachments" section
   #Borramos el attachment 
     When press "Remove" button on the attachment
     Then verify the "<name>" attachment is not displayed in the "Attachments" section
 
     Examples:
-      | valid extension | file path              |
-      | pdf             | test-data/invalid.pdf  |
-      | xlsx            | test-data/valid.xlsx   |
-      | svg             | test-data/valid.svg    |
-      | png             | test-data/valid.png    |
-      | docx            | test-data/invalid.docx |
+      | valid extension | file path              | name         |
+      | pdf             | test-data/valid.pdf    | valid.pdf    |
+      | pdf             | test-data/invalid.pdf  | invalid.pdf  |
+      | xlsx            | test-data/valid.xlsx   | valid.xlsx   |
+      | svg             | test-data/valid.svg    | valid.svg    |
+      | png             | test-data/valid.png    | valid.png    |
+      | docx            | test-data/invalid.docx | invalid.docx |
 
   @mutable
   Scenario Outline: TC003_06_PortalAdmin_DashboardUpdates - Upload an attachment with unsupported format
