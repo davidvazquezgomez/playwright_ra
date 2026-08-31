@@ -55,6 +55,7 @@ Feature: Privacy Notice for Super Admin
     And verify the "Update Privacy Notice" content does not contain the "QaTest" word added to the end
 
   @readOnly
+  # Bloqueo este caso temporalmente porque el contenido de la página Privacy Notice ha sido modificado. Sundarya debe realizar los cambios.
   Scenario Outline: TC001_05_SuperAdmin_PrivacyNotice - Verify links located in the "RegulatoryAdvantage | Privacy Notice" page
     Given the "RegulatoryAdvantage | Privacy Notice" page is open
     Then the "<link>" word is displayed in the "RegulatoryAdvantage | Privacy Notice" page
