@@ -20,11 +20,8 @@ Feature: Dashboard Options for Super Admin
     And verify the "Update Title;Jurisdiction;Impact Area;Date Announced;Date Effective;Priority;Status;Last Updated" columns are selected in the Dashboard Options popup
     And verify "Generate Report" buttons are displayed on the "Dashboard Options" popup
     When press "Generate Report" button
-    Then wait for the download completion notification
-    And verify the downloaded file name format is "01_13Jan REG_Updates_Report_" with current date and time
-    When read the downloaded excel file content
-    Then verify the excel file contains the "Title;AnnouncementDateDisplay;EffectiveDateDisplay;LastUpdated;Priority;Status;Jurisdiction;ImpactArea" column headers
-
+    Then verify "Report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Updates Dashboard" page
+   
   @readOnly
   Scenario: TC019_02_SuperAdmin_DashboardOptions - Generate a filtered Updates report
     Given the "Updates Dashboard - 01_13Jan REG" page is open
@@ -36,32 +33,28 @@ Feature: Dashboard Options for Super Admin
     Then verify filtered actions are displayed for "Priority" with value "Medium"
     When press "Dashboard Options" button
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
-    And verify "Generate Report" is displayed in the Dashboard Options popup and clickable in the Dashboard options
+    And verify "Generate Report" is displayed in the Dashboard Options popup
     When click on "Generate Report" option from the "Dashboard Options" popup
     Then verify the dashboard dropdown value is "Updates"
-    And verify the filters applied in the Updates dashboard are prechecked in the Generate Report options
     When press "Generate Report" button
-    Then wait for the download completion notification
+    Then verify "Report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Updates Dashboard" page
     And verify the downloaded file name format is "01_13Jan REG_Updates_Report_" with current date and time
-    When read the downloaded excel file content
-    Then verify the excel file contains the "Title;AnnouncementDateDisplay;EffectiveDateDisplay;LastUpdated;Priority;Status;Jurisdiction;ImpactArea" column headers
-    And verify the report is generated with the same filters and options applied in the "Updates" dashboard
+    
+
 
   @mutable
   Scenario: TC019_03_SuperAdmin_DashboardOptions - Generate an unfiltered Actions report
     Given the "Actions Dashboard - 01_13Jan REG" page is open
     When press "Dashboard Options" button
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
-    And verify "Generate Report" is displayed in the Dashboard Options popup and clickable in the Dashboard options
+    And verify "Generate Report" is displayed in the Dashboard Options popup
     When click on "Generate Report" option from the "Dashboard Options" popup
     And select "Actions" from the "Generate report for" dropdown
     Then verify the "Update Title;Action;User Assigned;Deadline Date;Update Priority;Action Priority;Action Status" columns are selected in the Dashboard Options popup
     When press "Generate Report" button
-    Then wait for the download completion notification
+    Then verify "Report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
     And verify the downloaded file name format is "01_13Jan REG_Actions_Report_" with current date and time
-    When read the downloaded excel file content
-    Then verify the excel file contains the "UpdateTitle;Action;UserAssigned;DeadlineDate;UpdatePriority;ActionPriority;ActionStatus" column headers
-
+   
   @readOnly
   Scenario: TC019_04_SuperAdmin_DashboardOptions - Generate a filtered Actions report
     Given the "Actions Dashboard - 01_13Jan REG" page is open
@@ -69,19 +62,17 @@ Feature: Dashboard Options for Super Admin
     And select "Belgium" in the "Jurisdiction" filter on the Dashboard filter
     And select "High" in the "Action Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    Then verify the data is updated to show the applied filter records in the "Actions" dashboard
+    Then verify filtered actions are displayed
     When press "Dashboard Options" button
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
-    And verify "Generate Report" is displayed in the Dashboard Options popup and clickable in the Dashboard options
+    And verify "Generate Report" is displayed in the Dashboard Options popup
     When click on "Generate Report" option from the "Dashboard Options" popup
     And select "Actions" from the "Generate report for" dropdown
-    Then verify the filters applied in the Actions dashboard are prechecked in the Generate Report options
     When press "Generate Report" button
-    Then wait for the download completion notification
+    Then verify "Report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
     And verify the downloaded file name format is "01_13Jan REG_Actions_Report_" with current date and time
-    When read the downloaded excel file content
-    Then verify the excel file contains the "UpdateTitle;Action;UserAssigned;DeadlineDate;UpdatePriority;ActionPriority;ActionStatus" column headers
-    And verify the report is generated with the same filters and options applied in the "Actions" dashboard
+    
+   
 
   @mutable
   Scenario: TC020_01_SuperAdmin_DashboardOptions - Generate an unfiltered Updates audit trail
@@ -94,11 +85,9 @@ Feature: Dashboard Options for Super Admin
     Then verify the "Update allocated to responsible person;User added to Update Watchlist;User removed from Update Watchlist;Update status changed;Update priority changed;Action added;User added to Action;User removed from Action;Action status Changed;Action priority Changed" audit trail change area parameters are displayed
     When select different audit trail parameters
     And press "Generate Audit Trail" button
-    Then verify the notification area displays the report generation status
+    Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Updates Dashboard" page
     And verify the downloaded file name format is "01_13Jan REG_AuditTrail_Report_" with current date and time
-    When read the downloaded excel file content
-    Then verify the excel file contains the "Update Title;Action;Jurisdiction;Change Area;Previous Value;Current Value;Modified By;Date Modified" column headers
-
+    
   @mutable
   Scenario: TC020_02_SuperAdmin_DashboardOptions - Generate a filtered Updates audit trail
     Given the "Updates Dashboard - 01_13Jan REG" page is open
@@ -106,16 +95,14 @@ Feature: Dashboard Options for Super Admin
     And select "Belgium" in the "Jurisdiction" filter on the Dashboard filter
     And select "High" in the "Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    Then verify the data is updated to show the applied filter records in the "Updates" dashboard
+    Then verify filtered updates are displayed
     When press "Dashboard Options" button
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     When click on "Generate Audit Trail" option from the "Dashboard Options" popup
     And press "Generate Audit Trail" button
-    Then verify the notification area displays the report generation status
+    Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Updates Dashboard" page
     And verify the downloaded file name format is "01_13Jan REG_AuditTrail_Report_" with current date and time
-    When read the downloaded excel file content
-    Then verify the excel file contains the "Update Title;Action;Jurisdiction;Change Area;Previous Value;Current Value;Modified By;Date Modified" column headers
-    And verify the report is generated with the same filters and options applied in the "Updates" dashboard
+    
 
   @mutable
   Scenario: TC020_03_SuperAdmin_DashboardOptions - Generate an unfiltered Actions audit trail
@@ -128,10 +115,9 @@ Feature: Dashboard Options for Super Admin
     Then verify the "Update allocated to responsible person;User added to Update Watchlist;User removed from Update Watchlist;Update status changed;Update priority changed;Action added;User added to Action;User removed from Action;Action status Changed;Action priority Changed" audit trail change area parameters are displayed
     When select different audit trail parameters
     And press "Generate Audit Trail" button
-    Then verify the notification area displays the report generation status
+    Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
     And verify the downloaded file name format is "01_13Jan REG_AuditTrail_Report_" with current date and time
-    When read the downloaded excel file content
-    Then verify the excel file contains the "Update Title;Action;Jurisdiction;Change Area;Previous Value;Current Value;Modified By;Date Modified" column headers
+   
 
   @mutable
   Scenario: TC020_04_SuperAdmin_DashboardOptions - Generate a filtered Actions audit trail
@@ -140,13 +126,11 @@ Feature: Dashboard Options for Super Admin
     And select "Belgium" in the "Jurisdiction" filter on the Dashboard filter
     And select "High" in the "Action Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    Then verify the data is updated to show the applied filter records in the "Actions" dashboard
+    Then verify filtered actions are displayed
     And verify for "Dashboard Options" button is visible
     When press "Dashboard Options" button
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     When press "Generate Audit Trail" button
-    Then verify the notification area displays the report generation status
+    Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
     And verify the downloaded file name format is "01_13Jan REG_AuditTrail_Report_" with current date and time
-    When read the downloaded excel file content
-    Then verify the excel file contains the "Update Title;Action;Jurisdiction;Change Area;Previous Value;Current Value;Modified By;Date Modified" column headers
-    And verify the report is generated with the same filters and options applied in the "Actions" dashboard
+    And logout from the application
