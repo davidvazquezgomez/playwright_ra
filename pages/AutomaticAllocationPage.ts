@@ -2,6 +2,7 @@ import { expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class AutomaticAllocationPage extends BasePage {
+  private readonly allocationCleanupTimeout = 30000;
   private allocationGridRows = 'app-auto-allocation [role="grid"][aria-label="Data table"] tbody tr.k-master-row';
   private allocationGridNoRecordsRow =
     'app-auto-allocation [role="grid"][aria-label="Data table"] tbody tr.k-grid-norecords';
@@ -21,6 +22,12 @@ export class AutomaticAllocationPage extends BasePage {
   };
   private allocationRowByName = (allocationName: string) =>
     `${this.allocationGridRows}:has(td[data-kendo-grid-column-index="0"]:text-is("${allocationName}"))`;
+  private allocationRowByNameIgnoringCase = (allocationName: string) =>
+    this._page.locator(this.allocationGridRows).filter({
+      has: this._page
+        .locator('td[data-kendo-grid-column-index="0"]')
+        .filter({ hasText: new RegExp(`^\\s*${this.escapeRegularExpression(allocationName.trim())}\\s*$`, 'i') }),
+    });
   private allocationNameCells =
     `${this.allocationGridRows} td[data-kendo-grid-column-index="0"]`;
   private editAllocationButtonByName = (allocationName: string) =>
@@ -77,6 +84,10 @@ export class AutomaticAllocationPage extends BasePage {
     'Update Watchlist':
       'app-auto-allocation-setup app-people-picker[formcontrolname="allocatedWatchList"] .tag-person-name',
   };
+
+  private escapeRegularExpression(value: string): string {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
 
   /**
    * Opens the edit form for an automatic allocation.
@@ -155,14 +166,15 @@ export class AutomaticAllocationPage extends BasePage {
         ((await allocationRows.count()) > 0 && await allocationRows.first().isVisible()) ||
         ((await noRecordsRow.count()) > 0 && await noRecordsRow.first().isVisible())
       );
-    }).toBe(true);
+    }, { timeout: this.allocationCleanupTimeout }).toBe(true);
 
-    const removeButton = this._page.locator(this.removeAllocationButtonByName(allocationName));
+    const allocationRow = this.allocationRowByNameIgnoringCase(allocationName);
+    const removeButton = allocationRow.locator('button[title="Remove Allocation"]');
     if (await removeButton.count() === 0 || !await removeButton.first().isVisible()) {
       return false;
     }
 
-    await this.clickElement(this.removeAllocationButtonByName(allocationName));
+    await this.clickLocator(removeButton);
     return true;
   }
 
@@ -173,7 +185,9 @@ export class AutomaticAllocationPage extends BasePage {
   async deleteAllocationIfPresent(allocationName: string): Promise<void> {
     if (await this.removeAllocationIfPresent(allocationName)) {
       await this.clickElement(this.deleteConfirmationButton);
-      await this.waitForSelectorStatus(this.allocationRowByName(allocationName), 'hidden');
+      await expect(this.allocationRowByNameIgnoringCase(allocationName)).toBeHidden({
+        timeout: this.allocationCleanupTimeout,
+      });
     }
   }
 

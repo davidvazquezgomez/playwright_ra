@@ -54,8 +54,8 @@ Feature: Automatic Allocation of Updates for Portal Admin
   @mutable @cleanup
   Scenario: TC001_04_PortalAdmin_AutomaticAllocation - Create and delete an allocation with the Cancel button
     Given the "Automatic Allocation of Updates - Global Inc" page is open
-    When remove the "QaTest" allocation if it exists
-    And register cleanup to remove the "QaTest" allocation from portal "Global Inc"
+    When remove the "qatest" allocation if it exists
+    And register cleanup to remove the "qatest" allocation from portal "Global Inc"
     And press "Create New Allocation" button
     And the "Automatic Allocation Setup" page is displayed
     When fill the "Allocation Name" field with "QaTest"
@@ -147,7 +147,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
     And confirm the duplicate automatic allocation if displayed
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation Setup" page
     And the "Automatic Allocation of Updates" page is displayed
-    And verify the "Admin, QA" allocation is present in the "Automatic Allocation of Updates" page
+    And verify the "QaTest" allocation is present in the "Automatic Allocation of Updates" page
     When click on "Remove Allocation" icon from the allocation "QaTest"
     Then the "Confirm Deletion" popup is displayed
     When press "Delete" button

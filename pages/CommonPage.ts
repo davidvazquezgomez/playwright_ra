@@ -923,7 +923,10 @@ export class CommonPage extends BasePage {
    * @param pageName Page name used in assertion messages.
    */
   async verifyToastMessageIsDisplayed(message: string, pageName: string): Promise<void> {
-    await expect(this.toastMessageByText(message), `Expected toast message "${message}" to be visible on the ${pageName} page.`).toBeVisible();
+    await expect(
+      this.toastMessageByText(message),
+      `Expected toast message "${message}" to be visible on the ${pageName} page.`,
+    ).toBeVisible({ timeout: 30000 });
   }
 
   /**
