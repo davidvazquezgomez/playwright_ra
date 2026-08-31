@@ -341,7 +341,7 @@ Feature: Dashboard Analytics for Client Admin
     When select the "21Declarations have been clarified for 2026" result by clicking on the "Update Title" section
     Then verify the "Update Action" modal is displayed
     And verify the "Update Action" modal contains the "Update;Action;User Assigned; Priority; Status; Deadline;Private Action" sections
-    And verify the "Update Action" modal contains the "21Declarations have been clarified for 2026;Test_action_assigned;satestclientuser2, satestclientuser2;High;Not Started;21 Aug 2026; Off" values
+    And verify the "Update Action" modal contains the "21Declarations have been clarified for 2026;Test_action_assigned;SS satestclientuser2, satestclientuser2;High;Complete;21 Aug 2026; Off" values
     And verify "Close;Update" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab

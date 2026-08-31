@@ -73,15 +73,15 @@ export class ActionsDashboardPage extends BasePage {
         has: this._page.locator('td[aria-colindex="1"]').getByText(updateTitle, { exact: true }),
       })
       .first()
-      .locator('td[aria-colindex="1"]');
+      .locator('td[aria-colindex="2"]');
   private readonly updateTitleCellByUpdateTitle = (updateTitle: string) =>
     this.actionsGrid()
       .locator('tbody tr.k-master-row')
       .filter({
-        has: this._page.locator('td[aria-colindex="2"]').getByText(updateTitle, { exact: true }),
+        has: this._page.locator('td[aria-colindex="1"]').getByText(updateTitle, { exact: true }),
       })
       .first()
-      .locator('td[aria-colindex="2"]');
+      .locator('td[aria-colindex="1"]');
   private readonly actionsPagerInfo = '.k-grid .k-pager-info';
 
   /**
@@ -380,7 +380,8 @@ export class ActionsDashboardPage extends BasePage {
    * @param values Semicolon-delimited values expected in the dialog.
    */
   async verifyUpdateActionValuesAreDisplayed(values: string): Promise<void> {
-    const expectedValues = values.split(';').map((value) => value.trim());
+    const normalizeValue = (value: string) => value.replace(/\s+/g, ' ').trim();
+    const expectedValues = values.split(';').map(normalizeValue);
     const fieldNames = ['Update', 'Action', 'User Assigned', 'Priority', 'Status', 'Deadline', 'Private Action'];
     if (expectedValues.length !== fieldNames.length) {
       throw new Error(`Expected ${fieldNames.length} Update Action values, but received ${expectedValues.length}.`);
@@ -398,7 +399,7 @@ export class ActionsDashboardPage extends BasePage {
         this.privateActionToggle().getAttribute('aria-checked'),
       ]);
       return [update, action, userAssigned, priority, status, deadline, privateAction === 'true' ? 'On' : 'Off']
-        .map((value) => value.trim());
+        .map(normalizeValue);
     };
     await expect(dialog).toBeVisible();
 
