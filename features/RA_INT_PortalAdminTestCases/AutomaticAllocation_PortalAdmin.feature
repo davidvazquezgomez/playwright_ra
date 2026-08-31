@@ -1,4 +1,4 @@
-﻿@AutomaticAllocation @AutomaticAllocation_PortalAdmin
+@AutomaticAllocation @AutomaticAllocation_PortalAdmin
 Feature: Automatic Allocation of Updates for Portal Admin
 
   Background:
@@ -8,7 +8,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
   @mutable
   Scenario: TC001_01_PortalAdmin_AutomaticAllocation - Navigate to Automatic Allocation Setup
     When click on "Global Inc" of the portals
-    And the "Global Inc - Overview" page is displayed
+    Then the "Global Inc - Overview" page is displayed
     When click on "Automatic Allocation of Updates" option from the left navigation
     Then the "Automatic Allocation of Updates" page is displayed
     And verify if "Allocation Name; Jurisdiction; Impact Area; Allocate To" are displayed on the Automatic Allocation of Updates page
@@ -36,7 +36,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
   @mutable
   Scenario: TC001_03_PortalAdmin_AutomaticAllocation - Verify warning message validations before creating a new allocation
     Given the "Automatic Allocation Setup - Global Inc" page is open
-    And verify "Allocation Name;Impact Area(s);Jurisdiction(s);Allocate Update To;Update Owner;Update Watchlist" form fields are displayed in the Automatic Allocation Setup page
+    Then verify "Allocation Name;Impact Area(s);Jurisdiction(s);Allocate Update To;Update Owner;Update Watchlist" form fields are displayed in the Automatic Allocation Setup page
     When press "Save" button
     Then verify "Allocation Name is required; At least one option (Impact Area or Jurisdiction) must be selected.;Update Owner is required." field errors are displayed in the Automatic Allocation Setup page
     When fill the "Allocation Name" field with "QaTest"
@@ -54,9 +54,9 @@ Feature: Automatic Allocation of Updates for Portal Admin
   @mutable @cleanup
   Scenario: TC001_04_PortalAdmin_AutomaticAllocation - Create and delete an allocation with the Cancel button
     Given the "Automatic Allocation of Updates - Global Inc" page is open
-    And remove the "QaTest" allocation if it exists
+    When remove the "QaTest" allocation if it exists
     And register cleanup to remove the "QaTest" allocation from portal "Global Inc"
-    Then press "Create New Allocation" button
+    And press "Create New Allocation" button
     And the "Automatic Allocation Setup" page is displayed
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
@@ -64,8 +64,8 @@ Feature: Automatic Allocation of Updates for Portal Admin
     And click on the "Jurisdiction(s)" checkbox
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
-    Then select the "Admin, QA" option in the "Update Owner" field
-    Then select the "Admin, QA" option in the "Update Watchlist" field
+    And select the "Admin, QA" option in the "Update Owner" field
+    When select the "Admin, QA" option in the "Update Watchlist" field
     And press "Cancel" button
     Then the "Unsaved Changes" popup is displayed
     And the popup message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
@@ -83,7 +83,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
     And verify the "QaTest" allocation is present in the "Automatic Allocation of Updates" page
     When click on "Remove Allocation" icon from the allocation "QaTest"
     Then the "Confirm Deletion" popup is displayed
-    And press "Delete" button
+    When press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
 
   @readOnly
@@ -122,9 +122,9 @@ Feature: Automatic Allocation of Updates for Portal Admin
   @mutable @cleanup
   Scenario: TC001_07_PortalAdmin_AutomaticAllocation - Create and delete an allocation with the Back button
     Given the "Automatic Allocation of Updates - Global Inc" page is open
-    And remove the "QaTest" allocation if it exists
+    When remove the "QaTest" allocation if it exists
     And register cleanup to remove the "QaTest" allocation from portal "Global Inc"
-    Then press "Create New Allocation" button
+    And press "Create New Allocation" button
     And the "Automatic Allocation Setup" page is displayed
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
@@ -150,22 +150,22 @@ Feature: Automatic Allocation of Updates for Portal Admin
     And verify the "Admin, QA" allocation is present in the "Automatic Allocation of Updates" page
     When click on "Remove Allocation" icon from the allocation "QaTest"
     Then the "Confirm Deletion" popup is displayed
-    And press "Delete" button
+    When press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
 
   @mutable @cleanup
   Scenario: TC003_01_PortalAdmin_AutomaticAllocation - Use multiple Jurisdiction and Impact Area selections
     Given the "Automatic Allocation of Updates - Global Inc" page is open
-    And remove the "QaTest" allocation if it exists
+    When remove the "QaTest" allocation if it exists
     And register cleanup to remove the "QaTest" allocation from portal "Global Inc"
-    Then press "Create New Allocation" button
+    And press "Create New Allocation" button
     And the "Automatic Allocation Setup" page is displayed
     When fill the "Allocation Name" field with "QaTest"
-    Then click on the "Impact Area(s)" checkbox
-    And select the "Select All" option in the "Impact Area(s)" field
+    And click on the "Impact Area(s)" checkbox
+    When select the "Select All" option in the "Impact Area(s)" field
     When click on the "Jurisdiction(s)" checkbox
-    Then select the "Select All" option in the "Jurisdiction(s)" field
-    And select the "AND" option in the "Operator" field
+    And select the "Select All" option in the "Jurisdiction(s)" field
+    When select the "AND" option in the "Operator" field
     And select the "Admin, QA" option in the "Update Owner" field
     And press "Save" button
     And confirm the duplicate automatic allocation if displayed
@@ -174,15 +174,15 @@ Feature: Automatic Allocation of Updates for Portal Admin
     And verify the "QaTest" allocation is present in the "Automatic Allocation of Updates" page
     When click on "Remove Allocation" icon from the allocation "QaTest"
     Then the "Confirm Deletion" popup is displayed
-    And press "Delete" button
+    When press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
 
   @mutable @cleanup
   Scenario: TC004_01_PortalAdmin_AutomaticAllocation - Create and delete an allocation using a team
     Given the "Automatic Allocation of Updates - Global Inc" page is open
-    And remove the "QaTest" allocation if it exists
+    When remove the "QaTest" allocation if it exists
     And register cleanup to remove the "QaTest" allocation from portal "Global Inc"
-    Then press "Create New Allocation" button
+    And press "Create New Allocation" button
     And the "Automatic Allocation Setup" page is displayed
     When fill the "Allocation Name" field with "QaTest"
     And click on the "Impact Area(s)" checkbox
@@ -191,7 +191,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
     And select the "Admin, QA" option in the "Update Owner" field
-    And verify "Admin, QA" is still selected in the "Update Owner" field
+    Then verify "Admin, QA" is still selected in the "Update Owner" field
     When select the "Admin, QA" option in the "Update Owner" field
     And press "Save" button
     And confirm the duplicate automatic allocation if displayed
@@ -200,15 +200,15 @@ Feature: Automatic Allocation of Updates for Portal Admin
     And verify the "QaTest" allocation is present in the "Automatic Allocation of Updates" page
     When click on "Remove Allocation" icon from the allocation "QaTest"
     Then the "Confirm Deletion" popup is displayed
-    And press "Delete" button
+    When press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
 
   @mutable @cleanup
   Scenario: TC005_PortalAdmin_AutomaticAllocation - Verify warning message for duplicate allocations
     Given the "Automatic Allocation of Updates - Global Inc" page is open
-    And remove the "QaTest2" allocation if it exists
+    When remove the "QaTest2" allocation if it exists
     And register cleanup to remove the "QaTest2" allocation from portal "Global Inc"
-    Then press "Create New Allocation" button
+    And press "Create New Allocation" button
     And the "Automatic Allocation Setup" page is displayed
     When fill the "Allocation Name" field with "QaTest2"
     And click on the "Impact Area(s)" checkbox
@@ -227,5 +227,5 @@ Feature: Automatic Allocation of Updates for Portal Admin
     And verify the "QaTest2" allocation is present in the "Automatic Allocation of Updates" page
     When click on "Remove Allocation" icon from the allocation "QaTest2"
     Then the "Confirm Deletion" popup is displayed
-    And press "Delete" button
+    When press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page

@@ -42,23 +42,23 @@ Feature: Dashboard Updates for Client User
   Scenario: TC002_01_ClientUser_DashboardUpdates - Verify read/unread functionality on the "Unread Updates" tab
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
-    Then open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
-    And the "People Law" page is displayed
+    And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
+    Then the "People Law" page is displayed
     When press "Mark as Unread" button on the selected update
     Then verify the "Mark as Unread" button is disabled on the selected update
     When press "Back" button
     Then the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is displayed
     When press the "Unread Updates" subsection
     And press "Clear" button in the search field
-    Then open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
-    And press "Back" button
-    And verify the "People Law" update is not displayed
+    And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
+    When press "Back" button
+    Then verify the "People Law" update is not displayed
 
   @mutable
   Scenario: TC003_01_ClientUser_DashboardUpdates - Create and revert a modification of an update
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
-    Then open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
+    And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Edit" button on the selected update
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
     And select "ECA, test" in the "Watch List" field on the selected update
@@ -67,8 +67,8 @@ Feature: Dashboard Updates for Client User
   #Rectifico para restaurar los datos 
     When open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Edit" button on the selected update
-    Then select "Update Allocated" option in the "Status" field in the "Update Details" subsection
-    And press "clear" in the "Watch List" field
+    And select "Update Allocated" option in the "Status" field in the "Update Details" subsection
+    When press "clear" in the "Watch List" field
     When press "Save" button on the selected update
     Then verify "Regulatory update updated successfully" toast message is displayed in the "Test_11-5_01" page
 
@@ -76,7 +76,7 @@ Feature: Dashboard Updates for Client User
   Scenario: TC003_02_ClientUser_DashboardUpdates - Simulate a modification of an update (Back button)
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "Test_11-5_01" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
-    Then open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
+    And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Edit" button on the selected update
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
     And select "ECA, test" in the "Watch List" field on the selected update
@@ -92,7 +92,7 @@ Feature: Dashboard Updates for Client User
   Scenario: TC003_03_ClientUser_DashboardUpdates - Cancel a modification of an update
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
-    Then open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
+    And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Edit" button on the selected update
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
     And select "ECA, test" in the "Watch List" field on the selected update
@@ -100,16 +100,16 @@ Feature: Dashboard Updates for Client User
     Then the "Unsaved Changes" popup is displayed
     When press "Continue" button
     Then the "ClientPortal_20260209133616 - Updates Dashboard" page is displayed
-    And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
-    And verify the "Status" field does not display "Update Closed"
+    When open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
+    Then verify the "Status" field does not display "Update Closed"
     And verify the "Watch List" field does not display "ECA, test"
 
   @mutable
   Scenario: TC003_04_ClientUser_DashboardUpdates - Create and delete a comment
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
-    Then open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
-    And enter "QaTest comment" in the "Comments" field
+    And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
+    When enter "QaTest comment" in the "Comments" field
     When press "Comment" button
     Then verify the posted comment is seen along with timestamp and edit, reply and delete option
   #Borramos el comentario para dejar el sistema como estaba
@@ -120,10 +120,10 @@ Feature: Dashboard Updates for Client User
   Scenario Outline: TC003_05_ClientUser_DashboardUpdates - Upload and delete a valid attachment
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
-    Then open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
+    And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When open the "Attachments" tab in the "Update Details" subsection
     And upload "<file path>" attachment in the "Update Details" Attachments tab
-    And verify the "<name>" attachment is displayed in the "Attachments" section
+    Then verify the "<name>" attachment is displayed in the "Attachments" section
   #Borramos el attachment 
     When press "Remove" button on the attachment
     Then verify the "<name>" attachment is not displayed in the "Attachments" section
@@ -141,7 +141,7 @@ Feature: Dashboard Updates for Client User
   Scenario Outline: TC003_06_ClientUser_DashboardUpdates - Upload an attachment with unsupported format
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
-    Then open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
+    And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Attachments" button
     And upload "<file path>" attachment in the "Update Details" Attachments tab
     When select a "<invalid extension>" format file from "<file path>" and upload it
@@ -159,7 +159,7 @@ Feature: Dashboard Updates for Client User
   @readOnly
   Scenario: TC004_ClientUser_DashboardUpdates - Verify search
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
-    And press "Clear all filters" section on the Dashboard filter if available
+    When press "Clear all filters" section on the Dashboard filter if available
     And save the "ClientPortal_20260209133616 - Updates Dashboard" items
     When search for "Income" update in the Analytics Dashboard
     Then verify only updates that contain "Income" in the title are displayed
@@ -169,7 +169,7 @@ Feature: Dashboard Updates for Client User
   @readOnly
   Scenario: TC005_ClientUser_DashboardUpdates - Verify auto suggestions for updates
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
-    And press "Clear all filters" section on the Dashboard filter if available
+    When press "Clear all filters" section on the Dashboard filter if available
     And press "Clear" button in the search field if available
     And save the "ClientPortal_20260209133616 - Updates Dashboard" items
     When search for "zz" update in the Analytics Dashboard
@@ -177,7 +177,7 @@ Feature: Dashboard Updates for Client User
     When press "Enter" key on the keyboard
     Then verify the "ClientPortal_20260209133616 - Updates Dashboard" item count is not the same
     And a message should get displayed as "There is no data to display."
-    And press "Clear" button in the search field
+    When press "Clear" button in the search field
     Then verify the "ClientPortal_20260209133616 - Updates Dashboard" item count is the same
 
   @readOnly
@@ -198,14 +198,14 @@ Feature: Dashboard Updates for Client User
   @readOnly
   Scenario: TC006_02_ClientUser_DashboardUpdates - Apply a predefined filter
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
-    Then press "Clear all filters" section on the Dashboard filter if available
+    When press "Clear all filters" section on the Dashboard filter if available
     And save the "ClientPortal_20260209133616 - Updates Dashboard" items
     When press "Filter" button on the Dashboard filter
     Then verify the "Saved Filters;My Updates;Knowledge Module;Jurisdiction;Impact Areas;Priority;Status" option is displayed in the Dashboard filter
     When press "More Filters" button
-    Then select "Date Announced" on the Dashboard filter
-    And verify the "Start date;End date" option is displayed in the Dashboard filter
-    And select "28 Nov 2025" in the "Start date" filter on the Dashboard filter
+    And select "Date Announced" on the Dashboard filter
+    Then verify the "Start date;End date" option is displayed in the Dashboard filter
+    When select "28 Nov 2025" in the "Start date" filter on the Dashboard filter
     And select "30 Nov 2025" in the "End date" filter on the Dashboard filter
     When press "View results" button on the Dashboard filter
     Then verify the "ClientPortal_20260209133616 - Updates Dashboard" item count is not the same
@@ -215,12 +215,12 @@ Feature: Dashboard Updates for Client User
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     And register cleanup to remove saved filter "QaTest" from "ClientPortal_20260209133616 - Updates Dashboard - All Updates"
     When press "Filter" button on the Dashboard filter
-    Then remove saved filter "QaTest" if it exists on the Dashboard filter
+    And remove saved filter "QaTest" if it exists on the Dashboard filter
     When select "Awaiting Allocation" in the "Status" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify the "Name Filter" modal is displayed on the Dashboard filter
-    And press "Save filter" button on the Dashboard filter
-    And verify "Filter Name is required." error message appears on the Dashboard filter
+    When press "Save filter" button on the Dashboard filter
+    Then verify "Filter Name is required." error message appears on the Dashboard filter
     When fill "QaTest" in the "Filter Name" field on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify "Filter saved successfully." toast message is displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page
@@ -229,27 +229,27 @@ Feature: Dashboard Updates for Client User
     Then verify the "QaTest" filter is displayed in the "Saved Filters" section on the Dashboard filter
     When press "Delete filter" button for "QaTest" on the Dashboard filter
     Then the "Confirm Delete" popup is displayed
-    And press "Delete" button
+    When press "Delete" button
     Then verify "Saved filter deleted successfully." toast message is displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page
 
   @readOnly
   Scenario: TC006_04_ClientUser_DashboardUpdates - Apply a customized filter
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
-    Then press "Clear all filters" section on the Dashboard filter if available
+    When press "Clear all filters" section on the Dashboard filter if available
     And save the "ClientPortal_20260209133616 - Updates Dashboard" items
     When press "Filter" button on the Dashboard filter
-    Then select "Test_ClientUser" located in the "Saved Filters" section on the Dashboard filter
-    And press "View results" button on the Dashboard filter
+    And select "Test_ClientUser" located in the "Saved Filters" section on the Dashboard filter
+    When press "View results" button on the Dashboard filter
     Then verify the "ClientPortal_20260209133616 - Updates Dashboard" item count is not the same
 
   @mutable
   Scenario: TC006_05_ClientUser_DashboardUpdates - Mark and unmark a filter as favourite
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
-    Then press "Clear all filters" section on the Dashboard filter if available
+    When press "Clear all filters" section on the Dashboard filter if available
     And save the "ClientPortal_20260209133616 - Updates Dashboard" items
     When press "Filter" button on the Dashboard filter
-    Then press "Save as favourite" button for "Test_ClientUser" on the Dashboard filter
-    And verify "Filter updated successfully." toast message is displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page
+    And press "Save as favourite" button for "Test_ClientUser" on the Dashboard filter
+    Then verify "Filter updated successfully." toast message is displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTUSER"
     Then the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
@@ -262,8 +262,8 @@ Feature: Dashboard Updates for Client User
   Scenario: TC006_06_ClientUser_DashboardUpdates - Clear all filters
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When press "Filter" button on the Dashboard filter
-    Then select "Awaiting Allocation" in the "Status" filter on the Dashboard filter
-    And press "View results" button on the Dashboard filter
+    And select "Awaiting Allocation" in the "Status" filter on the Dashboard filter
+    When press "View results" button on the Dashboard filter
     Then save the "ClientPortal_20260209133616 - Updates Dashboard" items
     When press "Clear all filters" button
     Then verify the "ClientPortal_20260209133616 - Updates Dashboard" item count is not the same
@@ -271,14 +271,14 @@ Feature: Dashboard Updates for Client User
   @readOnly
   Scenario: TC007_01_ClientUser_DashboardUpdates - Apply two filters
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
-    Then press "Clear all filters" section on the Dashboard filter if available
+    When press "Clear all filters" section on the Dashboard filter if available
     And save the "ClientPortal_20260209133616 - Updates Dashboard" items
-    Then select "Medium" in the "Priority" filter on the Dashboard filter
+    When select "Medium" in the "Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify the "ClientPortal_20260209133616 - Updates Dashboard" item count is not the same
     When press "Filter" button on the Dashboard filter
-    Then select "Italy" in the "Jurisdiction" filter on the Dashboard filter
-    And press "View results" button on the Dashboard filter
+    And select "Italy" in the "Jurisdiction" filter on the Dashboard filter
+    When press "View results" button on the Dashboard filter
     Then verify the "ClientPortal_20260209133616 - Updates Dashboard" item count is not the same
 
   @readOnly
@@ -310,9 +310,9 @@ Feature: Dashboard Updates for Client User
   Scenario: TC008_ClientUser_DashboardUpdates - Verify updates dashboard dashboard options
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     And register cleanup to restore the "Status" column on "ClientPortal_20260209133616 - Updates Dashboard - All Updates"
-    Then press "Dashboard options" button
-    When verify the "Dashboard Options" popup is displayed on the Dashboard
-    And verify the "Updates Dashboard" tab is selected in the Dashboard Options popup
+    When press "Dashboard options" button
+    Then verify the "Dashboard Options" popup is displayed on the Dashboard
+    Then verify the "Updates Dashboard" tab is selected in the Dashboard Options popup
     And verify "Edit Updates Dashboard" is displayed in the Dashboard Options popup
     And verify "Update Title;Action;User Assigned;Deadline Date;Update Priority;Action Priority;Action Status" columns are displayed in the Dashboard Options popup
     And verify "Update Title;Action;User Assigned;Deadline Date;Update Priority;Action Priority;Action Status" columns are selected in the Dashboard Options popup

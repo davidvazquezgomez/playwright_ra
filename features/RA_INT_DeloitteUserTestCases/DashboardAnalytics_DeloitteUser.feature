@@ -1,4 +1,4 @@
-﻿@DashboardAnalytics @DashboardAnalytics_DeloitteUser
+@DashboardAnalytics @DashboardAnalytics_DeloitteUser
 Feature: Dashboard Analytics for Deloitte User
 
   Background:
@@ -51,8 +51,8 @@ Feature: Dashboard Analytics for Deloitte User
     When select "Awaiting Allocation" in the "Status" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify the "Name Filter" modal is displayed on the Dashboard filter
-    And press "Save filter" button on the Dashboard filter
-    And verify "Filter Name is required." error message appears on the Dashboard filter
+    When press "Save filter" button on the Dashboard filter
+    Then verify "Filter Name is required." error message appears on the Dashboard filter
     When fill "QaTest" in the "Filter Name" field on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify "Filter saved successfully." toast message is displayed in the "Analytics Dashboard" page
@@ -124,7 +124,7 @@ Feature: Dashboard Analytics for Deloitte User
     And verify the "Update Details" subsection displays the "Mark as Unread;Edit;Comment" buttons
     When open the "Attachments" tab in the "Update Details" subsection
     Then verify the "Upload files" button is displayed in the "Update Details" Attachments tab
-    Then press "Close" button
+    When press "Close" button
     When press "Back" button
     And press the "Updates" section
     Then the "01_QA_ClientPortalSetup - Updates Dashboard" page is displayed
@@ -135,7 +135,7 @@ Feature: Dashboard Analytics for Deloitte User
     And verify the "Update Details" subsection displays the "Mark as Unread;Edit;Comment" buttons
     When open the "Attachments" tab in the "Update Details" subsection
     Then verify the "Upload files" button is displayed in the "Update Details" Attachments tab
-    And press "Close" button
+    When press "Close" button
     And press "Clear" button in the search field
 
   @mutable
@@ -147,7 +147,7 @@ Feature: Dashboard Analytics for Deloitte User
     And press "View results" button on the Dashboard filter
     Then save the "Update Analytics Data" items
     When press the "Updates" section
-    And the "All Updates" subsection is displayed
+    Then the "All Updates" subsection is displayed
     Then verify the "All Updates" table contains the same number of items as the "Update Analytics Data" chart
 
   @readOnly
@@ -181,8 +181,8 @@ Feature: Dashboard Analytics for Deloitte User
     When navigate to page "4" in the "Update Analytics Data" table
     Then verify that the first result that appears is number "31"
     When press the "Updates" section
-    Then press the "Analytics" section
-    And verify that the first result that appears is number "31"
+    And press the "Analytics" section
+    Then verify that the first result that appears is number "31"
 
   @readOnly
   Scenario: TC016_01_DeloitteUser_DashboardAnalytics - Navigate to Action Analytics page
@@ -231,8 +231,8 @@ Feature: Dashboard Analytics for Deloitte User
     When select "satestclientadmin, satestclientadmin" in the "User Assigned" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify the "Name Filter" modal is displayed on the Dashboard filter
-    And press "Save filter" button on the Dashboard filter
-    And verify "Filter Name is required." error message appears on the Dashboard filter
+    When press "Save filter" button on the Dashboard filter
+    Then verify "Filter Name is required." error message appears on the Dashboard filter
     When fill "QaTest" in the "Filter Name" field on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify "Filter saved successfully." toast message is displayed in the "Analytics Dashboard" page
@@ -265,7 +265,7 @@ Feature: Dashboard Analytics for Deloitte User
   Scenario: TC016_08_DeloitteUser_DashboardAnalytics - Verify Outstanding Actions Map controls
     Given the "QA_Test client3 - Analytics Dashboard - Action Analytics" page is open
     Then verify the "Outstanding Actions Map" chart is displayed
-    And press "Save visuals as PDF" map control
+    When press "Save visuals as PDF" map control
     When press "Reset Zoom" map control
     When press "Zoom In" map control
     When press "Zoom Out" map control
@@ -311,14 +311,14 @@ Feature: Dashboard Analytics for Deloitte User
     Given the "QA_Test client3 - Analytics Dashboard - Action Analytics" page is open
     When search for "2026 PDOC (Payroll Deductions Online Calculator) Released" update in the Analytics Dashboard
     Then verify the "Actions Analytics Data" chart is displayed
-    And select the "2026 PDOC (Payroll Deductions Online Calculator) Released" result by clicking on the "Action" section
+    When select the "2026 PDOC (Payroll Deductions Online Calculator) Released" result by clicking on the "Action" section
     Then verify the "Update Action" modal is displayed
     And verify the "Update Action" modal contains the "Update;Action;User Assigned; Priority; Status; Deadline;Private Action" sections
     And verify the "Update Action" modal contains the "2026 PDOC (Payroll Deductions Online Calculator) Released;sa1;satestclientuser, satestclientuser;Low;In Progress;13 Aug 2026; Off" values
     And verify "Close;Update" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
-    Then press "Close" button on the "Update Action" popup
+    When press "Close" button on the "Update Action" popup
     When press "Back" button
     When press "Open Dashboard" button
     And press the "Actions" section
@@ -330,7 +330,7 @@ Feature: Dashboard Analytics for Deloitte User
     And verify "<UpdateButtons>" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
-    Then press "Close" button on the "Update Action" popup
+    When press "Close" button on the "Update Action" popup
     And press "Clear" button in the search field
 
   @mutable
@@ -345,7 +345,7 @@ Feature: Dashboard Analytics for Deloitte User
     And verify "Close;Update" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
-    And press "Close" button on the "Update Action" popup
+    When press "Close" button on the "Update Action" popup
 
   @readOnly
   Scenario: TC017_04_DeloitteUser_DashboardAnalytics - Verify Action Analytics Data chart is updated after filtering
@@ -358,9 +358,9 @@ Feature: Dashboard Analytics for Deloitte User
     When press the "Updates" section
     Then the "All Updates" subsection is displayed
     When press the "Analytics" section
-    And the "Update Analytics" subsection is displayed
-    Then press the "Actions Analytics" subsection
-    And verify the "Actions Analytics Data" item count is the same
+    Then the "Update Analytics" subsection is displayed
+    When press the "Actions Analytics" subsection
+    Then verify the "Actions Analytics Data" item count is the same
 
   @readOnly
   Scenario Outline: TC017_05_DeloitteUser_DashboardAnalytics - Verify sort order is retained after navigating away
@@ -393,6 +393,6 @@ Feature: Dashboard Analytics for Deloitte User
     When navigate to page "1" in the "Actions Analytics Data" table
     Then verify that the first result that appears is number "1"
     When press the "Updates" section
-    Then press the "Analytics" section
-    And press the "Actions Analytics" subsection
-    And verify that the first result that appears is number "1"
+    And press the "Analytics" section
+    When press the "Actions Analytics" subsection
+    Then verify that the first result that appears is number "1"

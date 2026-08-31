@@ -1,4 +1,4 @@
-﻿@ClientPortalList @ClientPortalList_PortalAdmin
+@ClientPortalList @ClientPortalList_PortalAdmin
 Feature: Client Portal List for Portal Admin
 
   Background:
@@ -41,7 +41,7 @@ Feature: Client Portal List for Portal Admin
 
   @readOnly
   Scenario Outline: TC001_05_PortalAdmin_ClientPortalList - Verify column headers and sorting
-    Given the "Client Portal List" page is displayed
+    Then the "Client Portal List" page is displayed
     Then verify "<column>" column header is displayed in the "Client Portal List" page
     When click on "<column>" column header in the "Client Portal List" page
     Then verify items are sorted in "ascending" order by "<column>" in the "Client Portal List" page

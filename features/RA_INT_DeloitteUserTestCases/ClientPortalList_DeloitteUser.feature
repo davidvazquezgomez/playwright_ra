@@ -1,4 +1,4 @@
-﻿@ClientPortalList @ClientPortalList_DeloitteUser
+@ClientPortalList @ClientPortalList_DeloitteUser
 Feature: Client Portal List for Deloitte User
 
   Background:
@@ -40,7 +40,7 @@ Feature: Client Portal List for Deloitte User
 
   @readOnly
   Scenario Outline: TC001_05_DeloitteUser_ClientPortalList - Verify column headers and sorting
-    Given the "Client Portal List" page is displayed
+    Then the "Client Portal List" page is displayed
     Then verify "<column>" column header is displayed in the "Client Portal List" page
     When click on "<column>" column header in the "Client Portal List" page
     Then verify items are sorted in "ascending" order by "<column>" in the "Client Portal List" page

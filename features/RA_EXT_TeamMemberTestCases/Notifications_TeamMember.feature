@@ -19,11 +19,11 @@ Feature: Notifications for Team Member
     When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "disabled"
     And press "Cancel" button
     Then the "Unsaved Changes" popup is displayed
-    And press "Cancel" button on the "Unsaved Changes" popup
+    When press "Cancel" button on the "Unsaved Changes" popup
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
     When press "Profile" button
-    And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
+    Then verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
     Then the "Default Notifications Settings" page is displayed
     When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "enabled"
@@ -35,20 +35,20 @@ Feature: Notifications for Team Member
     Given the "Notification Preferences" page is open
     When check "Select All" Check box under "System" option from "Updates" section if it is "unchecked"
     And check "Select All" Check box under "Email" option from "Updates" section if it is "unchecked"
-    And check "Select All" Check box under "Lock Settings" option from "Updates" section if it is "unchecked"
     When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
-    Then select the frequency option "Daily" located under "Periodic Summary of Updates and Actions via email?" section
+    And select the frequency option "Daily" located under "Periodic Summary of Updates and Actions via email?" section
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC002_1_TeamMember_Notifications - Verify triggered notifications for updates
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    And the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
-    When search for "LINK TEST 2" update from the "Updates Dashboard - 01_13Jan REG" page
+    Then the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
+    When search for "LINK TEST 2" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     Then the "Update Details" page is displayed from the Updates Dashboard
     When press "Edit" button on the selected update
-    Then select "Update in Progress" option in the "Status" field in the "Update Details" subsection
+    And select "Update in Progress" option in the "Status" field in the "Update Details" subsection
+    When toggle the selected update priority between "High" and "Medium"
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Notifications" button
@@ -62,7 +62,6 @@ Feature: Notifications for Team Member
     Given the "Notification Preferences" page is open
     When check "Select All" Check box under "System" option from "Updates" section if it is "checked"
     And check "Select All" Check box under "Email" option from "Updates" section if it is "checked"
-    And check "Select All" Check box under "Lock Settings" option from "Updates" section if it is "checked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
@@ -70,12 +69,14 @@ Feature: Notifications for Team Member
   @mutable
   Scenario: TC002_3_TeamMember_Notifications - Verify triggered notifications for updates
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    And the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
-    When search for "LINK TEST 2" update from the "Updates Dashboard - 01_13Jan REG" page
-    Then open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
+    Then the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
+    When search for "LINK TEST 2" update from the "Updates Dashboard - 01_QA_StageTestPortal" page
+    And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
-    Then select "Update Allocated" option in the "Status" field in the "Update Details" subsection
+    And select "Alam, Asjad" in the "User Assigned" field on the selected update
+    When select "Update Allocated" option in the "Status" field in the "Update Details" subsection
+    And toggle the selected update priority between "High" and "Medium"
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Notifications" button
@@ -89,7 +90,6 @@ Feature: Notifications for Team Member
     Given the "Notification Preferences" page is open
     When check "Select All" Check box under "System" option from "Actions" section if it is "unchecked"
     And check "Select All" Check box under "Email" option from "Actions" section if it is "unchecked"
-    And check "Select All" Check box under "Lock Settings" option from "Actions" section if it is "unchecked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
@@ -97,10 +97,11 @@ Feature: Notifications for Team Member
   @mutable
   Scenario: TC003_2_TeamMember_Notifications - Verify triggered notifications for actions
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
-    When search for "LINK TEST 2" update from the "Action Dashboard - 01_QA_StageTestPortal" page
-    Then open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
-    And the "Update Action" popup is displayed
+    When search for "LINK TEST 2" update from the "01_QA_StageTestPortal - Actions Dashboard" page
+    And click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
+    Then the "Update Action" popup is displayed
     When select "Not Started" option in the "Status" field in the "Update Action" popup
+    And toggle the selected action priority between "High" and "Medium"
     And press "Update" button in the "Update Action" popup
     Then verify "Action updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When press "Notifications" button
@@ -114,28 +115,22 @@ Feature: Notifications for Team Member
     Given the "Notification Preferences" page is open
     When check "Select All" Check box under "System" option from "Actions" section if it is "checked"
     And check "Select All" Check box under "Email" option from "Actions" section if it is "checked"
-    And check "Select All" Check box under "Lock Settings" option from "Actions" section if it is "checked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
 
-    
   @mutable
   Scenario: TC003_4_TeamMember_Notifications - Verify triggered notifications for Actions
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
-    When search for "LINK TEST 1" update from the "Action Dashboard - 01_QA_StageTestPortal" page
-    Then open the first update in the "01_QA_StageTestPortal - Actions Dashboard" page
-    When press "Edit" button on the selected update
-    When select "In Progress" option in the "Status" field in the "Update Details" subsection
-    Then select "High" option in the "Priority" field in the "Update Details" subsection
-    And select "Alam, Asjad" in the "User Assigned" field on the selected update
-    When press "Save" button on the selected update
-    Then verify "Regulatory update updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
+    When search for "LINK TEST 1" update from the "01_QA_StageTestPortal - Actions Dashboard" page
+    And click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
+    Then the "Update Action" popup is displayed
+    When select "In Progress" option in the "Status" field in the "Update Action" popup
+    And toggle the selected action priority between "High" and "Medium"
+    And press "Update" button in the "Update Action" popup
+    Then verify "Action updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When press "Notifications" button
     Then the "Notifications" popup is displayed
     When press "View All" button
     Then the "Notification Listing" page is displayed
     And verify there are no system notifications
-
-
- 

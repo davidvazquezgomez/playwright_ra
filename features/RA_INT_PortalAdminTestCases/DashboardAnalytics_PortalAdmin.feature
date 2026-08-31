@@ -1,4 +1,4 @@
-﻿@DashboardAnalytics @DashboardAnalytics_PortalAdmin
+@DashboardAnalytics @DashboardAnalytics_PortalAdmin
 Feature: Dashboard Analytics for Portal Admin
 
   Background:
@@ -51,8 +51,8 @@ Feature: Dashboard Analytics for Portal Admin
     When select "Awaiting Allocation" in the "Status" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify the "Name Filter" modal is displayed on the Dashboard filter
-    And press "Save filter" button on the Dashboard filter
-    And verify "Filter Name is required." error message appears on the Dashboard filter
+    When press "Save filter" button on the Dashboard filter
+    Then verify "Filter Name is required." error message appears on the Dashboard filter
     When fill "QaTest" in the "Filter Name" field on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify "Filter saved successfully." toast message is displayed in the "Analytics Dashboard" page
@@ -119,8 +119,8 @@ Feature: Dashboard Analytics for Portal Admin
     Then verify the "Update Analytics Data" chart is displayed
     When open the first filtered update result in the "Update Analytics Data" table
     Then the "Increase to Monthly Social Security Tax Bases" page is displayed
-    And press the "Update Details" subsection
-    And verify the "Update Details" subsection displays the "User Assigned; Priority; Status;Summary; Deloitte View; Supporting References; Tags; Related updates; Watch List; Discussion; Jurisdiction; Impact Area; Date Announced; Date Effective;Regulator;Level of Authority;Status of Change" sections
+    When press the "Update Details" subsection
+    Then verify the "Update Details" subsection displays the "User Assigned; Priority; Status;Summary; Deloitte View; Supporting References; Tags; Related updates; Watch List; Discussion; Jurisdiction; Impact Area; Date Announced; Date Effective;Regulator;Level of Authority;Status of Change" sections
     And verify the "Update Details" subsection displays the "Admin, QA;Medium;Update in Progress;Argentina's minimum and maximum monthly taxable bases for social taxes have increased for January's accrual. The minimum monthly tax base has increased to ARS 89,557.43. The maximum monthly tax base has increased to ARS 2,910,574.49.;1;2;0;0;0;0;Argentina;Employment taxes rates & thresholds;26 Dec 2024;01 Jan 2025;Social Security Authority;Legislative/Binding;Final" values
     And verify the "Update Details" subsection displays the "Mark as Unread;Edit;Comment" buttons
     When open the "Attachments" tab in the "Update Details" subsection
@@ -135,7 +135,7 @@ Feature: Dashboard Analytics for Portal Admin
     And press "View results" button on the Dashboard filter
     Then save the "Update Analytics Data" items
     When press the "Updates" section
-    And the "All Updates" subsection is displayed
+    Then the "All Updates" subsection is displayed
     Then verify the "All Updates" table contains the same number of items as the "Update Analytics Data" chart
 
   @readOnly
@@ -169,8 +169,8 @@ Feature: Dashboard Analytics for Portal Admin
     When navigate to page "4" in the "Update Analytics Data" table
     Then verify that the first result that appears is number "31"
     When press the "Updates" section
-    Then press the "Analytics" section
-    And verify that the first result that appears is number "31"
+    And press the "Analytics" section
+    Then verify that the first result that appears is number "31"
 
   @readOnly
   Scenario: TC016_01_PortalAdmin_DashboardAnalytics - Navigate to Action Analytics page
@@ -220,8 +220,8 @@ Feature: Dashboard Analytics for Portal Admin
     When select "AMPOLU, SOUNDARYA" in the "User Assigned" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify the "Name Filter" modal is displayed on the Dashboard filter
-    And press "Save filter" button on the Dashboard filter
-    And verify "Filter Name is required." error message appears on the Dashboard filter
+    When press "Save filter" button on the Dashboard filter
+    Then verify "Filter Name is required." error message appears on the Dashboard filter
     When fill "QaTest" in the "Filter Name" field on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify "Filter saved successfully." toast message is displayed in the "Analytics Dashboard" page
@@ -230,7 +230,7 @@ Feature: Dashboard Analytics for Portal Admin
     Then verify the "QaTest" filter is displayed in the "Saved Filters" section on the Dashboard filter
     When press "Delete filter" button for "QaTest" on the Dashboard filter
     Then the "Confirm Delete" popup is displayed
-    And press "Delete" button on the "Confirm Delete" popup
+    When press "Delete" button on the "Confirm Delete" popup
     Then verify "Saved filter deleted successfully." toast message is displayed in the "Analytics Dashboard" page
 
   @readOnly
@@ -261,7 +261,7 @@ Feature: Dashboard Analytics for Portal Admin
   Scenario: TC016_08_PortalAdmin_DashboardAnalytics - Verify Outstanding Actions Map controls
     Given the "Global Inc - Analytics Dashboard - Action Analytics" page is open
     Then verify the "Outstanding Actions Map" chart is displayed
-    And press "Save visuals as PDF" map control
+    When press "Save visuals as PDF" map control
     When press "Reset Zoom" map control
     When press "Zoom In" map control
     When press "Zoom Out" map control
@@ -307,14 +307,14 @@ Feature: Dashboard Analytics for Portal Admin
     Given the "Global Inc - Analytics Dashboard - Action Analytics" page is open
     When search for "Labor Insurance Rates Updated" update in the Analytics Dashboard
     Then verify the "Actions Analytics Data" chart is displayed
-    And select the "Labor Insurance Rates Updated" result by clicking on the "Action" section
+    When select the "Labor Insurance Rates Updated" result by clicking on the "Action" section
     Then verify the "Update Action" modal is displayed
     And verify the "Update Action" modal contains the "Update;Action;User Assigned; Priority; Status; Deadline;Private Action" sections
     And verify the "Update Action" modal contains the "Labor Insurance Rates Updated;New Action Test 2;Search for user...;Medium;Complete;30 Sep 2025; Off" values
     And verify "Close;Update" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
-    Then press "Close" button on the "Update Action" popup
+    When press "Close" button on the "Update Action" popup
     When press "Back" button
     When press "Open Dashboard" button
     And press the "Actions" section
@@ -326,7 +326,7 @@ Feature: Dashboard Analytics for Portal Admin
     And verify "<UpdateButtons>" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
-    Then press "Close" button on the "Update Action" popup
+    When press "Close" button on the "Update Action" popup
     And press "Clear" button in the search field
 
   @mutable
@@ -341,7 +341,7 @@ Feature: Dashboard Analytics for Portal Admin
     And verify "Close;Update" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
-    And press "Close" button on the "Update Action" popup
+    When press "Close" button on the "Update Action" popup
 
   @readOnly
   Scenario: TC017_04_PortalAdmin_DashboardAnalytics - Verify Action Analytics Data chart is updated after filtering
@@ -354,9 +354,9 @@ Feature: Dashboard Analytics for Portal Admin
     When press the "Updates" section
     Then the "All Updates" subsection is displayed
     When press the "Analytics" section
-    And the "Update Analytics" subsection is displayed
-    Then press the "Actions Analytics" subsection
-    And verify the "Actions Analytics Data" item count is the same
+    Then the "Update Analytics" subsection is displayed
+    When press the "Actions Analytics" subsection
+    Then verify the "Actions Analytics Data" item count is the same
 
   @readOnly
   Scenario Outline: TC017_05_PortalAdmin_DashboardAnalytics - Verify sort order is retained after navigating away
@@ -389,6 +389,6 @@ Feature: Dashboard Analytics for Portal Admin
     When navigate to page "4" in the "Actions Analytics Data" table
     Then verify that the first result that appears is number "31"
     When press the "Updates" section
-    Then press the "Analytics" section
-    And press the "Actions Analytics" subsection
-    And verify that the first result that appears is number "31"
+    And press the "Analytics" section
+    When press the "Actions Analytics" subsection
+    Then verify that the first result that appears is number "31"

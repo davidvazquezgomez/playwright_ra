@@ -1,4 +1,4 @@
-﻿@ActionsDashboard @ActionsDashboard_DeloitteUser
+@ActionsDashboard @ActionsDashboard_DeloitteUser
 Feature: Dashboard Actions for Deloitte User
 
   Background:
@@ -17,7 +17,7 @@ Feature: Dashboard Actions for Deloitte User
     Then the "QA_Test client3 - Actions Dashboard" page is displayed
     And verify "All Actions" tabs are displayed in "QA_Test client3 - Actions Dashboard" page
     When press "My Actions" button
-    And verify pagination is displayed in the "QA_Test client3 - Actions Dashboard" page
+    Then verify pagination is displayed in the "QA_Test client3 - Actions Dashboard" page
 
   @readOnly
   Scenario Outline: TC009_02_DeloitteUser_DashboardActions - Verify default column header and sorting
@@ -74,7 +74,7 @@ Feature: Dashboard Actions for Deloitte User
     And press "View results" button on the Dashboard filter
     And click on "Deadline Date" column header in the "QA_Test client3 - Actions Dashboard" page
     And click on "Deadline Date" column header in the "QA_Test client3 - Actions Dashboard" page
-    And verify "Test Action" action is displayed in the first row of the "QA_Test client3 - Actions Dashboard" page
+    Then verify "Test Action" action is displayed in the first row of the "QA_Test client3 - Actions Dashboard" page
 
   @mutable
   Scenario: TC010_02_DeloitteUser_DashboardActions - Verify editing an action
@@ -109,8 +109,8 @@ Feature: Dashboard Actions for Deloitte User
     When click on the first action in the "QA_Test client3 - Actions Dashboard" page
     Then the "Update Action" popup is displayed
     When enable the "Private Action" toggle in the "Update Action" popup
-    And verify the "Private Action" toggle is enabled in the "Update Action" popup
-    And press "Update" button in the "Update Action" popup
+    Then verify the "Private Action" toggle is enabled in the "Update Action" popup
+    When press "Update" button in the "Update Action" popup
     Then verify "Action updated successfully" toast message is displayed in the "QA_Test client3 - Actions Dashboard" page
     When click on the first action in the "QA_Test client3 - Actions Dashboard" page
     Then the "Update Action" popup is displayed
@@ -140,7 +140,7 @@ Feature: Dashboard Actions for Deloitte User
     Then verify "Test comment" comment is displayed in the "Update Action" popup
     And verify a date is displayed for "Test comment" comment in the "Update Action" popup
     And verify actions are displayed for "Test comment" comment in the "Update Action" popup
-    And press "Update" button in the "Update Action" popup
+    When press "Update" button in the "Update Action" popup
     Then verify "Action updated successfully" toast message is displayed in the "QA_Test client3 - Actions Dashboard" page
 
   @mutable
@@ -157,7 +157,7 @@ Feature: Dashboard Actions for Deloitte User
     Then the "Update Action" popup is displayed
     When open the "Attachments" tab in the "Update Action" popup
     When upload "<file path>" attachment in the "Update Action" popup
-    And verify "<name>" attachment is displayed in the "Update Action" popup
+    Then verify "<name>" attachment is displayed in the "Update Action" popup
 
     Examples:
       | valid extension | file path              | name         |
@@ -240,7 +240,7 @@ Feature: Dashboard Actions for Deloitte User
     And select "High" option in the "Priority" field in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
     Then verify "Action updated successfully" toast message is displayed in the "Update Actions" page
-    And press "Action Status" header on the selected update
+    When press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
     When click on the first action in the "Update Actions" page
@@ -259,10 +259,10 @@ Feature: Dashboard Actions for Deloitte User
     And click on the first action in the "Update Actions" page
     Then the "Update Action" popup is displayed
     When enable the "Private Action" toggle in the "Update Action" popup
-    And verify the "Private Action" toggle is enabled in the "Update Action" popup
-    And press "Update" button in the "Update Action" popup
+    Then verify the "Private Action" toggle is enabled in the "Update Action" popup
+    When press "Update" button in the "Update Action" popup
     Then verify "Action updated successfully" toast message is displayed in the "Update Actions" page
-    And press "Action Status" header on the selected update
+    When press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
     And press "Action Status" header on the selected update
     When click on the first action in the "Update Actions" page
@@ -289,7 +289,7 @@ Feature: Dashboard Actions for Deloitte User
     Then verify "Test comment" comment is displayed in the "Update Action" popup
     And verify a date is displayed for "Test comment" comment in the "Update Action" popup
     And verify actions are displayed for "Test comment" comment in the "Update Action" popup
-    And press "Update" button in the "Update Action" popup
+    When press "Update" button in the "Update Action" popup
     Then verify "Action updated successfully" toast message is displayed in the "Update Actions" page
 
   @mutable
@@ -304,8 +304,8 @@ Feature: Dashboard Actions for Deloitte User
     Then the "Update Action" popup is displayed
     When open the "Attachments" tab in the "Update Action" popup
     When upload "<file path>" attachment in the "Update Action" popup
-    And verify "<name>" attachment is displayed in the "Update Action" popup
-    And press "Update" button in the "Update Action" popup
+    Then verify "<name>" attachment is displayed in the "Update Action" popup
+    When press "Update" button in the "Update Action" popup
     Then verify "Action updated successfully" toast message is displayed in the "Update Actions" page
 
     Examples:

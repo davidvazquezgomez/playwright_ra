@@ -54,11 +54,11 @@ Feature: Notifications for Super Admin
     When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "disabled"
     And press "Cancel" button
     Then the "Unsaved Changes" popup is displayed
-    And press "Cancel" button on the "Unsaved Changes" popup
+    When press "Cancel" button on the "Unsaved Changes" popup
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
     When press "Profile" button
-    And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
+    Then verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
     Then the "Default Notifications Settings" page is displayed
     When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "enabled"
@@ -79,7 +79,7 @@ Feature: Notifications for Super Admin
     And check "Select All" Check box under "Email" option from "Updates" section if it is "unchecked"
     And check "Select All" Check box under "Lock Settings" option from "Updates" section if it is "unchecked"
     When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
-    Then select the frequency option "Daily" located under "Periodic Summary of Updates and Actions via email?" section
+    And select the frequency option "Daily" located under "Periodic Summary of Updates and Actions via email?" section
     When press "Update Portal" button
     Then verify "01_QA_ClientPortalSetup" toast message is displayed in the "Client Portal List" page
 
@@ -88,20 +88,20 @@ Feature: Notifications for Super Admin
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     When press "Profile" button
-    And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
+    Then verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
     Then the "Default Notifications Settings" page is displayed
     When disable all user notification preferences
-    And verify all the "Notifications Preferences" are disabled
+    Then verify all the "Notifications Preferences" are disabled
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    And the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
-    Then open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
+    Then the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
+    When open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
-    When select "High" option in the "Priority" field in the "Update Details" subsection
-    Then select "Not Started" option in the "Status" field in the "Update Details" subsection
+    When toggle the selected update priority between "High" and "Medium"
+    And select "Update Allocated" option in the "Status" field in the "Update Details" subsection
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Notifications" button
@@ -132,12 +132,12 @@ Feature: Notifications for Super Admin
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    And the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
-    Then open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
+    Then the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
+    When open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
-    When select "High" option in the "Priority" field in the "Update Details" subsection
-    Then select "Update Allocated" option in the "Status" field in the "Update Details" subsection
+    When toggle the selected update priority between "High" and "Medium"
+    And select "Update Allocated" option in the "Status" field in the "Update Details" subsection
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Notifications" button
@@ -167,20 +167,20 @@ Feature: Notifications for Super Admin
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     When press "Profile" button
-    And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
+    Then verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
     Then the "Default Notifications Settings" page is displayed
     When disable all user notification preferences
-    And verify all the "Notifications Preferences" are disabled
+    Then verify all the "Notifications Preferences" are disabled
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
-    When the "01_QA_StageTestPortal - Actions Dashboard" page is displayed
-    Then click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
-    And the "Update Action" popup is displayed
+    Then the "01_QA_StageTestPortal - Actions Dashboard" page is displayed
+    When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
+    Then the "Update Action" popup is displayed
     When select "Not Started" option in the "Status" field in the "Update Action" popup
-    Then select "High" option in the "Priority" field in the "Update Action" popup
-    And press "Update" button in the "Update Action" popup
+    And toggle the selected action priority between "High" and "Medium"
+    When press "Update" button in the "Update Action" popup
     Then verify "Action updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When press "Notifications" button
     Then the "Notifications" popup is displayed
@@ -210,12 +210,12 @@ Feature: Notifications for Super Admin
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    And the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
-    Then open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
+    Then the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
+    When open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     When select "Update Allocated" option in the "Status" field in the "Update Details" subsection
-    Then select "High" option in the "Priority" field in the "Update Details" subsection
-    And select "satestclientuser2, satestclientuser2" in the "User Assigned" field on the selected update
+    And toggle the selected update priority between "High" and "Medium"
+    When select "satestclientuser2, satestclientuser2" in the "User Assigned" field on the selected update
     When press "Save" button on the selected update
     Then verify "Regulatory update updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Notifications" button
@@ -245,21 +245,21 @@ Feature: Notifications for Super Admin
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     When press "Profile" button
-    And verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
+    Then verify "Notification Preferences;Release Notes;Log out" are displayed on the "Profile" section
     When press "Notification Preferences" button
     Then the "Notification Preferences" page is displayed
     When disable all user notification preferences
-    And verify all the "Notifications Preferences" are disabled
+    Then verify all the "Notifications Preferences" are disabled
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    Then click on "Team Management" option from the left navigation
-    And the "Team Management" page is displayed
+    When click on "Team Management" option from the left navigation
+    Then the "Team Management" page is displayed
     When press "Edit" button for the first team in the "Team Management" page
     Then the "Create/Edit Team" page is displayed
     When open the Add Team Members dialog
     Then the "Add Team Members" popup is displayed
-    When select "clientadmin1" option in the "Search user" field
+    When select "clientadmin1, satest" option in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
     When save the team from the "Create/Edit Team" page
     Then verify "Team updated successfully" toast message is displayed in the "Team Management" page
@@ -291,14 +291,14 @@ Feature: Notifications for Super Admin
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     When click on "01_QA_StageTestPortal" of the portals
-    And the "01_QA_StageTestPortal - Overview" page is displayed
-    Then click on "Team Management" option from the left navigation
-    And the "Team Management" page is displayed
+    Then the "01_QA_StageTestPortal - Overview" page is displayed
+    When click on "Team Management" option from the left navigation
+    Then the "Team Management" page is displayed
     When press "Edit" button for the first team in the "Team Management" page
     Then the "Create/Edit Team" page is displayed
     When open the Add Team Members dialog
     Then the "Add Team Members" popup is displayed
-    When select "clientadmin1" option in the "Search user" field
+    When select "lientadmin1, satest" option in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
     When save the team from the "Create/Edit Team" page
     Then verify "Team updated successfully" toast message is displayed in the "Team Management" page
