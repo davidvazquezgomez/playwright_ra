@@ -24,7 +24,7 @@ Feature: Dashboard Options for Team Member
    
   @readOnly
   Scenario: TC019_02_TeamMember_DashboardOptions - Generate a filtered Updates report
-    Given the "Updates Dashboard - 01_QA_StageTestPortal " page is open
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When press "Filter" button on the Dashboard filter
     And select "Brazil" in the "Jurisdiction" filter on the Dashboard filter
     And select "High" in the "Priority" filter on the Dashboard filter
@@ -44,7 +44,7 @@ Feature: Dashboard Options for Team Member
 
   @mutable
   Scenario: TC019_03_TeamMember_DashboardOptions - Generate an unfiltered Actions report
-    Given the "Actions Dashboard - 01_QA_StageTestPortal " page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Dashboard Options" button
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Report" is displayed in the Dashboard Options popup
@@ -57,7 +57,7 @@ Feature: Dashboard Options for Team Member
    
   @readOnly
   Scenario: TC019_04_TeamMember_DashboardOptions - Generate a filtered Actions report
-    Given the "Actions Dashboard - 01_QA_StageTestPortal " page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And select "Japan" in the "Jurisdiction" filter on the Dashboard filter
     And select "Medium" in the "Action Priority" filter on the Dashboard filter
@@ -76,7 +76,7 @@ Feature: Dashboard Options for Team Member
 
   @mutable
   Scenario: TC020_01_TeamMember_DashboardOptions - Generate an unfiltered Updates audit trail
-    Given the "Updates Dashboard - 01_QA_StageTestPortal " page is open
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     Then the "Updates Dashboard" page is displayed
     When press "Dashboard Options" button
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
@@ -88,9 +88,9 @@ Feature: Dashboard Options for Team Member
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_QA_StageTestPortal  - Updates Dashboard" page
     And verify the downloaded file name format is "01_QA_StageTestPortal _AuditTrail_Report_" with current date and time
     
-  @mutable
+  @readOnly
   Scenario: TC020_02_TeamMember_DashboardOptions - Generate a filtered Updates audit trail
-    Given the "Updates Dashboard - 01_QA_StageTestPortal " page is open
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When press "Filter" button on the Dashboard filter
     And select "Brazil" in the "Jurisdiction" filter on the Dashboard filter
     And select "High" in the "Priority" filter on the Dashboard filter
@@ -106,7 +106,7 @@ Feature: Dashboard Options for Team Member
 
   @mutable
   Scenario: TC020_03_TeamMember_DashboardOptions - Generate an unfiltered Actions audit trail
-    Given the "Actions Dashboard - 01_QA_StageTestPortal " page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     Then verify for "Dashboard Options" button is visible
     When press "Dashboard Options" button
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
@@ -119,9 +119,9 @@ Feature: Dashboard Options for Team Member
     And verify the downloaded file name format is "01_QA_StageTestPortal _AuditTrail_Report_" with current date and time
    
 
-  @mutable
+  @readOnly
   Scenario: TC020_04_TeamMember_DashboardOptions - Generate a filtered Actions audit trail
-    Given the "Actions Dashboard - 01_QA_StageTestPortal " page is open
+    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And select "Japan" in the "Jurisdiction" filter on the Dashboard filter
     And select "Medium" in the "Action Priority" filter on the Dashboard filter

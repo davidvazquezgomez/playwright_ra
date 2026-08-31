@@ -88,7 +88,7 @@ Feature: Dashboard Options for Super Admin
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Updates Dashboard" page
     And verify the downloaded file name format is "01_13Jan REG_AuditTrail_Report_" with current date and time
     
-  @mutable
+  @readOnly
   Scenario: TC020_02_SuperAdmin_DashboardOptions - Generate a filtered Updates audit trail
     Given the "Updates Dashboard - 01_13Jan REG" page is open
     When press "Filter" button on the Dashboard filter
@@ -119,7 +119,7 @@ Feature: Dashboard Options for Super Admin
     And verify the downloaded file name format is "01_13Jan REG_AuditTrail_Report_" with current date and time
    
 
-  @mutable
+  @readOnly
   Scenario: TC020_04_SuperAdmin_DashboardOptions - Generate a filtered Actions audit trail
     Given the "Actions Dashboard - 01_13Jan REG" page is open
     When press "Filter" button on the Dashboard filter

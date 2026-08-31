@@ -44,7 +44,7 @@ Feature: Dashboard Options for Portal Admin
 
   @mutable
   Scenario: TC019_03_PortalAdmin_DashboardOptions - Generate an unfiltered Actions report
-    Given the "Actions Dashboard - Global Inc" page is open
+    Given the "Global Inc - Actions Dashboard" page is open
     When press "Dashboard Options" button
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Report" is displayed in the Dashboard Options popup
@@ -57,7 +57,7 @@ Feature: Dashboard Options for Portal Admin
    
   @readOnly
   Scenario: TC019_04_PortalAdmin_DashboardOptions - Generate a filtered Actions report
-    Given the "Actions Dashboard - Global Inc" page is open
+    Given the "Global Inc - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And select "Argentina" in the "Jurisdiction" filter on the Dashboard filter
     And select "High" in the "Action Priority" filter on the Dashboard filter
@@ -88,7 +88,7 @@ Feature: Dashboard Options for Portal Admin
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "Global Inc - Updates Dashboard" page
     And verify the downloaded file name format is "Global Inc_AuditTrail_Report_" with current date and time
     
-  @mutable
+  @readOnly
   Scenario: TC020_02_PortalAdmin_DashboardOptions - Generate a filtered Updates audit trail
     Given the "Updates Dashboard - Global Inc" page is open
     When press "Filter" button on the Dashboard filter
@@ -106,7 +106,7 @@ Feature: Dashboard Options for Portal Admin
 
   @mutable
   Scenario: TC020_03_PortalAdmin_DashboardOptions - Generate an unfiltered Actions audit trail
-    Given the "Actions Dashboard - Global Inc" page is open
+    Given the "Global Inc - Actions Dashboard" page is open
     Then verify for "Dashboard Options" button is visible
     When press "Dashboard Options" button
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
@@ -119,9 +119,9 @@ Feature: Dashboard Options for Portal Admin
     And verify the downloaded file name format is "Global Inc_AuditTrail_Report_" with current date and time
    
 
-  @mutable
+  @readOnly
   Scenario: TC020_04_PortalAdmin_DashboardOptions - Generate a filtered Actions audit trail
-    Given the "Actions Dashboard - Global Inc" page is open
+    Given the "Global Inc - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And select "Argentina" in the "Jurisdiction" filter on the Dashboard filter
     And select "High" in the "Action Priority" filter on the Dashboard filter
