@@ -5,7 +5,7 @@ export class PrivacyNoticePage extends BasePage {
   private privacyNoticeEditor = 'kendo-editor[formcontrolname="globalPrivacyNotice"] .ProseMirror';
   private privacyNoticeParagraphs = `${this.privacyNoticeEditor} > p`;
   private firstPrivacyNoticeParagraph = `${this.privacyNoticeEditor} > p:first-of-type`;
-  private privacyNoticeContentTitle = 'Global RegulatoryAdvantage Privacy Notice';
+  private privacyNoticeContentTitle = 'RegulatoryAdvantage | Privacy Notice';
   private privacyNoticeLinkByName = (linkName: string) =>
     this._page.getByRole('link', { name: linkName, exact: true });
   private lastClickedLinkDestination: string | undefined;
@@ -226,11 +226,8 @@ export class PrivacyNoticePage extends BasePage {
         ? this._page.locator(this.firstPrivacyNoticeParagraph)
         : this.getLastPrivacyNoticeParagraph();
     }
-
-    const publishedContent = this._page
-      .getByRole('heading', { name: this.privacyNoticeContentTitle, exact: true })
-      .locator('..');
-    const publishedParagraphs = publishedContent.locator(':scope > p');
+   
+    const publishedParagraphs = this._page.locator('app-privacy-notice p');    
     return position === 'first' ? publishedParagraphs.first() : publishedParagraphs.last();
   }
 
