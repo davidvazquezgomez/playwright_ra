@@ -82,20 +82,25 @@ Feature: Upload Updates for Super Admin
       | csv               | test-data/invalid.csv  | Only excel files (.xls, .xlsx) are allowed |
       | ppt               | test-data/invalid.pptx | Only excel files (.xls, .xlsx) are allowed |
 
-  @readOnly
+  @mutable
   Scenario Outline: TC006_SuperAdmin_UploadUpdates - Verify handling of XLSX with missing required columns
     When click on "Menu" option from the left navigation
     Then verify it displays "Upload Updates" option from the left navigation
     When click on "Upload Updates" option from the left navigation
-    When click on "Upload files" option from the Upload Updates page
-    When select a "xlsx" format file from "<wrong content file>" and upload it
-    Then a message should get displayed as "<expected message>"
+    Then click on "Upload files" option from the Upload Updates page
+    And select a "xlsx" format file from "<wrong content file>" and upload it
+    And select on option "No" in "Show updates to all applicable clients?" field
+    And a message should get displayed as "Affected Clients"
+    When user click over the "Select Client" dropdown list
+    Then user select "01_13Jan REG" client from the dropdown list by clicking on the check-box
+    And the selected client "01_13Jan REG" must get added in the Affected clients list
+    When press "Continue" button
+    Then a message should get displayed as "Upload cannot proceed. One or more errors were found in the uploaded file. Please correct the data issues listed below and re-upload. No updates will be saved until all errors are resolved."
+    And a message should get displayed as "<expected message>"
 
     Examples:
-      | wrong content file                  | expected message |
-      | test-data/missingJurisdiction.xlsx  |                  |
-      | test-data/missingImpactArea.xlsx    |                  |
-      | test-data/missingDateAnnounced.xlsx |                  |
-      | test-data/missingPriority.xlsx      |                  |
-      | test-data/missingStatus.xlsx        |                  |
-      | test-data/missingLastUpdated.xlsx   |                  |
+      | wrong content file                          | expected message                                          |
+      | test-data/TemplateMissingJurisdiction.xlsx  | Missing required field: Jurisdiction                      |
+      | test-data/TemplateMissingImpactArea.xlsx    | Missing required field: Impact Area                       |
+      | test-data/TemplateInvalidDateAnnounced.xlsx | Announcement date format is invalid. Expected MM/DD/YYYY. |
+      | test-data/TemplateStatus.xlsx               | Missing required field: Status of Change                  |
