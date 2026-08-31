@@ -147,10 +147,15 @@ export class AutomaticAllocationPage extends BasePage {
    * @returns True when the deletion confirmation was opened.
    */
   async removeAllocationIfPresent(allocationName: string): Promise<boolean> {
-    await expect.poll(async () =>
-      (await this._page.locator(this.allocationGridRows).count()) > 0 ||
-      (await this._page.locator(this.allocationGridNoRecordsRow).count()) > 0,
-    ).toBe(true);
+    await expect.poll(async () => {
+      const allocationRows = this._page.locator(this.allocationGridRows);
+      const noRecordsRow = this._page.locator(this.allocationGridNoRecordsRow);
+
+      return (
+        ((await allocationRows.count()) > 0 && await allocationRows.first().isVisible()) ||
+        ((await noRecordsRow.count()) > 0 && await noRecordsRow.first().isVisible())
+      );
+    }).toBe(true);
 
     const removeButton = this._page.locator(this.removeAllocationButtonByName(allocationName));
     if (await removeButton.count() === 0 || !await removeButton.first().isVisible()) {
