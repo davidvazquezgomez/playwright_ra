@@ -314,7 +314,7 @@ Feature: Dashboard Analytics for Client User
     When select the "People Law" result by clicking on the "Action" section
     Then verify the "Update Action" modal is displayed
     And verify the "Update Action" modal contains the "Update;Action;User Assigned; Priority; Status; Deadline;Private Action" sections
-    And verify the "Update Action" modal contains the "People Law;Action_20260209134219;User, Client;High;Not Started;10 Feb 2026; Off" values
+    And verify the "Update Action" modal contains the "People Law;Action_20260209134219;CA Admin, Client;High;Not Started;10 Feb 2026; Off" values
     And verify "Close;Update" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
@@ -326,7 +326,7 @@ Feature: Dashboard Analytics for Client User
     When select the "People Law" result by clicking on the "Action" section
     Then verify the "Update Action" modal is displayed
     And verify the "Update Action" modal contains the "Update;Action;User Assigned; Priority; Status; Deadline;Private Action" sections
-    And verify the "Update Action" modal contains the "People Law;Action_20260209134219;User, Client;High;Not Started;10 Feb 2026; Off" values
+    And verify the "Update Action" modal contains the "People Law;Action_20260209134219;CA Admin, Client;High;Not Started;10 Feb 2026; Off" values
     And verify "Close;Update" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
@@ -341,7 +341,7 @@ Feature: Dashboard Analytics for Client User
     When select the "People Law" result by clicking on the "Update Title" section
     Then verify the "Update Action" modal is displayed
     And verify the "Update Action" modal contains the "Update;Action;User Assigned; Priority; Status; Deadline;Private Action" sections
-    And verify the "Update Action" modal contains the "People Law;Action_20260209134219;User, Client;High;Not Started;10 Feb 2026; Off" values
+    And verify the "Update Action" modal contains the "People Law;Action_20260209134219;CA Admin, Client;High;Not Started;10 Feb 2026; Off" values
     And verify "Close;Update" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
