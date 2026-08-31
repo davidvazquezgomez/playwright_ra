@@ -310,18 +310,19 @@ Feature: Dashboard Analytics for Portal Admin
     And select the "Labor Insurance Rates Updated" result by clicking on the "Action" section
     Then verify the "Update Action" modal is displayed
     And verify the "Update Action" modal contains the "Update;Action;User Assigned; Priority; Status; Deadline;Private Action" sections
-    And verify the "Update Action" modal contains the "Labor Insurance Rates Updated;New Action Test 2;Search for user..., DeloitteUser;Medium;Complete;30 Sep 2025; Off" values
-    And verify "<UpdateButtons>" buttons are displayed on the "Update Action" popup
+    And verify the "Update Action" modal contains the "Labor Insurance Rates Updated;New Action Test 2;Search for user...;Medium;Complete;30 Sep 2025; Off" values
+    And verify "Close;Update" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
     Then press "Close" button on the "Update Action" popup
     When press "Back" button
+    When press "Open Dashboard" button
     And press the "Actions" section
     Then the "Global Inc - Actions Dashboard" page is displayed
     When select the "Labor Insurance Rates Updated" result by clicking on the "Action" section
     Then verify the "Update Action" modal is displayed
     And verify the "Update Action" modal contains the "Update;Action;User Assigned; Priority; Status; Deadline;Private Action" sections
-    And verify the "Update Action" modal contains the "Labor Insurance Rates Updated;New Action Test 2;Search for user..., DeloitteUser;Medium;Complete;30 Sep 2025; Off" values
+    And verify the "Update Action" modal contains the "Labor Insurance Rates Updated;New Action Test 2;Search for user...;Medium;Complete;30 Sep 2025; Off" values
     And verify "<UpdateButtons>" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab

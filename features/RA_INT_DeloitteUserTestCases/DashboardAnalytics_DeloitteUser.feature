@@ -315,11 +315,12 @@ Feature: Dashboard Analytics for Deloitte User
     Then verify the "Update Action" modal is displayed
     And verify the "Update Action" modal contains the "Update;Action;User Assigned; Priority; Status; Deadline;Private Action" sections
     And verify the "Update Action" modal contains the "2026 PDOC (Payroll Deductions Online Calculator) Released;sa1;satestclientuser, satestclientuser;Low;In Progress;13 Aug 2026; Off" values
-    And verify "<UpdateButtons>" buttons are displayed on the "Update Action" popup
+    And verify "Close;Update" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
     Then press "Close" button on the "Update Action" popup
     When press "Back" button
+    When press "Open Dashboard" button
     And press the "Actions" section
     Then the "QA_Test client3 - Actions Dashboard" page is displayed
     When select the "2026 PDOC (Payroll Deductions Online Calculator) Released" result by clicking on the "Action" section
