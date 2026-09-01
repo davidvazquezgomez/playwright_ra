@@ -2,7 +2,9 @@ import { expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class ManageImpactAreasPage extends BasePage {
+    private readonly impactAreaCleanupTimeout = 30000;
     private impactAreaRows = '[role="grid"][aria-label="Data table"] tbody tr.k-master-row';
+    private impactAreaNoRecordsRow = '[role="grid"][aria-label="Data table"] tbody tr.k-grid-norecords';
     private impactAreaNameCellSelector = 'td[data-kendo-grid-column-index="1"]';
     private impactAreaNameCells = `${this.impactAreaRows} ${this.impactAreaNameCellSelector}`;
     private noRecordsMessage = '[role="grid"][aria-label="Data table"] tbody tr.k-grid-norecords p';
@@ -155,14 +157,22 @@ export class ManageImpactAreasPage extends BasePage {
     }
 
     private async filterAndCheckImpactArea(impactAreaName: string): Promise<boolean> {
+        const impactAreaRows = this._page.locator(this.impactAreaRows);
+        const noRecordsRow = this._page.locator(this.impactAreaNoRecordsRow);
+
+        await expect.poll(async () =>
+            ((await impactAreaRows.count()) > 0 && await impactAreaRows.first().isVisible()) ||
+            ((await noRecordsRow.count()) > 0 && await noRecordsRow.first().isVisible()),
+        { timeout: this.impactAreaCleanupTimeout }).toBe(true);
+
         await this.clearInput(this.impactAreaNameFilterInput);
         await this.fillInputText(this.impactAreaNameFilterInput, impactAreaName);
 
         const impactArea = this.impactAreaNameCell(impactAreaName);
-        const impactAreaRows = this._page.locator(this.impactAreaRows);
         await expect.poll(async () =>
-            (await impactArea.count()) > 0 || (await impactAreaRows.count()) <= 1
-        ).toBe(true);
+            (await impactArea.count()) > 0 ||
+            ((await noRecordsRow.count()) > 0 && await noRecordsRow.first().isVisible()),
+        { timeout: this.impactAreaCleanupTimeout }).toBe(true);
 
         return await impactArea.count() > 0;
     }

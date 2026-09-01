@@ -64,7 +64,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     And click on the "Jurisdiction(s)" checkbox
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
-    And select the "Allocation, QA" option in the "Update Owner" field
+    And select the "Admin, QA" option in the "Update Owner" field
     When select the "Alam, Asjad" option in the "Update Watchlist" field
     And press "Cancel" button
     Then the "Unsaved Changes" popup is displayed
@@ -74,7 +74,7 @@ Feature: Automatic Allocation of Updates for Super Admin
     Then verify the "Impact Area(s)" checkbox is still selected
     And verify the "Jurisdiction(s)" checkbox is still selected
     And verify "AND" is still selected in the "Operator" field
-    And verify "Allocation, QA" is still selected in the "Update Owner" field
+    And verify "Admin, QA" is still selected in the "Update Owner" field
     And verify "Alam, Asjad" is still selected in the "Update Watchlist" field
     When press "Save" button
     And confirm the duplicate automatic allocation if displayed
