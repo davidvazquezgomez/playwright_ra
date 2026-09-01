@@ -124,19 +124,6 @@ Feature: Dashboard Analytics for Deloitte User
     And verify the "Update Details" subsection displays the "Mark as Unread;Edit;Comment" buttons
     When open the "Attachments" tab in the "Update Details" subsection
     Then verify the "Upload files" button is displayed in the "Update Details" Attachments tab
-    When press "Close" button
-    When press "Back" button
-    And press the "Updates" section
-    Then the "01_QA_ClientPortalSetup - Updates Dashboard" page is displayed
-    When select the "StageUpload11Aug2026" result by clicking on the "Update Title" section
-    Then the "StageUpload11Aug2026" page is displayed
-    And verify the "Update Details" subsection displays the "User Asigned; Priority; Status;Summary; Deloitte View; Supporting References; Tags; Related Updates; Watch List; Discussion; Comments, Attachmentents; Jurisdiction; Impact Area; Date Announced; Date Effective;Regulator;Level of Authority;Status of Change" sections
-    And verify the "Update Details" subsection displays the "<UpdateDetailsSectionsValues>" values
-    And verify the "Update Details" subsection displays the "Mark as Unread;Edit;Comment" buttons
-    When open the "Attachments" tab in the "Update Details" subsection
-    Then verify the "Upload files" button is displayed in the "Update Details" Attachments tab
-    When press "Close" button
-    And press "Clear" button in the search field
 
   @mutable
   Scenario: TC015_03_DeloitteUser_DashboardAnalytics - Verify Update Analytics Data chart is updated after filtering
