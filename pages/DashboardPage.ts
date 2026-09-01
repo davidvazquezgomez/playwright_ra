@@ -30,6 +30,9 @@ export class DashboardPage extends BasePage {
         `${this.filterDialog} .filters-toggle-btn:text-is("${buttonText}")`;
     private readonly saveFilterButton = (dialogSelector: string) =>
         this._page.locator(dialogSelector).getByRole('button', { name: 'Save filter', exact: true });
+    private readonly filterSavedToast = this._page
+        .locator('.k-notification-content')
+        .filter({ hasText: 'Filter saved successfully.' });
     private readonly resetFiltersButton = `${this.filterDialog} button.reset`;
     private readonly clearAllFiltersButton = () =>
         this._page.getByRole('button', { name: 'Clear all filters', exact: true });
@@ -241,6 +244,15 @@ export class DashboardPage extends BasePage {
         const activeDialog = await this._page.locator(this.nameFilterDialog).isVisible()
             ? this.nameFilterDialog
             : this.filterDialog;
+
+        if (activeDialog === this.nameFilterDialog && (await this._page.locator(this.filterNameInput).inputValue()).trim()) {
+            await Promise.all([
+                expect(this.filterSavedToast).toBeVisible({ timeout: 30000 }),
+                this.saveFilterButton(activeDialog).click(),
+            ]);
+            return;
+        }
+
         await this.saveFilterButton(activeDialog).click();
     }
 
