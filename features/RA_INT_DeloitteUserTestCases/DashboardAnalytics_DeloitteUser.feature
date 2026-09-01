@@ -63,7 +63,7 @@ Feature: Dashboard Analytics for Deloitte User
     Then save the value from the "Outstanding Updates" chart
     And save the value from the "Update Priority" chart
     When press "Filter" button on the Dashboard filter
-    When select "QaTest" located in the "Saved Filters" section on the Dashboard filter
+    When select "TestDashboardQa" located in the "Saved Filters" section on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify the "Outstanding Updates" chart value is not the same
     And verify the "Update Priority" chart value is not the same
@@ -119,7 +119,7 @@ Feature: Dashboard Analytics for Deloitte User
     Then verify the "Update Analytics Data" chart is displayed
     When open the first filtered update result in the "Update Analytics Data" table
     Then the "StageUpload11Aug2026" page is displayed
-    And verify the "Update Details" subsection displays the "User Asigned; Priority; Status;Summary; Deloitte View; Supporting References; Tags; Related Updates; Watch List; Discussion; Comments, Attachmentents; Jurisdiction; Impact Area; Date Announced; Date Effective;Regulator;Level of Authority;Status of Change" sections
+    And verify the "Update Details" subsection displays the "User Assigned; Priority; Status;Summary; Deloitte View; Supporting References; Tags; Related updates; Watch List; Discussion; Jurisdiction; Impact Area; Date Announced; Date Effective;Regulator;Level of Authority;Status of Change" sections
     And verify the "Update Details" subsection displays the "satestclientuser, satestclientuser;Not Set;Update Allocated;The National Revenue Agency (NRA) uses a series of podcast episodes to explain the adoption of the euro as Bulgaria's official currency;The National Revenue Agency (NRA) uses a series of podcast episodes to explain the adoption of the euro as Bulgaria's official currency;1;1;0;1;0;0;Mexico;Employer tax reporting/filing requirements;11 Aug 2026;11 Aug 2026;National Revenue Agency (NRA);Non-Binding;Draft" values
     And verify the "Update Details" subsection displays the "Mark as Unread;Edit;Comment" buttons
     When open the "Attachments" tab in the "Update Details" subsection
@@ -215,7 +215,7 @@ Feature: Dashboard Analytics for Deloitte User
     When remove saved filter "QaTest" if it exists on the Dashboard filter
     And register cleanup to remove saved filter "QaTest" from "QA_Test client3 - Analytics Dashboard - Action Analytics"
     When press "Filter" button on the Dashboard filter
-    When select "satestclientadmin, satestclientadmin" in the "User Assigned" filter on the Dashboard filter
+    When select "satestclientuser1, satestclientuser1" in the "User Assigned" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify the "Name Filter" modal is displayed on the Dashboard filter
     When press "Save filter" button on the Dashboard filter
@@ -296,12 +296,12 @@ Feature: Dashboard Analytics for Deloitte User
   @mutable
   Scenario: TC017_02_DeloitteUser_DashboardAnalytics - Compare Action Analytics Data and Actions Dashboard pages for a selected result
     Given the "QA_Test client3 - Analytics Dashboard - Action Analytics" page is open
-    When search for "2026 PDOC (Payroll Deductions Online Calculator) Released" update in the Analytics Dashboard
+    When search for "Increase to Monthly Social Security Tax Bases" update in the Analytics Dashboard
     Then verify the "Actions Analytics Data" chart is displayed
-    When select the "2026 PDOC (Payroll Deductions Online Calculator) Released" result by clicking on the "Action" section
+    When select the "Increase to Monthly Social Security Tax Bases" result by clicking on the "Action" section
     Then verify the "Update Action" modal is displayed
     And verify the "Update Action" modal contains the "Update;Action;User Assigned; Priority; Status; Deadline;Private Action" sections
-    And verify the "Update Action" modal contains the "2026 PDOC (Payroll Deductions Online Calculator) Released;sa1;satestclientuser, satestclientuser;Low;In Progress;13 Aug 2026; Off" values
+    And verify the "Update Action" modal contains the "Increase to Monthly Social Security Tax Bases;Test Action;test, TesNonDeloitteUser;Medium;In Progress;28 Aug 2026; Off" values
     And verify "Close;Update" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
@@ -310,11 +310,11 @@ Feature: Dashboard Analytics for Deloitte User
     When press "Open Dashboard" button
     And press the "Actions" section
     Then the "QA_Test client3 - Actions Dashboard" page is displayed
-    When select the "2026 PDOC (Payroll Deductions Online Calculator) Released" result by clicking on the "Action" section
+    When select the "Increase to Monthly Social Security Tax Bases" result by clicking on the "Action" section
     Then verify the "Update Action" modal is displayed
     And verify the "Update Action" modal contains the "Update;Action;User Assigned; Priority; Status; Deadline;Private Action" sections
-    And verify the "Update Action" modal contains the "2026 PDOC (Payroll Deductions Online Calculator) Released;sa1;satestclientuser, satestclientuser;Low;In Progress;13 Aug 2026; Off" values
-    And verify "<UpdateButtons>" buttons are displayed on the "Update Action" popup
+    And verify the "Update Action" modal contains the "Increase to Monthly Social Security Tax Bases;Test Action;test, TesNonDeloitteUser;Medium;In Progress;28 Aug 2026; Off" values
+    And verify "Close;Update" buttons are displayed on the "Update Action" popup
     When open the "Attachments" tab in the "Update Action" popup
     Then verify the "Upload files" button is displayed in the "Update Action" Attachments tab
     When press "Close" button on the "Update Action" popup

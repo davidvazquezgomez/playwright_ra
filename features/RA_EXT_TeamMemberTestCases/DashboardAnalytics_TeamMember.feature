@@ -391,9 +391,9 @@ Feature: Dashboard Analytics for Team Member
   Scenario: TC017_06_TeamMember_DashboardAnalytics - Verify Action Analytics Data table pagination and update details navigation
     Given the "01_QA_StageTestPortal - Analytics Dashboard - Action Analytics" page is open
     Then verify the "Actions Analytics Data" chart is displayed
-    When navigate to page "4" in the "Actions Analytics Data" table
-    Then verify that the first result that appears is number "31"
+    When navigate to page "3" in the "Actions Analytics Data" table
+    Then verify that the first result that appears is number "21"
     When press the "Updates" section
     And press the "Analytics" section
     When press the "Actions Analytics" subsection
-    Then verify that the first result that appears is number "31"
+    Then verify that the first result that appears is number "21"
