@@ -64,8 +64,11 @@ export class ManageImpactAreasPage extends BasePage {
      * @param impactAreaName Name to enter for the impact area.
      */
     async setImpactAreaName(impactAreaName: string): Promise<void> {
-        await this.clearInput(this.impactAreaNameInput);
+        await this.waitForElement(this.impactAreaNameInput, 15000);
+        await this.fillInputText(this.impactAreaNameInput, '');
+        await this.waitImplicit(10000);
         await this.fillInputText(this.impactAreaNameInput, impactAreaName);
+        await this.waitImplicit(10000);
     }
 
     /**

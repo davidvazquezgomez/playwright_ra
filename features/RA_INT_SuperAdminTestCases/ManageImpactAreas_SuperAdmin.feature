@@ -42,11 +42,12 @@ Feature: Manage Impact Areas for Super Admin
     When fill the "Impact Area Name" field with "Impact Area Test" value in the "Manage Impact Areas" page
     And click on the "Impact Area Test" impact area in the "Manage Impact Areas" page
     Then the "Edit Impact Area" page is displayed
-    When set the "Impact Area Name" field to "Impact Area Test" on the "Edit Impact Area" page
+    When set the "Impact Area Name" field to "Impact Area Test 2" on the "Edit Impact Area" page
     And press "Cancel" button
     Then the "Unsaved Changes" popup is displayed
     And verify "Continue;Cancel" buttons are displayed on the "Unsaved Changes" popup
     When press "Cancel" button on the "Unsaved Changes" popup
+    And set the "Impact Area Name" field to "Impact Area Test" on the "Edit Impact Area" page
     Then verify "Impact Area Test" value is displayed in the "Impact Area Name" field on the "Edit Impact Area" page
     When press "Save" button
     Then verify "Impact Area updated successfully" toast message is displayed in the "Manage Impact Areas" page
