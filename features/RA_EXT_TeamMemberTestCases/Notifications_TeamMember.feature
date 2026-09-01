@@ -49,7 +49,6 @@ Feature: Notifications for Team Member
     Then the "Update Details" page is displayed from the Updates Dashboard
     When press "Edit" button on the selected update
     And select "Update in Progress" option in the "Status" field in the "Update Details" subsection
-    When toggle the selected update priority between "High" and "Medium"
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Notifications" button
@@ -71,13 +70,11 @@ Feature: Notifications for Team Member
   Scenario: TC002_3_TeamMember_Notifications - Verify triggered notifications for updates
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     Then the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
-    When search for "LINK TEST 2" update from the "Updates Dashboard - 01_QA_StageTestPortal" page
+    When search for "Stage Test_1" update from the "Updates Dashboard - 01_QA_StageTestPortal" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
-    And select "Alam, Asjad" in the "User Assigned" field on the selected update
     When select "Update Allocated" option in the "Status" field in the "Update Details" subsection
-    And toggle the selected update priority between "High" and "Medium"
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Notifications" button
