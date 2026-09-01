@@ -35,11 +35,10 @@ Feature: Overview for Deloitte User
     Then the "Overview" page is displayed
 
     Examples:
-      | widgets                                                         | widget              | viewAll          | dashboard                        | tabs                      |
-      | New Updates;Outstanding Updates;New Actions;Outstanding Actions | New Updates         | View All Updates | 01_13Jan REG - Updates Dashboard | Updates;Actions;Analytics |
-      | New Updates;Outstanding Updates;New Actions;Outstanding Actions | Outstanding Updates | View All Updates | 01_13Jan REG - Updates Dashboard | Updates;Actions;Analytics |
-      | New Updates;Outstanding Updates;New Actions;Outstanding Actions | New Actions         | View All Actions | 01_13Jan REG - Actions Dashboard | Updates;Actions;Analytics |
-      | New Updates;Outstanding Updates;New Actions;Outstanding Actions | Outstanding Actions | View All Actions | 01_13Jan REG - Actions Dashboard | Updates;Actions;Analytics |
+      | widgets                                             | widget              | viewAll          | dashboard                        | tabs                      |
+      | Outstanding Updates;New Actions;Outstanding Actions | Outstanding Updates | View All Updates | 01_13Jan REG - Updates Dashboard | Updates;Actions;Analytics |
+      | Outstanding Updates;New Actions;Outstanding Actions | New Actions         | View All Actions | 01_13Jan REG - Actions Dashboard | Updates;Actions;Analytics |
+      | Outstanding Updates;New Actions;Outstanding Actions | Outstanding Actions | View All Actions | 01_13Jan REG - Actions Dashboard | Updates;Actions;Analytics |
 
   @readOnly
   Scenario Outline: TC003_02_DeloitteUser_Overview - Verify left navigation options
