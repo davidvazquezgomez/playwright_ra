@@ -127,7 +127,22 @@ export class UpdatesDashboardPage extends BasePage {
    * Saves changes made to the update currently selected in Update Details.
    */
   async saveSelectedUpdate(): Promise<void> {
-    await this.clickElement(this.updateDetailsSaveButton);
+    const saveButton = this._page.locator(this.updateDetailsSaveButton);
+
+    try {
+      await expect(saveButton).toBeEnabled();
+    } catch {
+      const priority = (await this.getUpdateDetailsDropdown('Priority').locator('.k-input-value-text').textContent())?.trim() ?? '';
+      const status = (await this.getUpdateDetailsDropdown('Status').locator('.k-input-value-text').textContent())?.trim() ?? '';
+      this.failWithApplicationError(
+        'Changing an editable update value must enable Save.',
+        'The Save button is enabled after changing the update Priority or Status.',
+        'The Save button remained disabled.',
+        `Priority: "${priority}"; Status: "${status}"; disabled: ${await saveButton.isDisabled()}.`,
+      );
+    }
+
+    await saveButton.click();
   }
 
   /**

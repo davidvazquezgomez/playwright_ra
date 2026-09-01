@@ -51,7 +51,7 @@ Feature: Dashboard Analytics for Team Leader
     And register cleanup to remove saved filter "QaTest" from "01_QA_StageTestPortal - Analytics Dashboard - Update Analytics"
     When press "Filter" button on the Dashboard filter
     Then verify the "Saved Filters;My Updates;Knowledge Module;Jurisdiction;Impact Areas;Priority;Status" option is displayed in the Dashboard filter
-    When select "Awaiting Allocation" in the "Status" filter on the Dashboard filter
+    When select "Update in Progress" in the "Status" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify the "Name Filter" modal is displayed on the Dashboard filter
     When press "Save filter" button on the Dashboard filter
@@ -80,7 +80,7 @@ Feature: Dashboard Analytics for Team Leader
     And verify the "Outstanding Updates" chart contains the "UPDATE OVERDUE;< 30 DAYS TO EFFECTIVE DATE;> 30 DAYS TO EFFECTIVE DATE" elements
     And save the value from the "Outstanding Updates" chart
     When press "Filter" button on the Dashboard filter
-    When select "Employment Taxes" in the "Knowledge Module" filter on the Dashboard filter
+    When select "Immigration" in the "Knowledge Module" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify the "Outstanding Updates" chart value is not the same
 

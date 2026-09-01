@@ -68,9 +68,9 @@ Feature: Upload Updates for Super Admin
     Examples:
       | wrong content file                                              | expected message                                                                                                           |
       | test-data/TemplatespellingErrorsInHeader.xlsx                   | Missing required field: ID                                                                                                 |
-      | test-data/differentHeaderCaseFormats.xlsx                       | Missing required field: ID                                                                                                 |
-      | test-data/fileWithIncompleteDetailsUnderValidHeaderColumns.xlsx | Missing required field: Title of Update \| Missing required field: Status of Change \| Missing required field: Impact Area |
-      | test-data/withRecordsAlreadyPresentInTheApplication.xlsx        | This update already exists in the dashboard (duplicate ID).                                                                |
+      | test-data/TemplatedifferentHeaderCaseFormats.xlsx                       | Missing required field: ID                                                                                                 |
+      | test-data/TemplatefileWithIncompleteDetailsUnderValidHeaderColumns.xlsx | Missing required field: Title of Update \| Missing required field: Status of Change \| Missing required field: Impact Area |
+      | test-data/TemplatewithRecordsAlreadyPresentInTheApplication.xlsx        | This update already exists in the dashboard (duplicate ID).                                                                |
 
   @readOnly
   Scenario Outline: TC005_SuperAdmin_UploadUpdates - Verify unsupported file formats are rejected

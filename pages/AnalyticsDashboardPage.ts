@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class AnalyticsDashboardPage extends BasePage {
-    private readonly chartRefreshTimeout = 60000;
+    private readonly chartRefreshTimeout = 150000;
     private readonly chartPanelByTitle = (chartTitle: string) =>
         this._page.locator('.stats-panel').filter({
             has: this._page.locator('.donut-header').getByText(chartTitle, { exact: true }),

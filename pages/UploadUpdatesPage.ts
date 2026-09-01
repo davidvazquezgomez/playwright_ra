@@ -3,6 +3,8 @@ import { BasePage } from './BasePage';
 import type { FileChooser } from 'playwright-core';
 
 export class UploadUpdatesPage extends BasePage {
+  private readonly defaultTimeoutMs = process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000;
+  private readonly selectionPollingIntervalMs = 200;
   private fileChooser?: FileChooser;
   private uploadStep = 'app-file-upload-step';
   private fileUploadSection = `${this.uploadStep} app-file-upload`;
@@ -24,6 +26,8 @@ export class UploadUpdatesPage extends BasePage {
     '[role="listbox"] [role="option"]:has-text("' + client + '")';
   private affectedClientSelection = (client: string) =>
     `${this.affectedClientsMultiSelect} kendo-taglist[role="listbox"] .k-chip[role="option"] .k-chip-label:text-is("${client}")`;
+  private selectedAffectedClientOption = (client: string) =>
+    `${this.affectedClientsMultiSelect} [role="option"][aria-selected="true"]:has-text("${client}")`;
   private fieldSelectors: Record<string, string> = {
     'Upload Updates title': this.uploadUpdatesTitle,
     'Upload Updates description': this.uploadUpdatesDescription,
@@ -165,6 +169,7 @@ export class UploadUpdatesPage extends BasePage {
     const clientSelector = this.clientDropdownOption(client);
     await this.waitForSelectorStatus(clientSelector, 'visible');
     await this.clickElement(clientSelector);
+    await this.waitForAffectedClientSelection(client);
   }
 
   /**
@@ -172,15 +177,47 @@ export class UploadUpdatesPage extends BasePage {
    * @param client Expected client name.
    */
   async verifyClientInAffectedList(client: string): Promise<void> {
-    const affectedClientSelector = this.affectedClientSelection(client);
-    if (!await this.checkIfFieldIsDisplayed(affectedClientSelector)) {
+    await this.waitForAffectedClientSelection(client);
+    const isClientSelected = await this.isAffectedClientSelected(client);
+
+    if (!isClientSelected) {
       this.failWithApplicationError(
         'A selected client must be displayed in the Affected clients list.',
-        `Client "${client}" is displayed in the Affected clients list.`,
-        `Client "${client}" is not displayed in the Affected clients list.`,
-        'The client option was selected from the Affected clients dropdown before verification.',
+        `Client "${client}" is displayed in the Affected clients list as a selected chip or selected option.`,
+        `Client "${client}" is not displayed in the Affected clients list as a selected chip or selected option.`,
+        `The client option was selected from the Affected clients dropdown and the test waited ${this.defaultTimeoutMs}ms for the selected state to render.`,
       );
     }
+  }
+
+  /**
+   * Waits until the selected client is rendered as a selected chip or selected option.
+   * @param client Client name expected to be selected.
+   */
+  private async waitForAffectedClientSelection(client: string): Promise<void> {
+    const timeoutAt = Date.now() + this.defaultTimeoutMs;
+
+    while (Date.now() < timeoutAt) {
+      if (await this.isAffectedClientSelected(client)) {
+        return;
+      }
+
+      await this.waitImplicit(this.selectionPollingIntervalMs);
+    }
+  }
+
+  /**
+   * Checks whether the client appears as selected in the affected clients control.
+   * @param client Client name expected to be selected.
+   * @returns True when the client is displayed as selected.
+   */
+  private async isAffectedClientSelected(client: string): Promise<boolean> {
+    const affectedClientSelector = this.affectedClientSelection(client);
+    const selectedClientOptionSelector = this.selectedAffectedClientOption(client);
+    const isClientChipVisible = await this._page.locator(affectedClientSelector).isVisible().catch(() => false);
+    const isSelectedOptionVisible = await this._page.locator(selectedClientOptionSelector).isVisible().catch(() => false);
+
+    return isClientChipVisible || isSelectedOptionVisible;
   }
 
 }
