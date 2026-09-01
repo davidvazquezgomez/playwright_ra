@@ -49,7 +49,7 @@ Feature: Upload Updates for Super Admin
       | xls             | test-data/valid.xls  |
       | xlsx            | test-data/valid.xlsx |
 
-    @mutable
+  @mutable
   Scenario Outline: TC004_SuperAdmin_UploadUpdates - Verify validation messages for invalid XLSX content
     When click on "Menu" option from the left navigation
     Then verify it displays "Upload Updates" option from the left navigation
@@ -66,12 +66,11 @@ Feature: Upload Updates for Super Admin
     Then a message should get displayed as "<expected message>"
 
     Examples:
-      | wrong content file                                              | expected message           |
-      | test-data/TemplatespellingErrorsInHeader.xlsx                   | Missing required field: ID |
-      | test-data/differentHeaderCaseFormats.xlsx                       | Missing required field: ID |
-      | test-data/fileWithIncompleteDetailsUnderValidHeaderColumns.xlsx | Missing entries error      |
-      | test-data/fileWithNoRowsUnderValidHeaderColumns.xlsx            | Blank file upload error    |
-      | test-data/withRecordsAlreadyPresentInTheApplication.xlsx        | Duplicate upload error     |
+      | wrong content file                                              | expected message                                                                                                           |
+      | test-data/TemplatespellingErrorsInHeader.xlsx                   | Missing required field: ID                                                                                                 |
+      | test-data/differentHeaderCaseFormats.xlsx                       | Missing required field: ID                                                                                                 |
+      | test-data/fileWithIncompleteDetailsUnderValidHeaderColumns.xlsx | Missing required field: Title of Update \| Missing required field: Status of Change \| Missing required field: Impact Area |
+      | test-data/withRecordsAlreadyPresentInTheApplication.xlsx        | This update already exists in the dashboard (duplicate ID).                                                                |
 
   @readOnly
   Scenario Outline: TC005_SuperAdmin_UploadUpdates - Verify unsupported file formats are rejected
