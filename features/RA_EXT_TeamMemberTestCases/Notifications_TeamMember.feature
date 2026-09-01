@@ -45,6 +45,7 @@ Feature: Notifications for Team Member
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     Then the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
     When search for "LINK TEST 2" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     Then the "Update Details" page is displayed from the Updates Dashboard
     When press "Edit" button on the selected update
     And select "Update in Progress" option in the "Status" field in the "Update Details" subsection
