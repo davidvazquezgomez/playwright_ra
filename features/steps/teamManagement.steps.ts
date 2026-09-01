@@ -17,7 +17,11 @@ When('press "Add User" button in the "Add Team Members" popup', async ({ teamMan
   await teamManagementPage.addSelectedTeamMembers();
 });
 
-When('save the team from the "Create/Edit Team" page', async ({ teamManagementPage }) => {
+When('press "Save" button on the {string} page', async ({ teamManagementPage }, pageName: string) => {
+  if (pageName !== 'Create/Edit Team') {
+    throw new Error(`The Save button is not supported on the "${pageName}" page.`);
+  }
+
   await teamManagementPage.saveTeam();
 });
 

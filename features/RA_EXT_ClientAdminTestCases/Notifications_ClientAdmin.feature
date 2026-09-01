@@ -80,7 +80,7 @@ Feature: Notifications for Client Admin
     And check "Select All" Check box under "Lock Settings" option from "Updates" section if it is "unchecked"
     When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
     And select the frequency option "Daily" located under "Periodic Summary of Updates and Actions via email?" section
-    When press "Update Portal" button
+    When press "Save Settings" button
     Then verify "01_QA_StageTestPortal" toast message is displayed in the "Client Portal List" page
 
   @mutable
@@ -100,7 +100,6 @@ Feature: Notifications for Client Admin
     When open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
-    When toggle the selected update priority between "High" and "Medium"
     And select "Update Allocated" option in the "Status" field in the "Update Details" subsection
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
@@ -124,7 +123,7 @@ Feature: Notifications for Client Admin
     And check "Select All" Check box under "Email" option from "Updates" section if it is "checked"
     And check "Select All" Check box under "Lock Settings" option from "Updates" section if it is "checked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
-    When press "Update Portal" button
+    When press "Save Settings" button
     Then verify "01_QA_StageTestPortal updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
@@ -136,7 +135,6 @@ Feature: Notifications for Client Admin
     When open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
-    When toggle the selected update priority between "High" and "Medium"
     And select "Update Allocated" option in the "Status" field in the "Update Details" subsection
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
@@ -159,7 +157,7 @@ Feature: Notifications for Client Admin
     And check "Select All" Check box under "Email" option from "Actions" section if it is "unchecked"
     And check "Select All" Check box under "Lock Settings" option from "Actions" section if it is "unchecked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
-    When press "Update Portal" button
+    When press "Save Settings" button
     Then verify "01_QA_StageTestPortal updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
@@ -202,7 +200,7 @@ Feature: Notifications for Client Admin
     And check "Select All" Check box under "Email" option from "Actions" section if it is "checked"
     And check "Select All" Check box under "Lock Settings" option from "Actions" section if it is "checked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
-    When press "Update Portal" button
+    When press "Save Settings" button
     Then verify "01_QA_StageTestPortal updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
@@ -214,7 +212,6 @@ Feature: Notifications for Client Admin
     When open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     When select "Update Allocated" option in the "Status" field in the "Update Details" subsection
-    And toggle the selected update priority between "High" and "Medium"
     When select "satestclientuser2, satestclientuser2" in the "User Assigned" field on the selected update
     When press "Save" button on the selected update
     Then verify "Regulatory update updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
@@ -261,7 +258,7 @@ Feature: Notifications for Client Admin
     Then the "Add Team Members" popup is displayed
     When select "clientadmin1, satest" option in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
-    When save the team from the "Create/Edit Team" page
+    When press "Save" button on the "Create/Edit Team" page
     Then verify "Team updated successfully" toast message is displayed in the "Team Management" page
     When press "Notifications" button
     Then the "Notifications" popup is displayed
@@ -298,9 +295,9 @@ Feature: Notifications for Client Admin
     Then the "Create/Edit Team" page is displayed
     When open the Add Team Members dialog
     Then the "Add Team Members" popup is displayed
-    When select "clientadmin1" option in the "Search user" field
+    When select "clientadmin1, satest" option in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
-    When save the team from the "Create/Edit Team" page
+    When press "Save" button on the "Create/Edit Team" page
     Then verify "Team updated successfully" toast message is displayed in the "Team Management" page
     When press "Notifications" button
     Then the "Notifications" popup is displayed

@@ -165,7 +165,7 @@ Feature: Notifications for Deloitte User
     Then the "Add Team Members" popup is displayed
     When select "clientadmin1, satest" option in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
-    When save the team from the "Create/Edit Team" page
+    When press "Save" button on the "Create/Edit Team" page
     Then verify "Team updated successfully" toast message is displayed in the "Team Management" page
     When press "Notifications" button
     Then the "Notifications" popup is displayed
@@ -187,7 +187,7 @@ Feature: Notifications for Deloitte User
     Then the "Add Team Members" popup is displayed
     When select "clientadmin1" option in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
-    When save the team from the "Create/Edit Team" page
+    When press "Save" button on the "Create/Edit Team" page
     Then verify "Team updated successfully" toast message is displayed in the "Team Management" page
     When press "Notifications" button
     Then the "Notifications" popup is displayed

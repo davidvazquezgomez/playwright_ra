@@ -12,7 +12,7 @@ Feature: Team Management for Portal Admin
     When click on "Team Management" option from the left navigation
     Then the "Team Management" page is displayed
     When press "Create Team" button
-    When save the team from the "Create/Edit Team" page
+    When press "Save" button on the "Create/Edit Team" page
     Then verify "<warning message>" toast message is displayed in the "Team Management" page
 
     Examples:
@@ -55,7 +55,7 @@ Feature: Team Management for Portal Admin
     Then the "Unsaved Changes" popup is displayed
     And verify "Continue;Cancel" buttons are displayed on the "Unsaved Changes" popup
     When press "Cancel" button on the "Unsaved Changes" popup
-    When save the team from the "Create/Edit Team" page
+    When press "Save" button on the "Create/Edit Team" page
     Then verify "Team created successfully." toast message is displayed in the "Team Management" page
 
   @mutable @cleanup
@@ -68,7 +68,7 @@ Feature: Team Management for Portal Admin
     And open the Add Team Members dialog
     And add "externaluserra2@yopmail.com;externaluserra3@yopmail.com;externaluserra4@yopmail.com" in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
-    When save the team from the "Create/Edit Team" page
+    When press "Save" button on the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
     Then verify the user "ra.grewspec@gmail.com" is available in the team leaders
     When search for "externaluserra2@yopmail.com" in the Team Members table email field
@@ -77,7 +77,7 @@ Feature: Team Management for Portal Admin
     Then verify the filter is removed
     When click on "Delete" icon against the team member "externaluserra1@yopmail.com"
     And press "Remove user" button
-    When save the team from the "Create/Edit Team" page
+    When press "Save" button on the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
 
   @mutable @cleanup
