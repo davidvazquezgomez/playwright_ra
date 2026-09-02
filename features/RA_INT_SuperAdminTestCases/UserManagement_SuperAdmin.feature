@@ -219,7 +219,7 @@ Feature: User Management for Super Admin
     When press the "Non-Deloitte Admins" section
     And select the user "qa.admin@example.com" from the table
     When press "Delete Selected User" button
-    Then the "Delete User" pop up is displayed with the title "Delete User"
+    Then the "Delete User" pop up is displayed with the title "Confirm User Deletion"
     When press "Cancel" button
     And search for "qa.admin@example.com" in the User Management table "Email" field
     Then verify the user "qa.admin@example.com" is displayed in the table

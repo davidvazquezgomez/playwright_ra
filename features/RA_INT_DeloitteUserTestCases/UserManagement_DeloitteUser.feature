@@ -7,9 +7,7 @@ Feature: User Management for Deloitte User
 
   @mutable
   Scenario: TC001_01_DeloitteUser_UserManagement - Verify User Management UI
-    When click on "QA_Test client3" of the portals
-    Then the "Overview" page is displayed
-    When click on "User Management" option from the left navigation
+    Given the "User Management - QA_Test client3" page is open  
     Then the "User Management" page is displayed
     And verify "Deloitte Users" tabs are displayed in "User Management" page
     And verify "EXPORT USERS;Add New User" buttons are displayed in the "User Management" page

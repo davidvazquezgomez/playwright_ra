@@ -36,7 +36,7 @@ Feature: User Management for Client Admin
 
     Examples:
       | tab                 | column    | searchText | user      |
-      | Non-Deloitte Admins | User Name | QA         | QA, Admin |
+      | Non-Deloitte Admins | User Name | QA         | Admin |
       | Non-Deloitte Admins | Email     | qa.admin@  | QA, Admin |
       | Non-Deloitte Users  | User Name | QA         | QA, User  |
       | Non-Deloitte Users  | Email     | qa.user@   | QA, User  |
