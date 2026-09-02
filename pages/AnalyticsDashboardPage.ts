@@ -50,7 +50,6 @@ export class AnalyticsDashboardPage extends BasePage {
      * @returns Total item count reported by the table pager.
      */
     async getDataTableItemCount(tableTitle: string): Promise<number> {
-        // await this._page.pause();
         await this.waitImplicit(5000);
         return this.getKendoPagerItemCount(this.dataTablePagerInfoByTitle(tableTitle));
     }
