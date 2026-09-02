@@ -39,6 +39,10 @@ Then('verify the "Mark as Unread" button is disabled on the selected update', as
   await updatesDashboardPage.verifyMarkAsUnreadIsDisabled();
 });
 
+Then('verify only updates that contain {string} in the title are displayed', async ({ updatesDashboardPage }, searchText: string) => {
+  await updatesDashboardPage.verifyAllUpdatesTitleContainsText(searchText);
+});
+
 When(
   'select {string} option in the {string} field in the "Update Details" subsection',
   async ({ updatesDashboardPage }, optionName: string, fieldName: string) => {

@@ -84,6 +84,59 @@ export class UpdatesDashboardPage extends BasePage {
   }
 
   /**
+   * Verifies that every visible update row's title contains the searched text.
+   * Waits for the grid to refresh with new content and settle, since reading immediately after the
+   * search can still return the previous, unfiltered rows while the reload is in flight.
+   * @param searchText The text expected within each displayed update title.
+   */
+  async verifyAllUpdatesTitleContainsText(searchText: string): Promise<void> {
+    const titleCells = this.updatesGrid().locator('tbody tr.k-master-row td[aria-colindex="1"]');
+    await this.ensureKendoGridHasRows(
+      this.updatesGrid(),
+      `The Updates Dashboard grid must display results after searching for "${searchText}".`,
+    );
+
+    const waitTimeout = process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000;
+    const areEqual = (a: string[], b: string[]) => a.length === b.length && a.every((title, index) => title === b[index]);
+    const initialTitles = await titleCells.allInnerTexts();
+    let previousTitles: string[] | undefined;
+    let hasChanged = false;
+    let titles = initialTitles;
+    try {
+      await expect.poll(
+        async () => {
+          titles = await titleCells.allInnerTexts();
+          if (!hasChanged && !areEqual(titles, initialTitles)) {
+            hasChanged = true;
+          }
+          const isStable = hasChanged && previousTitles !== undefined && areEqual(previousTitles, titles);
+          previousTitles = titles;
+          return isStable;
+        },
+        {
+          message: `Waiting for the Updates Dashboard grid to finish reloading after searching for "${searchText}".`,
+          timeout: waitTimeout,
+        },
+      ).toBe(true);
+    } catch {
+      // The grid never changed from its pre-search rows or never settled; fall through and assert on the last read.
+    }
+
+    const nonMatchingTitles = titles.filter(
+      (title) => !title.toLowerCase().includes(searchText.toLowerCase()),
+    );
+
+    if (nonMatchingTitles.length > 0) {
+      this.failWithApplicationError(
+        `Only updates whose title contains "${searchText}" must be displayed after searching.`,
+        `All displayed update titles contain "${searchText}".`,
+        `Found title(s) that do not contain "${searchText}": ${nonMatchingTitles.join(', ')}.`,
+        `${titles.length} update title(s) were read from the Updates Dashboard grid.`,
+      );
+    }
+  }
+
+  /**
    * Gets the total number of items displayed in the All Updates table.
    * @param expectedItemCount Optional total that the pager must report before returning.
    * @returns Total item count reported by the All Updates table pager.

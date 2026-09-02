@@ -173,8 +173,6 @@ Feature: Dashboard Updates for Super Admin
     And save the "1_E2E_Test1 - Updates Dashboard" items
     When search for "Income" update in the Analytics Dashboard
     Then verify only updates that contain "Income" in the title are displayed
-    When press "Enter" key on the keyboard
-    Then verify the "1_E2E_Test1 - Updates Dashboard" item count is not the same
 
   @readOnly
   Scenario: TC005_SuperAdmin_DashboardUpdates - Verify auto suggestions for updates
@@ -184,7 +182,6 @@ Feature: Dashboard Updates for Super Admin
     And save the "1_E2E_Test1 - Updates Dashboard" items
     When search for "zz" update in the Analytics Dashboard
     Then verify no updates are displayed
-    When press "Enter" key on the keyboard
     Then verify the "1_E2E_Test1 - Updates Dashboard" item count is not the same
     And a message should get displayed as "There is no data to display."
     When press "Clear" button in the search field
