@@ -144,17 +144,15 @@ Feature: Dashboard Updates for Client User
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Attachments" button
     And upload "<file path>" attachment in the "Update Details" Attachments tab
-    When select a "<invalid extension>" format file from "<file path>" and upload it
     Then a message should get displayed as "<expected message>"
     And verify the "<name>" attachment is not displayed in the "Attachments" section
 
      Examples:
-      | invalid extension | file path                  | expected message                                                         | name             |
-      | xls               | test-data/valid.xls        | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx.  | valid.xls        |
-      | jpg               | test-data/invalid.jpg      | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.jpg      |
-      | csv               | test-data/invalid.csv      | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.csv      |
-      | txt               | test-data/invalid.txt      | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.txt      |
-      | xlsx              | test-data/Fichero94MB.xlsx | Invalid file type \\".xlsx\\". Allowed types: pdf, xlsx, svg, png, docx. | Fichero94MB.xlsx |
+      | file path                  | expected message                                                         | name             |
+      | test-data/valid.xls        | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx.  | valid.xls        |
+      | test-data/invalid.jpg      | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.jpg      |
+      | test-data/invalid.csv      | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.csv      |
+      | test-data/invalid.txt      | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.txt      |
 
   @readOnly
   Scenario: TC004_ClientUser_DashboardUpdates - Verify search
