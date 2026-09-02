@@ -35,8 +35,8 @@ Feature: User Management for Client Admin
     Then verify the filter is removed
 
     Examples:
-      | tab                 | column    | searchText | user      |
-      | Non-Deloitte Admins | User Name | QA         | QA, Admin |
-      | Non-Deloitte Admins | Email     | qa.admin@  | QA, Admin |
-      | Non-Deloitte Users  | User Name | QA         | QA, User  |
-      | Non-Deloitte Users  | Email     | qa.user@   | QA, User  |
+      | tab                 | column    | searchText               | user          |
+      | Non-Deloitte Admins | User Name | Admin                    | Admin, Client |
+      | Non-Deloitte Admins | Email     | ndaextuser@outlook.com   | Admin, Client |
+      | Non-Deloitte Users  | User Name | Leader                   | Leader, Team  |
+      | Non-Deloitte Users  | Email     | TeamLeaderRA@outlook.com | Leader, Team  |

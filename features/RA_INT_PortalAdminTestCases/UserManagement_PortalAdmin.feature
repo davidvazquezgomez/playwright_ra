@@ -46,9 +46,7 @@ Feature: User Management for Portal Admin
 
   @mutable
   Scenario: TC002_01_PortalAdmin_UserManagement - Verify the Add Deloitte User dialog
-    When click on "Global Inc" of the portals
-    Then the "Overview" page is displayed
-    When click on "User Management" option from the left navigation
+    Given the "User Management - Global Inc" page is open
     Then the "User Management" page is displayed
     And the "Deloitte Users" section is displayed
     When press "Add New User" button
@@ -217,7 +215,7 @@ Feature: User Management for Portal Admin
     When press the "Non-Deloitte Admins" section
     And select the user "qa.admin@example.com" from the table
     When press "Delete Selected User" button
-    Then the "Delete User" pop up is displayed with the title "Delete User"
+    Then the "Delete User" pop up is displayed with the title "Confirm User Deletion"
     When press "Cancel" button
     And search for "qa.admin@example.com" in the User Management table "Email" field
     Then verify the user "qa.admin@example.com" is displayed in the table
