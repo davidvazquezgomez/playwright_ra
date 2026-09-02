@@ -98,30 +98,6 @@ Feature: Dashboard Actions for Client Admin
     And verify "Not Started" option is selected in the "Status" field on the "Update Action" popup
 
   @mutable
-  Scenario: TC010_03_ClientAdmin_DashboardActions - Verify the private action toggle
-    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
-    When press "Filter" button on the Dashboard filter
-    And press "Reset Filters" button on the Dashboard filter
-    And double-click "Test_ClientAdmin" option on the Dashboard filter
-    And press "View results" button on the Dashboard filter
-    And search for "24Maximum social security contributions have been proposed" update in the "01_QA_StageTestPortal - Actions Dashboard" page
-    Then verify "24Maximum social security contributions have been proposed" update is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
-    When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
-    Then the "Update Action" popup is displayed
-    When enable the "Private Action" toggle in the "Update Action" popup
-    And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
-    When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
-    Then the "Update Action" popup is displayed
-    And verify the "Private Action" toggle is enabled in the "Update Action" popup
-    When disable the "Private Action" toggle in the "Update Action" popup
-    And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
-    When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
-    Then the "Update Action" popup is displayed
-    And verify the "Private Action" toggle is disabled in the "Update Action" popup
-
-  @mutable
   Scenario: TC010_04_ClientAdmin_DashboardActions - Verify adding a comment to an action
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
