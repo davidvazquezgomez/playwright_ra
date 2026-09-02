@@ -156,16 +156,15 @@ Feature: Dashboard Updates for Super Admin
     And open the first update in the "1_E2E_Test1 - Updates Dashboard" page
     When press "Attachments" button
     And upload "<file path>" attachment in the "Update Details" Attachments tab
-    When select a "<invalid extension>" format file from "<file path>" and upload it
     Then a message should get displayed as "<expected message>"
     And verify the "<name>" attachment is not displayed in the "Attachments" section
 
     Examples:
-      | invalid extension | file path                  | expected message                            | name             |
-      | xls               | test-data/valid.xls        | Only excel files (.xls, .xlsx) are allowed. | valid.xls        |
-      | jpg               | test-data/invalid.jpg      | Only excel files (.xls, .xlsx) are allowed. | invalid.jpg      |
-      | csv               | test-data/invalid.csv      | Only excel files (.xls, .xlsx) are allowed. | invalid.csv      |
-      | txt               | test-data/invalid.txt      | Only excel files (.xls, .xlsx) are allowed. | invalid.txt      |
+      | file path                  | expected message                            | name             |
+      | test-data/valid.xls        | Invalid file type ".xls". Allowed types: pdf, xlsx, svg, png, docx. | valid.xls        |
+      | test-data/invalid.jpg      | Invalid file type ".jpg". Allowed types: pdf, xlsx, svg, png, docx. | invalid.jpg      |
+      | test-data/invalid.csv      | Invalid file type ".csv". Allowed types: pdf, xlsx, svg, png, docx. | invalid.csv      |
+      | test-data/invalid.txt      | Invalid file type ".txt". Allowed types: pdf, xlsx, svg, png, docx. | invalid.txt      |
 
   @readOnly
   Scenario: TC004_SuperAdmin_DashboardUpdates - Verify search
