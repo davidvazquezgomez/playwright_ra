@@ -303,6 +303,7 @@ export class ActionsDashboardPage extends BasePage {
   async searchForUpdate(updateTitle: string): Promise<void> {
     await this.fillInputText(this.dashboardUpdateSearchInput, updateTitle);
     await this.clickLocator(this.dashboardUpdateSearchResultByTitle(updateTitle));
+    await expect(this.updateTitleCellByUpdateTitle(updateTitle)).toBeVisible();
   }
 
   /**

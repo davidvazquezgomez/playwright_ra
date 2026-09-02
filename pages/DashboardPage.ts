@@ -483,7 +483,6 @@ export class DashboardPage extends BasePage {
      * @param sectionName Visible name of the filter section that contains the saved filter.
      */
     async selectSavedFilter(filterName: string, sectionName: string): Promise<void> {
-        await this._page.pause();
         const filterSection = this.filterSectionByName(sectionName);
         await expect(filterSection).toBeVisible();
 

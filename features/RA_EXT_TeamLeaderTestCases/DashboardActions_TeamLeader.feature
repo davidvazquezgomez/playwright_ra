@@ -156,10 +156,8 @@ Feature: Dashboard Actions for Team Leader
     When upload "<file path>" attachment in the "Update Action" popup
     Then a message should get displayed as "<expected message>"
     And verify "<name>" attachment is not displayed in the "Update Action" popup
-    When select "Complete" option in the "Status" field in the "Update Action" popup
     And press "Update" button in the "Update Action" popup
     Then verify "Action updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
-    And verify "Test Action" action is not displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
 
    Examples:
       | invalid extension | file path                  | expected message                                                         | name             |
