@@ -88,7 +88,6 @@ Feature: Notifications for Super Admin
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     And logout from the application
-    
 
   @readOnly
   Scenario: TC003_2_SuperAdmin_Notifications - Verify triggered notifications for updates
@@ -142,7 +141,7 @@ Feature: Notifications for Super Admin
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
     And logout from the application
     When launch Regulatory Advantage application URL and login as "Deloitte" user "SUPERADMIN"
-    Then the "01_QA_StageTestPortal - Actions Dashboard - All Actions" page is open
+    Then the "01_QA_StageTestPortal - Actions Dashboard" page is open
     And search for "24Maximum social security contributions have been proposed" update in the "01_13Jan REG - Actions Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Actions Dashboard" page
     When click on the first action in the "01_13Jan REG - Actions Dashboard" page
@@ -173,7 +172,7 @@ Feature: Notifications for Super Admin
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
     And logout from the application
     When launch Regulatory Advantage application URL and login as "Deloitte" user "SUPERADMIN"
-    Then the "01_QA_StageTestPortal - Actions Dashboard - All Actions" page is open
+    Then the "01_QA_StageTestPortal - Actions Dashboard" page is open
     And search for "24Maximum social security contributions have been proposed" update in the "01_13Jan REG - Actions Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Actions Dashboard" page
     When click on the first action in the "01_13Jan REG - Actions Dashboard" page
@@ -192,7 +191,6 @@ Feature: Notifications for Super Admin
     When press "View All" button
     Then the "Notification Listing" page is displayed
     And verify there are no system notifications
-
 
   @mutable
   Scenario: TC005_1_SuperAdmin_Notifications - Verify enable Notifications Preferences for teams
@@ -237,7 +235,7 @@ Feature: Notifications for Super Admin
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
     And logout from the application
     When launch Regulatory Advantage application URL and login as "Deloitte" user "SUPERADMIN"
-    Then the "01_QA_StageTestPortal -  Updates Dashboard - All Updates" page is open
+    Then the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When click on "Team Management" option from the left navigation
     Then the "Team Management" page is displayed
     When press "Edit" button for the first team in the "Team Management" page
