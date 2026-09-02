@@ -34,6 +34,13 @@ Then('verify the filter is removed', async ({ userManagementPage }) => {
 });
 
 Then(
+  'verify the User Management table {string} filter is removed',
+  async ({ userManagementPage }, columnName: string) => {
+    await userManagementPage.verifyUserSearchFilterIsRemoved(columnName);
+  },
+);
+
+Then(
   'verify items are sorted in {string} order by {string} in the {string} page by default',
   async ({ userManagementPage }, order: string, columnName: string, pageName: string) => {
     if (order !== 'ascending' || pageName !== 'User Management') {
@@ -98,6 +105,25 @@ When(
       testData,
       () => userManagementPage.removeUserIfPresent(emailAddress),
     );
+  },
+);
+
+When(
+  'ensure the user {string} exists in {string} with name {string} and company {string}',
+  async ({ userManagementPage, testData }, emailAddress: string, sectionName: string, userName: string, companyName: string) => {
+    const wasCreated = await userManagementPage.ensureUserExistsInSection(
+      emailAddress,
+      sectionName,
+      userName,
+      companyName,
+    );
+
+    if (wasCreated) {
+      registerScenarioCleanup(
+        testData,
+        () => userManagementPage.removeUserIfPresent(emailAddress),
+      );
+    }
   },
 );
 

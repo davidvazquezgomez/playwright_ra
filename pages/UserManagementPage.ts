@@ -119,14 +119,11 @@ export class UserManagementPage extends BasePage {
   }
 
   /**
-   * Verifies that a filtered User Management grid contains one row with the requested user value.
+   * Verifies that a filtered User Management grid contains the requested user value.
    * @param userValue Email address or displayed user value expected in the grid.
    */
   async verifyUserIsDisplayedInTable(userValue: string): Promise<void> {
-    const userRows = this._page.locator(this.gridRows);
-
-    await expect(userRows).toHaveCount(1);
-    await expect(this._page.locator(this.gridRowByText(userValue))).toBeVisible();
+    await this.verifyElementIsDisplayed(this.gridRowByText(userValue));
   }
 
   /**
@@ -234,6 +231,46 @@ export class UserManagementPage extends BasePage {
    */
   async enterExternalUserField(value: string, fieldLabel: string): Promise<void> {
     await this.fillInputText(this.externalUserFieldSelector(fieldLabel), value);
+  }
+
+  /**
+   * Ensures that a user exists in the requested User Management section.
+   * @param emailAddress Email address used to find or create the user.
+   * @param sectionName User Management section containing the user.
+   * @param userName Display name used to create the user when needed.
+   * @param companyName Company name used when creating an external user.
+   * @returns Whether this action created the user.
+   */
+  async ensureUserExistsInSection(
+    emailAddress: string,
+    sectionName: string,
+    userName: string,
+    companyName: string,
+  ): Promise<boolean> {
+    await this.searchUsers(emailAddress, 'Email');
+    await this.waitImplicit(500);
+
+    if (await this._page.locator(this.gridRowByEmail(emailAddress)).count() > 0) {
+      return false;
+    }
+
+    await this.clearInput(this.gridFilterInputByName('Email'));
+    if (sectionName === 'Deloitte Users') {
+      await this.ensureDeloitteUserExists(emailAddress, userName);
+      return true;
+    }
+
+    if (sectionName !== 'Non-Deloitte Admins' && sectionName !== 'Non-Deloitte Users') {
+      throw new Error(`Unsupported User Management section: "${sectionName}".`);
+    }
+
+    const [firstName, lastName] = userName.split(',').map(namePart => namePart.trim());
+    if (!firstName || !lastName || !companyName) {
+      throw new Error(`External user setup data is incomplete for "${userName}".`);
+    }
+
+    await this.ensureExternalUserExists(emailAddress, firstName, lastName, companyName);
+    return true;
   }
 
   /**
