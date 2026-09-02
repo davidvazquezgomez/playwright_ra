@@ -33,6 +33,9 @@ export class DashboardPage extends BasePage {
     private readonly filterSavedToast = this._page
         .locator('.k-notification-content')
         .filter({ hasText: 'Filter saved successfully.' });
+    private readonly filterUpdatedToast = this._page
+        .locator('.k-notification-content')
+        .filter({ hasText: 'Filter updated successfully.' });
     private readonly resetFiltersButton = `${this.filterDialog} button.reset`;
     private readonly clearAllFiltersButton = () =>
         this._page.getByRole('button', { name: 'Clear all filters', exact: true });
@@ -247,7 +250,10 @@ export class DashboardPage extends BasePage {
 
         if (activeDialog === this.nameFilterDialog && (await this._page.locator(this.filterNameInput).inputValue()).trim()) {
             await Promise.all([
-                expect(this.filterSavedToast).toBeVisible({ timeout: 30000 }),
+                expect.poll(async () =>
+                    await this.filterSavedToast.isVisible() || await this.filterUpdatedToast.isVisible(),
+                    { timeout: 30000 },
+                ).toBe(true),
                 this.saveFilterButton(activeDialog).click(),
             ]);
             return;
@@ -382,6 +388,47 @@ export class DashboardPage extends BasePage {
     }
 
     /**
+     * Restores a saved filter's canonical name when an interrupted scenario left it with an updated name.
+     * @param filterName Canonical saved-filter name required by the scenario.
+     * @param updatedFilterName Saved-filter name that a prior run may have persisted.
+     */
+    async restoreSavedFilterNameIfNeeded(filterName: string, updatedFilterName: string): Promise<void> {
+        await this.openFilterPanel();
+        await this.editDashboardFilters();
+
+        const savedFilter = this.savedFilterEditButtonByName(filterName);
+        const updatedSavedFilter = this.savedFilterEditButtonByName(updatedFilterName);
+
+        if (await savedFilter.count() > 0) {
+            if (await updatedSavedFilter.count() > 0) {
+                await updatedSavedFilter.click();
+                await expect(this._page.locator(this.confirmDeleteDialog)).toBeVisible();
+                await this.confirmDeleteFilterButton().click();
+                await expect(updatedSavedFilter).toHaveCount(0);
+            }
+
+            await this.closeFilterPanel();
+            return;
+        }
+
+        if (await updatedSavedFilter.count() === 0) {
+            await this.closeFilterPanel();
+            throw new Error(
+                `Neither saved filter "${filterName}" nor "${updatedFilterName}" was found.`
+            );
+        }
+
+        await updatedSavedFilter.click();
+        await this.saveFilterButton(this.filterDialog).click();
+        await expect(this._page.locator(this.nameFilterDialog)).toBeVisible();
+        await this.fillFilterName(filterName);
+        await Promise.all([
+            expect(this.filterUpdatedToast).toBeVisible({ timeout: 30000 }),
+            this.saveFilterButton(this.nameFilterDialog).click(),
+        ]);
+    }
+
+    /**
      * Expands a Dashboard filter section and selects one of its options.
      * @param optionName Visible name of the option to select.
      * @param sectionName Visible name of the filter section that contains the option.
@@ -436,6 +483,7 @@ export class DashboardPage extends BasePage {
      * @param sectionName Visible name of the filter section that contains the saved filter.
      */
     async selectSavedFilter(filterName: string, sectionName: string): Promise<void> {
+        await this._page.pause();
         const filterSection = this.filterSectionByName(sectionName);
         await expect(filterSection).toBeVisible();
 

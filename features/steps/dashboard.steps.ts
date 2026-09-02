@@ -1,4 +1,4 @@
-import { Then, When } from './fixtures';
+import { Given, Then, When } from './fixtures';
 import { registerScenarioCleanup } from './scenarioCleanup.hooks';
 
 When('press "Filter" button on the Dashboard filter', async ({ dashboardPage }) => {
@@ -131,6 +131,13 @@ When('press "Edit filter" button for {string} on the Dashboard filter', async ({
 When('remove saved filter {string} if it exists on the Dashboard filter', async ({ dashboardPage }, filterName: string) => {
     await dashboardPage.removeSavedFilterIfExists(filterName);
 });
+
+Given(
+    'the {string} saved filter is restored from {string} on the Dashboard filter',
+    async ({ dashboardPage }, filterName: string, updatedFilterName: string) => {
+        await dashboardPage.restoreSavedFilterNameIfNeeded(filterName, updatedFilterName);
+    },
+);
 
 When(
     'register cleanup to remove saved filter {string} from {string}',
