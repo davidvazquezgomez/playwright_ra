@@ -168,13 +168,13 @@ Feature: User Management for Super Admin
     Then verify the filter is removed
 
     Examples:
-      | tab                 | searchText                      | column    | user                |
-      | Deloitte Users      | g-coreconfirmations             | User Name | g-coreconfirmations |
-      | Deloitte Users      | g-coreconfirmations@deloitte.lu | Email     | g-coreconfirmations |
-      | Non-Deloitte Admins | QA, Admin                       | User Name | QA, Admin           |
-      | Non-Deloitte Admins | qa.admin@example.com            | Email     | QA, Admin           |
-      | Non-Deloitte Users  | Leader, Team                    | User Name | Leader, Team        |
-      | Non-Deloitte Users  | ext-teamleadr@yopmail.com       | Email     | Leader, Team        |
+      | tab                 | searchText                      | column    | user                 |
+      | Deloitte Users      | g-coreconfirmations             | User Name | g-coreconfirmations  |
+      | Deloitte Users      | g-coreconfirmations@deloitte.lu | Email     | g-coreconfirmations  |
+      | Non-Deloitte Admins | Alam, Asjad                     | User Name | Alam, Asjad          |
+      | Non-Deloitte Admins | asjad.alam@gmail.com            | Email     | asjad.alam@gmail.com |
+      | Non-Deloitte Users  | Leader, Team                    | User Name | Leader, Team         |
+      | Non-Deloitte Users  | ext-teamleadr@yopmail.com       | Email     | Leader, Team         |
 
   @mutable @cleanup
   Scenario: TC003_01_SuperAdmin_UserManagement - Delete the Deloitte User
@@ -206,7 +206,7 @@ Feature: User Management for Super Admin
     And ensure the external user "qa.admin@example.com" exists with first name "QA", last name "Admin", and company "Regulatory Advantage Testing"
     Given the "Team Management - 01_13Jan REG" page is open
     When click on "Edit" button for the "01_QA_UserManagement" team
-    And register cleanup to restore "sonigour, audit" as Team Leader of "01_QA_UserManagement", remove "qa.admin@example.com", and use portal "01_13Jan REG"
+    #And register cleanup to restore "sonigour, audit" as Team Leader of "01_QA_UserManagement", remove "qa.admin@example.com", and use portal "01_13Jan REG"
     And remove "sonigour, audit" from the "Team Leader" field
     And add "qa.admin@example.com" in the "Team Leader" field
     And open the Add Team Members dialog
