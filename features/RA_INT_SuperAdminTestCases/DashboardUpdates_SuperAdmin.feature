@@ -166,7 +166,6 @@ Feature: Dashboard Updates for Super Admin
       | jpg               | test-data/invalid.jpg      | Only excel files (.xls, .xlsx) are allowed. | invalid.jpg      |
       | csv               | test-data/invalid.csv      | Only excel files (.xls, .xlsx) are allowed. | invalid.csv      |
       | txt               | test-data/invalid.txt      | Only excel files (.xls, .xlsx) are allowed. | invalid.txt      |
-      | xlsx              | test-data/Fichero94MB.xlsx | Only excel files (.xls, .xlsx) are allowed. | Fichero94MB.xlsx |
 
   @readOnly
   Scenario: TC004_SuperAdmin_DashboardUpdates - Verify search
