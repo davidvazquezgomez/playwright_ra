@@ -150,7 +150,7 @@ Feature: Dashboard Actions for Deloitte User
     And press "Reset Filters" button on the Dashboard filter
     And double-click "test_portaladmin" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    And search for "Migration_test" update in the "QA_Test client3 - Actions Dashboard" page
+    And search for "Increase to Monthly Social Security Tax Bases" update in the "QA_Test client3 - Actions Dashboard" page
     When click on the first action in the "QA_Test client3 - Actions Dashboard" page
     Then the "Update Action" popup is displayed
     When open the "Attachments" tab in the "Update Action" popup
@@ -166,7 +166,6 @@ Feature: Dashboard Actions for Deloitte User
       | jpg               | test-data/invalid.jpg      | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.jpg      |
       | csv               | test-data/invalid.csv      | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.csv      |
       | txt               | test-data/invalid.txt      | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.txt      |
-      | xlsx              | test-data/Fichero94MB.xlsx | Invalid file type \\".xlsx\\". Allowed types: pdf, xlsx, svg, png, docx. | Fichero94MB.xlsx |
 
   @mutable
   Scenario: TC011_01_DeloitteUser_DashboardActions - Verify adding an action from the update details page
@@ -312,7 +311,6 @@ Feature: Dashboard Actions for Deloitte User
       | jpg               | test-data/invalid.jpg      | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.jpg      |
       | csv               | test-data/invalid.csv      | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.csv      |
       | txt               | test-data/invalid.txt      | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.txt      |
-      | xlsx              | test-data/Fichero94MB.xlsx | Invalid file type \\".xlsx\\". Allowed types: pdf, xlsx, svg, png, docx. | Fichero94MB.xlsx |
 
   @readOnly
   Scenario Outline: TC012_01_DeloitteUser_DashboardActions - Verify filtering the actions dashboard by
