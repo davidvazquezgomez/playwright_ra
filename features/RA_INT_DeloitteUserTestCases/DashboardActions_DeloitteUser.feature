@@ -347,6 +347,7 @@ Feature: Dashboard Actions for Deloitte User
   @mutable
   Scenario: TC012_03_DeloitteUser_DashboardActions - Verify saving a filter
     Given the "Actions Dashboard - QA_Test client3" page is open
+    And the "Test DashboardAction" saved filter is restored from "Test DashboardAction update" on the Dashboard filter
     When remove saved filter "Test DashboardAction" if it exists on the Dashboard filter
     When press "Filter" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter

@@ -374,6 +374,7 @@ Examples:
   @mutable
   Scenario: TC012_03_ClientUser_DashboardActions - Verify saving a filter
     Given the "ClientPortal_20260209133616 - Actions Dashboard" page is open
+    And the "Test DashboardAction" saved filter is restored from "Test DashboardAction update" on the Dashboard filter
     When remove saved filter "Test DashboardAction" if it exists on the Dashboard filter
     When press "Filter" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter

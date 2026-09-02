@@ -345,6 +345,7 @@ Feature: Dashboard Actions for Portal Admin
   @mutable
   Scenario: TC012_03_PortalAdmin_DashboardActions - Verify saving a filter
     Given the "Global Inc - Actions Dashboard" page is open
+    And the "Test DashboardAction" saved filter is restored from "Test DashboardAction update" on the Dashboard filter
     When remove saved filter "Test DashboardAction" if it exists on the Dashboard filter
     When press "Filter" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter
@@ -363,7 +364,6 @@ Feature: Dashboard Actions for Portal Admin
   @mutable
   Scenario: TC012_04_PortalAdmin_DashboardActions - Verify editing and deleting a saved filter
     Given the "Global Inc - Actions Dashboard" page is open
-    And the "Test DashboardAction" saved filter is restored from "Test DashboardAction update" on the Dashboard filter
     When press "Filter" button on the Dashboard filter
     When select "Test DashboardAction" located in the "Saved Filters" section on the Dashboard filter
     And press "Edit" button on the Dashboard filter
