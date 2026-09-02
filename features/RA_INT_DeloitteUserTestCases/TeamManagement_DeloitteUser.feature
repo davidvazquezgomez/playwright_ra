@@ -13,7 +13,7 @@ Feature: Team Management for Deloitte User
     Then the "Team Management" page is displayed
     When press "Create Team" button
     When press "Save" button on the "Create/Edit Team" page
-    Then verify "<warning message>" toast message is displayed in the "Team Management" page
+    Then verify the warning message "<warning message>" for fields "<mandatory field>" is displayed
 
     Examples:
       | mandatory field | warning message                      |
