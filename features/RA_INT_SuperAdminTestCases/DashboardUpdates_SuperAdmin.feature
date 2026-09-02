@@ -160,11 +160,11 @@ Feature: Dashboard Updates for Super Admin
     And verify the "<name>" attachment is not displayed in the "Attachments" section
 
     Examples:
-      | file path                  | expected message                            | name             |
-      | test-data/valid.xls        | Invalid file type ".xls". Allowed types: pdf, xlsx, svg, png, docx. | valid.xls        |
-      | test-data/invalid.jpg      | Invalid file type ".jpg". Allowed types: pdf, xlsx, svg, png, docx. | invalid.jpg      |
-      | test-data/invalid.csv      | Invalid file type ".csv". Allowed types: pdf, xlsx, svg, png, docx. | invalid.csv      |
-      | test-data/invalid.txt      | Invalid file type ".txt". Allowed types: pdf, xlsx, svg, png, docx. | invalid.txt      |
+      | file path             | expected message                                                    | name        |
+      | test-data/valid.xls   | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx. | valid.xls   |
+      | test-data/invalid.jpg | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.jpg |
+      | test-data/invalid.csv | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.csv |
+      | test-data/invalid.txt | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.txt |
 
   @readOnly
   Scenario: TC004_SuperAdmin_DashboardUpdates - Verify search

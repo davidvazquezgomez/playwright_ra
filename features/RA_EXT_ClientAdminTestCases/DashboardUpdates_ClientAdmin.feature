@@ -159,7 +159,7 @@ Feature: Dashboard Updates for Client Admin
     Then a message should get displayed as "<expected message>"
     And verify the "<name>" attachment is not displayed in the "Attachments" section
 
-     Examples:
+    Examples:
       | file path                  | expected message                                                         | name             |
       | test-data/valid.xls        | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx.  | valid.xls        |
       | test-data/invalid.jpg      | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.jpg      |
