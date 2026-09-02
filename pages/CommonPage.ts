@@ -261,6 +261,7 @@ export class CommonPage extends BasePage {
       '1_E2E_Test1 - Updates Dashboard - All Updates': '/project-dashboard/180/Updates/AllUpdates/All',
 
       // 01_QA_StageTestPortal (portal 415; used by ClientAdmin, TeamLeader, and TeamMember)
+      'Team Management - 01_QA_StageTestPortal': '/teams/415',
       'Automatic Allocation of Updates - 01_QA_StageTestPortal': '/allocation/415',
       'Automatic Allocation Setup - 01_QA_StageTestPortal': '/allocation-setup/415',
       '01_QA_StageTestPortal - Updates Dashboard - All Updates': '/project-dashboard/415/Updates/AllUpdates/All',

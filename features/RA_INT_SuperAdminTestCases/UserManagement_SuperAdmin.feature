@@ -201,11 +201,10 @@ Feature: User Management for Super Admin
 
   @mutable @cleanup
   Scenario: TC003_03_SuperAdmin_UserManagement - Delete the Non-Deloitte Admin assigned to an existing team
-    Given the "Team Management - 01_13Jan REG" page is open
-    When click on "User Management" option from the left navigation
+    Given the "User Management - 01_13Jan REG" page is open
     And press the "Non-Deloitte Admins" section
     And ensure the external user "qa.admin@example.com" exists with first name "QA", last name "Admin", and company "Regulatory Advantage Testing"
-    When click on "Team Management" option from the left navigation
+    Given the "Team Management - 01_13Jan REG" page is open
     When click on "Edit" button for the "01_QA_UserManagement" team
     And register cleanup to restore "sonigour, audit" as Team Leader of "01_QA_UserManagement", remove "qa.admin@example.com", and use portal "01_13Jan REG"
     And remove "sonigour, audit" from the "Team Leader" field
@@ -215,7 +214,7 @@ Feature: User Management for Super Admin
     When select "ValidLast, ValidFirst" option in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
     And press "Save" button
-    When click on "User Management" option from the left navigation
+    Given the "User Management - 01_13Jan REG" page is open
     Then the "User Management" page is displayed
     When press the "Non-Deloitte Admins" section
     And select the user "qa.admin@example.com" from the table
@@ -233,8 +232,8 @@ Feature: User Management for Super Admin
     Then verify "Selected user deleted successfully" toast message is displayed in the "User Management" page
     When search for "qa.admin@example.com" in the User Management table "Email" field
     Then verify the user "qa.admin@example.com" is not displayed in the table
-    When click on "Team Management" option from the left navigation
-    And search for "01_QA_UserManagement" in the Team Name field
+    Given the "Team Management - 01_13Jan REG" page is open
+    When search for "01_QA_UserManagement" in the Team Name field
     Then verify the user "QA, Admin" is not available in the team leaders
 
   @mutable @cleanup

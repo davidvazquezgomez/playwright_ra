@@ -249,8 +249,7 @@ Feature: Notifications for Client Admin
     Then verify all the "Notifications Preferences" are disabled
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
-    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When click on "Team Management" option from the left navigation
+    Given the "Team Management - 01_QA_StageTestPortal" page is open
     Then the "Team Management" page is displayed
     When press "Edit" button for the first team in the "Team Management" page
     Then the "Create/Edit Team" page is displayed
@@ -287,9 +286,7 @@ Feature: Notifications for Client Admin
   Scenario: TC005_4_ClientAdmin_Notifications - Verify triggered notifications for teams
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
-    When click on "01_QA_StageTestPortal" of the portals
-    Then the "01_QA_StageTestPortal - Overview" page is displayed
-    When click on "Team Management" option from the left navigation
+    Given the "Team Management - 01_QA_StageTestPortal" page is open
     Then the "Team Management" page is displayed
     When press "Edit" button for the first team in the "Team Management" page
     Then the "Create/Edit Team" page is displayed
