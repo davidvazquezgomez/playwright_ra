@@ -159,23 +159,24 @@ Feature: User Management for Portal Admin
       | Non-Deloitte Users  | Global_Inc_Non_Deloitte_Users_  |
       | Non-Deloitte Admins | Global_Inc_Non_Deloitte_Admins_ |
 
-  @readOnly
+  @mutable @cleanup
   Scenario Outline: TC002_08_PortalAdmin_UserManagement - Verify user is able to search and filter the users in the table
     Given the "User Management - Global Inc" page is open
     When press the "<tab>" section
+    And ensure the user "<email>" exists in "<tab>" with name "<user>" and company "<company>"
     And search for "<searchText>" in the User Management table "<column>" field
     Then verify the user "<user>" is displayed in the table
     When click on "Clear" button from the User Management table "<column>" field
-    Then verify the filter is removed
+    Then verify the User Management table "<column>" filter is removed
 
     Examples:
-      | tab                 | searchText           | column    | user                |
-      | Deloitte Users      | Deloitte             | User Name | BR, Deloitte Brasil |
-      | Deloitte Users      | br.dtt@deloitte.com  | Email     | BR, Deloitte Brasil |
-      | Non-Deloitte Admins | QA, Admin            | User Name | QA, Admin           |
-      | Non-Deloitte Admins | qa.admin@example.com | Email     | QA, Admin           |
-      | Non-Deloitte Users  | QA, User             | User Name | QA, User            |
-      | Non-Deloitte Users  | qa.user@example.com  | Email     | QA, User            |
+      | tab                 | searchText           | column    | user                | email                | company                      |
+      | Deloitte Users      | Deloitte             | User Name | BR, Deloitte Brasil | br.dtt@deloitte.com  |                              |
+      | Deloitte Users      | br.dtt@deloitte.com  | Email     | BR, Deloitte Brasil | br.dtt@deloitte.com  |                              |
+      | Non-Deloitte Admins | QA, Admin            | User Name | QA, Admin           | qa.admin@example.com | Regulatory Advantage Testing |
+      | Non-Deloitte Admins | qa.admin@example.com | Email     | QA, Admin           | qa.admin@example.com | Regulatory Advantage Testing |
+      | Non-Deloitte Users  | QA, User             | User Name | QA, User            | qa.user@example.com  | Regulatory Advantage Testing |
+      | Non-Deloitte Users  | qa.user@example.com  | Email     | QA, User            | qa.user@example.com  | Regulatory Advantage Testing |
 
   @mutable @cleanup
   Scenario: TC003_01_PortalAdmin_UserManagement - Delete the Deloitte User

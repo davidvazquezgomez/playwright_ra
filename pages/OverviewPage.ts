@@ -120,7 +120,7 @@ export class OverviewPage extends BasePage {
    * Verifies that the requested Overview header or footer fields are visible.
    * @param fields Semicolon-delimited display names of fields defined in the Gherkin example.
    */
-  async verifyOverviewFieldsDisplayed(fields: string): Promise<void> {
+  async verifyOverviewFieldsDisplayed(fields: string): Promise<void> {   
     await this.verifyRequestedFieldsDisplayed(fields, this.fieldSelectors);
   }
 
@@ -146,8 +146,10 @@ export class OverviewPage extends BasePage {
    */
   async verifyViewAsCardsAndSaveAsFavouriteOption(): Promise<void> {
     const visibleToggleButton = this._page.locator(this.visibleViewToggleButton);
-    await expect(visibleToggleButton).toBeVisible();
-    await this.waitForSelectorStatus(this.saveAsFavouriteIcon, 'visible');
+    await Promise.all([
+      this.waitForSelectorStatus(this.visibleViewToggleButton, 'visible'),
+      this.waitForSelectorStatus(this.saveAsFavouriteIcon, 'visible'),
+    ]);
 
     const title = await visibleToggleButton.getAttribute('title');
 

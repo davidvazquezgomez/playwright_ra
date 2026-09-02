@@ -12,7 +12,7 @@ export class TeamManagementPage extends BasePage {
   private addTeamMemberSearchResultByName = (userName: string) =>
     `kendo-popup.k-animation-container-shown:visible li[role="option"]:has(.person-name:text-is("${userName}"))`;
   private addUserButton = `${this.addTeamMembersDialog} button[aria-label="Add User"]`;
-  private saveTeamButton = 'button[form="teamForm"]:has(.k-button-text:text-is("Save"))';
+  private saveTeamButton = 'button.add-save-btn[form="teamForm"]';
   private leaveTeamButton = 'button:has(.k-button-text:text-is("Leave Team"))';
   private teamNameInput = '#teamForm kendo-textbox[formcontrolname="teamName"] input.k-input-inner';
   private teamNameFilter = 'input[aria-label="Team Name Filter"]';

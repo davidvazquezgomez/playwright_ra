@@ -16,7 +16,7 @@ Feature: Team Management for Team Leader
       | Team Leaders |
       | Created Date |
       | Updated Date |
-    When save the team from the "Create/Edit Team" page
+    When press "Save" button on the "Create/Edit Team" page
     And try saving the allocation without "<mandatory field>"
     Then verify "<warning message>" are displayed in the "Team Management" page
 
@@ -37,7 +37,7 @@ Feature: Team Management for Team Leader
       | test.user.1784145920996@gmail.com |
       | test.user.1783697990969@gmail.com |
       | test.user.1782906153337@gmail.com |
-    When save the team from the "Create/Edit Team" page
+    When press "Save" button on the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
     And verify the new Team Leader is added to the team
     And verify the saved changes are reflected in the team
@@ -47,7 +47,7 @@ Feature: Team Management for Team Leader
     Then verify the filter is removed and full results are shown
     When click on "Delete" icon against the team member "TeamMemberRA@outlook.com"
     And press "Remove user" button
-    When save the team from the "Create/Edit Team" page
+    When press "Save" button on the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
     When click on "Edit" icon for the team
     When leave the current team from the "Create/Edit Team" page

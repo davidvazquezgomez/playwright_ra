@@ -43,12 +43,11 @@ Feature: Notifications for Client User
   @mutable
   Scenario: TC003_2_ClientUser_Notifications - Verify triggered notifications for updates
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
-    When search for "People Law" update from the "Updates Dashboard - ClientPortal_20260209133616" page
+    When search for "Social Security Rates & Caps Updated" update from the "Updates Dashboard - ClientPortal_20260209133616" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
     When select "Awaiting Allocation" option in the "Status" field in the "Update Details" subsection
-    And select "ECA, test" in the "User Assigned" field on the selected update
     And toggle the selected update priority between "High" and "Medium"
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page
@@ -70,7 +69,7 @@ Feature: Notifications for Client User
   @mutable
   Scenario: TC003_4_ClientUser_Notifications - Verify triggered notifications for updates
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
-    When search for "People Law" update from the "Updates Dashboard - ClientPortal_20260209133616" page
+    When search for "Employment Taxes_1" update from the "Updates Dashboard - ClientPortal_20260209133616" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
@@ -121,13 +120,10 @@ Feature: Notifications for Client User
   @mutable
   Scenario: TC004_4_ClientUser_Notifications - Verify triggered notifications for Actions
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
-    Then the "ClientPortal_20260209133616 - Updates Dashboard" page is displayed
-    When search for "People Law" update from the "Updates Dashboard - ClientPortal_20260209133616" page
+    When search for "Employment Taxes_1" update from the "Updates Dashboard - ClientPortal_20260209133616" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And press "Edit" button on the selected update
-    And select "ECA, test" in the "User Assigned" field on the selected update
     And select "In Progress" option in the "Status" field in the "Update Details" subsection
-    And toggle the selected update priority between "High" and "Medium"
     When press "Save" button on the selected update
     Then verify "Action updated successfully" toast message is displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Notifications" button
