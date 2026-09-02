@@ -150,7 +150,7 @@ Feature: Dashboard Actions for Deloitte User
     And press "Reset Filters" button on the Dashboard filter
     And double-click "test_portaladmin" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    And search for "Migration_test" update in the "QA_Test client3 - Actions Dashboard" page
+    And search for "Increase to Monthly Social Security Tax Bases" update in the "QA_Test client3 - Actions Dashboard" page
     When click on the first action in the "QA_Test client3 - Actions Dashboard" page
     Then the "Update Action" popup is displayed
     When open the "Attachments" tab in the "Update Action" popup
