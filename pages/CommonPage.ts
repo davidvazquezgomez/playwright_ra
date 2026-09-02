@@ -36,7 +36,7 @@ export class CommonPage extends BasePage {
   private portalConfigurationSaveAndContinueButton = 'button.k-button-primary:has(.k-button-text:text-is("Save & Continue"))';
   private setNotificationPreferencesButton = 'button.k-button-primary:has(.k-button-text:text-is("Set Notification Preferences"))';
   private updatePortalButton = 'button.k-button-primary:has(.k-button-text:text-is("Update Portal"))';
-  private saveSettingsButton = 'button.k-button-primary:has(.k-button-text:text-is("Save Settings"))';
+  private saveSettingsButton = 'role=button[name="Save Settings"]';
   private clientPortalSetupHeading = 'app-title h1.heading:has-text("Client Portal Setup")';
   private clientPortalNameInput = 'kendo-textbox[formcontrolname="clientPortalName"] input.k-input-inner';
   private knowledgeModulesStep = 'kendo-stepper a.k-step-link[title="Knowledge Modules & Impact Areas"]';
