@@ -124,6 +124,7 @@ export class CommonPage extends BasePage {
   private sharedGridRows = `${this.sharedKendoGrid} tbody tr.k-master-row`;
   private sharedGridColumnHeaderByName = (columnName: string) =>
     `role=columnheader[name="${columnName}"]`;
+  private initializedGridSortCycles = new Set<string>();
   private tabByName = (tabName: string) => `role=tab[name="${tabName}"]`;
   private paginationPageSizes =
     'kendo-pager-page-sizes:has(kendo-dropdownlist[role="combobox"][aria-label="items per page"])';
@@ -437,7 +438,55 @@ export class CommonPage extends BasePage {
    * @param pageName Name of the page that owns the grid.
    */
   async clickGridColumnHeader(columnName: string, pageName: string): Promise<void> {
-    await this.clickElement(this.sharedGridColumnHeaderByName(columnName));
+    const columnHeaderSelector = this.sharedGridColumnHeaderByName(columnName);
+    const sortCycleKey = this.getGridSortCycleKey(pageName, columnName);
+
+    if (!this.initializedGridSortCycles.has(sortCycleKey)) {
+      await this.clearPreexistingGridSort(columnHeaderSelector, columnName, pageName);
+      this.initializedGridSortCycles.add(sortCycleKey);
+    }
+
+    await this.clickElement(columnHeaderSelector);
+  }
+
+  /**
+   * Creates a stable key used to track the first sort interaction per page and column.
+   * @param pageName Name of the page that owns the grid.
+   * @param columnName Name of the sorted column.
+   * @returns Normalized key for internal sort-cycle state.
+   */
+  private getGridSortCycleKey(pageName: string, columnName: string): string {
+    return `${pageName.trim().toLowerCase()}::${columnName.trim().toLowerCase()}`;
+  }
+
+  /**
+   * Removes any existing sort state from the requested column so sort assertions start from an unsorted baseline.
+   * @param columnHeaderSelector Selector for the requested column header.
+   * @param columnName Name of the sorted column.
+   * @param pageName Name of the page that owns the grid.
+   */
+  private async clearPreexistingGridSort(
+    columnHeaderSelector: string,
+    columnName: string,
+    pageName: string,
+  ): Promise<void> {
+    const columnHeader = this._page.locator(columnHeaderSelector);
+
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const currentSort = (await columnHeader.getAttribute('aria-sort'))?.trim().toLowerCase();
+      if (currentSort !== 'ascending' && currentSort !== 'descending') {
+        return;
+      }
+
+      await this.clickElement(columnHeaderSelector);
+    }
+
+    const finalSort = (await columnHeader.getAttribute('aria-sort'))?.trim().toLowerCase();
+    if (finalSort === 'ascending' || finalSort === 'descending') {
+      throw new Error(
+        `Unable to clear the predefined sort for column "${columnName}" on page "${pageName}" before verifying sort order.`,
+      );
+    }
   }
 
   /**

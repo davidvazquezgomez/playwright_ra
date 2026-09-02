@@ -17,6 +17,7 @@ const mutationPatterns = [
   uploadMutationPattern,
   /\b(mark|unmark)\b.*\b(unread|read|favo(?:u)?rite)\b/i,
   /\b(create|delete|remove|reassign|deactivate|reactivate)\b/i,
+  /\bensure\b.*\buser\b.*\bexists\b/i,
   /\b(edit|update)\b.*\b(action|allocation|client|impact area|portal|privacy|release|team|update|user)\b/i,
   /\b(add|adding)\b.*\b(action|allocation|attachment|comment|member|portal|team|user)\b/i,
   /\bsave\b.*\b(action|allocation|changes|filter|portal|privacy|release|settings|team|update|user)\b/i,
