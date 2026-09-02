@@ -14,7 +14,6 @@ Feature: User Management for Super Admin
     And verify "<sections>" tabs are displayed in "User Management" page
     When press the "<sections>" section
     Then verify "<buttons>" buttons are displayed in the User Management page
-    # MÃƒÂ©todo especÃƒÂ­fico en User Management por la casuÃƒÂ­stica de que el botÃƒÂ³n EXPORT USERS tiene un espacio inicial
     Then verify items are sorted in "ascending" order by "User Name" in the "User Management" page by default
 
     Examples:
@@ -202,11 +201,10 @@ Feature: User Management for Super Admin
 
   @mutable @cleanup
   Scenario: TC003_03_SuperAdmin_UserManagement - Delete the Non-Deloitte Admin assigned to an existing team
-    Given the "Team Management - 01_13Jan REG" page is open
-    When click on "User Management" option from the left navigation
+    Given the "User Management - 01_13Jan REG" page is open
     And press the "Non-Deloitte Admins" section
     And ensure the external user "qa.admin@example.com" exists with first name "QA", last name "Admin", and company "Regulatory Advantage Testing"
-    When click on "Team Management" option from the left navigation
+    Given the "Team Management - 01_13Jan REG" page is open
     When click on "Edit" button for the "01_QA_UserManagement" team
     And register cleanup to restore "sonigour, audit" as Team Leader of "01_QA_UserManagement", remove "qa.admin@example.com", and use portal "01_13Jan REG"
     And remove "sonigour, audit" from the "Team Leader" field
@@ -216,7 +214,7 @@ Feature: User Management for Super Admin
     When select "ValidLast, ValidFirst" option in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
     And press "Save" button
-    When click on "User Management" option from the left navigation
+    Given the "User Management - 01_13Jan REG" page is open
     Then the "User Management" page is displayed
     When press the "Non-Deloitte Admins" section
     And select the user "qa.admin@example.com" from the table
@@ -234,23 +232,22 @@ Feature: User Management for Super Admin
     Then verify "Selected user deleted successfully" toast message is displayed in the "User Management" page
     When search for "qa.admin@example.com" in the User Management table "Email" field
     Then verify the user "qa.admin@example.com" is not displayed in the table
-    When click on "Team Management" option from the left navigation
-    And search for "01_QA_UserManagement" in the Team Name field
+    Given the "Team Management - 01_13Jan REG" page is open
+    When search for "01_QA_UserManagement" in the Team Name field
     Then verify the user "QA, Admin" is not available in the team leaders
 
   @mutable @cleanup
   Scenario: TC003_04_SuperAdmin_UserManagement - Delete the Non-Deloitte user assigned to an existing automatic allocation
-    Given the "Automatic Allocation of Updates - 01_13Jan REG" page is open
-    When click on "User Management" option from the left navigation
+    Given the "User Management - 01_13Jan REG" page is open
     And press the "Non-Deloitte Users" section
     And ensure the external user "qa.allocation@example.com" exists with first name "QA", last name "Allocation", and company "Regulatory Advantage Testing"
-    When click on "Automatic Allocation of Updates" option from the left navigation
-    When click on "Edit Allocation" icon for the "01_QA_UserManagement" allocation
-    And register cleanup to restore the recipient of the "01_QA_UserManagement" allocation, remove "qa.allocation@example.com", and use portal "01_13Jan REG"
+    Given the "Automatic Allocation of Updates - 01_13Jan REG" page is open
+    When click on "Edit Allocation" icon for the "tEST_ALLOCATION_INT" allocation
+    And register cleanup to restore the recipient of the "tEST_ALLOCATION_INT" allocation, remove "qa.allocation@example.com", and use portal "01_13Jan REG"
     And add the user "qa.allocation@example.com" in the "Search for Teams and Users" field
     And press "Save" button
     And press "Update anyway" button
-    When click on "User Management" option from the left navigation
+    Given the "User Management - 01_13Jan REG" page is open
     Then the "User Management" page is displayed
     When press the "Non-Deloitte Users" section
     And select the user "qa.allocation@example.com" from the table
@@ -261,7 +258,7 @@ Feature: User Management for Super Admin
     Then verify the user "qa.allocation@example.com" is displayed in the table
     When select the user "qa.allocation@example.com" from the table
     When press "Delete Selected Users" button
-    And select "sonigour, audit" as the replacement user
+    And select "satestclientuser4, satestclientuser4" as the replacement user
     And press "Next" button
     And press "Reassign" button
     And press "Confirm Deletion" button

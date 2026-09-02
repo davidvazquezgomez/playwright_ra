@@ -3,9 +3,11 @@ import { BasePage } from './BasePage';
 
 export class AutomaticAllocationPage extends BasePage {
   private readonly allocationCleanupTimeout = 30000;
+  private allocationGrid = 'app-auto-allocation [role="grid"][aria-label="Data table"]';
   private allocationGridRows = 'app-auto-allocation [role="grid"][aria-label="Data table"] tbody tr.k-master-row';
   private allocationGridNoRecordsRow =
     'app-auto-allocation [role="grid"][aria-label="Data table"] tbody tr.k-grid-norecords';
+  private nextAllocationPageButton = 'app-auto-allocation button[aria-label="Go to the next page"]';
   private readonly fieldSelectors: Record<string, string> = {
     'Allocation Name': 'role=columnheader[name="Allocation Name"]',
     Jurisdiction: 'role=columnheader[name="Jurisdiction"]',
@@ -72,6 +74,10 @@ export class AutomaticAllocationPage extends BasePage {
     'kendo-popup.k-animation-container-shown:visible .k-dropdownlist-popup input[role="searchbox"][aria-label="Filter"]';
   private allocationRecipientOptionByEmail = (emailAddress: string) =>
     `kendo-popup.k-animation-container-shown:visible .k-dropdownlist-popup li[role="option"]:has-text("${emailAddress}")`;
+  private allocationRecipientOptionByNameParts = (nameParts: string[]) =>
+    `kendo-popup.k-animation-container-shown:visible .k-dropdownlist-popup li[role="option"]${nameParts
+      .map(namePart => `:has-text("${namePart}")`)
+      .join('')}`;
   private setupFieldErrorByText = (message: string) =>
     this._page.locator(`.k-form-error`).filter({ hasText: message });
   private checkboxByName = (checkboxName: string) =>
@@ -90,16 +96,39 @@ export class AutomaticAllocationPage extends BasePage {
   }
 
   /**
+   * Moves through the allocation grid pages until the requested allocation is rendered.
+   * @param allocationName Exact allocation name to locate.
+   */
+  private async displayAllocationByName(allocationName: string): Promise<void> {
+    const allocationRow = this._page.locator(this.allocationRowByName(allocationName));
+    const nextPageButton = this._page.locator(this.nextAllocationPageButton);
+
+    while (!await allocationRow.isVisible().catch(() => false)) {
+      if (await nextPageButton.isDisabled()) {
+        break;
+      }
+
+      const displayedAllocationNames = await this._page.locator(this.allocationNameCells).allTextContents();
+      await this.clickLocator(nextPageButton);
+      await expect.poll(async () =>
+        (await this._page.locator(this.allocationNameCells).allTextContents()).join('\n') !== displayedAllocationNames.join('\n'),
+      ).toBe(true);
+    }
+
+    await expect(allocationRow).toBeVisible();
+  }
+
+  /**
    * Opens the edit form for an automatic allocation.
    * @param allocationName Exact name of the allocation to edit.
    */
   async editAllocation(allocationName: string): Promise<void> {
     await this.ensureKendoGridHasRows(
-      'app-auto-allocation [role="grid"][aria-label="Data table"]',
+      this.allocationGrid,
       `Automatic Allocation must contain an allocation before "${allocationName}" can be edited.`,
       'The Automatic Allocation grid was displayed before searching for the requested allocation.',
     );
-    await expect(this._page.locator(this.allocationRowByName(allocationName))).toBeVisible();
+    await this.displayAllocationByName(allocationName);
     await this.ensureExpectedBusinessElementIsVisible(
       this._page.locator(this.editAllocationButtonByName(allocationName)),
       `The allocation "${allocationName}" must provide the Edit Allocation action.`,
@@ -419,8 +448,19 @@ export class AutomaticAllocationPage extends BasePage {
    */
   async restoreAllocationRecipient(recipient: string): Promise<void> {
     const currentRecipient = await this.getAllocationRecipient();
-    if (currentRecipient !== recipient) {
-      await this.addAllocationRecipient(recipient);
+    if (currentRecipient === recipient) {
+      return;
     }
+
+    if (recipient.includes('@')) {
+      await this.addAllocationRecipient(recipient);
+      return;
+    }
+
+    // The picker renders the selected recipient as "First Last" but filters options as "Last, First".
+    const nameParts = [...new Set(recipient.split(/\s+/).filter(Boolean))];
+    await this.clickElement(this.allocationRecipientPicker);
+    await this.fillInputText(this.allocationRecipientSearchInput, nameParts[nameParts.length - 1]);
+    await this.clickElement(this.allocationRecipientOptionByNameParts(nameParts));
   }
 }

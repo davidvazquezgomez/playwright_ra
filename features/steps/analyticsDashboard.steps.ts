@@ -1,4 +1,37 @@
 import { Then, When } from './fixtures';
+import type { AnalyticsDashboardPage } from '../../pages/AnalyticsDashboardPage';
+import type { UpdatesDashboardPage } from '../../pages/UpdatesDashboardPage';
+
+const analyticsDashboardTableItemKey = (tableTitle: string) => `analyticsDashboardTable:${tableTitle}`;
+
+const isUpdatesDashboardTable = (tableTitle: string) => /\s-\sUpdates Dashboard$/i.test(tableTitle);
+
+async function getSavedTableItemCount(
+    tableTitle: string,
+    analyticsDashboardPage: AnalyticsDashboardPage,
+    updatesDashboardPage: UpdatesDashboardPage,
+): Promise<number> {
+    return isUpdatesDashboardTable(tableTitle)
+        ? updatesDashboardPage.getAllUpdatesItemCount()
+        : analyticsDashboardPage.getDataTableItemCount(tableTitle);
+}
+
+async function verifySavedTableItemCount(
+    tableTitle: string,
+    expectedItemCount: number,
+    analyticsDashboardPage: AnalyticsDashboardPage,
+    updatesDashboardPage: UpdatesDashboardPage,
+): Promise<void> {
+    if (isUpdatesDashboardTable(tableTitle)) {
+        const actualItemCount = await updatesDashboardPage.getAllUpdatesItemCount(expectedItemCount);
+        if (actualItemCount !== expectedItemCount) {
+            throw new Error(`Expected "${tableTitle}" to contain ${expectedItemCount} items, but found ${actualItemCount}.`);
+        }
+        return;
+    }
+
+    await analyticsDashboardPage.verifyDataTableItemCount(tableTitle, expectedItemCount);
+}
 
 Then('verify the {string} chart is displayed', async ({ analyticsDashboardPage }, chartTitle: string) => {
     await analyticsDashboardPage.verifyChartIsDisplayed(chartTitle);
@@ -23,17 +56,21 @@ Then('save the value from the {string} chart', async ({ analyticsDashboardPage, 
     testData[`analyticsDashboardChart:${chartTitle}`] = await analyticsDashboardPage.getChartValues(chartTitle);
 });
 
-Then('save the {string} items', async ({ analyticsDashboardPage, testData }, tableTitle: string) => {
-    testData[`analyticsDashboardTable:${tableTitle}`] = await analyticsDashboardPage.getDataTableItemCount(tableTitle);
+Then('save the {string} items', async ({ analyticsDashboardPage, updatesDashboardPage, testData }, tableTitle: string) => {
+    testData[analyticsDashboardTableItemKey(tableTitle)] = await getSavedTableItemCount(
+        tableTitle,
+        analyticsDashboardPage,
+        updatesDashboardPage,
+    );
 });
 
-Then('verify the {string} item count is the same', async ({ analyticsDashboardPage, testData }, tableTitle: string) => {
-    const savedItemCount = testData[`analyticsDashboardTable:${tableTitle}`];
+Then('verify the {string} item count is the same', async ({ analyticsDashboardPage, updatesDashboardPage, testData }, tableTitle: string) => {
+    const savedItemCount = testData[analyticsDashboardTableItemKey(tableTitle)];
     if (typeof savedItemCount !== 'number') {
         throw new Error(`No saved item count exists for "${tableTitle}".`);
     }
 
-    await analyticsDashboardPage.verifyDataTableItemCount(tableTitle, savedItemCount);
+    await verifySavedTableItemCount(tableTitle, savedItemCount, analyticsDashboardPage, updatesDashboardPage);
 });
 
 When(
@@ -61,7 +98,7 @@ When('open the first filtered update result in the {string} table', async ({ ana
 Then(
     'verify the {string} table contains the same number of items as the {string} chart',
     async ({ actionsDashboardPage, updatesDashboardPage, testData }, tableTitle: string, chartTitle: string) => {
-        const savedItemCount = testData[`analyticsDashboardTable:${chartTitle}`];
+        const savedItemCount = testData[analyticsDashboardTableItemKey(chartTitle)];
         if (typeof savedItemCount !== 'number') {
             throw new Error(`No saved item count exists for "${chartTitle}".`);
         }

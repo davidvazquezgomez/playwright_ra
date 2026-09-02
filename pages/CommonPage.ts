@@ -6,6 +6,12 @@ export class CommonPage extends BasePage {
   private deloitteLogo = '#headerTile[aria-label="Deloitte Logo"][href="/"]';
   private navigationRenderTimeout = 5000;
   private navigationReloadAttempts = 5;
+  private readonly collapsedNavigationToggleCandidates = [
+    'app-side-navigation i.fa-bars',
+    'app-side-navigation i.fa.fa-bars',
+    '.side-navigation-toggle',
+    'button[aria-label="Toggle navigation"]',
+  ];
   private cookieConsentModal = '#onetrust-banner-sdk';
   private closeCookieConsentButton = '#onetrust-banner-sdk #onetrust-close-btn-container button, #onetrust-banner-sdk button[aria-label="Close"]';
 
@@ -25,7 +31,11 @@ export class CommonPage extends BasePage {
     `${this.sideNavigation} button:has-text("${item}")`;
 
   // Menu item with submenu
-  private menuWithSubmenu = `${this.sideNavigation} a.menu-link[title="Menu"]`;
+  private menuWithSubmenu =
+    `${this.sideNavigation} [title="Menu"], ` +
+    `${this.sideNavigation} [data-title="Menu"], ` +
+    `${this.sideNavigation} [aria-label="Menu"], ` +
+    `${this.sideNavigation} :text-is("Menu")`;
 
   private continueButton = 'button.k-button-primary:has-text("Continue")';
   private nextButton = 'button.k-button-primary:has(.k-button-text:text-is("Next"))';
@@ -145,6 +155,7 @@ export class CommonPage extends BasePage {
    */
   async launchApplication(url: string): Promise<void> {
     await this.loadPage(url);
+    await this._page.pause();
     const [title, bodyText] = await Promise.all([
       this._page.title(),
       this._page.locator('body').innerText(),
@@ -226,6 +237,7 @@ export class CommonPage extends BasePage {
       '01_13Jan REG - Analytics Dashboard - Update Analytics': '/project-dashboard/361/Analytics/UpdateAnalytics/All',
       '01_13Jan REG - Analytics Dashboard - Action Analytics': '/project-dashboard/361/Analytics/ActionsAnalytics/All',
       'Actions Dashboard - 01_13Jan REG': '/project-dashboard/361/Actions/AllActions/All',
+      '01_13Jan REG - Overview': '/dashboard/361',
 
       // Global Inc (portal 142; used by PortalAdmin)
       'User Management - Global Inc': '/user-management/142',
@@ -250,6 +262,7 @@ export class CommonPage extends BasePage {
       '1_E2E_Test1 - Updates Dashboard - All Updates': '/project-dashboard/180/Updates/AllUpdates/All',
 
       // 01_QA_StageTestPortal (portal 415; used by ClientAdmin, TeamLeader, and TeamMember)
+      'Team Management - 01_QA_StageTestPortal': '/teams/415',
       'Automatic Allocation of Updates - 01_QA_StageTestPortal': '/allocation/415',
       'Automatic Allocation Setup - 01_QA_StageTestPortal': '/allocation-setup/415',
       '01_QA_StageTestPortal - Updates Dashboard - All Updates': '/project-dashboard/415/Updates/AllUpdates/All',
@@ -350,7 +363,11 @@ export class CommonPage extends BasePage {
   async clickNavigationOption(option: string): Promise<void> {
     const navigationWasAvailable = await this.retryWithReload(async () => {
       const sideNavigation = this._page.locator(this.sideNavigation);
-      if (!await sideNavigation.isVisible({ timeout: this.navigationRenderTimeout }).catch(() => false)) {
+      if (await sideNavigation.count() > 0) {
+        if (!await this.expandSideNavigationIfCollapsed()) {
+          return false;
+        }
+      } else {
         await this.clickElement(this.deloitteLogo, this.navigationRenderTimeout);
       }
 
@@ -360,34 +377,52 @@ export class CommonPage extends BasePage {
 
       const submenuLink = this.submenuLinkByText(option);
       const mainMenuLink = this.menuLinkByText(option);
-      await this.waitForSelectorStatus(
-        `${submenuLink}, ${mainMenuLink}`,
-        'attached',
-        this.navigationRenderTimeout,
-      );
 
-      if (await this._page.locator(submenuLink).count() > 0) {
-        if (!await this.checkIfFieldIsDisplayed(submenuLink)) {
-          await this.clickElement(this.menuWithSubmenu, 5000);
-        }
-
-        await this.clickElement(submenuLink, 5000);
+      if (await this._page.locator(mainMenuLink).count() > 0) {
+        await this.clickElement(mainMenuLink, this.navigationRenderTimeout);
         return true;
       }
 
-      await this.clickElement(mainMenuLink, 5000);
+      await this.clickElement(this.menuWithSubmenu, this.navigationRenderTimeout);
+      await this.waitForSelectorStatus(submenuLink, 'attached', this.navigationRenderTimeout);
+      await this.clickElement(submenuLink, this.navigationRenderTimeout);
       return true;
     }, this.navigationReloadAttempts);
 
     if (!navigationWasAvailable) {
       const sideNavigation = this._page.locator(this.sideNavigation);
-      this.failWithApplicationError(
-        'The left navigation must be displayed after returning to the application root and reloading.',
-        `The left navigation is visible and provides the "${option}" option.`,
-        'The left navigation remained hidden after the configured recovery attempts.',
-        `Recovery attempts: ${this.navigationReloadAttempts}. Side navigation elements: ${await sideNavigation.count()}. Visible: ${await sideNavigation.isVisible().catch(() => false)}. Deloitte logo was available at "${this._page.url()}".`,
+      throw new Error(
+        `Unable to open the left navigation option "${option}" after ${this.navigationReloadAttempts} attempts. ` +
+        `Side navigation elements: ${await sideNavigation.count()}. ` +
+        `Visible: ${await sideNavigation.isVisible().catch(() => false)}. ` +
+        `Current URL: "${this._page.url()}".`,
       );
     }
+  }
+
+  /**
+   * Expands the side navigation when it is rendered in its collapsed state.
+   * @returns True when the side navigation is visible.
+   */
+  private async expandSideNavigationIfCollapsed(): Promise<boolean> {
+    const sideNavigation = this._page.locator(this.sideNavigation);
+    if (await sideNavigation.isVisible().catch(() => false)) {
+      return true;
+    }
+
+    for (const toggleSelector of this.collapsedNavigationToggleCandidates) {
+      const toggle = this._page.locator(toggleSelector).first();
+      if (!await toggle.isVisible().catch(() => false)) {
+        continue;
+      }
+
+      await this.clickLocator(toggle, this.navigationRenderTimeout);
+      if (await sideNavigation.isVisible({ timeout: this.navigationRenderTimeout }).catch(() => false)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**

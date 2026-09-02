@@ -202,7 +202,7 @@ Feature: Dashboard Updates for Super Admin
     Then verify the "Tags;Date Announced;Date Effective;Last Updated" option is displayed in the Dashboard filter
     When press "Less Filters" button on the Dashboard filter
     Then verify the "Tags;Date Announced;Date Effective;Last Updated" option is not displayed in the Dashboard filter
-    When select "Argentina" in the "Jurisdiction" filter on the Dashboard filter
+    When select "Australia" in the "Jurisdiction" filter on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     When press "Close" button on the Dashboard filter
     Then verify the "1_E2E_Test1 - Updates Dashboard" item count is the same

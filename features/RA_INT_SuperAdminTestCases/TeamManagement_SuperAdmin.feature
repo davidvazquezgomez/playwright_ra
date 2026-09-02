@@ -13,7 +13,7 @@ Feature: Team Management for Super Admin
     Then the "Team Management" page is displayed
     When press "Create Team" button
     When press "Save" button on the "Create/Edit Team" page
-    Then verify the warning message "First name is required;Last name is required;Email is required" for fields "First Name;Last Name;Email" is displayed
+    Then verify the warning message "<warning message>" for fields "<mandatory field>" is displayed
 
     Examples:
       | mandatory field | warning message                      |
