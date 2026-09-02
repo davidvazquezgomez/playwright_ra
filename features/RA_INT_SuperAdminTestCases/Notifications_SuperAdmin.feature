@@ -90,7 +90,7 @@ Feature: Notifications for Super Admin
     And logout from the application
     
 
-  @mutable
+  @readOnly
   Scenario: TC003_2_SuperAdmin_Notifications - Verify triggered notifications for updates
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Then press "Notifications" button
@@ -122,7 +122,7 @@ Feature: Notifications for Super Admin
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     And logout from the application
 
-  @mutable
+  @readOnly
   Scenario: TC003_4_SuperAdmin_Notifications - Verify triggered notifications for updates
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Then press "Notifications" button
@@ -153,7 +153,7 @@ Feature: Notifications for Super Admin
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     And logout from the application
 
-  @mutable
+  @readOnly
   Scenario: TC004_2_SuperAdmin_Notifications - Verify triggered notifications for actions
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Then press "Notifications" button
@@ -184,7 +184,7 @@ Feature: Notifications for Super Admin
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     And logout from the application
 
-  @mutable
+  @readOnly
   Scenario: TC004_4_SuperAdmin_Notifications - Verify triggered notifications for updates
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Then press "Notifications" button
@@ -217,7 +217,7 @@ Feature: Notifications for Super Admin
     When press "Save" button
     And logout from the application
 
-  @mutable
+  @readOnly
   Scenario: TC005_2_SuperAdmin_Notifications - Verify triggered notifications for teams
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Then press "Notifications" button
@@ -249,7 +249,7 @@ Feature: Notifications for Super Admin
     When press "Save" button
     And logout from the application
 
-  @mutable
+  @readOnly
   Scenario: TC005_4_SuperAdmin_Notifications - Verify triggered notifications for teams
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Then press "Notifications" button
