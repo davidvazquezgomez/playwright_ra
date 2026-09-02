@@ -64,7 +64,7 @@ Feature: Notifications for Team Leader
     And check "Select All" Check box under "Email" option from "Updates" section if it is "checked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
     When press "Save Settings" button
-    Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
+    Then verify "Notification settings updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC002_4_TeamLeader_Notifications - Verify triggered notifications for updates
@@ -90,7 +90,7 @@ Feature: Notifications for Team Leader
     And check "Select All" Check box under "Email" option from "Actions" section if it is "unchecked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
     When press "Save Settings" button
-    Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
+    Then verify "Notification settings updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC003_2_TeamLeader_Notifications - Verify triggered notifications for actions
@@ -115,7 +115,7 @@ Feature: Notifications for Team Leader
     And check "Select All" Check box under "Email" option from "Actions" section if it is "checked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
     When press "Save Settings" button
-    Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
+    Then verify "Notification settings updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC003_4_TeamLeader_Notifications - Verify triggered notifications for Actions
@@ -128,7 +128,7 @@ Feature: Notifications for Team Leader
     When select "Update Allocated" option in the "Status" field in the "Update Details" subsection
     And toggle the selected update priority between "High" and "Medium"
     When press "Save" button on the selected update
-    Then verify "Action updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
+    Then verify "Regulatory update updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Notifications" button
     Then the "Notifications" popup is displayed
     When press "View All" button

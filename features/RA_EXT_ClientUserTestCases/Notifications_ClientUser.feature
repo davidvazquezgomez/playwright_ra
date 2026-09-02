@@ -48,7 +48,6 @@ Feature: Notifications for Client User
     And press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
     When select "Awaiting Allocation" option in the "Status" field in the "Update Details" subsection
-    And toggle the selected update priority between "High" and "Medium"
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Notifications" button
@@ -63,7 +62,7 @@ Feature: Notifications for Client User
     When check "Select All" Check box under "System" option from "Updates" section if it is "checked"
     And check "Select All" Check box under "Email" option from "Updates" section if it is "checked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
-    And press "Update Portal" button
+    And press "Save Settings" button
     Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
@@ -74,7 +73,6 @@ Feature: Notifications for Client User
     And press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
     When select "Update Allocated" option in the "Status" field in the "Update Details" subsection
-    And toggle the selected update priority between "High" and "Medium"
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Notifications" button
@@ -89,7 +87,7 @@ Feature: Notifications for Client User
     When check "Select All" Check box under "System" option from "Actions" section if it is "unchecked"
     And check "Select All" Check box under "Email" option from "Actions" section if it is "unchecked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
-    And press "Update Portal" button
+    And press "Save Settings" button
     Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
@@ -114,7 +112,7 @@ Feature: Notifications for Client User
     When check "Select All" Check box under "System" option from "Actions" section if it is "checked"
     And check "Select All" Check box under "Email" option from "Actions" section if it is "checked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
-    And press "Update Portal" button
+    And press "Save Settings" button
     Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
@@ -123,7 +121,7 @@ Feature: Notifications for Client User
     When search for "Employment Taxes_1" update from the "Updates Dashboard - ClientPortal_20260209133616" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And press "Edit" button on the selected update
-    And select "In Progress" option in the "Status" field in the "Update Details" subsection
+    And select "Update Allocated" option in the "Status" field in the "Update Details" subsection
     When press "Save" button on the selected update
     Then verify "Action updated successfully" toast message is displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Notifications" button

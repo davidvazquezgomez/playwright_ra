@@ -69,6 +69,7 @@ Feature: Notifications for Super Admin
   Scenario: TC003_1_SuperAdmin_Notifications - Verify enable Notifications Preferences for updates
     When logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
+    Given the "Notification Preferences" page is open
     Then the "Notifications Preferences" page is displayed
     When check "Select All" Check box under "System" option from "Updates" section if it is "unchecked"
     And check "Select All" Check box under "Email" option from "Updates" section if it is "unchecked"
@@ -91,6 +92,7 @@ Feature: Notifications for Super Admin
 
   @readOnly
   Scenario: TC003_2_SuperAdmin_Notifications - Verify triggered notifications for updates
+    When logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Then press "Notifications" button
     Then the "Notifications" popup is displayed
@@ -102,6 +104,7 @@ Feature: Notifications for Super Admin
   Scenario: TC003_3_SuperAdmin_Notifications - Verify disabled Notifications Preferences for Updates
     When logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
+    Given the "Notification Preferences" page is open
     Then the "Notifications Preferences" page is displayed
     When check "Select All" Check box under "System" option from "Updates" section if it is "checked"
     And check "Select All" Check box under "Email" option from "Updates" section if it is "checked"
@@ -123,6 +126,7 @@ Feature: Notifications for Super Admin
 
   @readOnly
   Scenario: TC003_4_SuperAdmin_Notifications - Verify triggered notifications for updates
+    When logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Then press "Notifications" button
     Then the "Notifications" popup is displayed
@@ -134,6 +138,7 @@ Feature: Notifications for Super Admin
   Scenario: TC004_1_SuperAdmin_Notifications - Verify enable Notifications Preferences for actions
     When logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
+    Given the "Notification Preferences" page is open
     Then the "Notifications Preferences" page is displayed
     When check "Select All" Check box under "System" option from "Actions" section if it is "unchecked"
     And check "Select All" Check box under "Email" option from "Actions" section if it is "unchecked"
@@ -165,6 +170,7 @@ Feature: Notifications for Super Admin
   Scenario: TC004_3_SuperAdmin_Notifications - Verify disabled Notifications Preferences for Actions
     When logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
+    Given the "Notification Preferences" page is open
     Then the "Notifications Preferences" page is displayed
     When check "Select All" Check box under "System" option from "Actions" section if it is "checked"
     And check "Select All" Check box under "Email" option from "Actions" section if it is "checked"
@@ -196,6 +202,7 @@ Feature: Notifications for Super Admin
   Scenario: TC005_1_SuperAdmin_Notifications - Verify enable Notifications Preferences for teams
     When logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
+    Given the "Notification Preferences" page is open
     Then the "Notifications Preferences" page is displayed
     When check "Select All" Check box under "System" option from "Teams" section if it is "unchecked"
     And check "Select All" Check box under "Email" option from "Teams" section if it is "unchecked"
@@ -217,6 +224,7 @@ Feature: Notifications for Super Admin
 
   @readOnly
   Scenario: TC005_2_SuperAdmin_Notifications - Verify triggered notifications for teams
+    When logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Then press "Notifications" button
     Then the "Notifications" popup is displayed
@@ -228,6 +236,7 @@ Feature: Notifications for Super Admin
   Scenario: TC005_3_SuperAdmin_Notifications - Verify disabled Notifications Preferences for Teams
     When logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
+    Given the "Notification Preferences" page is open
     Then the "Notifications Preferences" page is displayed
     When check "Select All" Check box under "System" option from "Teams" section if it is "checked"
     And check "Select All" Check box under "Email" option from "Teams" section if it is "checked"
@@ -249,6 +258,7 @@ Feature: Notifications for Super Admin
 
   @readOnly
   Scenario: TC005_4_SuperAdmin_Notifications - Verify triggered notifications for teams
+    When logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Then press "Notifications" button
     Then the "Notifications" popup is displayed
