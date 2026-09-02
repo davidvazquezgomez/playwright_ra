@@ -231,7 +231,7 @@ Feature: Dashboard Analytics for Deloitte User
     And save the value from the "Action Priority" chart
     And save the value from the "Completed Actions" chart
     When press "Filter" button on the Dashboard filter
-    When select "Test DashboardAction" located in the "Saved Filters" section on the Dashboard filter
+    When select "Test_Analytics" located in the "Saved Filters" section on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify the "Outstanding Actions" chart value is not the same
     And verify the "Action Priority" chart value is not the same

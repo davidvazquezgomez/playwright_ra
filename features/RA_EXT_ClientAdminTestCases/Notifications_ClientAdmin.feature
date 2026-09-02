@@ -80,7 +80,7 @@ Feature: Notifications for Client Admin
     And check "Select All" Check box under "Lock Settings" option from "Updates" section if it is "unchecked"
     When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
     And select the frequency option "Daily" located under "Periodic Summary of Updates and Actions via email?" section
-    When press "Save Settings" button
+    When press "Update Portal" button
     Then verify "01_QA_StageTestPortal" toast message is displayed in the "Client Portal List" page
 
   @mutable
@@ -123,7 +123,7 @@ Feature: Notifications for Client Admin
     And check "Select All" Check box under "Email" option from "Updates" section if it is "checked"
     And check "Select All" Check box under "Lock Settings" option from "Updates" section if it is "checked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
-    When press "Save Settings" button
+    When press "Update Portal" button
     Then verify "01_QA_StageTestPortal updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
@@ -157,7 +157,7 @@ Feature: Notifications for Client Admin
     And check "Select All" Check box under "Email" option from "Actions" section if it is "unchecked"
     And check "Select All" Check box under "Lock Settings" option from "Actions" section if it is "unchecked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
-    When press "Save Settings" button
+    When press "Update Portal" button
     Then verify "01_QA_StageTestPortal updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
@@ -200,7 +200,7 @@ Feature: Notifications for Client Admin
     And check "Select All" Check box under "Email" option from "Actions" section if it is "checked"
     And check "Select All" Check box under "Lock Settings" option from "Actions" section if it is "checked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
-    When press "Save Settings" button
+    When press "Update Portal" button
     Then verify "01_QA_StageTestPortal updated successfully" toast message is displayed in the "Client Portal List" page
 
   @mutable
@@ -249,8 +249,7 @@ Feature: Notifications for Client Admin
     Then verify all the "Notifications Preferences" are disabled
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
-    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When click on "Team Management" option from the left navigation
+    Given the "Team Management - 01_QA_StageTestPortal" page is open
     Then the "Team Management" page is displayed
     When press "Edit" button for the first team in the "Team Management" page
     Then the "Create/Edit Team" page is displayed
@@ -287,9 +286,7 @@ Feature: Notifications for Client Admin
   Scenario: TC005_4_ClientAdmin_Notifications - Verify triggered notifications for teams
     When logout from the application
     Then launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
-    When click on "01_QA_StageTestPortal" of the portals
-    Then the "01_QA_StageTestPortal - Overview" page is displayed
-    When click on "Team Management" option from the left navigation
+    Given the "Team Management - 01_QA_StageTestPortal" page is open
     Then the "Team Management" page is displayed
     When press "Edit" button for the first team in the "Team Management" page
     Then the "Create/Edit Team" page is displayed

@@ -203,17 +203,16 @@ Feature: User Management for Portal Admin
 
   @mutable @cleanup
   Scenario: TC003_03_PortalAdmin_UserManagement - Delete the Non-Deloitte Admin assigned to an existing team
-    Given the "Team Management - Global Inc" page is open
-    When click on "User Management" option from the left navigation
+    Given the "User Management - Global Inc" page is open
     And press the "Non-Deloitte Admins" section
     And ensure the external user "qa.admin@example.com" exists with first name "QA", last name "Admin", and company "Regulatory Advantage Testing"
-    When click on "Team Management" option from the left navigation
+    Given the "Team Management - Global Inc" page is open
     When click on "Edit" button for the "01_QA_UserManagement" team
     And register cleanup to restore "sonigour, audit" as Team Leader of "01_QA_UserManagement", remove "qa.admin@example.com", and use portal "Global Inc"
     And remove "sonigour, audit" from the "Team Leader" field
     And add "qa.admin@example.com" in the "Team Leader" field
     And press "Save" button
-    When click on "User Management" option from the left navigation
+    Given the "User Management - Global Inc" page is open
     Then the "User Management" page is displayed
     When press the "Non-Deloitte Admins" section
     And select the user "qa.admin@example.com" from the table
@@ -231,23 +230,22 @@ Feature: User Management for Portal Admin
     Then verify "Selected user deleted successfully" toast message is displayed in the "User Management" page
     When search for "qa.admin@example.com" in the User Management table "Email" field
     Then verify the user "qa.admin@example.com" is not displayed in the table
-    When click on "Team Management" option from the left navigation
-    And search for "01_QA_UserManagement" in the Team Name field
+    Given the "Team Management - Global Inc" page is open
+    When search for "01_QA_UserManagement" in the Team Name field
     Then verify the user "QA, Admin" is not available in the team leaders
 
   @mutable @cleanup
   Scenario: TC003_04_PortalAdmin_UserManagement - Delete the Non-Deloitte user assigned to an existing automatic allocation
-    Given the "Automatic Allocation of Updates - Global Inc" page is open
-    When click on "User Management" option from the left navigation
+    Given the "User Management - Global Inc" page is open
     And press the "Non-Deloitte Users" section
     And ensure the external user "qa.allocation@example.com" exists with first name "QA", last name "Allocation", and company "Regulatory Advantage Testing"
-    When click on "Automatic Allocation of Updates" option from the left navigation
+    Given the "Automatic Allocation of Updates - Global Inc" page is open
     When click on "Edit Allocation" icon for the "01_QA_UserManagement" allocation
     And register cleanup to restore the recipient of the "01_QA_UserManagement" allocation, remove "qa.allocation@example.com", and use portal "Global Inc"
     And add the user "qa.allocation@example.com" in the "Search for Teams and Users" field
     And press "Save" button
     And press "Update anyway" button
-    When click on "User Management" option from the left navigation
+    Given the "User Management - Global Inc" page is open
     Then the "User Management" page is displayed
     When press the "Non-Deloitte Users" section
     And select the user "qa.allocation@example.com" from the table

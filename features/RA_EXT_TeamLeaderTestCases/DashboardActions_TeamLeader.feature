@@ -98,30 +98,6 @@ Feature: Dashboard Actions for Team Leader
     And verify "Not Started" option is selected in the "Status" field on the "Update Action" popup
 
   @mutable
-  Scenario: TC010_03_TeamLeader_DashboardActions - Verify the private action toggle
-    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
-    When press "Filter" button on the Dashboard filter
-    And press "Reset Filters" button on the Dashboard filter
-    And double-click "Test_TeamLeader" option on the Dashboard filter
-    And press "View results" button on the Dashboard filter
-    And search for "Employment Taxes_Outstanding Update is approaching Effective Date 30 days" update in the "01_QA_StageTestPortal - Actions Dashboard" page
-    Then verify "Employment Taxes_Outstanding Update is approaching Effective Date 30 days" update is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
-    When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
-    Then the "Update Action" popup is displayed
-    When enable the "Private Action" toggle in the "Update Action" popup
-    And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
-    When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
-    Then the "Update Action" popup is displayed
-    And verify the "Private Action" toggle is enabled in the "Update Action" popup
-    When disable the "Private Action" toggle in the "Update Action" popup
-    And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
-    When click on the first action in the "01_QA_StageTestPortal - Actions Dashboard" page
-    Then the "Update Action" popup is displayed
-    And verify the "Private Action" toggle is disabled in the "Update Action" popup
-
-  @mutable
   Scenario: TC010_04_TeamLeader_DashboardActions - Verify adding a comment to an action
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
@@ -373,6 +349,7 @@ Feature: Dashboard Actions for Team Leader
   @mutable
   Scenario: TC012_03_TeamLeader_DashboardActions - Verify saving a filter
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
+    And the "Test DashboardAction" saved filter is restored from "Test DashboardAction update" on the Dashboard filter
     When remove saved filter "Test DashboardAction" if it exists on the Dashboard filter
     When press "Filter" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter

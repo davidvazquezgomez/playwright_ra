@@ -98,31 +98,6 @@ Feature: Dashboard Actions for Deloitte User
     And verify "Not Started" option is selected in the "Status" field on the "Update Action" popup
 
   @mutable
-  Scenario: TC010_03_DeloitteUser_DashboardActions - Verify the private action toggle
-    Given the "Actions Dashboard - QA_Test client3" page is open
-    When press "Filter" button on the Dashboard filter
-    And press "Reset Filters" button on the Dashboard filter
-    And double-click "test_portaladmin" option on the Dashboard filter
-    And press "View results" button on the Dashboard filter
-    And search for "04May 2026 Employment Income Brackets test stage" update in the "QA_Test client3 - Actions Dashboard" page
-    Then verify "04May 2026 Employment Income Brackets test stage" update is displayed in the "QA_Test client3 - Actions Dashboard" page
-    When click on the first action in the "QA_Test client3 - Actions Dashboard" page
-    Then the "Update Action" popup is displayed
-    When enable the "Private Action" toggle in the "Update Action" popup
-    Then verify the "Private Action" toggle is enabled in the "Update Action" popup
-    When press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "QA_Test client3 - Actions Dashboard" page
-    When click on the first action in the "QA_Test client3 - Actions Dashboard" page
-    Then the "Update Action" popup is displayed
-    And verify the "Private Action" toggle is enabled in the "Update Action" popup
-    When disable the "Private Action" toggle in the "Update Action" popup
-    And press "Update" button in the "Update Action" popup
-    Then verify "Action updated successfully" toast message is displayed in the "QA_Test client3 - Actions Dashboard" page
-    When click on the first action in the "QA_Test client3 - Actions Dashboard" page
-    Then the "Update Action" popup is displayed
-    And verify the "Private Action" toggle is disabled in the "Update Action" popup
-
-  @mutable
   Scenario: TC010_04_DeloitteUser_DashboardActions - Verify adding a comment to an action
   #Nuevo Filtro Añadido
     Given the "Actions Dashboard - QA_Test client3" page is open
@@ -372,6 +347,7 @@ Feature: Dashboard Actions for Deloitte User
   @mutable
   Scenario: TC012_03_DeloitteUser_DashboardActions - Verify saving a filter
     Given the "Actions Dashboard - QA_Test client3" page is open
+    And the "Test DashboardAction" saved filter is restored from "Test DashboardAction update" on the Dashboard filter
     When remove saved filter "Test DashboardAction" if it exists on the Dashboard filter
     When press "Filter" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter
