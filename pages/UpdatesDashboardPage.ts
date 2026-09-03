@@ -412,10 +412,21 @@ export class UpdatesDashboardPage extends BasePage {
   }
 
   /**
-   * Presses the Action Status column header on the selected update.
+   * Presses the Action Status column header on the selected update and waits for the
+   * resulting sort state so the grid settles before further interactions read its rows.
    */
   async pressActionStatusColumnHeader(): Promise<void> {
-    await this.actionStatusColumnHeader().click();
+    const header = this.actionStatusColumnHeader();
+    const currentSort = (await header.getAttribute('aria-sort'))?.trim().toLowerCase() ?? 'none';
+    const nextSort = currentSort === 'none' ? 'ascending' : currentSort === 'ascending' ? 'descending' : 'none';
+
+    await header.click();
+
+    if (nextSort === 'none') {
+      await expect(header).not.toHaveAttribute('aria-sort', /ascending|descending/);
+    } else {
+      await expect(header).toHaveAttribute('aria-sort', nextSort);
+    }
   }
 
   /**
