@@ -15,11 +15,24 @@ export class DashboardPage extends BasePage {
     private readonly dashboardOptionsColumnByName = (columnName: string) =>
         this._page.locator(this.dashboardOptionsDialog).getByRole('listitem').filter({
             hasText: new RegExp(`^\\s*${this.escapeRegularExpression(columnName)}\\s*$`, 'i'),
+        }).or(this.dashboardOptionsReportColumnByName(columnName));
+    private readonly dashboardOptionsReportColumnByName = (columnName: string) =>
+        this._page.locator(this.dashboardOptionsDialog).locator('.column-checkboxes .checkbox-item').filter({
+            has: this._page.locator('label').filter({
+                hasText: new RegExp(`^\\s*${this.escapeRegularExpression(columnName)}\\s*$`, 'i'),
+            }),
         });
     private readonly dashboardOptionsSaveButton = () =>
         this._page.locator(this.dashboardOptionsDialog).getByRole('button', { name: 'Save', exact: true });
+    private readonly dashboardOptionsReportTypeDropdownValue = () =>
+        this._page
+            .locator(this.dashboardOptionsDialog)
+            .locator('div:has(> div > h5:text-is("Generate report for")) kendo-dropdownlist .k-input-value-text')
+            .first();
     private readonly popupOptionButtonByName = (popupName: string, optionName: string) =>
-        `div[role="dialog"]:has(.k-dialog-title:text-is("${popupName}")) button[aria-label="${optionName}"]`;
+        `div[role="dialog"]:has(.k-dialog-title:text-is("${popupName}")) li[role="tab"]:has(span.k-link-text:text-is("${optionName}")) span.k-link`;
+    private readonly popupOptionTabByName = (popupName: string, optionName: string) =>
+        this._page.locator(`div[role="dialog"]:has(.k-dialog-title:text-is("${popupName}")) li[role="tab"]:has(span.k-link-text:text-is("${optionName}"))`);
     private readonly filterDialog = 'div[role="dialog"]:has(.k-dialog-title:text-is("Filter"))';
     private readonly nameFilterDialog = 'div[role="dialog"]:has(.k-dialog-title:text-is("Name Filter"))';
     private readonly confirmDeleteDialog = 'div[role="dialog"]:has(.k-dialog-title:text-is("Confirm Delete"))';
@@ -208,6 +221,25 @@ export class DashboardPage extends BasePage {
                 this.actionsGrid().getByRole('columnheader', { name: this.dashboardColumnExpectedToBeHidden, exact: true }),
             ).toHaveCount(0);
             this.dashboardColumnExpectedToBeHidden = undefined;
+        }
+    }
+
+    /**
+     * Verifies the value selected in the Dashboard Options report type dropdown.
+     * @param expectedValue Expected dropdown value.
+     */
+    async verifyDashboardOptionsReportTypeValue(expectedValue: string): Promise<void> {
+        const dropdownValue = this.dashboardOptionsReportTypeDropdownValue();
+        await expect(dropdownValue).toBeVisible();
+        const actualValue = (await dropdownValue.innerText()).trim();
+
+        if (actualValue !== expectedValue) {
+            this.failWithApplicationError(
+                'The "Generate report for" dropdown in the Dashboard Options popup must show the dashboard report type.',
+                `The dropdown shows "${expectedValue}".`,
+                `The dropdown shows "${actualValue}".`,
+                `Dashboard Options popup dropdown value text: "${actualValue}".`,
+            );
         }
     }
 
@@ -921,5 +953,6 @@ export class DashboardPage extends BasePage {
      */
     async clickButton(buttonName: string, popupName: string): Promise<void> {
         await this.clickElement(this.popupOptionButtonByName(popupName, buttonName));
+        await expect(this.popupOptionTabByName(popupName, buttonName)).toHaveClass(/k-active/);
     }
 }

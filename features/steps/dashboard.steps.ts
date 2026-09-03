@@ -25,6 +25,10 @@ Then('verify {string} columns are displayed in the Dashboard Options popup', asy
     await dashboardPage.verifyDashboardOptionColumnsAreDisplayed(columns);
 });
 
+Then('verify the dashboard dropdown value is {string}', async ({ dashboardPage }, expectedValue: string) => {
+    await dashboardPage.verifyDashboardOptionsReportTypeValue(expectedValue);
+});
+
 Then('verify {string} columns are selected in the Dashboard Options popup', async ({ dashboardPage }, columns: string) => {
     await dashboardPage.verifyDashboardOptionColumnsSelected(columns, true);
 });

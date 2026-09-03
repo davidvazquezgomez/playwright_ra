@@ -12,13 +12,13 @@ Feature: Dashboard Options for Clinet User
     And verify for client portal name "ClientPortal_20260209133616"
     When press "Open Dashboard" button
     Then the "Updates Dashboard" page is displayed
-    When press "Dashboard Options" button
+    When press "Dashboard Options" button on the Dashboard
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Report" is displayed in the Dashboard Options popup
     When click on "Generate Report" option from the "Dashboard Options" popup
-    Then verify the dashboard dropdown default value is "Updates"
-    And verify the "Update Title;Jurisdiction;Impact Area;Date Announced;Date Effective;Priority;Status;Last Updated" columns are selected in the Dashboard Options popup
-    And verify "Generate Report" buttons are displayed on the "Dashboard Options" popup
+    Then verify the dashboard dropdown value is "Updates"
+    And verify "Update Title;Jurisdiction;Impact Area;Date Announced;Date Effective;Priority;Status;Last Updated" columns are selected in the Dashboard Options popup
+    And verify "Generate Report;Cancel" buttons are displayed on the "Dashboard Options" popup
     When press "Generate Report" button
     Then verify "Report generated and downloaded successfully" toast message is displayed in the "01_QA_StageTestPortal  - Updates Dashboard" page
    
@@ -50,7 +50,7 @@ Feature: Dashboard Options for Clinet User
     And verify "Generate Report" is displayed in the Dashboard Options popup
     When click on "Generate Report" option from the "Dashboard Options" popup
     And select "Actions" from the "Generate report for" dropdown
-    Then verify the "Update Title;Action;User Assigned;Deadline Date;Update Priority;Action Priority;Action Status" columns are selected in the Dashboard Options popup
+    Then verify "Update Title;Action;User Assigned;Deadline Date;Update Priority;Action Priority;Action Status" columns are selected in the Dashboard Options popup
     When press "Generate Report" button
     Then verify "Report generated and downloaded successfully" toast message is displayed in the "ClientPortal_20260209133616 - Actions Dashboard" page
     And verify the downloaded file name format is "ClientPortal_20260209133616_Actions_Report_" with current date and time

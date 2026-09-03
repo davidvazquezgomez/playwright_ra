@@ -102,7 +102,7 @@ export class CommonPage extends BasePage {
   private kendoDialogByTitle = (title: string) =>
     `div[role="dialog"]:has(.k-dialog-title:text-is("${title}"))`;
   private kendoDialogButtonByName = (title: string, buttonName: string) =>
-    `${this.kendoDialogByTitle(title)} button[aria-label="${buttonName}"]`;
+    `${this.kendoDialogByTitle(title)} button:is([aria-label="${buttonName}"], :has(> span.k-button-text:text-is("${buttonName}")))`;
   private visibleKendoDialogContent = 'div[role="dialog"]:visible .k-dialog-content';
   private dialogActionButtonByName = (buttonName: string) =>
     `div[role="dialog"]:visible kendo-dialog-actions button[aria-label="${buttonName}"]`;
