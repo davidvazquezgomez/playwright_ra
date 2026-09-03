@@ -23,7 +23,7 @@ export class ActionsDashboardPage extends BasePage {
   private readonly updateActionInput = `${this.updateActionDialog} input[formcontrolname="action"]`;
   private readonly updateActionDeadlineInput = `${this.updateActionDialog} kendo-datepicker[formcontrolname="deadline"] input`;
   private readonly updateActionButton = () =>
-    this._page.getByRole('button', { name: 'Update', exact: true });
+    this._page.locator(this.updateActionDialog).getByRole('button', { name: 'Update', exact: true });
   private readonly privateActionToggle = () =>
     this._page.locator(this.updateActionDialog).getByRole('switch', { name: 'Private Action', exact: true });
   private readonly updateActionCommentsTab = () =>
@@ -453,10 +453,26 @@ export class ActionsDashboardPage extends BasePage {
   }
 
   /**
-   * Saves the changes in the Update Action dialog.
+   * Saves the changes in the Update Action dialog and waits until the dialog closes.
    */
   async updateAction(): Promise<void> {
-    await this.updateActionButton().click();
+    const dialog = this._page.locator(this.updateActionDialog);
+    const updateButton = this.updateActionButton();
+    const attempts = 2;
+
+    for (let attempt = 1; attempt <= attempts; attempt++) {
+      await expect(updateButton).toBeEnabled({ timeout: 15000 });
+      await this.clickLocator(updateButton);
+
+      try {
+        await expect(dialog).toBeHidden({ timeout: 15000 });
+        return;
+      } catch (error) {
+        if (attempt === attempts) {
+          throw error;
+        }
+      }
+    }
   }
 
   /**
