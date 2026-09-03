@@ -17,6 +17,17 @@ When('press "Add User" button in the "Add Team Members" popup', async ({ teamMan
   await teamManagementPage.addSelectedTeamMembers();
 });
 
+Then(
+  'verify the warning messages {string} for mandatory fields {string} are displayed on the {string} page',
+  async ({ teamManagementPage }, messages: string, fields: string, pageName: string) => {
+    if (pageName !== 'Create/Edit Team') {
+      throw new Error(`Mandatory field warnings are not supported on the "${pageName}" page.`);
+    }
+
+    await teamManagementPage.verifyMandatoryFieldWarningMessages(messages, fields);
+  },
+);
+
 When('press "Save" button on the {string} page', async ({ teamManagementPage }, pageName: string) => {
   if (pageName !== 'Create/Edit Team') {
     throw new Error(`The Save button is not supported on the "${pageName}" page.`);

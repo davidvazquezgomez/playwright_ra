@@ -13,13 +13,11 @@ Feature: Team Management for Deloitte User
     Then the "Team Management" page is displayed
     When press "Create Team" button
     When press "Save" button on the "Create/Edit Team" page
-    Then verify the warning message "<warning message>" for fields "<mandatory field>" is displayed
+    Then verify the warning messages "<warning message>" for mandatory fields "<mandatory field>" are displayed on the "Create/Edit Team" page
 
     Examples:
-      | mandatory field | warning message                      |
-      | Team Name       | Team name is required                |
-      | Team Leader     | At least one Team Leader is required |
-      | Team Member     | At least one Team Member is required |
+      | mandatory field                   | warning message                                                                                |
+      | Team Name;Team Leader;Team Member | Team Name is required;At least one Team Leader is required;At least one Team Member is required |
 
   @readOnly
   Scenario Outline: TC001_02_DeloitteUser_TeamManagement - Verify Teams table column header and sorting

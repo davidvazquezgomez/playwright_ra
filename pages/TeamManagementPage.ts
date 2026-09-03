@@ -33,6 +33,47 @@ export class TeamManagementPage extends BasePage {
     `${this.teamRowByName(teamName)} button[title^="Remove"]`;
   private warningDialog = 'div[role="dialog"]:has(.k-dialog-title:text-is("Warning"))';
   private warningDeleteButton = `${this.warningDialog} button:has(.k-button-text:text-is("Delete"))`;
+  private teamForm = '#teamForm';
+  private teamFormWarningMessageByText = (message: string) =>
+    this._page.locator(this.teamForm).getByText(message, { exact: true }).first();
+
+  /**
+   * Verifies that every mandatory field of the Create/Edit Team form displays its warning message.
+   * @param messages Semicolon-delimited expected warning messages.
+   * @param fields Semicolon-delimited mandatory field labels that own each message.
+   */
+  async verifyMandatoryFieldWarningMessages(messages: string, fields: string): Promise<void> {
+    const expectedMessages = messages.split(';').map(message => message.trim()).filter(Boolean);
+    const fieldLabels = fields.split(';').map(field => field.trim()).filter(Boolean);
+
+    if (expectedMessages.length === 0 || expectedMessages.length !== fieldLabels.length) {
+      throw new Error('Each mandatory field must have one corresponding warning message.');
+    }
+
+    await this.waitForElement(this.teamNameInput);
+
+    const missingWarnings: string[] = [];
+
+    for (const [index, message] of expectedMessages.entries()) {
+      const isDisplayed = await this.teamFormWarningMessageByText(message)
+        .waitFor({ state: 'visible', timeout: 10000 })
+        .then(() => true)
+        .catch(() => false);
+
+      if (!isDisplayed) {
+        missingWarnings.push(`${fieldLabels[index]}: "${message}"`);
+      }
+    }
+
+    if (missingWarnings.length > 0) {
+      this.failWithApplicationError(
+        'Saving the Create/Edit Team form without mandatory data must display a warning message for every mandatory field.',
+        `Warning messages displayed for: ${fieldLabels.join(', ')}.`,
+        `No warning message was displayed for: ${missingWarnings.join('; ')}.`,
+        'The Create/Edit Team form remained open after the Save action.',
+      );
+    }
+  }
 
   /**
    * Opens the editor for the first team displayed in the Team Management grid.
