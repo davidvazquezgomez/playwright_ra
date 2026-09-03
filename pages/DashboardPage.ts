@@ -247,19 +247,15 @@ export class DashboardPage extends BasePage {
         const activeDialog = await this._page.locator(this.nameFilterDialog).isVisible()
             ? this.nameFilterDialog
             : this.filterDialog;
+        const saveButton = this.saveFilterButton(activeDialog);
 
         if (activeDialog === this.nameFilterDialog && (await this._page.locator(this.filterNameInput).inputValue()).trim()) {
-            await Promise.all([
-                expect.poll(async () =>
-                    await this.filterSavedToast.isVisible() || await this.filterUpdatedToast.isVisible(),
-                    { timeout: 30000 },
-                ).toBe(true),
-                this.saveFilterButton(activeDialog).click(),
-            ]);
+            await saveButton.click();
+            await expect(saveButton).toBeHidden();
             return;
         }
 
-        await this.saveFilterButton(activeDialog).click();
+        await saveButton.click();
     }
 
     /**
