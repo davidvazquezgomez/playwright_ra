@@ -12,6 +12,11 @@ export class TeamManagementPage extends BasePage {
   private addTeamMemberSearchResultByName = (userName: string) =>
     `kendo-popup.k-animation-container-shown:visible li[role="option"]:has(.person-name:text-is("${userName}"))`;
   private addUserButton = `${this.addTeamMembersDialog} button[aria-label="Add User"]`;
+  private addTeamMembersCancelButton = `${this.addTeamMembersDialog} button:has(.k-button-text:text-is("Cancel"))`;
+  private addTeamMembersDuplicateUserWarning = `${this.addTeamMembersDialog} :text-is("User already exists in Team members list")`;
+  private teamMembersGrid = '#teamForm [role="grid"][aria-label="Data table"]';
+  private teamMemberNameCellByName = (displayName: string) =>
+    `${this.teamMembersGrid} tbody tr.k-master-row td[data-kendo-grid-column-index="0"]:text-is("${displayName}")`;
   private saveTeamButton = 'button.add-save-btn[form="teamForm"]';
   private leaveTeamButton = 'button:has(.k-button-text:text-is("Leave Team"))';
   private teamNameInput = '#teamForm kendo-textbox[formcontrolname="teamName"] input.k-input-inner';
@@ -20,10 +25,7 @@ export class TeamManagementPage extends BasePage {
   private visibleKendoPopup = 'kendo-popup.k-animation-container-shown:visible';
   private teamLeaderSearchResultByEmail = (emailAddress: string) =>
     `kendo-popup.k-animation-container-shown:visible li[role="option"]:has-text("${emailAddress}")`;
-  private teamLeaderChipByName = (userName: string) =>
-    `#teamForm app-people-picker[formcontrolname="teamLeaders"] .k-chip:has(.tag-person-name:text-is("${userName}"))`;
-  private removeTeamLeaderChipButtonByName = (userName: string) =>
-    `${this.teamLeaderChipByName(userName)} .k-chip-remove-action[aria-label="delete"]`;
+  private teamLeaderChips = '#teamForm app-people-picker[formcontrolname="teamLeaders"] .k-chip';
   private teamRowByName = (teamName: string) =>
     `${this.teamGridRows}:has(td[data-kendo-grid-column-index="0"]:text-is("${teamName}"))`;
   private teamLeadersCell = 'td[data-kendo-grid-column-index="1"]';
@@ -33,6 +35,7 @@ export class TeamManagementPage extends BasePage {
     `${this.teamRowByName(teamName)} button[title^="Remove"]`;
   private warningDialog = 'div[role="dialog"]:has(.k-dialog-title:text-is("Warning"))';
   private warningDeleteButton = `${this.warningDialog} button:has(.k-button-text:text-is("Delete"))`;
+  private pendingTeamMemberNameToAdd?: string;
 
   /**
    * Opens the editor for the first team displayed in the Team Management grid.
@@ -69,13 +72,63 @@ export class TeamManagementPage extends BasePage {
     const searchResult = this.addTeamMemberSearchResultByName(userName);
     await this.waitForSelectorStatus(searchResult, 'visible');
     await this.clickElement(searchResult);
+    this.pendingTeamMemberNameToAdd = userName;
   }
 
   /**
    * Confirms the selected members in the Add Team Members dialog.
    */
   async addSelectedTeamMembers(): Promise<void> {
+    if (
+      this.pendingTeamMemberNameToAdd &&
+      await this.isTeamMemberAlreadyAdded(this.pendingTeamMemberNameToAdd)
+    ) {
+      await this.clickElement(this.addTeamMembersCancelButton);
+      this.pendingTeamMemberNameToAdd = undefined;
+      return;
+    }
+
     await this.clickElement(this.addUserButton);
+
+    const duplicateWarning = this._page.locator(this.addTeamMembersDuplicateUserWarning);
+    if (await duplicateWarning.count() > 0 && await duplicateWarning.isVisible()) {
+      await this.clickElement(this.addTeamMembersCancelButton);
+    }
+
+    this.pendingTeamMemberNameToAdd = undefined;
+  }
+
+  /**
+   * Determines whether a candidate user already exists in the Team Members grid.
+   * @param userName Display name chosen from the Add Team Members search field.
+   * @returns True when the user is already listed as a Team Member.
+   */
+  private async isTeamMemberAlreadyAdded(userName: string): Promise<boolean> {
+    const candidateNames = [userName, this.swapCommaSeparatedName(userName)].filter(
+      (value, index, self): value is string => Boolean(value) && self.indexOf(value) === index,
+    );
+
+    for (const candidateName of candidateNames) {
+      if (await this._page.locator(this.teamMemberNameCellByName(candidateName)).count() > 0) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Converts "Last, First" to "First, Last" when possible.
+   * @param name Display name formatted with a comma separator.
+   * @returns Swapped display name, or the original value when no swap is possible.
+   */
+  private swapCommaSeparatedName(name: string): string {
+    const parts = name.split(',').map(value => value.trim()).filter(Boolean);
+    if (parts.length !== 2) {
+      return name;
+    }
+
+    return `${parts[1]}, ${parts[0]}`;
   }
 
   /**
@@ -168,6 +221,23 @@ export class TeamManagementPage extends BasePage {
    * @param userName Display name that must not appear among the team's leaders.
    */
   async verifyUserIsNotAvailableInTeamLeaders(userName: string): Promise<void> {
+    const onCreateEditTeamPage = await this._page.getByRole('heading', { name: 'Create/Edit Team' }).isVisible()
+      .catch(() => false);
+
+    if (onCreateEditTeamPage) {
+      if (await this.isTeamLeaderPresent(userName)) {
+        const chipTexts = await this._page.locator(this.teamLeaderChips).allTextContents();
+        this.failWithApplicationError(
+          'A removed Team Leader must no longer be selected in the team editor.',
+          `Team Leaders that do not contain "${userName}".`,
+          chipTexts.map(value => value.trim()).filter(Boolean).join(' | '),
+          'The Create/Edit Team page still shows the removed user as a Team Leader.',
+        );
+      }
+
+      return;
+    }
+
     const filteredTeamRows = this._page.locator(this.teamGridRows);
     await expect(filteredTeamRows).toHaveCount(1);
 
@@ -202,13 +272,21 @@ export class TeamManagementPage extends BasePage {
    */
   async removeTeamLeader(userName: string): Promise<void> {
     await this.closeTeamLeaderOptions();
-    const teamLeaderChip = this._page.locator(this.teamLeaderChipByName(userName));
-    if (await teamLeaderChip.count() === 0) {
+
+    const matchIndex = await this.findTeamLeaderChipIndexByName(userName, 8000);
+    if (matchIndex < 0) {
       return;
     }
 
-    await this.clickElement(this.removeTeamLeaderChipButtonByName(userName));
-    await expect(teamLeaderChip).toHaveCount(0);
+    const matchedChip = this._page.locator(this.teamLeaderChips).nth(matchIndex);
+    await matchedChip.hover();
+
+    const removeButton = matchedChip
+      .locator('.k-chip-remove-action, [aria-label*="delete" i], [aria-label*="remove" i], [title*="remove" i]')
+      .first();
+
+    await removeButton.click({ force: true });
+    await expect.poll(async () => await this.isTeamLeaderPresent(userName)).toBe(false);
   }
 
   /**
@@ -242,6 +320,74 @@ export class TeamManagementPage extends BasePage {
   }
 
   /**
+   * Normalizes display names for resilient text comparison.
+   * @param value Raw chip or step text.
+   * @returns Lower-cased value collapsed to single spaces.
+   */
+  private normalizeDisplayName(value: string): string {
+    return value.replace(/\s+/g, ' ').trim().toLowerCase();
+  }
+
+  /**
+   * Finds the index of a selected Team Leader chip that matches the requested user.
+   * @param userName Display name requested in the step.
+   * @param timeoutMs Maximum wait for chips to render before skipping.
+   * @returns Zero-based chip index, or -1 when no match is found.
+   */
+  private async findTeamLeaderChipIndexByName(userName: string, timeoutMs: number): Promise<number> {
+    const start = Date.now();
+    while (Date.now() - start < timeoutMs) {
+      const chipCount = await this._page.locator(this.teamLeaderChips).count();
+
+      for (let index = 0; index < chipCount; index += 1) {
+        const chipText = (await this._page.locator(this.teamLeaderChips).nth(index).textContent()) ?? '';
+        if (this.doesTeamLeaderChipMatch(userName, chipText)) {
+          return index;
+        }
+      }
+
+      await this.waitImplicit(300);
+    }
+
+    return -1;
+  }
+
+  /**
+   * Determines whether a Team Leader chip text corresponds to the requested user.
+   * @param userName Display name from the step.
+   * @param chipText Rendered chip text.
+   * @returns True when the chip likely represents the requested user.
+   */
+  private doesTeamLeaderChipMatch(userName: string, chipText: string): boolean {
+    const normalizedChip = this.normalizeDisplayName(chipText);
+    if (!normalizedChip) {
+      return false;
+    }
+
+    const exactCandidates = [
+      this.normalizeDisplayName(userName),
+      this.normalizeDisplayName(this.swapCommaSeparatedName(userName)),
+    ].filter((value, index, self): value is string => Boolean(value) && self.indexOf(value) === index);
+
+    if (exactCandidates.some(candidate => normalizedChip.includes(candidate))) {
+      return true;
+    }
+
+    const nameTokens = this
+      .normalizeDisplayName(userName)
+      .split(/[^a-z0-9]+/)
+      .map(value => value.trim())
+      .filter(value => value.length >= 3);
+
+    if (nameTokens.length >= 2 && nameTokens.every(token => normalizedChip.includes(token))) {
+      return true;
+    }
+
+    const strongestToken = nameTokens.sort((a, b) => b.length - a.length)[0];
+    return Boolean(strongestToken && strongestToken.length >= 6 && normalizedChip.includes(strongestToken));
+  }
+
+  /**
    * Restores a Team Leader configuration after a scenario changes a shared team.
    * @param teamName Exact name of the team to restore.
    * @param requiredLeader Team Leader that must be present after restoration.
@@ -255,12 +401,12 @@ export class TeamManagementPage extends BasePage {
     await this.editTeam(teamName);
     let changed = false;
 
-    if (await this._page.locator(this.teamLeaderChipByName(temporaryLeader)).count() > 0) {
+    if (await this.isTeamLeaderPresent(temporaryLeader)) {
       await this.removeTeamLeader(temporaryLeader);
       changed = true;
     }
 
-    if (await this._page.locator(this.teamLeaderChipByName(requiredLeader)).count() === 0) {
+    if (!await this.isTeamLeaderPresent(requiredLeader)) {
       await this.addTeamLeader(requiredLeader);
       changed = true;
     }
@@ -268,5 +414,26 @@ export class TeamManagementPage extends BasePage {
     if (changed) {
       await this.saveTeam();
     }
+  }
+
+  /**
+   * Checks whether a Team Leader is currently selected in the form.
+   * @param userName Display name to find among selected Team Leader chips.
+   * @returns True when the user is already selected.
+   */
+  private async isTeamLeaderPresent(userName: string): Promise<boolean> {
+    const chipCount = await this._page.locator(this.teamLeaderChips).count();
+    if (chipCount === 0) {
+      return false;
+    }
+
+    for (let index = 0; index < chipCount; index += 1) {
+      const chipText = (await this._page.locator(this.teamLeaderChips).nth(index).textContent()) ?? '';
+      if (this.doesTeamLeaderChipMatch(userName, chipText)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }
