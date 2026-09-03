@@ -70,7 +70,7 @@ Feature: Dashboard Actions for Team Leader
     Then verify "Action added successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    And double-click "Test_TeamLeader2" option on the Dashboard filter
+    And double-click "DashboardActions_Test" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
     And click on "Deadline Date" column header in the "01_QA_StageTestPortal - Actions Dashboard" page
     And click on "Deadline Date" column header in the "01_QA_StageTestPortal - Actions Dashboard" page
@@ -167,7 +167,7 @@ Feature: Dashboard Actions for Team Leader
       | txt               | test-data/invalid.txt      | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.txt      |
   @mutable
   Scenario: TC011_01_TeamLeader_DashboardActions - Verify adding an action from the update details page
-    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
+    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When search for "Employment Taxes_Outstanding Update is approaching Effective Date 7 days" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     Then verify "Employment Taxes_Outstanding Update is approaching Effective Date 7 days" update is displayed from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     When open the first update in the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
