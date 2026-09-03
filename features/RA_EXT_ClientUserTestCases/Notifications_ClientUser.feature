@@ -37,7 +37,7 @@ Feature: Notifications for Client User
     And check "Select All" Check box under "Email" option from "Updates" section if it is "unchecked"
     When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
     And select the frequency option "Daily" located under "Periodic Summary of Updates and Actions via email?" section
-    When press "Update Portal" button
+    When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
 
   @mutable
