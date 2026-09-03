@@ -53,11 +53,7 @@ Then(
 
 Then(
   'the {string} pop up is displayed with the title {string}',
-  async ({ userManagementPage }, popupName: string, title: string) => {
-    if (popupName !== title) {
-      throw new Error(`Popup name "${popupName}" does not match title "${title}".`);
-    }
-
+  async ({ userManagementPage }, _popupName: string, title: string) => {
     await userManagementPage.verifyUserDialogDisplayed(title);
   },
 );

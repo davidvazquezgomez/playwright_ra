@@ -4,13 +4,14 @@ import { BasePage } from './BasePage';
 export class UserManagementPage extends BasePage {
   private userDialogByTitle = (title: string) =>
     `div[role="dialog"]:has(.k-dialog-title:text-is("${title}"))`;
+  private deleteUserDialog =
+    'div[role="dialog"]:has(.k-dialog-title:text-is("Delete User"), .k-dialog-title:text-is("Confirm User Deletion"))';
   private externalUserDialog =
     'div[role="dialog"]:has(.k-dialog-title:text-is("Add Non-Deloitte Admin"), .k-dialog-title:text-is("Add Non-Deloitte User"))';
   private externalUserFieldByName = (fieldName: string) =>
     `${this.externalUserDialog} kendo-textbox[formcontrolname="${fieldName}"] input.k-input-inner`;
   private userDialogTitleByTitle = (title: string) =>
     `${this.userDialogByTitle(title)} .k-dialog-title`;
-  private deleteUserDialog = this.userDialogByTitle('Delete User');
   private deleteUserCurrentStep =
     `${this.deleteUserDialog} .k-step-current .k-step-text:text-is("Select Replacement")`;
   private deleteUserReplacementDropdown =
@@ -21,6 +22,8 @@ export class UserManagementPage extends BasePage {
     `kendo-popup.k-animation-container-shown:visible .k-dropdownlist-popup li[role="option"]:has(span:text-is("${userName}"))`;
   private deleteUserReplacementValue =
     `${this.deleteUserReplacementDropdown} .k-input-value-text`;
+  private confirmUserDeletionButtonInDialog =
+    `${this.deleteUserDialog} kendo-dialog-actions button[aria-label="Confirm"]`;
   private addDeloitteUserSearchInput =
     `${this.userDialogByTitle('Add Deloitte User')} input[role="combobox"][placeholder="Search for user..."]`;
   private searchResultByName = (userName: string) =>
@@ -202,8 +205,15 @@ export class UserManagementPage extends BasePage {
    */
   async verifyDeleteUserDialogDisplayed(): Promise<void> {
     await expect(this._page.locator(this.deleteUserDialog)).toBeVisible();
-    await expect(this._page.locator(this.deleteUserCurrentStep)).toBeVisible();
-    await expect(this._page.locator(this.deleteUserReplacementDropdown)).toBeVisible();
+
+    const replacementStepVisible = await this._page.locator(this.deleteUserCurrentStep).isVisible().catch(() => false);
+    const replacementDropdownVisible = await this._page.locator(this.deleteUserReplacementDropdown).isVisible().catch(() => false);
+    if (replacementStepVisible && replacementDropdownVisible) {
+      return;
+    }
+
+    // Some flows open a confirmation dialog first and move to reassignment after Confirm.
+    await expect(this._page.locator(this.confirmUserDeletionButtonInDialog)).toBeVisible();
   }
 
   /**
@@ -211,6 +221,14 @@ export class UserManagementPage extends BasePage {
    * @param userName Display name of the replacement user.
    */
   async selectDeleteUserReplacement(userName: string): Promise<void> {
+    const replacementDropdown = this._page.locator(this.deleteUserReplacementDropdown);
+    if (!await replacementDropdown.isVisible().catch(() => false)) {
+      const confirmButton = this._page.locator(this.confirmUserDeletionButtonInDialog).first();
+      if (await confirmButton.isVisible().catch(() => false)) {
+        await this.clickLocator(confirmButton);
+      }
+    }
+
     await this.clickElement(this.deleteUserReplacementDropdown);
     await this.fillInputText(this.deleteUserReplacementSearchInput, userName);
     await this.clickElement(this.deleteUserReplacementOptionByName(userName));
@@ -419,6 +437,7 @@ export class UserManagementPage extends BasePage {
       'Add Non-Deloitte Admin',
       'Add Non-Deloitte User',
       'Delete User',
+      'Confirm User Deletion',
     ];
     if (!supportedTitles.includes(title)) {
       throw new Error(`Unsupported User Management dialog title "${title}".`);

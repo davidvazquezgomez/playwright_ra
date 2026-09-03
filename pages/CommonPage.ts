@@ -791,7 +791,18 @@ export class CommonPage extends BasePage {
         await this.clickElement(this.reassignButton);
         break;
       case "Confirm":
-        await this.clickElement(this.confirmButton);
+        {
+          const visibleDialogConfirmButton = this._page
+            .locator('div[role="dialog"]:visible')
+            .last()
+            .getByRole('button', { name: 'Confirm', exact: true });
+          if (await visibleDialogConfirmButton.isVisible().catch(() => false)) {
+            await this.clickLocator(visibleDialogConfirmButton);
+            break;
+          }
+
+          await this.clickElement(this.confirmButton);
+        }
         break;
       case "Confirm Deletion":
         await this.clickElement(this.confirmDeletionButton);
@@ -843,7 +854,18 @@ export class CommonPage extends BasePage {
         await this.clickElement(this.dialogActionButtonByName('Close'));
         break;
       case "Cancel":
-        await this.clickElement(this.cancelButton);
+        {
+          const visibleDialogCancelButton = this._page
+            .locator('div[role="dialog"]:visible')
+            .last()
+            .getByRole('button', { name: 'Cancel', exact: true });
+          if (await visibleDialogCancelButton.isVisible().catch(() => false)) {
+            await this.clickLocator(visibleDialogCancelButton);
+            break;
+          }
+
+          await this.clickElement(this.cancelButton);
+        }
         break;
       case "Disable Impact Area":
         await this.clickElement(this.disableImpactAreaButton);

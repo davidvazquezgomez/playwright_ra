@@ -45,7 +45,7 @@ When('add {string} in the {string} field', async ({ teamManagementPage }, emailA
   await teamManagementPage.addTeamLeader(emailAddress);
 });
 
-When('remove {string} from the {string} field', async ({ teamManagementPage }, userName: string, fieldLabel: string) => {
+When('remove {string} from the {string} field if exists', async ({ teamManagementPage }, userName: string, fieldLabel: string) => {
   if (fieldLabel !== 'Team Leader') {
     throw new Error(`Team Management field "${fieldLabel}" is not supported.`);
   }
