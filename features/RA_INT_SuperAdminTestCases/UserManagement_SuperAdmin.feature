@@ -220,14 +220,13 @@ Feature: User Management for Super Admin
     When press the "Non-Deloitte Admins" section
     And select the user "qa.admin@example.com" from the table
     When press "Delete Selected User" button
-    Then the "Delete User" pop up is displayed with the title "Confirm User Deletion"
+    Then the "Delete User" pop up is displayed with the title "Delete User"
     When press "Cancel" button
     And search for "qa.admin@example.com" in the User Management table "Email" field
     Then verify the user "qa.admin@example.com" is displayed in the table
     When select the user "qa.admin@example.com" from the table
     When press "Delete Selected User" button
-    Then the "Delete User" pop up is displayed with the title "Confirm User Deletion"
-    And press "Confirm" button
+    Then the "Delete User" pop up is displayed with the title "Delete User"
     And select "sonigour, audit" as the replacement user
     And press "Next" button
     And press "Reassign" button
@@ -237,6 +236,7 @@ Feature: User Management for Super Admin
     Then verify the user "qa.admin@example.com" is not displayed in the table
     Given the "Team Management - 01_13Jan REG" page is open
     When search for "01_QA_UserManagement" in the Team Name field
+    When click on "Edit" button for the "01_QA_UserManagement" team
     Then verify the user "QA, Admin" is not available in the team leaders
 
   @mutable @cleanup
