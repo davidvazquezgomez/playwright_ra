@@ -362,12 +362,26 @@ export class CommonPage extends BasePage {
   async clickNavigationOption(option: string): Promise<void> {
     const navigationWasAvailable = await this.retryWithReload(async () => {
       const sideNavigation = this._page.locator(this.sideNavigation);
+      try {
+        await this.waitForSelectorStatus(this.sideNavigation, 'attached', this.navigationRenderTimeout);
+      } catch {
+        for (let logoAttempt = 1; logoAttempt <= 3; logoAttempt++) {
+          try {
+            await this.clickElement(this.deloitteLogo, this.navigationRenderTimeout);
+            await this.waitForSelectorStatus(this.sideNavigation, 'attached', this.navigationRenderTimeout);
+            break;
+          } catch (error) {
+            if (logoAttempt === 3) {
+              throw error;
+            }
+          }
+        }
+      }
+
       if (await sideNavigation.count() > 0) {
         if (!await this.expandSideNavigationIfCollapsed()) {
           return false;
         }
-      } else {
-        await this.clickElement(this.deloitteLogo, this.navigationRenderTimeout);
       }
 
       if (!await sideNavigation.isVisible({ timeout: this.navigationRenderTimeout }).catch(() => false)) {
@@ -791,7 +805,18 @@ export class CommonPage extends BasePage {
         await this.clickElement(this.reassignButton);
         break;
       case "Confirm":
-        await this.clickElement(this.confirmButton);
+        {
+          const visibleDialogConfirmButton = this._page
+            .locator('div[role="dialog"]:visible')
+            .last()
+            .getByRole('button', { name: 'Confirm', exact: true });
+          if (await visibleDialogConfirmButton.isVisible().catch(() => false)) {
+            await this.clickLocator(visibleDialogConfirmButton);
+            break;
+          }
+
+          await this.clickElement(this.confirmButton);
+        }
         break;
       case "Confirm Deletion":
         await this.clickElement(this.confirmDeletionButton);
@@ -843,7 +868,18 @@ export class CommonPage extends BasePage {
         await this.clickElement(this.dialogActionButtonByName('Close'));
         break;
       case "Cancel":
-        await this.clickElement(this.cancelButton);
+        {
+          const visibleDialogCancelButton = this._page
+            .locator('div[role="dialog"]:visible')
+            .last()
+            .getByRole('button', { name: 'Cancel', exact: true });
+          if (await visibleDialogCancelButton.isVisible().catch(() => false)) {
+            await this.clickLocator(visibleDialogCancelButton);
+            break;
+          }
+
+          await this.clickElement(this.cancelButton);
+        }
         break;
       case "Disable Impact Area":
         await this.clickElement(this.disableImpactAreaButton);

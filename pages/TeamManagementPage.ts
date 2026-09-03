@@ -202,16 +202,43 @@ export class TeamManagementPage extends BasePage {
    */
   async removeTeamLeader(userName: string): Promise<void> {
     await this.closeTeamLeaderOptions();
+    const teamLeaderChip = this._page.locator(this.teamLeaderChipByName(userName));
+    if (await teamLeaderChip.count() === 0) {
+      return;
+    }
+
     await this.clickElement(this.removeTeamLeaderChipButtonByName(userName));
-    await expect(this._page.locator(this.teamLeaderChipByName(userName))).toHaveCount(0);
+    await expect(teamLeaderChip).toHaveCount(0);
   }
 
   /**
    * Closes the Team Leader people-picker options before interacting with form chips.
    */
   private async closeTeamLeaderOptions(): Promise<void> {
+    const visiblePopupCount = await this._page.locator(this.visibleKendoPopup).count();
+    if (visiblePopupCount === 0) {
+      return;
+    }
+
+    // Prefer blur/click-outside actions that keep the current input value.
+    await this.clickElement(this.teamNameInput);
+    try {
+      await this.waitForSelectorStatus(this.visibleKendoPopup, 'hidden', 1000);
+      return;
+    } catch {
+      // Continue to secondary fallback when click-outside does not close the popup.
+    }
+
+    await this.pressKeyOnElement(this.teamLeaderSearchInput, 'Tab');
+    try {
+      await this.waitForSelectorStatus(this.visibleKendoPopup, 'hidden', 1000);
+      return;
+    } catch {
+      // Final fallback for stubborn popups.
+    }
+
     await this.pressKeyOnElement(this.teamLeaderSearchInput, 'Escape');
-    await this.waitForSelectorStatus(this.visibleKendoPopup, 'hidden');
+    await this.waitForSelectorStatus(this.visibleKendoPopup, 'hidden', 3000);
   }
 
   /**

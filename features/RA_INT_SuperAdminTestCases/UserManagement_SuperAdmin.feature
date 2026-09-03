@@ -207,13 +207,14 @@ Feature: User Management for Super Admin
     Given the "Team Management - 01_13Jan REG" page is open
     When click on "Edit" button for the "01_QA_UserManagement" team
     #And register cleanup to restore "sonigour, audit" as Team Leader of "01_QA_UserManagement", remove "qa.admin@example.com", and use portal "01_13Jan REG"
-    And remove "sonigour, audit" from the "Team Leader" field
+    And remove "sonigour, audit" from the "Team Leader" field if exists
     And add "qa.admin@example.com" in the "Team Leader" field
     And open the Add Team Members dialog
     Then the "Add Team Members" popup is displayed
     When select "ValidLast, ValidFirst" option in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
     And press "Save" button
+    And verify "Team updated successfully." toast message is displayed in the "Team Management" page
     Given the "User Management - 01_13Jan REG" page is open
     Then the "User Management" page is displayed
     When press the "Non-Deloitte Admins" section
@@ -225,6 +226,8 @@ Feature: User Management for Super Admin
     Then verify the user "qa.admin@example.com" is displayed in the table
     When select the user "qa.admin@example.com" from the table
     When press "Delete Selected User" button
+    Then the "Delete User" pop up is displayed with the title "Confirm User Deletion"
+    And press "Confirm" button
     And select "sonigour, audit" as the replacement user
     And press "Next" button
     And press "Reassign" button

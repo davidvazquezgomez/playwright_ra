@@ -770,10 +770,28 @@ export class BasePage {
    * @param selector Input selector.
    */
   async clearInput(selector: string): Promise<void> {
-    let inputElement = await this.waitForElement(selector);
-    if (inputElement) {
-      await inputElement.click({ clickCount: 3 });
-      await this._page.keyboard.press('Backspace');
+    const inputLocator = this._page.locator(selector);
+    const actionTimeout = process.env.TIMEOUT ? Number(process.env.TIMEOUT) * 2 : 30000;
+    const blockingSpinner = 'app-spinner .cssload-container';
+
+    await inputLocator.waitFor({ state: 'visible', timeout: actionTimeout });
+
+    for (let attempt = 1; attempt <= 3; attempt += 1) {
+      try {
+        await this.waitForSelectorStatus(blockingSpinner, 'hidden', actionTimeout);
+      } catch {
+        // Spinner may not always detach; click retries below still handle transient overlays.
+      }
+
+      try {
+        await inputLocator.click({ clickCount: 3, timeout: actionTimeout });
+        await this._page.keyboard.press('Backspace');
+        return;
+      } catch (error) {
+        if (attempt === 3) {
+          throw error;
+        }
+      }
     }
   }
 
