@@ -2,6 +2,10 @@ import { expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class ReleaseNotesPage extends BasePage {
+    private readonly abbreviatedMonthNames = [
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+    ];
     private readonly titleInput = 'kendo-textbox[formcontrolname="title"] input';
     private readonly releaseNotesDatePicker = 'kendo-datepicker[formcontrolname="releaseNotesDate"]';
     private readonly releaseNotesEditor = 'kendo-editor[formcontrolname="releaseNotes"] [contenteditable="true"]';
@@ -50,12 +54,13 @@ export class ReleaseNotesPage extends BasePage {
      * @param title Created release note title.
      */
     async verifyCreatedReleaseNoteIsDisplayed(title: string): Promise<void> {
-        const today = new Intl.DateTimeFormat('en-GB', {
-            day: '2-digit',
-            month: 'short',
-            year: 'numeric',
-        }).format(new Date());
-        const expectedTitle = `${title} - ${today}`;
+        const today = new Date();
+        const formattedToday = [
+            String(today.getDate()).padStart(2, '0'),
+            this.abbreviatedMonthNames[today.getMonth()],
+            today.getFullYear(),
+        ].join(' ');
+        const expectedTitle = `${title} - ${formattedToday}`;
 
         await expect(this.releaseNoteTitleByText(expectedTitle), `Expected created release note "${expectedTitle}" to be visible.`).toHaveText(expectedTitle);
     }
@@ -205,8 +210,7 @@ export class ReleaseNotesPage extends BasePage {
             throw new Error(`Unable to parse release note date "${dateLabel.trim()}".`);
         }
 
-        const monthIndex = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            .indexOf(match[2]);
+        const monthIndex = this.abbreviatedMonthNames.indexOf(match[2]);
 
         if (monthIndex === -1) {
             throw new Error(`Unable to parse release note month "${match[2]}".`);
