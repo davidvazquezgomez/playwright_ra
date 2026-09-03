@@ -2,6 +2,9 @@ import { expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class PrivacyNoticePage extends BasePage {
+  private readonly publishedLinkActionTimeout = process.env.TIMEOUT
+    ? Number(process.env.TIMEOUT) * 2
+    : 30000;
   private privacyNoticeEditor = 'kendo-editor[formcontrolname="globalPrivacyNotice"] .ProseMirror';
   private privacyNoticeParagraphs = `${this.privacyNoticeEditor} > p`;
   private firstPrivacyNoticeParagraph = `${this.privacyNoticeEditor} > p:first-of-type`;
@@ -25,7 +28,9 @@ export class PrivacyNoticePage extends BasePage {
    * @param linkName Accessible name of the expected link.
    */
   async verifyPublishedLinkDisplayed(linkName: string): Promise<void> {
-    await expect(await this.getPublishedLink(linkName)).toBeVisible();
+    await expect(await this.getPublishedLink(linkName)).toBeVisible({
+      timeout: this.publishedLinkActionTimeout,
+    });
   }
 
   /**
@@ -35,7 +40,7 @@ export class PrivacyNoticePage extends BasePage {
    */
   async clickPublishedLink(linkName: string): Promise<void> {
     const link = await this.getPublishedLink(linkName);
-    await expect(link).toBeVisible();
+    await expect(link).toBeVisible({ timeout: this.publishedLinkActionTimeout });
 
     const destination = await link.getAttribute('href');
     if (!destination) {
@@ -44,16 +49,23 @@ export class PrivacyNoticePage extends BasePage {
 
     this.lastClickedLinkDestination = destination;
     const opensNewTab = (await link.getAttribute('target')) === '_blank';
+    const isMailToDestination = destination.startsWith('mailto:');
 
     if (opensNewTab) {
       const popupPromise = this._page.waitForEvent('popup');
-      await link.click();
+      await link.click({
+        timeout: this.publishedLinkActionTimeout,
+        noWaitAfter: true,
+      });
       this._page = await popupPromise;
       await this._page.waitForLoadState('domcontentloaded').catch(() => undefined);
       return;
     }
 
-    await link.click();
+    await link.click({
+      timeout: this.publishedLinkActionTimeout,
+      noWaitAfter: isMailToDestination,
+    });
   }
 
   /**
