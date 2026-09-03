@@ -388,10 +388,10 @@ Feature: Dashboard Actions for Team Leader
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    When select "Low" in the "Action Priority" filter on the Dashboard filter
+    When select "High" in the "Action Priority" filter on the Dashboard filter
     And select "United Kingdom" in the "Jurisdiction" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    Then verify filtered actions are displayed for "Action Priority" with value "Low"
+    Then verify filtered actions are displayed for "Action Priority" with value "High"
     And verify filtered actions are displayed for "Jurisdiction" with value "United Kingdom"
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter

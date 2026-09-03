@@ -525,8 +525,8 @@ export class BasePage {
       .locator('.k-calendar-td:not(.k-other-month)')
       .getByText(currentDay, { exact: true });
     await todayCell.scrollIntoViewIfNeeded();
-    // Kendo can render the popup partly below the viewport; force bypasses that clipping.
-    await todayCell.click({ force: true });
+    // The calendar popup can remain outside the viewport even after scrolling; dispatch the event directly.
+    await todayCell.dispatchEvent('click');
     await expect(datePicker.locator('input[role="combobox"]')).toHaveValue(/\d/);
   }
 
@@ -582,8 +582,8 @@ export class BasePage {
           .locator('.k-calendar-td:not(.k-other-month)')
           .getByText(String(day), { exact: true });
         await targetDay.scrollIntoViewIfNeeded();
-        // Kendo can render the popup partly below the viewport; force bypasses that clipping.
-        await targetDay.click({ force: true });
+        // The calendar popup can remain outside the viewport even after scrolling; dispatch the event directly.
+        await targetDay.dispatchEvent('click');
         await expect(datePicker.locator('input[role="combobox"]')).toHaveValue(displayedDate);
         return;
       }

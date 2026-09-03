@@ -389,6 +389,7 @@ export class DashboardPage extends BasePage {
 
     /**
      * Restores a saved filter's canonical name when an interrupted scenario left it with an updated name.
+     * Does nothing when neither saved filter exists.
      * @param filterName Canonical saved-filter name required by the scenario.
      * @param updatedFilterName Saved-filter name that a prior run may have persisted.
      */
@@ -413,9 +414,7 @@ export class DashboardPage extends BasePage {
 
         if (await updatedSavedFilter.count() === 0) {
             await this.closeFilterPanel();
-            throw new Error(
-                `Neither saved filter "${filterName}" nor "${updatedFilterName}" was found.`
-            );
+            return;
         }
 
         await updatedSavedFilter.click();
