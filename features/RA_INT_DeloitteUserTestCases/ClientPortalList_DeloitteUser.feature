@@ -7,9 +7,11 @@ Feature: Client Portal List for Deloitte User
 
   @readOnly
   Scenario: TC001_01_DeloitteUser_ClientPortalList - Verify client portal list navigation
-    Then verify "Edit" button is not displayed for the portals in the list
+    When verify "Edit" button is not displayed for the portals in the list
+    Then click on "01_13Jan REG" of the portals
+    And the "Overview" page is displayed
     When click on "Home" option from the left navigation
-    Then the "Client Portal List" page is displayed
+    And the "Client Portal List" page is displayed
 
   @readOnly
   Scenario: TC001_02_DeloitteUser_ClientPortalList - Verify pagination
