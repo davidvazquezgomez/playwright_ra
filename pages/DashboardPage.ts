@@ -818,7 +818,7 @@ export class DashboardPage extends BasePage {
         for (let index = 0; index < await rows.count(); index += 1) {
             const row = rows.nth(index);
             if (filterName === 'Jurisdiction') {
-                await expect(row.locator(`img[src*="${value.toLowerCase()}"]`).or(row.getByText(value, { exact: true }))).toBeVisible();
+                await expect(row.locator(`img[src*="${value.toLowerCase()}"]`).or(row.getByText(value, { exact: true })).first()).toBeVisible();
             } else {
                 const columnIndex = await this.getGridColumnIndex(filterName);
                 await expect(

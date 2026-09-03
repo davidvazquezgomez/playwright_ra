@@ -31,7 +31,7 @@ Feature: Dashboard Options for Super Admin
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed for "Jurisdiction" with value "Belgium"
     Then verify filtered actions are displayed for "Priority" with value "Medium"
-    When press "Dashboard Options" button
+    When press "Dashboard Options" button on the Dashboard
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Report" is displayed in the Dashboard Options popup
     When click on "Generate Report" option from the "Dashboard Options" popup
@@ -45,7 +45,7 @@ Feature: Dashboard Options for Super Admin
   @mutable
   Scenario: TC019_03_SuperAdmin_DashboardOptions - Generate an unfiltered Actions report
     Given the "Actions Dashboard - 01_13Jan REG" page is open
-    When press "Dashboard Options" button
+    When press "Dashboard Options" button on the Dashboard
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Report" is displayed in the Dashboard Options popup
     When click on "Generate Report" option from the "Dashboard Options" popup
@@ -63,7 +63,7 @@ Feature: Dashboard Options for Super Admin
     And select "High" in the "Action Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed
-    When press "Dashboard Options" button
+    When press "Dashboard Options" button on the Dashboard
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Report" is displayed in the Dashboard Options popup
     When click on "Generate Report" option from the "Dashboard Options" popup
@@ -78,7 +78,7 @@ Feature: Dashboard Options for Super Admin
   Scenario: TC020_01_SuperAdmin_DashboardOptions - Generate an unfiltered Updates audit trail
     Given the "Updates Dashboard - 01_13Jan REG" page is open
     Then the "Updates Dashboard" page is displayed
-    When press "Dashboard Options" button
+    When press "Dashboard Options" button on the Dashboard
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Audit Trail" is displayed in the Dashboard Options popup
     When click on "Generate Audit Trail" option from the "Dashboard Options" popup
@@ -96,7 +96,7 @@ Feature: Dashboard Options for Super Admin
     And select "High" in the "Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify filtered updates are displayed
-    When press "Dashboard Options" button
+    When press "Dashboard Options" button on the Dashboard
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     When click on "Generate Audit Trail" option from the "Dashboard Options" popup
     And press "Generate Audit Trail" button
@@ -108,7 +108,7 @@ Feature: Dashboard Options for Super Admin
   Scenario: TC020_03_SuperAdmin_DashboardOptions - Generate an unfiltered Actions audit trail
     Given the "Actions Dashboard - 01_13Jan REG" page is open
     Then verify for "Dashboard Options" button is visible
-    When press "Dashboard Options" button
+    When press "Dashboard Options" button on the Dashboard
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Audit Trail" is displayed in the Dashboard Options popup
     When click on "Generate Audit Trail" option from the "Dashboard Options" popup
@@ -128,7 +128,7 @@ Feature: Dashboard Options for Super Admin
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed
     And verify for "Dashboard Options" button is visible
-    When press "Dashboard Options" button
+    When press "Dashboard Options" button on the Dashboard
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     When press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page

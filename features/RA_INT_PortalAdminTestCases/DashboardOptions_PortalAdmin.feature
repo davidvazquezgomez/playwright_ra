@@ -31,7 +31,7 @@ Feature: Dashboard Options for Portal Admin
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed for "Jurisdiction" with value "Australia"
     Then verify filtered actions are displayed for "Priority" with value "High"
-    When press "Dashboard Options" button
+    When press "Dashboard Options" button on the Dashboard
     Then verify the "Dashboard Options" popup is displayed on the Dashboard
     And verify "Generate Report" is displayed in the Dashboard Options popup
     When click on "Generate Report" option from the "Dashboard Options" popup
