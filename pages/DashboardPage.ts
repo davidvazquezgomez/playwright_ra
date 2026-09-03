@@ -108,7 +108,7 @@ export class DashboardPage extends BasePage {
     private readonly actionsGrid = () => this._page.getByRole('grid', { name: 'Data table', exact: true });
     private selectedDeadlineStartDate?: Date;
     private selectedDeadlineEndDate?: Date;
-    private jurisdictionSelectionBeforeActionStatus?: string[];
+    private jurisdictionSelectionBeforeStatusChange?: string[];
     private dashboardColumnExpectedToBeHidden?: string;
 
     /**
@@ -630,8 +630,8 @@ export class DashboardPage extends BasePage {
      * @param sectionName Visible filter section name.
      */
     async toggleSelectAllOptions(sectionName: string): Promise<void> {
-        if (sectionName === 'Action Status') {
-            this.jurisdictionSelectionBeforeActionStatus = await this.getSelectedFilterOptionNames('Jurisdiction');
+        if (this.isJurisdictionRetentionValidationSection(sectionName)) {
+            this.jurisdictionSelectionBeforeStatusChange = await this.getSelectedFilterOptionNames('Jurisdiction');
         }
         await this.setFilterSectionExpanded(sectionName, true);
         await this.selectAllOptionLabel(sectionName).click();
@@ -714,21 +714,32 @@ export class DashboardPage extends BasePage {
     }
 
     /**
-     * Verifies that Jurisdiction selections were not changed when Action Status was selected.
+     * Verifies that Jurisdiction selections were not changed when Status or Action Status was selected.
      */
     async verifyJurisdictionSelectionUnchanged(): Promise<void> {
-        if (!this.jurisdictionSelectionBeforeActionStatus) {
-            throw new Error('No Jurisdiction selection was captured before selecting Action Status.');
+        if (!this.jurisdictionSelectionBeforeStatusChange) {
+            throw new Error('No Jurisdiction selection was captured before selecting Status or Action Status.');
         }
         const selectedJurisdictions = await this.getSelectedFilterOptionNames('Jurisdiction');
-        if (JSON.stringify(selectedJurisdictions) !== JSON.stringify(this.jurisdictionSelectionBeforeActionStatus)) {
+        const previousSelection = [...this.jurisdictionSelectionBeforeStatusChange].sort((a, b) => a.localeCompare(b));
+        const currentSelection = [...selectedJurisdictions].sort((a, b) => a.localeCompare(b));
+        if (JSON.stringify(currentSelection) !== JSON.stringify(previousSelection)) {
             this.failWithApplicationError(
-                'Selecting Action Status must not change the selected Jurisdiction options.',
-                `[${this.jurisdictionSelectionBeforeActionStatus.join(' | ')}]`,
+                'Selecting Status or Action Status must not change the selected Jurisdiction options.',
+                `[${previousSelection.join(' | ')}]`,
                 `[${selectedJurisdictions.join(' | ')}]`,
-                'Jurisdiction selections were captured before selecting Action Status and read again afterwards.',
+                'Jurisdiction selections were captured before selecting Status or Action Status and read again afterwards.',
             );
         }
+    }
+
+    /**
+     * Determines whether selecting all options in the given section should preserve Jurisdiction selections.
+     * @param sectionName Visible filter section name.
+     */
+    private isJurisdictionRetentionValidationSection(sectionName: string): boolean {
+        const normalizedSectionName = sectionName.trim().toLowerCase();
+        return normalizedSectionName === 'status' || normalizedSectionName === 'action status';
     }
 
     /**
