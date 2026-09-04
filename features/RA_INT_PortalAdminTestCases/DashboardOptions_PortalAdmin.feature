@@ -1,4 +1,4 @@
-@DashboardOptions @DashboardOptions_SuperAdmin
+@DashboardOptions @DashboardOptions_PortalAdmin
 Feature: Dashboard Options for Portal Admin
 
   Background:
