@@ -1,4 +1,4 @@
-@DashboardOptions @DashboardOptions_SuperAdmin
+@DashboardOptions @DashboardOptions_ClientAdmin
 Feature: Dashboard Options for Client Admin
 
   Background:

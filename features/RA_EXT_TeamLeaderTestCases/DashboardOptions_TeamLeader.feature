@@ -1,4 +1,4 @@
-@DashboardOptions @DashboardOptions_SuperAdmin
+@DashboardOptions @DashboardOptions_TeamLeader
 Feature: Dashboard Options for Team Leader
 
   Background:
