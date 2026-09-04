@@ -1008,6 +1008,87 @@ export class CommonPage extends BasePage {
   }
 
   /**
+   * Verifies that the last downloaded file is named with the expected prefix followed by the current date and time.
+   * @param expectedNamePrefix Report name prefix, such as "01_13Jan REG_Updates_Report_".
+   */
+  async verifyDownloadedFileNameFormat(expectedNamePrefix: string): Promise<void> {
+    const fileName = await this.waitForLastDownloadedFileName();
+    if (!fileName) {
+      throw new Error(
+        `No downloaded file was detected for the expected name prefix "${expectedNamePrefix}".`,
+      );
+    }
+
+    console.log(`Downloaded file name: ${fileName}`);
+
+    // The application replaces spaces of the portal name with underscores in the generated file name.
+    const normalizeSeparators = (value: string) => value.replace(/ /g, '_').toLowerCase();
+    const normalizedFileName = normalizeSeparators(fileName);
+    const normalizedPrefix = normalizeSeparators(expectedNamePrefix);
+
+    if (!normalizedFileName.startsWith(normalizedPrefix)) {
+      this.failWithApplicationError(
+        'A generated report must be downloaded with the report name prefix followed by the current date and time.',
+        `File name starting with "${expectedNamePrefix}".`,
+        `File name "${fileName}".`,
+        `Downloaded file: ${fileName}`,
+      );
+    }
+
+    const remainder = fileName.slice(normalizedPrefix.length);
+    const extensionIndex = remainder.lastIndexOf('.');
+    const timestamp = extensionIndex === -1 ? remainder : remainder.slice(0, extensionIndex);
+    const timestampMatch = timestamp.match(/^(\d{4}-\d{2}-\d{2})T(\d{2})-(\d{2})-(\d{2})$/);
+
+    if (!timestampMatch) {
+      this.failWithApplicationError(
+        'A generated report must be downloaded with the report name prefix followed by the current date and time.',
+        `Date and time in "YYYY-MM-DDTHH-mm-ss" format after the prefix "${expectedNamePrefix}".`,
+        `Value "${timestamp}" after the prefix.`,
+        `Downloaded file: ${fileName}`,
+      );
+    }
+
+    const [, downloadDate, hours, minutes, seconds] = timestampMatch;
+    const now = new Date();
+    const currentDates = [this.formatDate(now), this.formatUtcDate(now)];
+
+    if (!currentDates.includes(downloadDate)) {
+      this.failWithApplicationError(
+        'A generated report must be downloaded with the report name prefix followed by the current date and time.',
+        `Current date ${currentDates.join(' or ')} in the file name.`,
+        `Date ${downloadDate} in the file name.`,
+        `Downloaded file: ${fileName}`,
+      );
+    }
+
+    if (Number(hours) > 23 || Number(minutes) > 59 || Number(seconds) > 59) {
+      this.failWithApplicationError(
+        'A generated report must be downloaded with the report name prefix followed by the current date and time.',
+        'A valid time of day in "HH-mm-ss" format in the file name.',
+        `Time ${hours}-${minutes}-${seconds} in the file name.`,
+        `Downloaded file: ${fileName}`,
+      );
+    }
+  }
+
+  /**
+   * Formats a date as "YYYY-MM-DD" using the local time zone.
+   */
+  private formatDate(date: Date): string {
+    const month = `${date.getMonth() + 1}`.padStart(2, '0');
+    const day = `${date.getDate()}`.padStart(2, '0');
+    return `${date.getFullYear()}-${month}-${day}`;
+  }
+
+  /**
+   * Formats a date as "YYYY-MM-DD" using UTC.
+   */
+  private formatUtcDate(date: Date): string {
+    return date.toISOString().slice(0, 10);
+  }
+
+  /**
    * Verifies that the current application page displays the expected heading.
    * @param pageName Exact text expected in the page heading.
    */
