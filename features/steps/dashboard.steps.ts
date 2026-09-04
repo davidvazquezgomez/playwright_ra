@@ -29,6 +29,10 @@ Then('verify the dashboard dropdown value is {string}', async ({ dashboardPage }
     await dashboardPage.verifyDashboardOptionsReportTypeValue(expectedValue);
 });
 
+When('select {string} from the "Generate report for" dropdown', async ({ dashboardPage }, reportType: string) => {
+    await dashboardPage.selectDashboardOptionsReportType(reportType);
+});
+
 Then('verify {string} columns are selected in the Dashboard Options popup', async ({ dashboardPage }, columns: string) => {
     await dashboardPage.verifyDashboardOptionColumnsSelected(columns, true);
 });
@@ -274,4 +278,12 @@ Then('verify all filters are reset to their default values on the Dashboard filt
 
 When('click on {string} option from the {string} popup', async ({ dashboardPage }, option: string, popupName: string) => {
     await dashboardPage.clickButton(option, popupName);
+});
+
+Then('verify the {string} audit trail change area parameters are displayed', async ({ dashboardPage }, parameters: string) => {
+    await dashboardPage.verifyAuditTrailChangeAreaParametersAreDisplayed(parameters);
+});
+
+When('select {string} audit trail change area parameter', async ({ dashboardPage }, parameterName: string) => {
+    await dashboardPage.selectAuditTrailChangeAreaParameter(parameterName);
 });

@@ -22,12 +22,27 @@ export class DashboardPage extends BasePage {
                 hasText: new RegExp(`^\\s*${this.escapeRegularExpression(columnName)}\\s*$`, 'i'),
             }),
         });
+    private readonly auditTrailChangeAreaParameterByName = (parameterName: string) =>
+        this._page
+            .locator(this.dashboardOptionsDialog)
+            .locator('div:has(> h4:text-is("Audit Trail Change Areas")) > div.control-items li label')
+            .filter({ hasText: new RegExp(`^\\s*${this.escapeRegularExpression(parameterName)}\\s*$`, 'i') });
     private readonly dashboardOptionsSaveButton = () =>
         this._page.locator(this.dashboardOptionsDialog).getByRole('button', { name: 'Save', exact: true });
     private readonly dashboardOptionsReportTypeDropdownValue = () =>
         this._page
             .locator(this.dashboardOptionsDialog)
             .locator('div:has(> div > h5:text-is("Generate report for")) kendo-dropdownlist .k-input-value-text')
+            .first();
+    private readonly dashboardOptionsReportTypeDropdown = () =>
+        this._page
+            .locator(this.dashboardOptionsDialog)
+            .locator('div:has(> div > h5:text-is("Generate report for")) kendo-dropdownlist[role="combobox"]')
+            .first();
+    private readonly dashboardOptionsReportTypeOptionByName = (reportType: string) =>
+        this._page
+            .locator('kendo-popup.k-animation-container-shown .k-list-item[role="option"]')
+            .filter({ hasText: new RegExp(`^\\s*${this.escapeRegularExpression(reportType)}\\s*$`) })
             .first();
     private readonly popupOptionButtonByName = (popupName: string, optionName: string) =>
         `div[role="dialog"]:has(.k-dialog-title:text-is("${popupName}")) li[role="tab"]:has(span.k-link-text:text-is("${optionName}")) span.k-link`;
@@ -220,6 +235,29 @@ export class DashboardPage extends BasePage {
     }
 
     /**
+     * Verifies that requested audit trail change area parameters are displayed.
+     * @param parameters Semicolon-delimited parameter names.
+     */
+    async verifyAuditTrailChangeAreaParametersAreDisplayed(parameters: string): Promise<void> {
+        for (const parameterName of this.parseSemicolonDelimitedValues(parameters)) {
+            await expect(this.auditTrailChangeAreaParameterByName(parameterName)).toBeVisible();
+        }
+    }
+
+    /**
+     * Selects a single audit trail change area parameter.
+     * @param parameterName Parameter label in the Audit Trail Change Areas panel.
+     */
+    async selectAuditTrailChangeAreaParameter(parameterName: string): Promise<void> {
+        const checkbox = this.auditTrailChangeAreaParameterByName(parameterName).locator('input[type="checkbox"]');
+        if (!(await checkbox.isChecked())) {
+            await checkbox.setChecked(true);
+        }
+        await expect(checkbox).toBeChecked();
+    }
+
+
+    /**
      * Saves the selected Dashboard Options columns.
      */
     async saveDashboardOptions(): Promise<void> {
@@ -231,6 +269,18 @@ export class DashboardPage extends BasePage {
             ).toHaveCount(0);
             this.dashboardColumnExpectedToBeHidden = undefined;
         }
+    }
+
+    /**
+     * Selects the report type in the Dashboard Options "Generate report for" dropdown.
+     * @param reportType Report type option to select.
+     */
+    async selectDashboardOptionsReportType(reportType: string): Promise<void> {
+        await this.clickLocator(this.dashboardOptionsReportTypeDropdown());
+        await this.clickLocator(this.dashboardOptionsReportTypeOptionByName(reportType));
+        await expect(this.dashboardOptionsReportTypeDropdownValue()).toHaveText(
+            new RegExp(`^\\s*${this.escapeRegularExpression(reportType)}\\s*$`),
+        );
     }
 
     /**
