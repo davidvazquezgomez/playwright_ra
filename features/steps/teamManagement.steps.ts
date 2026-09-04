@@ -9,6 +9,10 @@ When('open the Add Team Members dialog', async ({ teamManagementPage }) => {
   await teamManagementPage.openAddTeamMembersDialog();
 });
 
+When('enter {string} in the Team Management {string} field', async ({ teamManagementPage }, value: string, fieldLabel: string) => {
+  await teamManagementPage.enterCreateEditTeamField(value, fieldLabel);
+});
+
 When('select {string} option in the "Search user" field', async ({ teamManagementPage }, userName: string) => {
   await teamManagementPage.selectTeamMemberToAdd(userName);
 });
@@ -49,11 +53,19 @@ When('click on {string} button for the {string} team', async ({ teamManagementPa
 });
 
 When('add {string} in the {string} field', async ({ teamManagementPage }, emailAddress: string, fieldLabel: string) => {
-  if (fieldLabel !== 'Team Leader') {
-    throw new Error(`Team Management field "${fieldLabel}" is not supported.`);
+  if (fieldLabel === 'Team Leader') {
+    await teamManagementPage.addTeamLeader(emailAddress);
+    return;
   }
 
-  await teamManagementPage.addTeamLeader(emailAddress);
+  if (fieldLabel === 'Search user') {
+    await teamManagementPage.selectTeamMembersToAdd(emailAddress);
+    return;
+  }
+
+  if (fieldLabel !== 'Team Leader' && fieldLabel !== 'Search user') {
+    throw new Error(`Team Management field "${fieldLabel}" is not supported.`);
+  }
 });
 
 When('remove {string} from the {string} field if exists', async ({ teamManagementPage }, userName: string, fieldLabel: string) => {
@@ -66,6 +78,30 @@ When('remove {string} from the {string} field if exists', async ({ teamManagemen
 
 When('search for {string} in the Team Name field', async ({ teamManagementPage }, teamName: string) => {
   await teamManagementPage.searchTeamsByName(teamName);
+});
+
+When('search for {string} in the Team Members table email field', async ({ teamManagementPage }, emailAddress: string) => {
+  await teamManagementPage.searchTeamMembersByEmail(emailAddress);
+});
+
+Then('verify filters are applied', async ({ teamManagementPage }) => {
+  await teamManagementPage.verifyTeamMembersEmailFilterIsApplied();
+});
+
+When('click on {string} button from the Team Members table email field', async ({ teamManagementPage }, buttonName: string) => {
+  if (buttonName.toLowerCase() !== 'filter') {
+    throw new Error(`Team Members table email field button "${buttonName}" is not supported.`);
+  }
+
+  await teamManagementPage.clearTeamMembersEmailFilter();
+});
+
+When('click on {string} icon against the team member {string}', async ({ teamManagementPage }, iconName: string, emailAddress: string) => {
+  if (iconName !== 'Delete') {
+    throw new Error(`Team member icon "${iconName}" is not supported.`);
+  }
+
+  await teamManagementPage.deleteTeamMember(emailAddress);
 });
 
 When('ensure the team {string} does not exist', async ({ teamManagementPage }, teamName: string) => {
@@ -88,6 +124,18 @@ When(
 
 Then('verify the user {string} is not available in the team leaders', async ({ teamManagementPage }, userName: string) => {
   await teamManagementPage.verifyUserIsNotAvailableInTeamLeaders(userName);
+});
+
+Then('verify the user {string} is available in the team leaders', async ({ teamManagementPage }, userName: string) => {
+  await teamManagementPage.verifyUserIsAvailableInTeamLeaders(userName);
+});
+
+Then('verify the deleted team {string} is not available in the {string} page', async ({ teamManagementPage }, teamName: string, pageName: string) => {
+  if (pageName !== 'Team Management') {
+    throw new Error(`Deleted team availability is not supported for the "${pageName}" page.`);
+  }
+
+  await teamManagementPage.verifyDeletedTeamIsNotAvailable(teamName);
 });
 
 When(

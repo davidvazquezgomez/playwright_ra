@@ -3,6 +3,7 @@ import { expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class UpdatesDashboardPage extends BasePage {
+  private postedUpdateDetailsComment?: string;
   private readonly updateSearchInput =
     'input[placeholder="Select or type update title"][role="combobox"]';
   private readonly updateSearchResultByTitle = (title: string) =>
@@ -55,8 +56,18 @@ export class UpdatesDashboardPage extends BasePage {
     ).first();
   private readonly updateDetailsSelectedPersonByField = (fieldName: 'User Assigned' | 'Watch List') =>
     this.updateDetailsPeoplePickerByField(fieldName).locator('.selected-person-name');
+  private readonly updateDetailsPeoplePickerClearButton = (fieldName: 'User Assigned' | 'Watch List') =>
+    this.updateDetailsPeoplePickerByField(fieldName).locator(
+      '.k-clear-value, button[title="clear"], button[aria-label*="clear" i]',
+    );
   private readonly updateDetailsCommentButton = () =>
     this.activeUpdateDetailsPanel().locator('app-comments .comment-input-actions button[type="submit"]');
+  private readonly updateDetailsCommentEditor = () =>
+    this.activeUpdateDetailsPanel().locator('app-comments [role="textbox"][contenteditable="true"]');
+  private readonly updateDetailsCommentEntryByText = (comment: string) =>
+    this.activeUpdateDetailsPanel().locator(
+      `app-comments .comment-item:has(.comment-body:text-is("${comment}"))`,
+    ).first();
 
   /**
    * Searches the Updates Dashboard for an update title.
@@ -65,6 +76,14 @@ export class UpdatesDashboardPage extends BasePage {
   async searchForUpdate(updateTitle: string): Promise<void> {
     await this.fillInputText(this.updateSearchInput, updateTitle);
     await this.updateSearchResultByTitle(updateTitle).click();
+  }
+  /**
+   * Searches the Updates Dashboard and confirms the entered query without selecting a suggestion.
+   * @param updateTitle Update title text to search for.
+   */
+  async searchUpdatesDashboard(updateTitle: string): Promise<void> {
+    await this.fillInputText(this.updateSearchInput, updateTitle);
+    await this.pressKeyOnElement(this.updateSearchInput, 'Enter');
   }
 
   /**
@@ -81,6 +100,12 @@ export class UpdatesDashboardPage extends BasePage {
    */
   async verifyUpdateIsNotDisplayed(updateTitle: string): Promise<void> {
     await expect(this.updateRowByTitle(updateTitle)).toHaveCount(0);
+  }
+  /**
+   * Verifies that the active Updates Dashboard grid has no result rows.
+   */
+  async verifyNoUpdatesAreDisplayed(): Promise<void> {
+    await expect(this.updatesGrid().locator('tbody tr.k-master-row')).toHaveCount(0);
   }
 
   /**
@@ -154,6 +179,15 @@ export class UpdatesDashboardPage extends BasePage {
       },
     )[expectedItemCount === undefined ? 'toBeGreaterThan' : 'toBe'](expectedItemCount ?? 0);
 
+    return this.getKendoPagerItemCount(this.updatesPagerInfo);
+  }
+
+  /**
+   * Gets the total number of updates, including when the grid is empty after a search.
+   * @returns Total item count reported by the All Updates table pager.
+   */
+  async getAllUpdatesItemCountIncludingZero(): Promise<number> {
+    await expect(this._page.locator(this.updatesPagerInfo)).toBeVisible();
     return this.getKendoPagerItemCount(this.updatesPagerInfo);
   }
 
@@ -239,6 +273,91 @@ export class UpdatesDashboardPage extends BasePage {
   }
 
   /**
+   * Verifies the displayed value of an editable Update Details field.
+   * @param expectedValue Exact value expected in the field.
+   * @param fieldName Business name of the Update Details field.
+   */
+  async verifyUpdateDetailsFieldValue(expectedValue: string, fieldName: string): Promise<void> {
+    if (fieldName === 'User Assigned' || fieldName === 'Watch List') {
+      await expect(this.updateDetailsSelectedPersonByField(fieldName)).toContainText(expectedValue);
+      return;
+    }
+
+    const dropdown = this.getUpdateDetailsDropdown(fieldName);
+    await expect(dropdown.locator('.k-input-value-text')).toHaveText(expectedValue);
+  }
+
+  /**
+   * Verifies that an editable Update Details field does not display a discarded value.
+   * @param fieldName Business name of the Update Details field.
+   * @param unexpectedValue Value that must not be displayed in the field.
+   */
+  async verifyUpdateDetailsFieldDoesNotDisplayValue(fieldName: string, unexpectedValue: string): Promise<void> {
+    if (fieldName === 'User Assigned' || fieldName === 'Watch List') {
+      await expect(this.updateDetailsSelectedPersonByField(fieldName)).not.toContainText(unexpectedValue);
+      return;
+    }
+
+    const dropdown = this.getUpdateDetailsDropdown(fieldName);
+    await expect(dropdown.locator('.k-input-value-text')).not.toHaveText(unexpectedValue);
+  }
+
+  /**
+   * Enters text in the selected update's comment editor.
+   * @param comment Text of the comment to enter.
+   */
+  async enterUpdateDetailsComment(comment: string): Promise<void> {
+    await this.updateDetailsCommentEditor().fill(comment);
+    this.postedUpdateDetailsComment = comment;
+  }
+
+  /**
+   * Posts the comment entered for the selected update.
+   */
+  async postUpdateDetailsComment(): Promise<void> {
+    if (!this.postedUpdateDetailsComment) {
+      throw new Error('A comment must be entered before it can be posted.');
+    }
+
+    await this.clickLocator(this.updateDetailsCommentButton());
+  }
+
+  /**
+   * Verifies that the posted selected-update comment has a timestamp and its available actions.
+   */
+  async verifyPostedUpdateDetailsComment(): Promise<void> {
+    if (!this.postedUpdateDetailsComment) {
+      throw new Error('A posted comment must be available before it can be verified.');
+    }
+
+    const commentEntry = this.updateDetailsCommentEntryByText(this.postedUpdateDetailsComment);
+    const commentActions = commentEntry.locator('.comment-actions-row');
+    await expect(commentEntry).toBeVisible();
+    await expect(commentEntry.locator('.comment-date'))
+      .toHaveText(/\d{1,2}\s[A-Za-z]{3}\s\d{4}\s\d{1,2}:\d{2}\s(?:AM|PM)\s\(UTC\)/);
+    await expect(commentActions.locator('a:text-is("Reply")')).toBeVisible();
+    await expect(commentActions.locator('a:text-is("Edit")')).toBeVisible();
+    await expect(commentActions.locator('a:text-is("Delete")')).toBeVisible();
+  }
+
+  /**
+   * Deletes a comment from the selected update.
+   * @param comment Exact text of the comment to delete.
+   */
+  async deleteUpdateDetailsComment(comment: string): Promise<void> {
+    const commentEntry = this.updateDetailsCommentEntryByText(comment);
+    await this.clickLocator(commentEntry.locator('.comment-actions-row a:text-is("Delete")'));
+  }
+
+  /**
+   * Verifies that a comment is absent from the selected update.
+   * @param comment Exact text of the comment expected to be absent.
+   */
+  async verifyUpdateDetailsCommentIsNotDisplayed(comment: string): Promise<void> {
+    await expect(this.updateDetailsCommentEntryByText(comment)).toHaveCount(0);
+  }
+
+  /**
    * Selects a user in a people-picker field on the selected update.
    * @param userName Exact user name to select.
    * @param fieldName Business name of the people-picker field.
@@ -254,6 +373,17 @@ export class UpdatesDashboardPage extends BasePage {
     await matchingUser.waitFor({ state: 'visible' });
     await this.clickLocator(matchingUser);
     await expect(this.updateDetailsSelectedPersonByField(fieldName)).toHaveText(userName);
+  }
+
+  /**
+   * Clears all selected users from the Watch List people-picker.
+   */
+  async clearUpdateDetailsWatchList(): Promise<void> {
+    const fieldName = 'Watch List' as const;
+    const clearButton = this.updateDetailsPeoplePickerClearButton(fieldName);
+
+    await this.clickLocator(clearButton);
+    await expect(this.updateDetailsSelectedPersonByField(fieldName)).toHaveCount(0);
   }
 
   /**

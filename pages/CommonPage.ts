@@ -939,7 +939,7 @@ export class CommonPage extends BasePage {
         await this.clickElement(this.profileMenuOptionByName(button));
         break;
       case "Back":
-        await this.clickElement(this.backButton);
+        await this.clickElement(this.backButton, 60000);
         break;
       case "favorite icon":
         await this.clickElement(this.favouriteIcon);

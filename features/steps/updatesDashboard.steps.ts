@@ -3,6 +3,9 @@ import { Then, When } from './fixtures';
 When('search for {string} update from the {string} page', async ({ updatesDashboardPage }, updateTitle: string, _pageName: string) => {
   await updatesDashboardPage.searchForUpdate(updateTitle);
 });
+When('search for {string} update in the Updates Dashboard', async ({ updatesDashboardPage }, updateTitle: string) => {
+  await updatesDashboardPage.searchUpdatesDashboard(updateTitle);
+});
 
 Then('verify {string} update is displayed from the {string} page', async ({ updatesDashboardPage }, updateTitle: string, _pageName: string) => {
   await updatesDashboardPage.verifyUpdateIsDisplayed(updateTitle);
@@ -10,6 +13,9 @@ Then('verify {string} update is displayed from the {string} page', async ({ upda
 
 Then('verify the {string} update is not displayed', async ({ updatesDashboardPage }, updateTitle: string) => {
   await updatesDashboardPage.verifyUpdateIsNotDisplayed(updateTitle);
+});
+Then('verify no updates are displayed', async ({ updatesDashboardPage }) => {
+  await updatesDashboardPage.verifyNoUpdatesAreDisplayed();
 });
 
 When('open the first update in the {string} page', async ({ updatesDashboardPage }, _pageName: string) => {
@@ -60,6 +66,44 @@ When(
     await updatesDashboardPage.selectUpdateDetailsPerson(userName, fieldName);
   },
 );
+
+Then(
+  'verify {string} value is displayed in the {string} field',
+  async ({ updatesDashboardPage }, expectedValue: string, fieldName: string) => {
+    await updatesDashboardPage.verifyUpdateDetailsFieldValue(expectedValue, fieldName);
+  },
+);
+
+Then(
+  'verify the {string} field does not display {string}',
+  async ({ updatesDashboardPage }, fieldName: string, unexpectedValue: string) => {
+    await updatesDashboardPage.verifyUpdateDetailsFieldDoesNotDisplayValue(fieldName, unexpectedValue);
+  },
+);
+
+When('enter {string} comment on the selected update', async ({ updatesDashboardPage }, comment: string) => {
+  await updatesDashboardPage.enterUpdateDetailsComment(comment);
+});
+
+When('post the comment on the selected update', async ({ updatesDashboardPage }) => {
+  await updatesDashboardPage.postUpdateDetailsComment();
+});
+
+Then('verify the posted update comment has timestamp and edit, reply and delete actions', async ({ updatesDashboardPage }) => {
+  await updatesDashboardPage.verifyPostedUpdateDetailsComment();
+});
+
+When('press "Delete" button on the {string} comment', async ({ updatesDashboardPage }, comment: string) => {
+  await updatesDashboardPage.deleteUpdateDetailsComment(comment);
+});
+
+Then('verify the {string} comment is not displayed in the "Comments" field', async ({ updatesDashboardPage }, comment: string) => {
+  await updatesDashboardPage.verifyUpdateDetailsCommentIsNotDisplayed(comment);
+});
+
+When('press "clear" in the "Watch List" field', async ({ updatesDashboardPage }) => {
+  await updatesDashboardPage.clearUpdateDetailsWatchList();
+});
 
 When('open the {string} update from the Updates Dashboard', async ({ updatesDashboardPage }, updateTitle: string) => {
   await updatesDashboardPage.openUpdateByTitle(updateTitle);

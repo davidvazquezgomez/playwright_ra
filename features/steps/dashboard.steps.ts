@@ -13,8 +13,8 @@ Then('verify the "Dashboard options" popup is displayed on the Dashboard', async
     await dashboardPage.verifyDashboardOptionsPopupIsDisplayed();
 });
 
-Then('verify the "Actions Dashboard" tab is selected in the Dashboard Options popup', async ({ dashboardPage }) => {
-    await dashboardPage.verifyDashboardOptionsActionsTabIsSelected();
+Then('verify the {string} tab is selected in the Dashboard Options popup', async ({ dashboardPage }, tabName: string) => {
+    await dashboardPage.verifyDashboardOptionsTabIsSelected(tabName);
 });
 
 Then('verify {string} is displayed in the Dashboard Options popup', async ({ dashboardPage }, heading: string) => {
@@ -70,10 +70,7 @@ Then('verify the "Dashboard options" popup is closed on the Dashboard', async ({
 });
 
 Then('verify {string} column header is not displayed in the {string} page', async ({ dashboardPage }, columnName: string, pageName: string) => {
-    if (!pageName.includes('Actions Dashboard')) {
-        throw new Error(`Page "${pageName}" is not supported by Dashboard Options assertions.`);
-    }
-    await dashboardPage.verifyActionsDashboardColumnIsNotDisplayed(columnName);
+    await dashboardPage.verifyDashboardColumnIsNotDisplayed(columnName, pageName);
 });
 
 Then('press "More Filters" button on the Dashboard filter', async ({ dashboardPage }) => {
@@ -119,6 +116,24 @@ When('press "Clear" button in the search field if available', async ({ dashboard
 When('double-click {string} option on the Dashboard filter', async ({ dashboardPage }, optionName: string) => {
     await dashboardPage.doubleClickFilterOption(optionName);
 });
+
+When('select "Date Announced" on the Dashboard filter', async ({ dashboardPage }) => {
+    await dashboardPage.selectDateAnnouncedFilter();
+});
+
+When(
+    'press "Save as favourite" button for {string} on the Dashboard filter',
+    async ({ dashboardPage }, filterName: string) => {
+        await dashboardPage.toggleSavedFilterFavourite(filterName);
+    },
+);
+
+When(
+    'press "Remove as favourite" button for {string} on the Dashboard filter',
+    async ({ dashboardPage }, filterName: string) => {
+        await dashboardPage.toggleSavedFilterFavourite(filterName);
+    },
+);
 
 When('press "View results" button on the Dashboard filter', async ({ dashboardPage }) => {
     await dashboardPage.viewFilteredResults();
