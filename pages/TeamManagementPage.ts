@@ -298,10 +298,32 @@ export class TeamManagementPage extends BasePage {
       return;
     }
 
-    await this.clickElement(this.removeButtonByTeamName(teamName));
-    await this.waitForSelectorStatus(this.teamDeletionDialog, 'visible');
+    await this.removeTeam(teamName);
     await this.clickElement(this.teamDeletionConfirmButton);
     await expect(teamRow).toHaveCount(0);
+  }
+
+  /**
+   * Opens the delete confirmation popup for the requested team.
+   * @param teamName Exact name of the team to remove.
+   */
+  async removeTeam(teamName: string): Promise<void> {
+    await this.clearInput(this.teamNameFilter);
+    await this.fillInputText(this.teamNameFilter, teamName);
+    await this.ensureKendoGridHasRows(
+      '[role="grid"][aria-label="Data table"]',
+      `Team Management must contain a team before "${teamName}" can be removed.`,
+      `The Team Management grid was filtered by "${teamName}" before searching for the requested team.`,
+    );
+    await expect(this._page.locator(this.teamRowByName(teamName))).toBeVisible();
+    await this.ensureExpectedBusinessElementIsVisible(
+      this._page.locator(this.removeButtonByTeamName(teamName)),
+      `The team "${teamName}" must provide the Remove action.`,
+      `A Remove button is displayed for "${teamName}".`,
+      `The team row "${teamName}" is visible in the Team Management grid.`,
+    );
+    await this.clickElement(this.removeButtonByTeamName(teamName));
+    await this.waitForSelectorStatus(this.teamDeletionDialog, 'visible');
   }
 
   /**

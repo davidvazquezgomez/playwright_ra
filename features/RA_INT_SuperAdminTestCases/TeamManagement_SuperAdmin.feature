@@ -70,6 +70,7 @@ Feature: Team Management for Super Admin
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
     Then verify the user "naidu, smriti" is available in the team leaders
     When search for "asjad.alam@gmail.com" in the Team Members table email field
+    Then click on "Edit" button for the "QA_TEST_01" team
     Then verify filters are applied
     When click on "filter" button from the Team Members table email field
     Then verify the filter is removed
@@ -82,7 +83,7 @@ Feature: Team Management for Super Admin
   Scenario: TC002_03_SuperAdmin_TeamManagement - Delete a created team
     Given the "Team Management - 01_13Jan REG" page is open
     And ensure the team "QA_TEST_01" exists with Team Leader "ext-teamleadr@yopmail.com" and Team Member "smoke@gmail.com"
-    And register the team "QA_TEST_01" for cleanup
+    #And register the team "QA_TEST_01" for cleanup
     When click on "Remove" button for the "QA_TEST_01" team
     Then the "Warning" popup is displayed
     And verify "Delete;Cancel" buttons are displayed on the "Warning" popup
