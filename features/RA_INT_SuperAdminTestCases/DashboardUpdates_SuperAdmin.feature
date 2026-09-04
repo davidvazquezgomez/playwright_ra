@@ -314,7 +314,7 @@ Feature: Dashboard Updates for Super Admin
   Scenario: TC008_SuperAdmin_DashboardUpdates - Verify updates dashboard dashboard options
     Given the "1_E2E_Test1 - Updates Dashboard - All Updates" page is open
     And register cleanup to restore the "Status" column on "1_E2E_Test1 - Updates Dashboard - All Updates"
-    When press "Dashboard options" button
+    When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     Then verify the "Updates Dashboard" tab is selected in the Dashboard Options popup
     And verify "Edit Updates Dashboard" is displayed in the Dashboard Options popup

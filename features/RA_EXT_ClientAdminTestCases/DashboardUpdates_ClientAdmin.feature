@@ -315,7 +315,7 @@ Feature: Dashboard Updates for Client Admin
   Scenario: TC008_ClientAdmin_DashboardUpdates - Verify updates dashboard dashboard options
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     And register cleanup to restore the "Status" column on "01_QA_StageTestPortal - Updates Dashboard - All Updates"
-    When press "Dashboard options" button
+    When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     Then verify the "Updates Dashboard" tab is selected in the Dashboard Options popup
     And verify "Edit Updates Dashboard" is displayed in the Dashboard Options popup
