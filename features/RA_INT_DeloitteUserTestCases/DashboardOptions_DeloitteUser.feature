@@ -80,6 +80,7 @@ Feature: Dashboard Options for Deloitte User
     When click on "Generate Audit Trail" option from the "Dashboard Options" popup
     Then verify the "Update allocated to responsible person;User added to Update Watchlist;User removed from Update Watchlist;Update status changed;Update priority changed;Action added;User added to Action;User removed from Action;Action status Changed;Action priority Changed" audit trail change area parameters are displayed
     When select "Update priority changed" audit trail change area parameter
+    When select "Action added" audit trail change area parameter
     And press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Updates Dashboard" page
     And verify the downloaded file name format is "01_13Jan REG_AuditTrail_Report_" with current date and time
@@ -92,7 +93,7 @@ Feature: Dashboard Options for Deloitte User
     And select "Medium" in the "Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed
-    When press "Dashboard options" button
+    When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     When click on "Generate Audit Trail" option from the "Dashboard Options" popup
     And press "Generate Audit Trail" button
@@ -108,6 +109,7 @@ Feature: Dashboard Options for Deloitte User
     When click on "Generate Audit Trail" option from the "Dashboard Options" popup
     Then verify the "Update allocated to responsible person;User added to Update Watchlist;User removed from Update Watchlist;Update status changed;Update priority changed;Action added;User added to Action;User removed from Action;Action status Changed;Action priority Changed" audit trail change area parameters are displayed
     When select "Action priority Changed" audit trail change area parameter
+    When select "Action added" audit trail change area parameter
     And press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
     And verify the downloaded file name format is "01_13Jan REG_AuditTrail_Report_" with current date and time

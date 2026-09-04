@@ -82,7 +82,7 @@ Feature: Dashboard Options for Clinet User
     When select "Update priority changed" audit trail change area parameter
     And press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "ClientPortal_20260209133616  - Updates Dashboard" page
-    And verify the downloaded file name format is "ClientPortal_20260209133616 _AuditTrail_Report_" with current date and time
+    And verify the downloaded file name format is "ClientPortal_20260209133616_AuditTrail_Report_" with current date and time
 
   @readOnly
   Scenario: TC020_02_ClientUser_DashboardOptions - Generate a filtered Updates audit trail
@@ -92,12 +92,13 @@ Feature: Dashboard Options for Clinet User
     And select "High" in the "Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed
-    When press "Dashboard options" button
+    When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     When click on "Generate Audit Trail" option from the "Dashboard Options" popup
+    When select "Action added" audit trail change area parameter
     And press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "ClientPortal_20260209133616  - Updates Dashboard" page
-    And verify the downloaded file name format is "ClientPortal_20260209133616 _AuditTrail_Report_" with current date and time
+    And verify the downloaded file name format is "ClientPortal_20260209133616_AuditTrail_Report_" with current date and time
 
   @mutable
   Scenario: TC020_03_ClientUser_DashboardOptions - Generate an unfiltered Actions audit trail
@@ -110,7 +111,7 @@ Feature: Dashboard Options for Clinet User
     When select "Action priority Changed" audit trail change area parameter
     And press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "ClientPortal_20260209133616  - Actions Dashboard" page
-    And verify the downloaded file name format is "ClientPortal_20260209133616 _AuditTrail_Report_" with current date and time
+    And verify the downloaded file name format is "ClientPortal_20260209133616_AuditTrail_Report_" with current date and time
 
   @readOnly
   Scenario: TC020_04_ClientUser_DashboardOptions - Generate a filtered Actions audit trail
@@ -123,7 +124,8 @@ Feature: Dashboard Options for Clinet User
     And verify for "Dashboard options" button is visible
     When press "Dashboard options" button
     Then verify the "Dashboard options" popup is displayed on the Dashboard
+    When select "Action added" audit trail change area parameter
     When press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "ClientPortal_20260209133616  - Actions Dashboard" page
-    And verify the downloaded file name format is "ClientPortal_20260209133616 _AuditTrail_Report_" with current date and time
+    And verify the downloaded file name format is "ClientPortal_20260209133616_AuditTrail_Report_" with current date and time
     And logout from the application

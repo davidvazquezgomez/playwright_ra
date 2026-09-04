@@ -92,9 +92,10 @@ Feature: Dashboard Options for Portal Admin
     And select "High" in the "Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed
-    When press "Dashboard options" button
+    When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     When click on "Generate Audit Trail" option from the "Dashboard Options" popup
+    When select "Action added" audit trail change area parameter
     And press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "Global Inc - Updates Dashboard" page
     And verify the downloaded file name format is "Global Inc_AuditTrail_Report_" with current date and time
@@ -123,6 +124,7 @@ Feature: Dashboard Options for Portal Admin
     And verify for "Dashboard options" button is visible
     When press "Dashboard options" button
     Then verify the "Dashboard options" popup is displayed on the Dashboard
+    When select "Action added" audit trail change area parameter
     When press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "Global Inc - Actions Dashboard" page
     And verify the downloaded file name format is "Global Inc_AuditTrail_Report_" with current date and time

@@ -89,12 +89,13 @@ Feature: Dashboard Options for Super Admin
     Given the "Updates Dashboard - 01_13Jan REG" page is open
     When press "Filter" button on the Dashboard filter
     And select "Belgium" in the "Jurisdiction" filter on the Dashboard filter
-    And select "High" in the "Priority" filter on the Dashboard filter
+    And select "Medium" in the "Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed
     When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     When click on "Generate Audit Trail" option from the "Dashboard Options" popup
+    When select "Action added" audit trail change area parameter
     And press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Updates Dashboard" page
     And verify the downloaded file name format is "01_13Jan REG_AuditTrail_Report_" with current date and time
@@ -123,6 +124,7 @@ Feature: Dashboard Options for Super Admin
     When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     When click on "Generate Audit Trail" option from the "Dashboard Options" popup
+    When select "Action added" audit trail change area parameter
     When press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
     And verify the downloaded file name format is "01_13Jan REG_AuditTrail_Report_" with current date and time
