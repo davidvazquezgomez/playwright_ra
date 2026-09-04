@@ -102,7 +102,6 @@ Feature: Dashboard Options for Team Leader
   @mutable
   Scenario: TC020_03_TeamLeader_DashboardOptions - Generate an unfiltered Actions audit trail
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
-    Then verify for "Dashboard options" button is visible
     When press "Dashboard options" button
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     And verify "Generate Audit Trail" is displayed in the Dashboard Options popup

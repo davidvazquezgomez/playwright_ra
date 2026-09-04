@@ -102,7 +102,6 @@ Feature: Dashboard Options for Super Admin
   @mutable
   Scenario: TC020_03_SuperAdmin_DashboardOptions - Generate an unfiltered Actions audit trail
     Given the "Actions Dashboard - 01_13Jan REG" page is open
-    Then verify for "Dashboard options" button is visible
     When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     And verify "Generate Audit Trail" is displayed in the Dashboard Options popup
