@@ -675,6 +675,27 @@ export class BasePage {
   }
 
   /**
+   * Filters and confirms a user or team from a people-picker popup with Enter.
+   * @param controlSelector Selector for the page-specific people-picker control.
+   * @param searchInputSelector Selector for the people-picker search input.
+   * @param optionName Exact visible user or team name to select.
+   */
+  protected async selectUserPickerOption(
+    controlSelector: string,
+    searchInputSelector: string,
+    optionName: string,
+  ): Promise<void> {
+    const optionSelector =
+      `kendo-popup.k-animation-container-shown:visible li[role="option"]:has(.person-name:text-is("${optionName}"))`;
+
+    await this.clickElement(controlSelector);
+    await this.waitForElement(searchInputSelector, 15000);
+    await this.fillInputText(searchInputSelector, optionName);
+    await this.waitForElement(optionSelector, 15000);
+    await this.pressKeyOnElement(searchInputSelector, 'Enter');
+  }
+
+  /**
    * Presses a key on an element.
    * @param selector Element selector.
    * @param key Key to press.

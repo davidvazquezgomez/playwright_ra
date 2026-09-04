@@ -21,7 +21,6 @@ Feature: Dashboard Actions for Team Member
 
   @readOnly
   Scenario Outline: TC009_02_TeamMember_DashboardActions - Verify default column header and sorting
-# URL https://stage.regulatoryadvantage.deloitte.com/project-dashboard/415/Actions/AllActions/All
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     Then verify "<column>" column header is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When click on "<column>" column header in the "01_QA_StageTestPortal - Actions Dashboard" page
@@ -411,7 +410,6 @@ Feature: Dashboard Actions for Team Member
   @readOnly
   Scenario: TC012_05_TeamMember_DashboardActions - Verify resetting the 01_QA_StageTestPortal - Actions Dashboard filters
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
-    #Se han hecho cambios en datos, antes no se reflejaban
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter

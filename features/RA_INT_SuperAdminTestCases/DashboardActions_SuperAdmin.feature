@@ -319,7 +319,6 @@ Feature: Dashboard Actions for Super Admin
   @mutable
   Scenario Outline: TC011_06_SuperAdmin_DashboardActions - Upload an attachment with unsupported format from the update details page
     Given the "Updates Dashboard - 01_13Jan REG" page is open
-    #Diseñado para fallar 
     When search for "Occupational Illness Trust Fund" update from the "Updates Dashboard - 01_13Jan REG" page
     And open the first update in the "Updates Dashboard - 01_13Jan REG" page
     And open the "Update Actions" tab on the selected update

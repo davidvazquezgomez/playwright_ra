@@ -30,6 +30,10 @@ export class ClientPortalListPage extends BasePage {
   private selectedStatusFilter = (status: string) =>
     `${this.statusFilterDropdown} .k-input-value-text:text-is("${status}")`;
   private clientPortalStatusCells = `${this.clientPortalRows} td[data-kendo-grid-column-index="2"]`;
+  private clientPortalStatusCellByName = (portalName: string) =>
+    `${this.clientPortalRowByName(portalName)} td[data-kendo-grid-column-index="2"]`;
+  private clientPortalAccessError =
+    '.k-notification-content, [role="alert"]';
   private noClientPortalResultsMessage =
     '[role="grid"][aria-label="Data table"] tbody tr.k-grid-norecords p';
   private pagerButtonByName = (buttonName: string) => {
@@ -193,6 +197,33 @@ export class ClientPortalListPage extends BasePage {
 
     await expect(clientPortalNameCell).toBeVisible();
     await expect(this._page.locator(this.clientPortalRows)).toHaveCount(1);
+  }
+
+  /**
+   * Verifies the displayed status of a named client portal.
+   * @param portalName Exact client portal name displayed in the Client Portal List.
+   * @param expectedStatus Expected status displayed for the client portal.
+   */
+  async verifyClientPortalStatus(portalName: string, expectedStatus: string): Promise<void> {
+    await expect(this._page.locator(this.clientPortalRowByName(portalName))).toBeVisible();
+    await expect(this._page.locator(this.clientPortalStatusCellByName(portalName))).toHaveText(expectedStatus);
+  }
+
+  /**
+   * Attempts to open a named client portal from the Client Portal List.
+   * @param portalName Exact client portal name displayed in the Client Portal List.
+   */
+  async clickClientPortalName(portalName: string): Promise<void> {
+    await this.clickElement(this.clientPortalNameCell(portalName));
+  }
+
+  /**
+   * Verifies that opening an unavailable client portal displays an access error.
+   */
+  async verifyClientPortalAccessErrorDisplayed(): Promise<void> {
+    await expect(this._page.locator(this.clientPortalAccessError).filter({
+      hasText: /error|disabled|deactivated|inactive/i,
+    })).toBeVisible();
   }
 
   /**

@@ -148,11 +148,6 @@ export class CommonPage extends BasePage {
     `kendo-popup.k-animation-container-shown:visible li[role="option"]:has(.k-list-item-text:text-is("${optionName}"))`;
   private visibleKendoSelectAllCheckbox =
     'kendo-popup.k-animation-container-shown:visible .select-all input[type="checkbox"]';
-  private visibleUserPickerOptionByName = (optionName: string) =>
-    `kendo-popup.k-animation-container-shown:visible li[role="option"]:has(.person-name:text-is("${optionName}"))`;
-  private readonly userPickerResultsTimeout = 15000;
-
-
   /**
    * Launches the application by navigating to the specified URL.
    * @param url The URL of the application to launch.
@@ -211,11 +206,7 @@ export class CommonPage extends BasePage {
     searchInputSelector: string,
     optionName: string,
   ): Promise<void> {
-    await this.clickElement(controlSelector);
-    await this.waitForElement(searchInputSelector, this.userPickerResultsTimeout);
-    await this.fillInputText(searchInputSelector, optionName);
-    await this.waitForElement(this.visibleUserPickerOptionByName(optionName), this.userPickerResultsTimeout);
-    await this.pressKeyOnElement(searchInputSelector, 'Enter');
+    await super.selectUserPickerOption(controlSelector, searchInputSelector, optionName);
   }
 
   /**
