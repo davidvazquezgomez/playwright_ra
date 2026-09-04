@@ -2,7 +2,7 @@
 Feature: Notifications for Super Admin
 
   Background:
-    Given launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
+    Given launch Regulatory Advantage application URL and login as "Deloitte" user "SUPERADMIN"
     And verify if applicable portals are displayed
 
   @mutable
@@ -70,7 +70,7 @@ Feature: Notifications for Super Admin
     When logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Given the "Notification Preferences" page is open
-    Then the "Notifications Preferences" page is displayed
+    Then the "Notification Preferences" page is displayed
     When check "Select All" Check box under "System" option from "Updates" section if it is "unchecked"
     And check "Select All" Check box under "Email" option from "Updates" section if it is "unchecked"
     When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
@@ -101,11 +101,9 @@ Feature: Notifications for Super Admin
     And verify the Systems notifications triggered
 
   @mutable
-  Scenario: TC003_3_SuperAdmin_Notifications - Verify disabled Notifications Preferences for Updates
-    When logout from the application
-    When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
+  Scenario: TC003_3_SuperAdmin_Notifications - Verify disabled Notifications Preferences for Updates    
     Given the "Notification Preferences" page is open
-    Then the "Notifications Preferences" page is displayed
+    Then the "Notification Preferences" page is displayed
     When check "Select All" Check box under "System" option from "Updates" section if it is "checked"
     And check "Select All" Check box under "Email" option from "Updates" section if it is "checked"
     When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "enabled"
@@ -122,11 +120,11 @@ Feature: Notifications for Super Admin
     And select "Update Allocated" option in the "Status" field in the "Update Details" subsection
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
-    And logout from the application
+    
 
   @readOnly
   Scenario: TC003_4_SuperAdmin_Notifications - Verify triggered notifications for updates
-    When logout from the application
+    And logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Then press "Notifications" button
     Then the "Notifications" popup is displayed
@@ -139,7 +137,7 @@ Feature: Notifications for Super Admin
     When logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Given the "Notification Preferences" page is open
-    Then the "Notifications Preferences" page is displayed
+    Then the "Notification Preferences" page is displayed
     When check "Select All" Check box under "System" option from "Actions" section if it is "unchecked"
     And check "Select All" Check box under "Email" option from "Actions" section if it is "unchecked"
     When press "Save Settings" button
@@ -159,9 +157,10 @@ Feature: Notifications for Super Admin
 
   @readOnly
   Scenario: TC004_2_SuperAdmin_Notifications - Verify triggered notifications for actions
+    When logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Then press "Notifications" button
-    Then the "Notifications" popup is displayed
+    Then the "Notification" popup is displayed
     When press "View All" button
     Then the "Notification Listing" page is displayed
     And verify the Systems notifications triggered
@@ -171,7 +170,7 @@ Feature: Notifications for Super Admin
     When logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Given the "Notification Preferences" page is open
-    Then the "Notifications Preferences" page is displayed
+    Then the "Notification Preferences" page is displayed
     When check "Select All" Check box under "System" option from "Actions" section if it is "checked"
     And check "Select All" Check box under "Email" option from "Actions" section if it is "checked"
     When press "Save Settings" button
@@ -203,7 +202,7 @@ Feature: Notifications for Super Admin
     When logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Given the "Notification Preferences" page is open
-    Then the "Notifications Preferences" page is displayed
+    Then the "Notification Preferences" page is displayed
     When check "Select All" Check box under "System" option from "Teams" section if it is "unchecked"
     And check "Select All" Check box under "Email" option from "Teams" section if it is "unchecked"
     When press "Save Settings" button
@@ -237,7 +236,7 @@ Feature: Notifications for Super Admin
     When logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Given the "Notification Preferences" page is open
-    Then the "Notifications Preferences" page is displayed
+    Then the "Notification Preferences" page is displayed
     When check "Select All" Check box under "System" option from "Teams" section if it is "checked"
     And check "Select All" Check box under "Email" option from "Teams" section if it is "checked"
     When press "Save Settings" button
@@ -254,7 +253,7 @@ Feature: Notifications for Super Admin
     When select "satesclientadmin, satestclientadmin" option in the "Search user" field
     Then the "Team Management" page is displayed
     When press "Save" button
-    And logout from the application
+   
 
   @readOnly
   Scenario: TC005_4_SuperAdmin_Notifications - Verify triggered notifications for teams
