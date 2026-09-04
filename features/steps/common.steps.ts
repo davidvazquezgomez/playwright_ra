@@ -173,6 +173,10 @@ When('user click at {string} link', async ({ commonPage }, elementName: string) 
   await commonPage.downloadFileFromElement(elementName);
 });
 
+Then('verify the downloaded file name format is {string} with current date and time', async ({ commonPage }, expectedNamePrefix: string) => {
+  await commonPage.verifyDownloadedFileNameFormat(expectedNamePrefix);
+});
+
 Then('verify {string} user name and {string} email address are displayed', async ({ commonPage }, userName: string, emailAddress: string) => {
   await commonPage.verifyProfileDetails(userName, emailAddress);
 });

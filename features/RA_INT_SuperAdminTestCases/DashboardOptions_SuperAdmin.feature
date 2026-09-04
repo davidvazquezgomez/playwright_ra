@@ -34,7 +34,7 @@ Feature: Dashboard Options for Super Admin
     When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     And verify "Generate Report" is displayed in the Dashboard Options popup
-    When click on "Generate Report" option from the "Dashboard options" popup
+    When click on "Generate Report" option from the "Dashboard Options" popup
     Then verify the dashboard dropdown value is "Updates"
     When press "Generate Report" button
     Then verify "Report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Updates Dashboard" page

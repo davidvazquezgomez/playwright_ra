@@ -11,10 +11,49 @@ export class BasePage {
   private context: BrowserContext;
   // Shared across page objects because every fixture wraps the same browser page.
   private static authenticatedRolesByPage = new WeakMap<Page, string>();
+  private static lastDownloadedFileNamesByPage = new WeakMap<Page, string>();
+  private static downloadTrackedPages = new WeakSet<Page>();
 
   constructor(page: Page, context: any) {
     this._page = page;
     this.context = context;
+    this.trackDownloads();
+  }
+
+  /**
+   * Records every file downloaded by the current browser page so later steps can inspect its name.
+   */
+  private trackDownloads(): void {
+    if (BasePage.downloadTrackedPages.has(this._page)) {
+      return;
+    }
+
+    BasePage.downloadTrackedPages.add(this._page);
+    this._page.on('download', (download) => {
+      BasePage.lastDownloadedFileNamesByPage.set(this._page, download.suggestedFilename());
+    });
+  }
+
+  /**
+   * Waits until the browser page reports a downloaded file and returns its suggested name.
+   * The name is consumed, so every verification requires a new download.
+   * @param timeout Maximum time to wait for the download, in milliseconds.
+   */
+  protected async waitForLastDownloadedFileName(timeout: number = 30000): Promise<string | undefined> {
+    const pollingInterval = 500;
+    const deadline = Date.now() + timeout;
+
+    while (Date.now() <= deadline) {
+      const fileName = BasePage.lastDownloadedFileNamesByPage.get(this._page);
+      if (fileName) {
+        BasePage.lastDownloadedFileNamesByPage.delete(this._page);
+        return fileName;
+      }
+
+      await this._page.waitForTimeout(pollingInterval);
+    }
+
+    return undefined;
   }
 
   /**

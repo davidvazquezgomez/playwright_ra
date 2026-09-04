@@ -43,8 +43,8 @@ Feature: Team Management for Portal Admin
     And ensure the team "QA_TEST_01" does not exist
     And register the team "QA_TEST_01" for cleanup
     When press "Create Team" button
-    And enter "QA_TEST_01" in the "Team Name" field
-    And enter "Additional information for the QA team" in the "Additional Information" field
+    And enter "QA_TEST_01" in the Team Management "Team Name" field
+    And enter "Additional information for the QA team" in the Team Management "Additional Information" field
     And add "validadmin@external.com" in the "Team Leader" field
     And open the Add Team Members dialog
     And add "externaluserra1@yopmail.com" in the "Search user" field

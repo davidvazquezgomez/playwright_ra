@@ -66,7 +66,6 @@ Feature: Dashboard Updates for Super Admin
     And select "ECA, test" in the "Watch List" field on the selected update
     When press "Save" button on the selected update
     Then verify "Regulatory update updated successfully" toast message is displayed in the "Test_11-5_01" page
-  #Rectifico para restaurar los datos 
     When open the first update in the "1_E2E_Test1 - Updates Dashboard" page
     When press "Edit" button on the selected update
     And select "RBT, testclientadmin" in the "User Assigned" field on the selected update
@@ -121,12 +120,11 @@ Feature: Dashboard Updates for Super Admin
     Given the "1_E2E_Test1 - Updates Dashboard - All Updates" page is open
     When search for "Test_11-5_01" update from the "1_E2E_Test1 - Updates Dashboard" page
     And open the first update in the "1_E2E_Test1 - Updates Dashboard" page
-    When enter "QaTest comment" in the "Comments" field
-    When press "Comment" button
-    Then verify the posted comment is seen along with timestamp and edit, reply and delete option
-  #Borramos el comentario para dejar el sistema como estaba
-    When press "Delete" button
-    Then verify the comment is not displayed in the "Comments" field
+    When enter "QaTest comment" comment on the selected update
+    When post the comment on the selected update
+    Then verify the posted update comment has timestamp and edit, reply and delete actions
+    When press "Delete" button on the "QaTest comment" comment
+    Then verify the "QaTest comment" comment is not displayed in the "Comments" field
 
   @mutable
   Scenario Outline: TC003_05_SuperAdmin_DashboardUpdates - Upload and delete a valid attachment
@@ -136,7 +134,6 @@ Feature: Dashboard Updates for Super Admin
     When open the "Attachments" tab in the "Update Details" subsection
     And upload "<file path>" attachment in the "Update Details" Attachments tab
     Then verify the "<name>" attachment is displayed in the "Attachments" section
-  #Borramos el attachment 
     When press "Remove" button on the attachment
     Then verify the "<name>" attachment is not displayed in the "Attachments" section
 
@@ -180,7 +177,7 @@ Feature: Dashboard Updates for Super Admin
     When press "Clear all filters" section on the Dashboard filter if available
     And press "Clear" button in the search field if available
     And save the "1_E2E_Test1 - Updates Dashboard" items
-    When search for "zz" update in the Analytics Dashboard
+    When search for "zz" update in the Updates Dashboard
     Then verify no updates are displayed
     Then verify the "1_E2E_Test1 - Updates Dashboard" item count is not the same
     And a message should get displayed as "There is no data to display."
