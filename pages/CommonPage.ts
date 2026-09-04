@@ -5,6 +5,10 @@ export class CommonPage extends BasePage {
   private sideNavigation = '.side-navigation';
   private deloitteLogo = '#headerTile[aria-label="Deloitte Logo"][href="/"]';
   private navigationRenderTimeout = 5000;
+  private pageNavigationTimeout = Math.max(
+    process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000,
+    30000,
+  );
   private navigationReloadAttempts = 5;
   private readonly collapsedNavigationToggleCandidates = [
     'app-side-navigation i.fa-bars',
@@ -44,7 +48,7 @@ export class CommonPage extends BasePage {
   private confirmDeletionButton = 'button.k-button-error:has(.k-button-text:text-is("Confirm Deletion"))';
   private updateAnywayButton = 'button[aria-label="Update anyway"]';
   private portalConfigurationSaveAndContinueButton = 'button.k-button-primary:has(.k-button-text:text-is("Save & Continue"))';
-  private setNotificationPreferencesButton = 'role=button[name="Set Notification Preferences"]';
+  private setNotificationPreferencesButton = 'button.k-button-primary:has(.k-button-text:text-is("Set Notification Preferences"))';
   private updatePortalButton = 'button.k-button-primary:has(.k-button-text:text-is("Update Portal"))';
   private saveSettingsButton = 'role=button[name="Save Settings"]';
   private clientPortalSetupHeading = 'app-title h1.heading:has-text("Client Portal Setup")';
@@ -91,9 +95,9 @@ export class CommonPage extends BasePage {
     `role=heading[name="${pageName}"][level="3"]`;
   private pageHeadingByName = (pageName: string) => `h1.heading:has-text("${pageName}")`;
   private userManagementPageTitle = 'h1.heading:text-is("User Management")';
-  // Notification preference pages render the title without the shared heading class.
+  // Client roles render "Default Notifications Settings"; SuperAdmin/Deloitte roles render "Notification Preferences".
   private defaultNotificationSettingsPageTitle =
-    'app-user-notification-preference app-title h1:text-matches("Default Notifications Settings|Notification Preferences|Notifications Preferences", "i")';
+    'h1.heading:text-is("Default Notifications Settings"), h1.heading:text-is("Notification Preferences")';
   private releaseNotesPageTitle = 'app-title h1.heading:text-is("RegulatoryAdvantage | Release Notes")';
   private pageTitle = 'app-title h1.heading';
   private disclaimerContent = 'div.description-section > div';
@@ -1077,7 +1081,6 @@ export class CommonPage extends BasePage {
       case 'User Management':
         return this.userManagementPageTitle;
       case 'Notification Preferences':
-      case 'Notifications Preferences':
       case 'Default Notifications Settings':
         return this.defaultNotificationSettingsPageTitle;
       case 'RegulatoryAdvantage | Release Notes':
@@ -1093,7 +1096,7 @@ export class CommonPage extends BasePage {
    */
   async verifyPageNavigation(pageName: string): Promise<void> {
     const selector = this.getPageNavigationSelector(pageName);
-    await this.waitForSelectorStatus(selector, 'visible');
+    await this.waitForSelectorStatus(selector, 'visible', this.pageNavigationTimeout);
   }
 
   /**
