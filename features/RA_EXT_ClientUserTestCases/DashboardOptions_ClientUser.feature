@@ -1,4 +1,4 @@
-@DashboardOptions @DashboardOptions_SuperAdmin
+@DashboardOptions @DashboardOptions_ClientUser
 Feature: Dashboard Options for Clinet User
 
   Background:

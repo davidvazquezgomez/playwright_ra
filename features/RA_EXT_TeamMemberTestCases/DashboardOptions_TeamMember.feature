@@ -1,4 +1,4 @@
-@DashboardOptions @DashboardOptions_SuperAdmin
+@DashboardOptions @DashboardOptions_TeamMember
 Feature: Dashboard Options for Team Member
 
   Background:

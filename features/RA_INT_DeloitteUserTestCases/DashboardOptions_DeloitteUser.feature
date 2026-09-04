@@ -1,4 +1,4 @@
-@DashboardOptions @DashboardOptions_SuperAdmin
+@DashboardOptions @DashboardOptions_DeloitteUser
 Feature: Dashboard Options for Deloitte User
 
   Background:
