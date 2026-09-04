@@ -15,10 +15,10 @@ Feature: Dashboard Options for Super Admin
     When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     And verify "Generate Report" is displayed in the Dashboard Options popup
-    When click on "Generate Report" option from the "Dashboard options" popup
+    When click on "Generate Report" option from the "Dashboard Options" popup
     Then verify the dashboard dropdown value is "Updates"
     And verify "Update Title;Jurisdiction;Impact Area;Date Announced;Date Effective;Priority;Status;Last Updated" columns are selected in the Dashboard Options popup
-    And verify "Generate Report;Cancel" buttons are displayed on the "Dashboard options" popup
+    And verify "Generate Report;Cancel" buttons are displayed on the "Dashboard Options" popup
     When press "Generate Report" button
     Then verify "Report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Updates Dashboard" page
 
@@ -46,7 +46,7 @@ Feature: Dashboard Options for Super Admin
     When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     And verify "Generate Report" is displayed in the Dashboard Options popup
-    When click on "Generate Report" option from the "Dashboard options" popup
+    When click on "Generate Report" option from the "Dashboard Options" popup
     And select "Actions" from the "Generate report for" dropdown
     Then verify "Update Title;Action;User Assigned;Deadline Date;Update Priority;Action Priority;Action Status" columns are selected in the Dashboard Options popup
     When press "Generate Report" button
@@ -64,7 +64,7 @@ Feature: Dashboard Options for Super Admin
     When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     And verify "Generate Report" is displayed in the Dashboard Options popup
-    When click on "Generate Report" option from the "Dashboard options" popup
+    When click on "Generate Report" option from the "Dashboard Options" popup
     And select "Actions" from the "Generate report for" dropdown
     When press "Generate Report" button
     Then verify "Report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
@@ -77,9 +77,9 @@ Feature: Dashboard Options for Super Admin
     When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     And verify "Generate Audit Trail" is displayed in the Dashboard Options popup
-    When click on "Generate Audit Trail" option from the "Dashboard options" popup
+    When click on "Generate Audit Trail" option from the "Dashboard Options" popup
     Then verify the "Update allocated to responsible person;User added to Update Watchlist;User removed from Update Watchlist;Update status changed;Update priority changed;Action added;User added to Action;User removed from Action;Action status Changed;Action priority Changed" audit trail change area parameters are displayed
-    When select different audit trail parameters
+    When select "Update priority changed" audit trail change area parameter
     And press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Updates Dashboard" page
     And verify the downloaded file name format is "01_13Jan REG_AuditTrail_Report_" with current date and time
@@ -91,10 +91,10 @@ Feature: Dashboard Options for Super Admin
     And select "Belgium" in the "Jurisdiction" filter on the Dashboard filter
     And select "High" in the "Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    Then verify filtered updates are displayed
+    Then verify filtered actions are displayed
     When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
-    When click on "Generate Audit Trail" option from the "Dashboard options" popup
+    When click on "Generate Audit Trail" option from the "Dashboard Options" popup
     And press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Updates Dashboard" page
     And verify the downloaded file name format is "01_13Jan REG_AuditTrail_Report_" with current date and time
@@ -106,9 +106,9 @@ Feature: Dashboard Options for Super Admin
     When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     And verify "Generate Audit Trail" is displayed in the Dashboard Options popup
-    When click on "Generate Audit Trail" option from the "Dashboard options" popup
+    When click on "Generate Audit Trail" option from the "Dashboard Options" popup
     Then verify the "Update allocated to responsible person;User added to Update Watchlist;User removed from Update Watchlist;Update status changed;Update priority changed;Action added;User added to Action;User removed from Action;Action status Changed;Action priority Changed" audit trail change area parameters are displayed
-    When select different audit trail parameters
+    When select "Action priority Changed" audit trail change area parameter
     And press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
     And verify the downloaded file name format is "01_13Jan REG_AuditTrail_Report_" with current date and time
@@ -121,9 +121,9 @@ Feature: Dashboard Options for Super Admin
     And select "High" in the "Action Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed
-    And verify for "Dashboard options" button is visible
     When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
+    When click on "Generate Audit Trail" option from the "Dashboard Options" popup
     When press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
     And verify the downloaded file name format is "01_13Jan REG_AuditTrail_Report_" with current date and time
