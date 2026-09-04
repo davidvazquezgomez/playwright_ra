@@ -10,8 +10,8 @@ export class DashboardPage extends BasePage {
     private readonly dashboardOptionsButton =
         'button[data-title="Dashboard options"], button[title="Dashboard options"], button[aria-label="Dashboard options"], button:has(.k-i-more-horizontal), button:has(.fa-ellipsis-v), button:has(.fa-ellipsis-h), button:has(kendo-svgicon.k-svg-i-more-horizontal)';
     private readonly dashboardOptionsDialog = 'div[role="dialog"]:has(.k-dialog-title:text-is("Dashboard options"))';
-    private readonly dashboardOptionsActionsTab = () =>
-        this._page.locator(this.dashboardOptionsDialog).getByRole('tab', { name: 'Actions Dashboard', exact: true });
+    private readonly dashboardOptionsTabByName = (tabName: string) =>
+        this._page.locator(this.dashboardOptionsDialog).getByRole('tab', { name: tabName, exact: true });
     private readonly dashboardOptionsColumnByName = (columnName: string) =>
         this._page.locator(this.dashboardOptionsDialog).getByRole('listitem').filter({
             hasText: new RegExp(`^\\s*${this.escapeRegularExpression(columnName)}\\s*$`, 'i'),
@@ -56,6 +56,8 @@ export class DashboardPage extends BasePage {
         this._page.locator(this.filterDialog).getByRole('button', { name: 'View results', exact: true });
     private readonly filterOptionByName = (optionName: string) =>
         `${this.filterDialog} .saved-filter-name:text-is("${optionName}")`;
+    private readonly dateAnnouncedFilterOption = () =>
+        this._page.locator(this.filterDialog).getByText('Date Announced', { exact: true });
     private readonly activeFilterDialog = () =>
         this._page.getByRole('dialog').filter({
             has: this._page.locator('.k-dialog-title').getByText('Filter', { exact: true }),
@@ -104,6 +106,12 @@ export class DashboardPage extends BasePage {
         this.filterOptionLabels(sectionName).filter({ hasText: /^\s*Select All\s*$/ }).first();
     private readonly savedFilterByName = (filterName: string, sectionName: string) =>
         this.filterSectionByName(sectionName).locator('.saved-filter-name').getByText(filterName, { exact: true });
+    private readonly savedFilterItemByName = (filterName: string) =>
+        this._page.locator(this.filterDialog).locator('.saved-filter-item').filter({
+            has: this._page.locator('.saved-filter-name').getByText(filterName, { exact: true }),
+        }).first();
+    private readonly savedFilterFavouriteControlByName = (filterName: string) =>
+        this.savedFilterItemByName(filterName).locator(':scope > *').last();
     private readonly savedFilterDeleteButtonByName = (filterName: string) =>
         this._page.locator(this.filterDialog).locator('.saved-filter-item', {
             has: this._page.locator('.saved-filter-name').getByText(filterName, { exact: true }),
@@ -161,10 +169,11 @@ export class DashboardPage extends BasePage {
     }
 
     /**
-     * Verifies that the Actions Dashboard tab is selected in Dashboard Options.
+     * Verifies that the requested Dashboard Options tab is selected.
+     * @param tabName Exact visible name of the expected selected tab.
      */
-    async verifyDashboardOptionsActionsTabIsSelected(): Promise<void> {
-        await expect(this.dashboardOptionsActionsTab()).toHaveAttribute('aria-selected', 'true');
+    async verifyDashboardOptionsTabIsSelected(tabName: string): Promise<void> {
+        await expect(this.dashboardOptionsTabByName(tabName)).toHaveAttribute('aria-selected', 'true');
     }
 
     /**
@@ -251,10 +260,15 @@ export class DashboardPage extends BasePage {
     }
 
     /**
-     * Verifies that the named Actions Dashboard column header is hidden.
+     * Verifies that the named dashboard column header is hidden.
      * @param columnName Column header expected to be absent.
+     * @param pageName Current dashboard page used as failure context.
      */
-    async verifyActionsDashboardColumnIsNotDisplayed(columnName: string): Promise<void> {
+    async verifyDashboardColumnIsNotDisplayed(columnName: string, pageName: string): Promise<void> {
+        if (!pageName.includes('Dashboard')) {
+            throw new Error(`Page "${pageName}" is not supported by Dashboard Options assertions.`);
+        }
+
         await expect(this.actionsGrid().getByRole('columnheader', { name: columnName, exact: true })).toHaveCount(0);
     }
 
@@ -347,6 +361,28 @@ export class DashboardPage extends BasePage {
      */
     async doubleClickFilterOption(optionName: string): Promise<void> {
         await this._page.locator(this.filterOptionByName(optionName)).dblclick();
+    }
+
+    /**
+     * Adds the Date Announced date-range filter to the Dashboard filter panel.
+     */
+    async selectDateAnnouncedFilter(): Promise<void> {
+        await this.clickLocator(this.dateAnnouncedFilterOption());
+    }
+
+    /**
+     * Toggles the favourite status of a named saved Dashboard filter.
+     * @param filterName Exact visible name of the saved filter.
+     */
+    async toggleSavedFilterFavourite(filterName: string): Promise<void> {
+        if (!await this._page.locator(this.filterDialog).isVisible()) {
+            await this.openFilterPanel();
+        }
+
+        const savedFilterItem = this.savedFilterItemByName(filterName);
+        await expect(savedFilterItem).toBeVisible();
+        await this.clickLocator(this.savedFilterFavouriteControlByName(filterName));
+        await expect(this.filterUpdatedToast).toBeVisible({ timeout: 30_000 });
     }
 
     /**

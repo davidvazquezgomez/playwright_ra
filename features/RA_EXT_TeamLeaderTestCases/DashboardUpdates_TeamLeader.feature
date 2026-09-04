@@ -66,7 +66,6 @@ Feature: Dashboard page for Team Leader
     And select "satestclientuser3, satestclientuser3" in the "Watch List" field on the selected update
     When press "Save" button on the selected update
     Then verify "Regulatory update updated successfully" toast message is displayed in the "26Updates to 2025 Maximum Annual Earnings for Sickness, Maternity and Family Allowance Contributions" page
-  #Rectifico para restaurar los datos 
     When open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     And select "satestclientuser2, satestclientuser2" in the "User Assigned" field on the selected update
@@ -121,12 +120,11 @@ Feature: Dashboard page for Team Leader
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When search for "26Updates to 2025 Maximum Annual Earnings for Sickness, Maternity and Family Allowance Contributions" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
-    When enter "QaTest comment" in the "Comments" field
-    When press "Comment" button
-    Then verify the posted comment is seen along with timestamp and edit, reply and delete option
-  #Borramos el comentario para dejar el sistema como estaba
-    When press "Delete" button
-    Then verify the comment is not displayed in the "Comments" field
+    When enter "QaTest comment" comment on the selected update
+    When post the comment on the selected update
+    Then verify the posted update comment has timestamp and edit, reply and delete actions
+    When press "Delete" button on the "QaTest comment" comment
+    Then verify the "QaTest comment" comment is not displayed in the "Comments" field
 
   @mutable
   Scenario Outline: TC003_05_TeamLeader_DashboardUpdates - Upload and delete a valid attachment
@@ -136,7 +134,6 @@ Feature: Dashboard page for Team Leader
     When open the "Attachments" tab in the "Update Details" subsection
     And upload "<file path>" attachment in the "Update Details" Attachments tab
     Then verify the "<name>" attachment is displayed in the "Attachments" section
-  #Borramos el attachment 
     When press "Remove" button on the attachment
     Then verify the "<name>" attachment is not displayed in the "Attachments" section
 
@@ -173,7 +170,6 @@ Feature: Dashboard page for Team Leader
     And save the "01_QA_StageTestPortal - Updates Dashboard" items
     When search for "Income" update in the Analytics Dashboard
     Then verify only updates that contain "Income" in the title are displayed
-    When press "Enter" key on the keyboard
     Then verify the "01_QA_StageTestPortal - Updates Dashboard" item count is not the same
 
   @readOnly
@@ -184,7 +180,6 @@ Feature: Dashboard page for Team Leader
     And save the "01_QA_StageTestPortal - Updates Dashboard" items
     When search for "zz" update in the Analytics Dashboard
     Then verify no updates are displayed
-    When press "Enter" key on the keyboard
     Then verify the "01_QA_StageTestPortal - Updates Dashboard" item count is not the same
     And a message should get displayed as "There is no data to display."
     When press "Clear" button in the search field

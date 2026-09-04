@@ -73,6 +73,20 @@ Then('verify the {string} item count is the same', async ({ analyticsDashboardPa
     await verifySavedTableItemCount(tableTitle, savedItemCount, analyticsDashboardPage, updatesDashboardPage);
 });
 
+Then('verify the {string} item count is not the same', async ({ analyticsDashboardPage, updatesDashboardPage, testData }, tableTitle: string) => {
+    const savedItemCount = testData[analyticsDashboardTableItemKey(tableTitle)];
+    if (typeof savedItemCount !== 'number') {
+        throw new Error(`No saved item count exists for "${tableTitle}".`);
+    }
+
+    const currentItemCount = isUpdatesDashboardTable(tableTitle)
+        ? await updatesDashboardPage.getAllUpdatesItemCountIncludingZero()
+        : await analyticsDashboardPage.getDataTableItemCount(tableTitle);
+    if (currentItemCount === savedItemCount) {
+        throw new Error(`Expected "${tableTitle}" item count to differ from ${savedItemCount}, but it remained ${currentItemCount}.`);
+    }
+});
+
 When(
     'navigate to page {string} in the {string} table',
     async ({ analyticsDashboardPage }, pageNumber: string, tableTitle: string) => {
