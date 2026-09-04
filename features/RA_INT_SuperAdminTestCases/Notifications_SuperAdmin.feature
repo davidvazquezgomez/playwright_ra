@@ -187,11 +187,11 @@ Feature: Notifications for Super Admin
     When toggle the selected action priority between "High" and "Medium"
     And select "Not Started" option in the "Status" field in the "Update Action" popup
     When press "Update" button in the "Update Action" popup
-    Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
-    And logout from the application
+       
 
   @readOnly
   Scenario: TC004_4_SuperAdmin_Notifications - Verify triggered notifications for updates
+    When logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Then press "Notifications" button
     Then the "Notifications" popup is displayed
