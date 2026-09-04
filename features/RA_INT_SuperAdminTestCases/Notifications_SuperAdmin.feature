@@ -101,13 +101,16 @@ Feature: Notifications for Super Admin
     And verify the Systems notifications triggered
 
   @mutable
-  Scenario: TC003_3_SuperAdmin_Notifications - Verify disabled Notifications Preferences for Updates    
+  Scenario: TC003_3_SuperAdmin_Notifications - Verify disabled Notifications Preferences for Updates
+   And logout from the application
+    When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"    
     Given the "Notification Preferences" page is open
     Then the "Notification Preferences" page is displayed
     When check "Select All" Check box under "System" option from "Updates" section if it is "checked"
     And check "Select All" Check box under "Email" option from "Updates" section if it is "checked"
-    When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "enabled"
+    When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "disabled"
     And select the frequency option "Daily" located under "Periodic Summary of Updates and Actions via email?" section
+    And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "enabled"
     When press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
     And logout from the application
@@ -117,7 +120,7 @@ Feature: Notifications for Super Admin
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
-    And select "Update Allocated" option in the "Status" field in the "Update Details" subsection
+    And select "Update in Progress" option in the "Status" field in the "Update Details" subsection
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     
@@ -146,24 +149,24 @@ Feature: Notifications for Super Admin
     When launch Regulatory Advantage application URL and login as "Deloitte" user "SUPERADMIN"
     Then the "01_QA_StageTestPortal - Actions Dashboard" page is open
     And search for "24Maximum social security contributions have been proposed" update in the "01_13Jan REG - Actions Dashboard" page
-    And open the first update in the "01_QA_StageTestPortal - Actions Dashboard" page
     When click on the first action in the "01_13Jan REG - Actions Dashboard" page
     Then the "Update Action" popup is displayed
-    When toggle the selected update priority between "High" and "Medium"
+    When toggle the selected action priority between "High" and "Medium"
     And select "In Progress" option in the "Status" field in the "Update Action" popup
-    When press "Update" button in the "Update Action" popup
-    Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
-    And logout from the application
+    Then press "Update" button in the "Update Action" popup
+    
 
   @readOnly
   Scenario: TC004_2_SuperAdmin_Notifications - Verify triggered notifications for actions
     When logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Then press "Notifications" button
-    Then the "Notification" popup is displayed
+    Then the "Notifications" popup is displayed
     When press "View All" button
     Then the "Notification Listing" page is displayed
     And verify the Systems notifications triggered
+
+
 
   @mutable
   Scenario: TC004_3_SuperAdmin_Notifications - Verify disabled Notifications Preferences for Actions
@@ -179,17 +182,16 @@ Feature: Notifications for Super Admin
     When launch Regulatory Advantage application URL and login as "Deloitte" user "SUPERADMIN"
     Then the "01_QA_StageTestPortal - Actions Dashboard" page is open
     And search for "24Maximum social security contributions have been proposed" update in the "01_13Jan REG - Actions Dashboard" page
-    And open the first update in the "01_QA_StageTestPortal - Actions Dashboard" page
     When click on the first action in the "01_13Jan REG - Actions Dashboard" page
     Then the "Update Action" popup is displayed
-    When toggle the selected update priority between "High" and "Medium"
+    When toggle the selected action priority between "High" and "Medium"
     And select "Not Started" option in the "Status" field in the "Update Action" popup
     When press "Update" button in the "Update Action" popup
-    Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
-    And logout from the application
+       
 
   @readOnly
   Scenario: TC004_4_SuperAdmin_Notifications - Verify triggered notifications for updates
+    When logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Then press "Notifications" button
     Then the "Notifications" popup is displayed

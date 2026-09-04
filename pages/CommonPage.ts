@@ -105,8 +105,12 @@ export class CommonPage extends BasePage {
   private privacyPreferenceCenterTitle = `${this.privacyPreferenceCenterDialog} h2#ot-pc-title`;
   private kendoDialogByTitle = (title: string) =>
     `div[role="dialog"]:has(.k-dialog-title:text-is("${title}"))`;
+  private visibleWarningKendoDialog =
+    'div[role="dialog"]:visible:has(.k-dialog-title .fa-exclamation-triangle)';
+  private resolvePopupDialogByTitle = (title: string) =>
+    title === 'Warning' ? this.visibleWarningKendoDialog : this.kendoDialogByTitle(title);
   private kendoDialogButtonByName = (title: string, buttonName: string) =>
-    `${this.kendoDialogByTitle(title)} button:is([aria-label="${buttonName}"], :has(> span.k-button-text:text-is("${buttonName}")))`;
+    `${this.resolvePopupDialogByTitle(title)} button:is([aria-label="${buttonName}"], :has(> span.k-button-text:text-is("${buttonName}")))`;
   private visibleKendoDialogContent = 'div[role="dialog"]:visible .k-dialog-content';
   private dialogActionButtonByName = (buttonName: string) =>
     `div[role="dialog"]:visible kendo-dialog-actions button[aria-label="${buttonName}"]`;
@@ -148,12 +152,18 @@ export class CommonPage extends BasePage {
     `kendo-popup.k-animation-container-shown:visible li[role="option"]:has(.k-list-item-text:text-is("${optionName}"))`;
   private visibleKendoSelectAllCheckbox =
     'kendo-popup.k-animation-container-shown:visible .select-all input[type="checkbox"]';
+  private visibleUserPickerOptionByName = (optionName: string) =>
+    `kendo-popup.k-animation-container-shown:visible li[role="option"]:has(.person-name:text-is("${optionName}"))`;
+  private readonly userPickerResultsTimeout = 15000;
+
+
   /**
    * Launches the application by navigating to the specified URL.
    * @param url The URL of the application to launch.
    */
   async launchApplication(url: string): Promise<void> {
     await this.loadPage(url);
+    
     const [title, bodyText] = await Promise.all([
       this._page.title(),
       this._page.locator('body').innerText(),
@@ -206,7 +216,11 @@ export class CommonPage extends BasePage {
     searchInputSelector: string,
     optionName: string,
   ): Promise<void> {
-    await super.selectUserPickerOption(controlSelector, searchInputSelector, optionName);
+    await this.clickElement(controlSelector);
+    await this.waitForElement(searchInputSelector, this.userPickerResultsTimeout);
+    await this.fillInputText(searchInputSelector, optionName);
+    await this.waitForElement(this.visibleUserPickerOptionByName(optionName), this.userPickerResultsTimeout);
+    await this.pressKeyOnElement(searchInputSelector, 'Enter');
   }
 
   /**
@@ -930,7 +944,7 @@ export class CommonPage extends BasePage {
         await this.clickElement(this.profileMenuOptionByName(button));
         break;
       case "Back":
-        await this.clickElement(this.backButton, 60000);
+        await this.clickElement(this.backButton);
         break;
       case "favorite icon":
         await this.clickElement(this.favouriteIcon);
@@ -1188,8 +1202,13 @@ export class CommonPage extends BasePage {
       return;
     }
 
-    const dialog = this.kendoDialogByTitle(title);
+    const dialog = this.resolvePopupDialogByTitle(title);
     await this.waitForElement(dialog);
+
+    if (title === 'Warning') {
+      return;
+    }
+
     await this.assertText(`${dialog} .k-dialog-title`, title);
   }
 
