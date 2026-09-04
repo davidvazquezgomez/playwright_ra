@@ -8,8 +8,8 @@ export class DashboardPage extends BasePage {
     private readonly updateSearchClearButton =
         'kendo-autocomplete:has(input[placeholder="Select or type update title"]) .k-clear-value[title="clear"]';
     private readonly dashboardOptionsButton =
-        'button[data-title="Dashboard options"], button[title="Dashboard Options"], button[aria-label="Dashboard Options"], button:has(.k-i-more-horizontal), button:has(.fa-ellipsis-v), button:has(.fa-ellipsis-h), button:has(kendo-svgicon.k-svg-i-more-horizontal)';
-    private readonly dashboardOptionsDialog = 'div[role="dialog"]:has(.k-dialog-title:text-is("Dashboard Options"))';
+        'button[data-title="Dashboard options"], button[title="Dashboard options"], button[aria-label="Dashboard options"], button:has(.k-i-more-horizontal), button:has(.fa-ellipsis-v), button:has(.fa-ellipsis-h), button:has(kendo-svgicon.k-svg-i-more-horizontal)';
+    private readonly dashboardOptionsDialog = 'div[role="dialog"]:has(.k-dialog-title:text-is("Dashboard options"))';
     private readonly dashboardOptionsActionsTab = () =>
         this._page.locator(this.dashboardOptionsDialog).getByRole('tab', { name: 'Actions Dashboard', exact: true });
     private readonly dashboardOptionsColumnByName = (columnName: string) =>

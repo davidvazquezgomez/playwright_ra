@@ -31,7 +31,7 @@ Feature: Overview for Team Member
     When press "<viewAll>" button
     Then the "<dashboard>" page is displayed
     And verify if "<tabs>" are displayed on the Overview page
-    When press "back" button
+    When press "Back" button
     Then the "Overview" page is displayed
 
     Examples:

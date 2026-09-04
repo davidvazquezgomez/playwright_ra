@@ -5,11 +5,11 @@ When('press "Filter" button on the Dashboard filter', async ({ dashboardPage }) 
     await dashboardPage.openFilterPanel();
 });
 
-When('press "Dashboard Options" button on the Dashboard', async ({ dashboardPage }) => {
+When('press "Dashboard options" button on the Dashboard', async ({ dashboardPage }) => {
     await dashboardPage.openDashboardOptions();
 });
 
-Then('verify the "Dashboard Options" popup is displayed on the Dashboard', async ({ dashboardPage }) => {
+Then('verify the "Dashboard options" popup is displayed on the Dashboard', async ({ dashboardPage }) => {
     await dashboardPage.verifyDashboardOptionsPopupIsDisplayed();
 });
 
@@ -61,7 +61,7 @@ When('press "Save" button in the Dashboard Options popup', async ({ dashboardPag
     await dashboardPage.saveDashboardOptions();
 });
 
-Then('verify the "Dashboard Options" popup is closed on the Dashboard', async ({ dashboardPage }) => {
+Then('verify the "Dashboard options" popup is closed on the Dashboard', async ({ dashboardPage }) => {
     await dashboardPage.verifyDashboardOptionsPopupIsClosed();
 });
 

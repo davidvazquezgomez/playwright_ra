@@ -935,7 +935,6 @@ export class CommonPage extends BasePage {
         await this.clickElement(this.profileMenuOptionByName(button));
         break;
       case "Back":
-      case "back":
         await this.clickElement(this.backButton);
         break;
       case "favorite icon":
@@ -947,7 +946,6 @@ export class CommonPage extends BasePage {
       case "Filter":
         await this.clickElement(this.dashboardFilterButton);
         break;
-      case "Dashboard Options":
       case "Dashboard options":
         await this.buttonByName('Dashboard Options').click();
         break;
@@ -958,8 +956,6 @@ export class CommonPage extends BasePage {
       case "More Filters":
       case "Clear all filters":
       case "Remove user":
-      case "Go Back":
-      case "Go back":
       case "Update Portal Now":
       case "Deactivate Portal":
       case "Yes":

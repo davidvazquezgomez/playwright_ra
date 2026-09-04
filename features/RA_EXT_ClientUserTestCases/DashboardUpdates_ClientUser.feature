@@ -147,12 +147,12 @@ Feature: Dashboard Updates for Client User
     Then a message should get displayed as "<expected message>"
     And verify the "<name>" attachment is not displayed in the "Attachments" section
 
-     Examples:
-      | file path                  | expected message                                                         | name             |
-      | test-data/valid.xls        | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx.  | valid.xls        |
-      | test-data/invalid.jpg      | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.jpg      |
-      | test-data/invalid.csv      | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.csv      |
-      | test-data/invalid.txt      | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.txt      |
+    Examples:
+      | file path             | expected message                                                        | name        |
+      | test-data/valid.xls   | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx. | valid.xls   |
+      | test-data/invalid.jpg | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.jpg |
+      | test-data/invalid.csv | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.csv |
+      | test-data/invalid.txt | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.txt |
 
   @readOnly
   Scenario: TC004_ClientUser_DashboardUpdates - Verify search
@@ -309,7 +309,7 @@ Feature: Dashboard Updates for Client User
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     And register cleanup to restore the "Status" column on "ClientPortal_20260209133616 - Updates Dashboard - All Updates"
     When press "Dashboard options" button
-    Then verify the "Dashboard Options" popup is displayed on the Dashboard
+    Then verify the "Dashboard options" popup is displayed on the Dashboard
     Then verify the "Updates Dashboard" tab is selected in the Dashboard Options popup
     And verify "Edit Updates Dashboard" is displayed in the Dashboard Options popup
     And verify "Update Title;Action;User Assigned;Deadline Date;Update Priority;Action Priority;Action Status" columns are displayed in the Dashboard Options popup
@@ -317,5 +317,5 @@ Feature: Dashboard Updates for Client User
     When deselect "Status" column in the Dashboard Options popup
     Then verify "Status" column is not selected in the Dashboard Options popup
     When press "Save" button in the Dashboard Options popup
-    Then verify the "Dashboard Options" popup is closed on the Dashboard
+    Then verify the "Dashboard options" popup is closed on the Dashboard
     And verify "Status" column header is not displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page

@@ -31,7 +31,7 @@ Feature: Overview for Client Admin
     When press "<viewAll>" button
     Then the "<dashboard>" page is displayed
     And verify if "<tabs>" are displayed on the Overview page
-    When press "back" button
+    When press "Back" button
     Then the "Overview" page is displayed
 
     Examples:
@@ -75,5 +75,5 @@ Feature: Overview for Client Admin
     When press "Open Dashboard" button
     Then the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
     And verify if "Actions;Analytics" are displayed on the Overview page
-    When press "back" button
+    When press "Back" button
     Then the "Overview" page is displayed

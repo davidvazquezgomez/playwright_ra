@@ -31,7 +31,7 @@ Feature: Overview for Client User
     When press "View All Updates" button
     Then the "ClientPortal_20260209133616 - Updates Dashboard" page is displayed
     And verify if "Updates;Actions;Analytics" are displayed on the Overview page
-    When press "back" button
+    When press "Back" button
     Then the "Overview" page is displayed
 
   @readOnly

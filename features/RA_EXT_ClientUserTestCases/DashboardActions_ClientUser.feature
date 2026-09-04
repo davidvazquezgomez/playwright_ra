@@ -182,12 +182,12 @@ Feature: Dashboard Actions for Client User
     And press "Update" button in the "Update Action" popup
     Then verify "Action updated successfully" toast message is displayed in the "ClientPortal_20260209133616 - Actions Dashboard" page
 
-     Examples:
-      | invalid extension | file path                  | expected message                                                         | name             |
-      | xls               | test-data/valid.xls        | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx.  | valid.xls        |
-      | jpg               | test-data/invalid.jpg      | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.jpg      |
-      | csv               | test-data/invalid.csv      | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.csv      |
-      | txt               | test-data/invalid.txt      | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.txt      |
+    Examples:
+      | invalid extension | file path             | expected message                                                        | name        |
+      | xls               | test-data/valid.xls   | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx. | valid.xls   |
+      | jpg               | test-data/invalid.jpg | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.jpg |
+      | csv               | test-data/invalid.csv | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.csv |
+      | txt               | test-data/invalid.txt | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.txt |
 
   @mutable
   Scenario: TC011_01_ClientUser_DashboardActions - Verify adding an action from the update details page
@@ -332,12 +332,12 @@ Feature: Dashboard Actions for Client User
     Then a message should get displayed as "<expected message>"
     And verify "<name>" attachment is not displayed in the "Update Action" popup
 
-Examples:
-      | invalid extension | file path                  | expected message                                                         | name             |
-      | xls               | test-data/valid.xls        | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx.  | valid.xls        |
-      | jpg               | test-data/invalid.jpg      | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.jpg      |
-      | csv               | test-data/invalid.csv      | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.csv      |
-      | txt               | test-data/invalid.txt      | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx.  | invalid.txt      |
+    Examples:
+      | invalid extension | file path             | expected message                                                        | name        |
+      | xls               | test-data/valid.xls   | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx. | valid.xls   |
+      | jpg               | test-data/invalid.jpg | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.jpg |
+      | csv               | test-data/invalid.csv | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.csv |
+      | txt               | test-data/invalid.txt | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.txt |
 
   @readOnly
   Scenario Outline: TC012_01_ClientUser_DashboardActions - Verify filtering the 01_13Jan REG - Actions Dashboard by
@@ -452,8 +452,8 @@ Examples:
   Scenario: TC018_ClientUser_DashboardActions - Verify actions dashboard dashboard options Action
     Given the "ClientPortal_20260209133616 - Actions Dashboard" page is open
     Then verify "Action Status" column header is displayed in the "ClientPortal_20260209133616 - Actions Dashboard" page
-    When press "Dashboard Options" button on the Dashboard
-    Then verify the "Dashboard Options" popup is displayed on the Dashboard
+    When press "Dashboard options" button on the Dashboard
+    Then verify the "Dashboard options" popup is displayed on the Dashboard
     And verify the "Actions Dashboard" tab is selected in the Dashboard Options popup
     And verify "Edit Actions Dashboard" is displayed in the Dashboard Options popup
     And verify "Update Title;Action;User Assigned;Deadline Date;Update Priority;Action Priority;Action Status" columns are displayed in the Dashboard Options popup
@@ -461,5 +461,5 @@ Examples:
     When deselect "Action Status" column in the Dashboard Options popup
     Then verify "Action Status" column is not selected in the Dashboard Options popup
     When press "Save" button in the Dashboard Options popup
-    Then verify the "Dashboard Options" popup is closed on the Dashboard
+    Then verify the "Dashboard options" popup is closed on the Dashboard
     And verify "Action Status" column header is not displayed in the "ClientPortal_20260209133616 - Actions Dashboard" page
