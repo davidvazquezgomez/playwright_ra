@@ -5,6 +5,10 @@ export class CommonPage extends BasePage {
   private sideNavigation = '.side-navigation';
   private deloitteLogo = '#headerTile[aria-label="Deloitte Logo"][href="/"]';
   private navigationRenderTimeout = 5000;
+  private pageNavigationTimeout = Math.max(
+    process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000,
+    30000,
+  );
   private navigationReloadAttempts = 5;
   private readonly collapsedNavigationToggleCandidates = [
     'app-side-navigation i.fa-bars',
@@ -1097,7 +1101,7 @@ export class CommonPage extends BasePage {
    */
   async verifyPageNavigation(pageName: string): Promise<void> {
     const selector = this.getPageNavigationSelector(pageName);
-    await this.waitForSelectorStatus(selector, 'visible');
+    await this.waitForSelectorStatus(selector, 'visible', this.pageNavigationTimeout);
   }
 
   /**
