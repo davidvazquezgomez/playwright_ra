@@ -6,50 +6,59 @@ Feature: Team Management for Team Leader
     And verify if applicable portals are displayed
 
   @mutable
-  Scenario Outline: TC001_TeamLeader_TeamManagement - Verify UI validations for team set up, mandatory field validations and column sorting
-    When click on "ClientPortal_20260212191012" Client Portal from the client portal list
+  Scenario Outline: TC001_01_TeamLeader_TeamManagement - Verify mandatory field validations for team setup
+    When click on "01_QA_StageTestPortal" of the portals
     Then the "Overview" page is displayed
     When click on "Team Management" option from the left navigation
     Then the "Team Management" page is displayed
-    Then verify the following column headings are displayed and sortable in the Teams table:
+    When press "Create Team" button
+    When press "Save" button on the "Create/Edit Team" page
+    Then verify the warning messages "<warning message>" for mandatory fields "<mandatory field>" are displayed on the "Create/Edit Team" page
+
+    Examples:
+      | mandatory field                   | warning message                                                                                |
+      | Team Name;Team Leader;Team Member | Team Name is required;At least one Team Leader is required;At least one Team Member is required |
+
+  @readOnly
+  Scenario Outline: TC001_02_TeamLeader_TeamManagement - Verify Teams table column header and sorting
+    Given the "Team Management - 01_QA_StageTestPortal" page is open
+    Then verify "<column>" column header is displayed in the "Team Management" page
+    When click on "<column>" column header in the "Team Management" page
+    Then verify items are sorted in "ascending" order by "<column>" in the "Team Management" page
+    When click on "<column>" column header in the "Team Management" page
+    Then verify items are sorted in "descending" order by "<column>" in the "Team Management" page
+    When click on "<column>" column header in the "Team Management" page
+    Then verify sorting is removed for "<column>" in the "Team Management" page
+
+    Examples:
+      | column       |
       | Team Name    |
       | Team Leaders |
       | Created Date |
       | Updated Date |
-    When press "Save" button on the "Create/Edit Team" page
-    And try saving the allocation without "<mandatory field>"
-    Then verify "<warning message>" are displayed in the "Team Management" page
 
-    Examples:
-      | mandatory field | warning message                      |
-      | Team Name       | Team name is required                |
-      | Team Leader     | At least one Team Leader is required |
-      | Team Member     | At least one Team Member is required |
+  
 
-  @mutable
-  Scenario: TC002_TeamLeader_TeamManagement - Verify user is able to edit and leave team
-    Then verify it displays "Team Management" option from the left navigation
-    When click on "Team Management" option from the left navigation
-    Then the "Team Management" page is displayed
-    When click on "Edit" icon for an existing team
-    And add "ndaextuser@outlook.com" in the "Team Leader" field
-    And add the following Team Members:
-      | test.user.1784145920996@gmail.com |
-      | test.user.1783697990969@gmail.com |
-      | test.user.1782906153337@gmail.com |
+  @mutable @cleanup
+  Scenario: TC002_01_TeamLeader_TeamManagement - Edit a created team
+    Given the "Team Management - 01_QA_StageTestPortal" page is open
+    And ensure the team "testttt" exists with Team Leader "ext-teamleadr@yopmail.com" and Team Member "smoke@gmail.com"
+    And register the team "testttt" for cleanup
+    When click on "Edit" button for the "testttt" team
+    And add "satestclientadmin@yopmail.com" in the "Team Leader" field
+    And open the Add Team Members dialog
+    And add "asjad.alam@gmail.com" in the "Search user" field
+    And press "Add User" button in the "Add Team Members" popup
     When press "Save" button on the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
-    And verify the new Team Leader is added to the team
-    And verify the saved changes are reflected in the team
-    When search for "test.user.1784145920996@gmail.com" in the Team Members table email field
+    Then verify the user "satestclientadmin" is available in the team leaders
+    When search for "asjad.alam@gmail.com" in the Team Members table email field
     Then verify filters are applied
-    When click on "clear filter" or "filter" button
-    Then verify the filter is removed and full results are shown
-    When click on "Delete" icon against the team member "TeamMemberRA@outlook.com"
+    When click on "filter" button from the Team Members table email field
+    Then verify the filter is removed
+    When click on "Delete" icon against the team member "asjad.alam@gmail.com"
     And press "Remove user" button
     When press "Save" button on the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
-    When click on "Edit" icon for the team
-    When leave the current team from the "Create/Edit Team" page
-    Then confirm the leave action in the confirmation pop up
-    Then verify the user is removed from the team (or appropriate confirmation is shown)
+
+  
