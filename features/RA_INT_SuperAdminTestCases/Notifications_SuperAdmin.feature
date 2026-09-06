@@ -120,10 +120,11 @@ Feature: Notifications for Super Admin
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
-    And select "Update in Progress" option in the "Status" field in the "Update Details" subsection
+    And select "Update Allocated" option in the "Status" field in the "Update Details" subsection
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
-    
+
+  
 
   @readOnly
   Scenario: TC003_4_SuperAdmin_Notifications - Verify triggered notifications for updates
@@ -220,8 +221,9 @@ Feature: Notifications for Super Admin
     Then the "Add Team Members" popup is displayed
     When select "clientadmin1, satest" option in the "Search user" field
     Then the "Team Management" page is displayed
-    When press "Save" button
+    When press "Add User" button in the "Add Team Members" popup
     And logout from the application
+    #no me deja añadir el user porq ya está añadido_ revisar
 
   @readOnly
   Scenario: TC005_2_SuperAdmin_Notifications - Verify triggered notifications for teams
@@ -253,8 +255,8 @@ Feature: Notifications for Super Admin
     When open the Add Team Members dialog
     Then the "Add Team Members" popup is displayed
     When select "satesclientadmin, satestclientadmin" option in the "Search user" field
+    And press "Add User" button in the "Add Team Members" popup
     Then the "Team Management" page is displayed
-    When press "Save" button
    
 
   @readOnly
