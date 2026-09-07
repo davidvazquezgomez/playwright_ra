@@ -154,7 +154,6 @@ export class CommonPage extends BasePage {
     'kendo-popup.k-animation-container-shown:visible .select-all input[type="checkbox"]';
   private visibleUserPickerOptionByName = (optionName: string) =>
     `kendo-popup.k-animation-container-shown:visible li[role="option"]:has(.person-name:text-is("${optionName}"))`;
-  private readonly userPickerResultsTimeout = 15000;
 
 
   /**
@@ -653,15 +652,6 @@ export class CommonPage extends BasePage {
 
     await this.clickElement(tab);
     await expect(this._page.locator(tab), `Expected ${tabKind} "${tabName}" to be active.`).toHaveAttribute('aria-selected', 'true');
-  }
-
-  /**
-   * Escapes text before it is used as literal regular-expression content.
-   * @param value Text to escape.
-   * @returns Escaped regular-expression content.
-   */
-  private escapeRegularExpression(value: string): string {
-    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
   /**

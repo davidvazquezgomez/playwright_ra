@@ -1003,10 +1003,6 @@ export class DashboardPage extends BasePage {
         throw new Error(`The "${columnName}" column was not found.`);
     }
 
-    private escapeRegularExpression(value: string): string {
-        return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-
     private parseSemicolonDelimitedValues(values: string): string[] {
         const parsedValues = values.split(';').map((value) => value.trim()).filter(Boolean);
         if (parsedValues.length === 0) {
