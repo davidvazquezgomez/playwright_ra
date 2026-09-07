@@ -75,7 +75,7 @@ Feature: Team Management for Super Admin
     When click on "filter" button from the Team Members table email field
     Then verify the filter is removed
     When click on "Delete" icon against the team member "smoke@gmail.com"
-    And press "Remove user" button
+    And press "Remove User" button on the "Remove User?" popup
     When press "Save" button on the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
 

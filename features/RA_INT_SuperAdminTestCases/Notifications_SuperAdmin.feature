@@ -120,7 +120,7 @@ Feature: Notifications for Super Admin
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
-    And select "Update Allocated" option in the "Status" field in the "Update Details" subsection
+    And select "Awaiting Allocation" option in the "Status" field in the "Update Details" subsection
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
 
@@ -219,11 +219,11 @@ Feature: Notifications for Super Admin
     Then the "Create/Edit Team" page is displayed
     When open the Add Team Members dialog
     Then the "Add Team Members" popup is displayed
-    When select "clientadmin1, satest" option in the "Search user" field
+    When select "Asjad, Alam" option in the "Search user" field
     Then the "Team Management" page is displayed
     When press "Add User" button in the "Add Team Members" popup
     And logout from the application
-    #no me deja añadir el user porq ya está añadido_ revisar
+    #no me deja añadir el user porq ya está añadido_ revisar, clientadmin1, satest
 
   @readOnly
   Scenario: TC005_2_SuperAdmin_Notifications - Verify triggered notifications for teams
@@ -247,16 +247,23 @@ Feature: Notifications for Super Admin
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
     And logout from the application
     When launch Regulatory Advantage application URL and login as "Deloitte" user "SUPERADMIN"
-    Then the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    Then the "01_13Jan REG - Updates Dashboard - All Updates" page is open
     When click on "Team Management" option from the left navigation
     Then the "Team Management" page is displayed
     When press "Edit" button for the first team in the "Team Management" page
     Then the "Create/Edit Team" page is displayed
     When open the Add Team Members dialog
     Then the "Add Team Members" popup is displayed
-    When select "satesclientadmin, satestclientadmin" option in the "Search user" field
+    When select "satestclientuser4, satestclientuser4" option in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
-    Then the "Team Management" page is displayed
+    Then press "Save" button on the "Create/Edit Team" page    
+    And the "Team Management" page is displayed
+    #esta parte es para eliminar y que no falle en el siguiente test
+    When press "Edit" button for the first team in the "Team Management" page   
+    Then search for "satestclientuser4@yopmail.com" in the Team Members table email field
+    When click on "Delete" icon against the team member "satestclientuser4@yopmail.com"
+    Then press "Remove User" button on the "Remove User?" popup
+    When press "Save" button on the "Create/Edit Team" page
    
 
   @readOnly
@@ -267,4 +274,5 @@ Feature: Notifications for Super Admin
     Then the "Notifications" popup is displayed
     When press "View All" button
     Then the "Notification Listing" page is displayed
+     #debería estar vavío las notification listing?
     And verify there are no system notifications

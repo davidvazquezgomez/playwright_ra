@@ -964,7 +964,6 @@ export class CommonPage extends BasePage {
       case "Delete":
       case "More Filters":
       case "Clear all filters":
-      case "Remove user":
       case "Update Portal Now":
       case "Deactivate Portal":
       case "Yes":
