@@ -68,21 +68,11 @@ Feature: Team Management for Portal Admin
     And press "Add User" button in the "Add Team Members" popup
     When press "Save" button on the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
-<<<<<<< HEAD
     Then verify the user "Rewspec, Gwyn" is available in the team leaders
     When click on "Edit" button for the "QA_TEST_01" team
     Then search for "ra.dpayroll01@gmail.com" in the Team Members table email field
     When click on "Delete" icon against the team member "ra.dpayroll01@gmail.com"
     And press "Remove user" button
-=======
-    Then verify the user "ra.grewspec@gmail.com" is available in the team leaders
-    When search for "externaluserra2@yopmail.com" in the Team Members table email field
-    Then verify filters are applied
-    When click on "filter" button from the Team Members table email field
-    Then verify the filter is removed
-    When click on "Delete" icon against the team member "externaluserra1@yopmail.com"
-    And press "Remove User" button on the "Remove User?" popup
->>>>>>> de1dcc55173e09c68b7801678772cf677efa73a0
     When press "Save" button on the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
 

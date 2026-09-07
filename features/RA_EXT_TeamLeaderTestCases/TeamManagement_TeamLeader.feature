@@ -26,30 +26,5 @@ Feature: Team Management for Team Leader
 
   
 
-<<<<<<< HEAD
- 
-=======
-  @mutable @cleanup
-  Scenario: TC002_01_TeamLeader_TeamManagement - Edit a created team
-    Given the "Team Management - 01_QA_StageTestPortal" page is open
-    And ensure the team "testttt" exists with Team Leader "ext-teamleadr@yopmail.com" and Team Member "smoke@gmail.com"
-    And register the team "testttt" for cleanup
-    When click on "Edit" button for the "testttt" team
-    And add "satestclientadmin@yopmail.com" in the "Team Leader" field
-    And open the Add Team Members dialog
-    And add "asjad.alam@gmail.com" in the "Search user" field
-    And press "Add User" button in the "Add Team Members" popup
-    When press "Save" button on the "Create/Edit Team" page
-    Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
-    Then verify the user "satestclientadmin" is available in the team leaders
-    When search for "asjad.alam@gmail.com" in the Team Members table email field
-    Then verify filters are applied
-    When click on "filter" button from the Team Members table email field
-    Then verify the filter is removed
-    When click on "Delete" icon against the team member "asjad.alam@gmail.com"
-    And press "Remove User" button on the "Remove User?" popup
-    When press "Save" button on the "Create/Edit Team" page
-    Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
-
->>>>>>> de1dcc55173e09c68b7801678772cf677efa73a0
+  
   
