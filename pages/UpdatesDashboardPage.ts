@@ -91,7 +91,6 @@ export class UpdatesDashboardPage extends BasePage {
    * @param updateTitle The update title to search for.
    */
   async searchForUpdate(updateTitle: string): Promise<void> {
-    await this._page.pause();
     await this.fillInputText(this.updateSearchInput, updateTitle);
     await this.updateSearchResultByTitle(updateTitle).click();
   }
