@@ -110,6 +110,10 @@ When('click on {string} icon against the team member {string}', async ({ teamMan
   await teamManagementPage.deleteTeamMember(emailAddress);
 });
 
+When('remove the team member {string} from the current team if exists', async ({ teamManagementPage }, emailAddress: string) => {
+  await teamManagementPage.removeTeamMemberIfPresent(emailAddress);
+});
+
 When('ensure the team {string} does not exist', async ({ teamManagementPage }, teamName: string) => {
   await teamManagementPage.removeTeamIfPresent(teamName);
 });

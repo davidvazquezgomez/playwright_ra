@@ -123,7 +123,11 @@ Feature: Notifications for Super Admin
     And select "Awaiting Allocation" option in the "Status" field in the "Update Details" subsection
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
-
+    #resetear datos para q no falle el siguiente test
+    When press "Edit" button on the selected update
+    Then the "Update Details" page is displayed from the Updates Dashboard
+    And select "Update in Progress" option in the "Status" field in the "Update Details" subsection
+    When press "Save" button on the selected update
   
 
   @readOnly
@@ -215,15 +219,20 @@ Feature: Notifications for Super Admin
     Then the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When click on "Team Management" option from the left navigation
     Then the "Team Management" page is displayed
+    #primero se limpia el usuario por si quedó de una ejecución anterior
+    When press "Edit" button for the first team in the "Team Management" page
+    Then the "Create/Edit Team" page is displayed
+    When remove the team member "asjad.alam@gmail.com" from the current team if exists
+    And press "Save" button on the "Create/Edit Team" page
+    Then the "Team Management" page is displayed
     When press "Edit" button for the first team in the "Team Management" page
     Then the "Create/Edit Team" page is displayed
     When open the Add Team Members dialog
     Then the "Add Team Members" popup is displayed
     When select "Asjad, Alam" option in the "Search user" field
-    Then the "Team Management" page is displayed
-    When press "Add User" button in the "Add Team Members" popup
-    And logout from the application
-    #no me deja añadir el user porq ya está añadido_ revisar, clientadmin1, satest
+    And press "Add User" button in the "Add Team Members" popup
+    Then press "Save" button on the "Create/Edit Team" page
+    And the "Team Management" page is displayed
 
   @readOnly
   Scenario: TC005_2_SuperAdmin_Notifications - Verify triggered notifications for teams

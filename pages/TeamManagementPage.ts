@@ -1,4 +1,4 @@
-import { expect } from '@playwright/test';
+import { expect, Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class TeamManagementPage extends BasePage {
@@ -24,6 +24,8 @@ export class TeamManagementPage extends BasePage {
     `${this.teamMemberRowByEmail(emailAddress)} button[title*="Delete" i], ${this.teamMemberRowByEmail(emailAddress)} button[aria-label*="Delete" i], ${this.teamMemberRowByEmail(emailAddress)} button[title*="Remove" i], ${this.teamMemberRowByEmail(emailAddress)} button[aria-label*="Remove" i]`;
   private teamMemberNameCellByName = (displayName: string) =>
     `${this.teamMembersGrid} tbody tr.k-master-row td[data-kendo-grid-column-index="0"]:text-is("${displayName}")`;
+  private removeUserConfirmButton =
+    'div[role="dialog"]:has(.k-dialog-title:text-is("Remove User?")) button:has(.k-button-text:text-is("Remove User"))';
   private saveTeamButton = 'button.add-save-btn[form="teamForm"]';
   private leaveTeamButton = 'button:has(.k-button-text:text-is("Leave Team"))';
   private teamNameInput = '#teamForm kendo-textbox[formcontrolname="teamName"] input.k-input-inner';
@@ -139,34 +141,70 @@ export class TeamManagementPage extends BasePage {
    * @param userName User name expected to be available for selection.
    */
   async selectTeamMemberToAdd(userName: string): Promise<void> {
-    await this.fillInputText(this.addTeamMemberSearchInput, userName);
-
     const searchOptions = this._page.locator(this.addTeamMemberSearchOptions);
-    await expect(searchOptions.first()).toBeVisible({ timeout: 10000 });
 
-    const candidateOption = searchOptions
-      .filter({ hasText: userName })
-      .locator(':not([aria-selected="true"])')
-      .first();
+    // The people picker only matches its own name order, so each supported term is tried.
+    for (const [termIndex, searchTerm] of this.buildTeamMemberSearchTerms(userName).entries()) {
+      await this.fillInputText(this.addTeamMemberSearchInput, searchTerm);
 
-    const selectedCandidate = searchOptions
-      .filter({ hasText: userName })
-      .locator('[aria-selected="true"]')
-      .first();
+      const optionsAreDisplayed = await searchOptions
+        .first()
+        .waitFor({ state: 'visible', timeout: termIndex === 0 ? 10000 : 5000 })
+        .then(() => true)
+        .catch(() => false);
 
-    if (await candidateOption.count() > 0) {
-      await candidateOption.click();
-      this.pendingTeamMemberNameToAdd = userName;
-      return;
-    }
+      if (!optionsAreDisplayed) {
+        continue;
+      }
 
-    if (await selectedCandidate.count() > 0) {
-      // Keep the existing selection and avoid toggling it off.
+      const matchingOption = await this.findTeamMemberSearchOption(userName);
+      if (!matchingOption) {
+        continue;
+      }
+
+      if (await matchingOption.getAttribute('aria-selected') !== 'true') {
+        await this.clickLocator(matchingOption);
+      }
+
       this.pendingTeamMemberNameToAdd = userName;
       return;
     }
 
     throw new Error(`No Search user option matched "${userName}" in Add Team Members.`);
+  }
+
+  /**
+   * Builds the search terms accepted by the Add Team Members people picker for a display name.
+   * @param userName Display name requested by the scenario.
+   * @returns Unique search terms ordered from the most to the least specific.
+   */
+  private buildTeamMemberSearchTerms(userName: string): string[] {
+    const nameParts = userName.split(',').map(part => part.trim()).filter(Boolean);
+    const searchTerms = [userName, this.swapCommaSeparatedName(userName), ...nameParts];
+
+    return searchTerms.filter((term, index, terms) => Boolean(term) && terms.indexOf(term) === index);
+  }
+
+  /**
+   * Finds the search result that contains every part of the requested display name.
+   * @param userName Display name requested by the scenario.
+   * @returns Locator of the matching option, or null when no option matches.
+   */
+  private async findTeamMemberSearchOption(userName: string): Promise<Locator | null> {
+    const nameParts = userName.split(/[\s,]+/).map(part => part.trim().toLowerCase()).filter(Boolean);
+    const searchOptions = this._page.locator(this.addTeamMemberSearchOptions);
+    const optionCount = await searchOptions.count();
+
+    for (let optionIndex = 0; optionIndex < optionCount; optionIndex++) {
+      const option = searchOptions.nth(optionIndex);
+      const optionText = ((await option.textContent()) ?? '').toLowerCase();
+
+      if (nameParts.every(namePart => optionText.includes(namePart))) {
+        return option;
+      }
+    }
+
+    return null;
   }
 
   /**
@@ -436,6 +474,28 @@ export class TeamManagementPage extends BasePage {
     const teamMemberRow = this._page.locator(this.teamMemberRowByEmail(emailAddress));
     await expect(teamMemberRow).toHaveCount(1);
     await this.clickElement(this.teamMemberDeleteButtonByEmail(emailAddress));
+  }
+
+  /**
+   * Removes a Team Member from the team being edited only when the member is already listed.
+   * @param emailAddress Email address of the Team Member to remove.
+   */
+  async removeTeamMemberIfPresent(emailAddress: string): Promise<void> {
+    await this.searchTeamMembersByEmail(emailAddress);
+
+    const teamMemberRow = this._page.locator(this.teamMemberRowByEmail(emailAddress));
+    const isMemberListed = await teamMemberRow
+      .first()
+      .waitFor({ state: 'visible', timeout: 10000 })
+      .then(() => true)
+      .catch(() => false);
+
+    if (isMemberListed) {
+      await this.clickElement(this.teamMemberDeleteButtonByEmail(emailAddress));
+      await this.clickElement(this.removeUserConfirmButton);
+    }
+
+    await this.clearTeamMembersEmailFilter();
   }
 
   /**
