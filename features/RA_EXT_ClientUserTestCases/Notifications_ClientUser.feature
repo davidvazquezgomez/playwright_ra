@@ -38,7 +38,7 @@ Feature: Notifications for Client User
     When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
     And select the frequency option "Daily" located under "Periodic Summary of Updates and Actions via email?" section
     When press "Save Settings" button
-    Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
+     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC003_2_ClientUser_Notifications - Verify triggered notifications for updates
@@ -62,17 +62,17 @@ Feature: Notifications for Client User
     When check "Select All" Check box under "System" option from "Updates" section if it is "checked"
     And check "Select All" Check box under "Email" option from "Updates" section if it is "checked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
-    And press "Save Settings" button
-    Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
+    And press "Save Settings" button    
+    Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC003_4_ClientUser_Notifications - Verify triggered notifications for updates
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
-    When search for "Employment Taxes_1" update from the "Updates Dashboard - ClientPortal_20260209133616" page
+    When search for "Social Security Rates & Caps Updated" update from the "Updates Dashboard - ClientPortal_20260209133616" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
-    When select "Update Allocated" option in the "Status" field in the "Update Details" subsection
+    When change the selected update status to a different value
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Notifications" button
@@ -88,7 +88,7 @@ Feature: Notifications for Client User
     And check "Select All" Check box under "Email" option from "Actions" section if it is "unchecked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
     And press "Save Settings" button
-    Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
+    Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC004_2_ClientUser_Notifications - Verify triggered notifications for actions
@@ -113,7 +113,7 @@ Feature: Notifications for Client User
     And check "Select All" Check box under "Email" option from "Actions" section if it is "checked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
     And press "Save Settings" button
-    Then verify "01_QA_ClientPortalSetup updated successfully" toast message is displayed in the "Client Portal List" page
+    Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC004_4_ClientUser_Notifications - Verify triggered notifications for Actions
