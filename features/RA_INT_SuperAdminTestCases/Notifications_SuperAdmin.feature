@@ -120,14 +120,9 @@ Feature: Notifications for Super Admin
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     Then the "Update Details" page is displayed from the Updates Dashboard
-    And select "Awaiting Allocation" option in the "Status" field in the "Update Details" subsection
+    And change the selected update status to a different value
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
-    #resetear datos para q no falle el siguiente test
-    When press "Edit" button on the selected update
-    Then the "Update Details" page is displayed from the Updates Dashboard
-    And select "Update in Progress" option in the "Status" field in the "Update Details" subsection
-    When press "Save" button on the selected update
   
 
   @readOnly

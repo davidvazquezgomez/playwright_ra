@@ -21,6 +21,7 @@ export class UpdatesDashboardPage extends BasePage {
     this._page.getByRole('columnheader', { name: 'Action Status', exact: true });
   private readonly activeUpdateDetailsPanel = () =>
     this._page.locator('kendo-tabstrip > [role="tabpanel"][aria-hidden="false"]').first();
+  private readonly openDropdownOptions = 'kendo-popup.k-animation-container-shown:visible li[role="option"]';
   private readonly updateDetailsSectionLabelByName = (sectionName: string) =>
     this.activeUpdateDetailsPanel().locator(
       `xpath=.//label[contains(concat(' ', normalize-space(@class), ' '), ' form-label ') and normalize-space(text()[1]) = "${sectionName}"]`,
@@ -260,6 +261,39 @@ export class UpdatesDashboardPage extends BasePage {
     const nextPriority = currentPriority === firstPriority ? secondPriority : firstPriority;
 
     await this.selectUpdateDetailsOption(nextPriority, 'Priority');
+  }
+
+  /**
+   * Changes the selected update status to any available value other than the current one.
+   * @returns The status value applied to the update.
+   */
+  async changeSelectedUpdateStatus(): Promise<string> {
+    const statusDropdown = this.getUpdateDetailsDropdown('Status');
+    const currentStatus = (await statusDropdown.locator('.k-input-value-text').innerText()).trim();
+
+    await this.clickLocator(statusDropdown);
+    const statusOptions = this._page.locator(this.openDropdownOptions);
+    await expect(statusOptions.first()).toBeVisible();
+
+    const availableStatuses = (await statusOptions.allInnerTexts())
+      .map(status => status.trim())
+      .filter(Boolean);
+    const nextStatusIndex = availableStatuses.findIndex(status => status !== currentStatus);
+
+    if (nextStatusIndex === -1) {
+      this.failWithApplicationError(
+        'The update Status list must offer an alternative value so the status can be changed.',
+        `A status option other than "${currentStatus}".`,
+        `The only available option was "${currentStatus}".`,
+        `Status options displayed: ${availableStatuses.join(', ') || 'none'}.`,
+      );
+    }
+
+    const nextStatus = availableStatuses[nextStatusIndex];
+    await this.clickLocator(statusOptions.nth(nextStatusIndex));
+    await expect(statusDropdown.locator('.k-input-value-text')).toHaveText(nextStatus);
+
+    return nextStatus;
   }
 
   /**
