@@ -44,20 +44,37 @@ export class UpdatesDashboardPage extends BasePage {
     this._page.locator('app-update-details button.btn-unread-read');
   private readonly updateDetailsEditButton = 'button[title="Edit"]';
   private readonly updateDetailsSaveButton = 'button[title="Save"]';
+  private readonly updateDetailsPeoplePickerControlByFieldName: Record<'User Assigned' | 'Watch List', string> = {
+    'User Assigned':
+      'kendo-tabstrip > [role="tabpanel"][aria-hidden="false"] app-people-picker[formcontrolname="userAssigned"] kendo-dropdownlist[role="combobox"]',
+    'Watch List':
+      'kendo-tabstrip > [role="tabpanel"][aria-hidden="false"] app-people-picker[formcontrolname="watchList"] kendo-multiselect input[role="combobox"]',
+  };
+  private readonly updateDetailsPeoplePickerSearchInputByFieldName: Record<'User Assigned' | 'Watch List', string> = {
+    'User Assigned':
+      'kendo-popup.k-animation-container-shown:visible .k-dropdownlist-popup.custom-people-picker input[role="searchbox"][aria-label="Filter"]',
+    'Watch List':
+      'kendo-tabstrip > [role="tabpanel"][aria-hidden="false"] app-people-picker[formcontrolname="watchList"] kendo-multiselect input[role="combobox"]',
+  };
+  private readonly updateDetailsPeoplePickerContainerByFieldName: Record<'User Assigned' | 'Watch List', string> = {
+    'User Assigned':
+      'kendo-tabstrip > [role="tabpanel"][aria-hidden="false"] app-people-picker[formcontrolname="userAssigned"]',
+    'Watch List':
+      'kendo-tabstrip > [role="tabpanel"][aria-hidden="false"] app-people-picker[formcontrolname="watchList"]',
+  };
   private readonly updateDetailsPeoplePickerByField = (fieldName: 'User Assigned' | 'Watch List') =>
-    this.activeUpdateDetailsPanel().locator(
-      `app-people-picker[formcontrolname="${fieldName === 'User Assigned' ? 'userAssigned' : 'watchList'}"] kendo-dropdownlist[role="combobox"]`,
-    );
-  private readonly updateDetailsPeoplePickerSearchInput =
-    'kendo-popup.k-animation-container-shown .k-dropdownlist-popup [role="searchbox"][aria-label="Filter"]';
+    this._page.locator(this.updateDetailsPeoplePickerControlByFieldName[fieldName]);
+  private readonly updateDetailsPeoplePickerContainerByField = (fieldName: 'User Assigned' | 'Watch List') =>
+    this._page.locator(this.updateDetailsPeoplePickerContainerByFieldName[fieldName]);
   private readonly updateDetailsPeoplePickerOptionByName = (name: string) =>
-    this._page.locator(
-      `kendo-popup.k-animation-container-shown .k-dropdownlist-popup [role="option"]:has-text("${name}")`,
-    ).first();
+    `kendo-popup.k-animation-container-shown:visible li[role="option"]:has(.person-name:text-is("${name}")), ` +
+    `kendo-popup.k-animation-container-shown:visible li[role="option"]:text-is("${name}")`;
   private readonly updateDetailsSelectedPersonByField = (fieldName: 'User Assigned' | 'Watch List') =>
-    this.updateDetailsPeoplePickerByField(fieldName).locator('.selected-person-name');
+    fieldName === 'Watch List'
+      ? this.updateDetailsPeoplePickerContainerByField(fieldName).locator('.tag-person-name')
+      : this.updateDetailsPeoplePickerByField(fieldName).locator('.selected-person-name');
   private readonly updateDetailsPeoplePickerClearButton = (fieldName: 'User Assigned' | 'Watch List') =>
-    this.updateDetailsPeoplePickerByField(fieldName).locator(
+    this.updateDetailsPeoplePickerContainerByField(fieldName).locator(
       '.k-clear-value, button[title="clear"], button[aria-label*="clear" i]',
     );
   private readonly updateDetailsCommentButton = () =>
@@ -367,12 +384,15 @@ export class UpdatesDashboardPage extends BasePage {
     fieldName: 'User Assigned' | 'Watch List',
   ): Promise<void> {
     const peoplePicker = this.updateDetailsPeoplePickerByField(fieldName);
+    const searchInputSelector = this.updateDetailsPeoplePickerSearchInputByFieldName[fieldName];
+    const userOptionSelector = this.updateDetailsPeoplePickerOptionByName(userName);
+
     await this.clickLocator(peoplePicker);
-    await this.fillInputText(this.updateDetailsPeoplePickerSearchInput, userName);
-    const matchingUser = this.updateDetailsPeoplePickerOptionByName(userName);
-    await matchingUser.waitFor({ state: 'visible' });
-    await this.clickLocator(matchingUser);
-    await expect(this.updateDetailsSelectedPersonByField(fieldName)).toHaveText(userName);
+    await this.waitForElement(searchInputSelector);
+    await this.fillInputText(searchInputSelector, userName);
+    await this.waitForElement(userOptionSelector);
+    await this.pressKeyOnElement(searchInputSelector, 'Enter');
+    await expect(this.updateDetailsSelectedPersonByField(fieldName)).toContainText(userName);
   }
 
   /**
