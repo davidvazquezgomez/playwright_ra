@@ -9,7 +9,7 @@ export class DashboardPage extends BasePage {
         'kendo-autocomplete:has(input[placeholder="Select or type update title"]) .k-clear-value[title="clear"]';
     private readonly dashboardOptionsButton =
         'button[data-title="Dashboard options"], button[title="Dashboard options"], button[aria-label="Dashboard options"], button:has(.k-i-more-horizontal), button:has(.fa-ellipsis-v), button:has(.fa-ellipsis-h), button:has(kendo-svgicon.k-svg-i-more-horizontal)';
-    private readonly dashboardOptionsDialog = 'div[role="dialog"]:has(.k-dialog-title:text-is("Dashboard options"))';
+    private readonly dashboardOptionsDialog = 'div[role="dialog"]:has(.k-dialog-title:text-is("Dashboard Options"))';
     private readonly dashboardOptionsTabByName = (tabName: string) =>
         this._page.locator(this.dashboardOptionsDialog).getByRole('tab', { name: tabName, exact: true });
     private readonly dashboardOptionsColumnByName = (columnName: string) =>

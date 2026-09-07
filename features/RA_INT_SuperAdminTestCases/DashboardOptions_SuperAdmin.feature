@@ -38,7 +38,7 @@ Feature: Dashboard Options for Super Admin
     Then verify the dashboard dropdown value is "Updates"
     When press "Generate Report" button
     Then verify "Report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Updates Dashboard" page
-    And verify the downloaded file name format is "01_13Jan REG_Updates_Report_" with current date and time
+    And verify the downloaded file name format is "01_13Jan_REG_Updates_Report_" with current date and time
 
   @mutable
   Scenario: TC019_03_SuperAdmin_DashboardOptions - Generate an unfiltered Actions report
@@ -51,7 +51,7 @@ Feature: Dashboard Options for Super Admin
     Then verify "Update Title;Action;User Assigned;Deadline Date;Update Priority;Action Priority;Action Status" columns are selected in the Dashboard Options popup
     When press "Generate Report" button
     Then verify "Report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
-    And verify the downloaded file name format is "01_13Jan REG_Actions_Report_" with current date and time
+    And verify the downloaded file name format is "01_13Jan_REG_Actions_Report_" with current date and time
 
   @readOnly
   Scenario: TC019_04_SuperAdmin_DashboardOptions - Generate a filtered Actions report
@@ -68,7 +68,7 @@ Feature: Dashboard Options for Super Admin
     And select "Actions" from the "Generate report for" dropdown
     When press "Generate Report" button
     Then verify "Report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
-    And verify the downloaded file name format is "01_13Jan REG_Actions_Report_" with current date and time
+    And verify the downloaded file name format is "01_13Jan_REG_Actions_Report_" with current date and time
 
   @mutable
   Scenario: TC020_01_SuperAdmin_DashboardOptions - Generate an unfiltered Updates audit trail
@@ -82,22 +82,23 @@ Feature: Dashboard Options for Super Admin
     When select "Update priority changed" audit trail change area parameter
     And press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Updates Dashboard" page
-    And verify the downloaded file name format is "01_13Jan REG_AuditTrail_Report_" with current date and time
+    And verify the downloaded file name format is "01_13Jan_REG_AuditTrail_Report_" with current date and time
 
   @readOnly
   Scenario: TC020_02_SuperAdmin_DashboardOptions - Generate a filtered Updates audit trail
     Given the "Updates Dashboard - 01_13Jan REG" page is open
     When press "Filter" button on the Dashboard filter
     And select "Belgium" in the "Jurisdiction" filter on the Dashboard filter
-    And select "High" in the "Priority" filter on the Dashboard filter
+    And select "Medium" in the "Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed
     When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     When click on "Generate Audit Trail" option from the "Dashboard Options" popup
+    When select "Action added" audit trail change area parameter
     And press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Updates Dashboard" page
-    And verify the downloaded file name format is "01_13Jan REG_AuditTrail_Report_" with current date and time
+    And verify the downloaded file name format is "01_13Jan_REG_AuditTrail_Report_" with current date and time
 
   @mutable
   Scenario: TC020_03_SuperAdmin_DashboardOptions - Generate an unfiltered Actions audit trail
@@ -110,7 +111,7 @@ Feature: Dashboard Options for Super Admin
     When select "Action priority Changed" audit trail change area parameter
     And press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
-    And verify the downloaded file name format is "01_13Jan REG_AuditTrail_Report_" with current date and time
+    And verify the downloaded file name format is "01_13Jan_REG_AuditTrail_Report_" with current date and time
 
   @readOnly
   Scenario: TC020_04_SuperAdmin_DashboardOptions - Generate a filtered Actions audit trail
@@ -123,7 +124,8 @@ Feature: Dashboard Options for Super Admin
     When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     When click on "Generate Audit Trail" option from the "Dashboard Options" popup
+    When select "Action added" audit trail change area parameter
     When press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_13Jan REG - Actions Dashboard" page
-    And verify the downloaded file name format is "01_13Jan REG_AuditTrail_Report_" with current date and time
+    And verify the downloaded file name format is "01_13Jan_REG_AuditTrail_Report_" with current date and time
     And logout from the application
