@@ -14,8 +14,8 @@ export class TeamManagementPage extends BasePage {
   private addTeamMembersCancelButton = `${this.addTeamMembersDialog} button:has(.k-button-text:text-is("Cancel"))`;
   private addTeamMembersDuplicateUserWarning = `${this.addTeamMembersDialog} :text-is("User already exists in Team members list")`;
   private teamMembersGrid = '#teamForm [role="grid"][aria-label="Data table"]';
-  private teamMembersEmailFilterInput = `${this.teamMembersGrid} input[aria-label="Email Filter"]`;
-  private teamMembersEmailFilterCell = `${this.teamMembersGrid} td[aria-label="Email Filter"]`;
+  private teamMembersEmailFilterInput = `${this.teamMembersGrid} input[aria-label*="Email"][aria-label*="Filter"], ${this.teamMembersGrid} input[placeholder*="Email" i], ${this.teamMembersGrid} td[data-kendo-grid-column-index="1"] input`;
+  private teamMembersEmailFilterCell = `${this.teamMembersGrid} td[aria-label*="Email"], ${this.teamMembersGrid} td[data-kendo-grid-column-index="1"]`;
   private teamMembersEmailClearButton = `${this.teamMembersEmailFilterCell} button[title="Clear"]`;
   private teamMembersEmailFilterActionButton = `${this.teamMembersEmailFilterCell} button[title*="Filter" i]`;
   private teamMemberRowByEmail = (emailAddress: string) =>
@@ -404,17 +404,23 @@ export class TeamManagementPage extends BasePage {
 
   /**
    * Filters Team Members by email on the Create/Edit Team page.
+   * Waits for the filter input to be visible and ready before applying the filter.
    * @param emailAddress Email address used to filter Team Members.
    */
   async searchTeamMembersByEmail(emailAddress: string): Promise<void> {
+    // Ensure the Team Members grid and filter input are fully rendered before attempting to interact
+    await this.waitForElement(this.teamMembersEmailFilterInput, 10000);
     await this.clearInput(this.teamMembersEmailFilterInput);
     await this.fillInputText(this.teamMembersEmailFilterInput, emailAddress);
   }
 
   /**
    * Verifies that the Team Members email filter contains a value.
+   * Waits for the filter input to be visible and stable before reading its value.
    */
   async verifyTeamMembersEmailFilterIsApplied(): Promise<void> {
+    // Ensure the filter input is visible and ready
+    await this.waitForElement(this.teamMembersEmailFilterInput, 10000);
     const filterValue = (await this._page.locator(this.teamMembersEmailFilterInput).inputValue()).trim();
     if (filterValue.length > 0) {
       return;
@@ -430,8 +436,12 @@ export class TeamManagementPage extends BasePage {
 
   /**
    * Clears the Team Members email filter from the Create/Edit Team page.
+   * Attempts to click a Clear or Filter button, or manually clears the input field.
    */
   async clearTeamMembersEmailFilter(): Promise<void> {
+    // Ensure the filter input is visible and ready
+    await this.waitForElement(this.teamMembersEmailFilterInput, 10000);
+    
     const clearButton = this._page.locator(this.teamMembersEmailClearButton);
     if (await clearButton.count() > 0 && await clearButton.first().isVisible().catch(() => false)) {
       await this.clickElement(this.teamMembersEmailClearButton);
@@ -444,17 +454,23 @@ export class TeamManagementPage extends BasePage {
       return;
     }
 
+    // Fallback: manually clear the input field
     await this.clearInput(this.teamMembersEmailFilterInput);
   }
 
   /**
    * Deletes a Team Member from the Team Members grid by email.
+   * Ensures the Remove User confirmation dialog appears before returning.
    * @param emailAddress Email address displayed in the Team Members row to remove.
    */
   async deleteTeamMember(emailAddress: string): Promise<void> {
     const teamMemberRow = this._page.locator(this.teamMemberRowByEmail(emailAddress));
     await expect(teamMemberRow).toHaveCount(1);
     await this.clickElement(this.teamMemberDeleteButtonByEmail(emailAddress));
+    
+    // Wait for the Remove User? confirmation dialog to appear
+    const removeUserDialog = 'div[role="dialog"]:has(.k-dialog-title:text-is("Remove User?"))';
+    await this.waitForSelectorStatus(removeUserDialog, 'visible');
   }
 
   /**
