@@ -25,6 +25,7 @@ const ANALYSIS_DIR = path.resolve('test-results', 'analysis');
 const QUALITY_SUMMARY_FILE = path.join(ANALYSIS_DIR, 'allure-quality-summary.md');
 const QUALITY_METRICS_FILE = path.join(ANALYSIS_DIR, 'allure-quality-metrics.json');
 const APPLICATION_DEFECT_PATTERN = /APPLICATION DEFECT DETECTED/;
+const APPLICATION_DEFECT_BUSINESS_RULE_PATTERN = /APPLICATION DEFECT DETECTED\s*\r?\n?\s*Business rule:\s*(.+?)(?:\r?\n\s*Expected result:|$)/s;
 
 function escapePropertyValue(value) {
   return String(value ?? '').replace(/\\/g, '\\\\').replace(/\r?\n/g, ' ');
@@ -66,6 +67,37 @@ function writeReportMetadata() {
     reportUrl: buildUrl,
   };
   fs.writeFileSync(path.join(ALLURE_DIR, 'executor.json'), JSON.stringify(executor, null, 2));
+}
+
+function normalizeApplicationDefectMessages() {
+  if (!fs.existsSync(ALLURE_DIR)) {
+    return;
+  }
+
+  let normalized = 0;
+  const resultFiles = fs.readdirSync(ALLURE_DIR).filter(file => file.endsWith('-result.json'));
+
+  for (const file of resultFiles) {
+    const filePath = path.join(ALLURE_DIR, file);
+    const result = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    const statusDetails = result.statusDetails;
+    const message = statusDetails?.message || '';
+    const match = message.match(APPLICATION_DEFECT_BUSINESS_RULE_PATTERN);
+    if (!match) {
+      continue;
+    }
+
+    const normalizedMessage = `APPLICATION DEFECT DETECTED\nBusiness rule: ${match[1].trim()}`;
+    if (message === normalizedMessage) {
+      continue;
+    }
+
+    statusDetails.message = normalizedMessage;
+    fs.writeFileSync(filePath, JSON.stringify(result));
+    normalized += 1;
+  }
+
+  console.log(`  ✅ ${normalized} application defect result(s) normalized by business rule.`);
 }
 
 function classifyTimeoutFailures() {
@@ -544,6 +576,7 @@ function normalizeSuiteHierarchy() {
 
 console.log('🔧 Allure BDD Enhance: injecting unreached Gherkin steps...');
 writeReportMetadata();
+normalizeApplicationDefectMessages();
 const bddMap = loadBddDataMap();
 console.log(`  Loaded ${bddMap.size} test cases from .features-gen.`);
 enhanceResults(bddMap);

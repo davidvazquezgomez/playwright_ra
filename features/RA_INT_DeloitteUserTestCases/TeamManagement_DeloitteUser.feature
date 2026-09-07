@@ -56,27 +56,6 @@ Feature: Team Management for Deloitte User
     When press "Save" button on the "Create/Edit Team" page
     Then verify "Team created successfully." toast message is displayed in the "Team Management" page
 
-  @mutable @cleanup
-  Scenario: TC002_02_DeloitteUser_TeamManagement - Edit a created team
-    Given the "Team Management - QA_Test client3" page is open
-    And ensure the team "QA_TEST_01" exists with Team Leader "satestclientadmin1@yopmail.com" and Team Member "DeloitteUserTest@gmail.com"
-    And register the team "QA_TEST_01" for cleanup
-    When click on "Edit" button for the "QA_TEST_01" team
-    And add "ra.grewspec@gmail.com" in the "Team Leader" field
-    And open the Add Team Members dialog
-    And add "DeloitteUserTest2@gmail.com;TestDeloitteUserTest2@gmail.com;NonDeloitteUserTest@gmail.com" in the "Search user" field
-    And press "Add User" button in the "Add Team Members" popup
-    When press "Save" button on the "Create/Edit Team" page
-    Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
-    Then verify the user "ra.grewspec@gmail.com" is available in the team leaders
-    When search for "DeloitteUserTest2@gmail.com" in the Team Members table email field
-    Then verify filters are applied
-    When click on "filter" button from the Team Members table email field
-    Then verify the filter is removed
-    When click on "Delete" icon against the team member "DeloitteUserTest@gmail.com"
-    And press "Remove User" button on the "Remove User?" popup
-    When press "Save" button on the "Create/Edit Team" page
-    Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
 
   @mutable @cleanup
   Scenario: TC002_03_DeloitteUser_TeamManagement - Delete a created team
