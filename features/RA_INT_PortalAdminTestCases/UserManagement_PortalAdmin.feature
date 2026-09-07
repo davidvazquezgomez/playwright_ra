@@ -14,7 +14,6 @@ Feature: User Management for Portal Admin
     And verify "<sections>" tabs are displayed in "User Management" page
     When press the "<sections>" section
     Then verify "<buttons>" buttons are displayed in the User Management page
-    # MÃƒÂ©todo especÃƒÂ­fico en User Management por la casuÃƒÂ­stica de que el botÃƒÂ³n EXPORT USERS tiene un espacio inicial
     Then verify items are sorted in "ascending" order by "User Name" in the "User Management" page by default
 
     Examples:
@@ -206,7 +205,6 @@ Feature: User Management for Portal Admin
     And ensure the external user "qa.admin@example.com" exists with first name "QA", last name "Admin", and company "Regulatory Advantage Testing"
     Given the "Team Management - Global Inc" page is open
     When click on "Edit" button for the "01_QA_UserManagement" team
-    #And register cleanup to restore "sonigour, audit" as Team Leader of "01_QA_UserManagement", remove "qa.admin@example.com", and use portal "Global Inc"
     And remove "sonigour, audit" from the "Team Leader" field if exists
     And add "qa.admin@example.com" in the "Team Leader" field
     And open the Add Team Members dialog

@@ -105,8 +105,12 @@ export class CommonPage extends BasePage {
   private privacyPreferenceCenterTitle = `${this.privacyPreferenceCenterDialog} h2#ot-pc-title`;
   private kendoDialogByTitle = (title: string) =>
     `div[role="dialog"]:has(.k-dialog-title:text-is("${title}"))`;
+  private visibleWarningKendoDialog =
+    'div[role="dialog"]:visible:has(.k-dialog-title .fa-exclamation-triangle)';
+  private resolvePopupDialogByTitle = (title: string) =>
+    title === 'Warning' ? this.visibleWarningKendoDialog : this.kendoDialogByTitle(title);
   private kendoDialogButtonByName = (title: string, buttonName: string) =>
-    `${this.kendoDialogByTitle(title)} button:is([aria-label="${buttonName}"], :has(> span.k-button-text:text-is("${buttonName}")))`;
+    `${this.resolvePopupDialogByTitle(title)} button:is([aria-label="${buttonName}"], :has(> span.k-button-text:text-is("${buttonName}")))`;
   private visibleKendoDialogContent = 'div[role="dialog"]:visible .k-dialog-content';
   private dialogActionButtonByName = (buttonName: string) =>
     `div[role="dialog"]:visible kendo-dialog-actions button[aria-label="${buttonName}"]`;
@@ -159,6 +163,7 @@ export class CommonPage extends BasePage {
    */
   async launchApplication(url: string): Promise<void> {
     await this.loadPage(url);
+    
     const [title, bodyText] = await Promise.all([
       this._page.title(),
       this._page.locator('body').innerText(),
@@ -939,7 +944,7 @@ export class CommonPage extends BasePage {
         await this.clickElement(this.profileMenuOptionByName(button));
         break;
       case "Back":
-        await this.clickElement(this.backButton, 60000);
+        await this.clickElement(this.backButton);
         break;
       case "favorite icon":
         await this.clickElement(this.favouriteIcon);
@@ -959,13 +964,28 @@ export class CommonPage extends BasePage {
       case "Delete":
       case "More Filters":
       case "Clear all filters":
-      case "Remove user":
       case "Update Portal Now":
       case "Deactivate Portal":
       case "Yes":
       case "Edit Client":
       case "Reactivate Portal":
         await this.buttonByName(button).click({ noWaitAfter: true });
+        break;
+      case "Remove user":
+        {
+          const buttonTextPattern = new RegExp(`^\\s*${this.escapeRegularExpression(button)}\\s*$`, 'i');
+          const visibleDialogButton = this._page
+            .locator('div[role="dialog"]:visible button')
+            .filter({ hasText: buttonTextPattern })
+            .first();
+
+          if (await visibleDialogButton.isVisible().catch(() => false)) {
+            await this.clickLocator(visibleDialogButton);
+            break;
+          }
+
+          await this.buttonByName(button).click({ noWaitAfter: true });
+        }
         break;
       case "Create anyway":
         await this.confirmDuplicateAutomaticAllocation();
@@ -1197,8 +1217,13 @@ export class CommonPage extends BasePage {
       return;
     }
 
-    const dialog = this.kendoDialogByTitle(title);
+    const dialog = this.resolvePopupDialogByTitle(title);
     await this.waitForElement(dialog);
+
+    if (title === 'Warning') {
+      return;
+    }
+
     await this.assertText(`${dialog} .k-dialog-title`, title);
   }
 

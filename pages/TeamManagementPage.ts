@@ -292,16 +292,64 @@ export class TeamManagementPage extends BasePage {
    * @param teamName Exact team name to remove.
    */
   async removeTeamIfPresent(teamName: string): Promise<void> {
+    await this.ensureTeamManagementListIsReady();
     await this.searchTeamsByName(teamName);
     const teamRow = this._page.locator(this.teamRowByName(teamName));
     if (await teamRow.count() === 0) {
       return;
     }
 
-    await this.clickElement(this.removeButtonByTeamName(teamName));
-    await this.waitForSelectorStatus(this.teamDeletionDialog, 'visible');
+    await this.removeTeam(teamName);
     await this.clickElement(this.teamDeletionConfirmButton);
     await expect(teamRow).toHaveCount(0);
+  }
+
+  /**
+   * Ensures the Team Management list page is ready before team-grid cleanup actions.
+   */
+  private async ensureTeamManagementListIsReady(): Promise<void> {
+    const teamNameFilter = this._page.locator(this.teamNameFilter);
+    if (await teamNameFilter.isVisible().catch(() => false)) {
+      return;
+    }
+
+    const currentUrl = this._page.url();
+    const parsedUrl = new URL(currentUrl);
+    const portalId = parsedUrl.pathname
+      .split('/')
+      .find((pathSegment) => /^\d+$/.test(pathSegment));
+
+    if (!portalId) {
+      throw new Error(
+        `Unable to open Team Management for cleanup because no portal id was found in URL "${currentUrl}".`,
+      );
+    }
+
+    await this.loadPage(new URL(`/teams/${portalId}`, parsedUrl.origin).toString());
+    await this.waitForElement(this.teamNameFilter);
+  }
+
+  /**
+   * Opens the delete confirmation popup for the requested team.
+   * @param teamName Exact name of the team to remove.
+   */
+  async removeTeam(teamName: string): Promise<void> {
+    await this.clearInput(this.teamNameFilter);
+    await this.fillInputText(this.teamNameFilter, teamName);
+    await this.ensureKendoGridHasRows(
+      '[role="grid"][aria-label="Data table"]',
+      `Team Management must contain a team before "${teamName}" can be removed.`,
+      `The Team Management grid was filtered by "${teamName}" before searching for the requested team.`,
+    );
+    await expect(this._page.locator(this.teamRowByName(teamName))).toBeVisible();
+    await this.ensureExpectedBusinessElementIsVisible(
+      this._page.locator(this.removeButtonByTeamName(teamName)),
+      `The team "${teamName}" must provide the Remove action.`,
+      `A Remove button is displayed for "${teamName}".`,
+      `The team row "${teamName}" is visible in the Team Management grid.`,
+    );
+    await this.clickElement(this.removeButtonByTeamName(teamName));
+    await this.waitForSelectorStatus(this.teamDeletionDialog, 'visible');
   }
 
   /**
@@ -470,20 +518,39 @@ export class TeamManagementPage extends BasePage {
       return;
     }
 
-    const filteredTeamRows = this._page.locator(this.teamGridRows);
-    await expect(filteredTeamRows).toHaveCount(1);
+    await this.ensureKendoGridHasRows(
+      '[role="grid"][aria-label="Data table"]',
+      'Team Management must display at least one team before Team Leader availability can be verified.',
+      'The Team Management grid was displayed before checking Team Leaders.',
+    );
 
-    const teamLeadersCell = filteredTeamRows.locator(this.teamLeadersCell);
-    try {
-      await expect(teamLeadersCell).toContainText(userName);
-    } catch {
-      this.failWithApplicationError(
-        'A Team Leader added to a team must be displayed for the filtered team.',
-        `Team Leaders that contain "${userName}".`,
-        (await teamLeadersCell.textContent())?.trim() ?? '',
-        `The Team Leaders cell was displayed for the filtered team but does not contain "${userName}".`,
-      );
+    const gridRows = this._page.locator(this.teamGridRows);
+    const rowCount = await gridRows.count();
+    const matchingLeaderValues: string[] = [];
+    const renderedLeaderValues: string[] = [];
+
+    for (let index = 0; index < rowCount; index += 1) {
+      const leaderValue = ((await gridRows.nth(index).locator(this.teamLeadersCell).textContent()) ?? '').trim();
+      if (!leaderValue) {
+        continue;
+      }
+
+      renderedLeaderValues.push(leaderValue);
+      if (this.doesTeamLeaderChipMatch(userName, leaderValue)) {
+        matchingLeaderValues.push(leaderValue);
+      }
     }
+
+    if (matchingLeaderValues.length > 0) {
+      return;
+    }
+
+    this.failWithApplicationError(
+      'A Team Leader added to a team must be displayed in Team Management Team Leaders.',
+      `At least one Team Leaders value that contains "${userName}".`,
+      renderedLeaderValues.join(' | ') || '(no Team Leaders values read from the grid)',
+      'The Team Management Team Leaders column values were read from the rendered data rows.',
+    );
   }
 
   /**

@@ -13,6 +13,13 @@ Then('verify attachments section is not displayed in the "Add Action" popup', as
 });
 
 Then(
+  'verify the "Add Action" button is {string} on the Actions Dashboard',
+  async ({ actionsDashboardPage }, expectedState: 'enabled' | 'disabled') => {
+    await actionsDashboardPage.verifyAddActionButtonState(expectedState);
+  },
+);
+
+Then(
   'verify {string} validation messages are displayed in the "Add Action" popup',
   async ({ actionsDashboardPage }, messages: string) => {
     await actionsDashboardPage.verifyMandatoryFieldMessagesAreDisplayed(messages);

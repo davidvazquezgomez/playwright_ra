@@ -12,10 +12,10 @@ Feature: Client Portal Setup for Super Admin
     And verify "Client Portal Name;Deloitte Administrators;Business Sponsor;Ask Deloitte Contact" field is displayed in the "Client Portal Setup" page
     When press "Save" button
     Then verify "Client Portal Name is required;At least one Deloitte Administrator is required;Business Sponsor is required" are displayed in the "Client Portal Setup" page
-    When fill the "Client Portal Name" field with "Portal Test" value in the "Client Portal Setup" page
-    And fill the "Deloitte Administrators" field with "e-business, DTT" value in the "Client Portal Setup" page
-    And fill the "Business Sponsor" field with "e-business, DTT" value in the "Client Portal Setup" page
-    And fill the "Ask Deloitte Contact" field with "askdeloitte@test.com" value in the "Client Portal Setup" page
+    When fill the "Client Portal Name" field with "Portal Test" value in the Client Portal Setup form
+    And fill the "Deloitte Administrators" field with "e-business, DTT" value in the Client Portal Setup form
+    And fill the "Business Sponsor" field with "e-business, DTT" value in the Client Portal Setup form
+    And fill the "Ask Deloitte Contact" field with "askdeloitte@test.com" value in the Client Portal Setup form
     And click on "Home" option from the left navigation
     Then the "Unsaved Changes" popup is displayed
     And verify "Continue;Cancel" buttons are displayed on the "Unsaved Changes" popup
@@ -36,10 +36,10 @@ Feature: Client Portal Setup for Super Admin
     Then the "Client Portal Setup" page is displayed
     When press "Save & Continue" button on the "Client Portal Setup" page
     Then the "Knowledge Modules & Impact Areas" page is displayed
-    When update the Knowledge Modules & Impact Areas using check-box or "Select All"
+    When update the Knowledge Modules & Impact Areas selection
     And press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page
     Then the "Jurisdictions" page is displayed
-    When update the Jurisdictions selection by removing specific items and making selective configurations
+    When update the Jurisdictions selection
     And press "Update Portal Now" button
     Then a message should get displayed as "updated successfully"
 
@@ -51,24 +51,25 @@ Feature: Client Portal Setup for Super Admin
     And press "Yes" button
     Then a message should get displayed as "updated successfully"
     When click on "Home" option from the left navigation
-    And navigate to the deactivated client list at the end of the portal listing
-    Then verify the deactivated client portal details are displayed
-    When click on the deactivated client portal name in the client portal listing
-    Then verify the error message is displayed on the client portal listing
+    And press "Last Page" pagination button in the "Client Portal List" page
+    Then verify the current page is "last" in the "Client Portal List" page
+    And verify "01_QA_ClientPortalSetup" client portal displays "Disabled" status in the Client Portal List
+    When click on the "01_QA_ClientPortalSetup" client portal name in the client portal listing
+    Then verify an access error is displayed on the client portal listing
     When press "Edit Client" button
     And press "Reactivate Portal" button
     When press "Yes" button
     Then a message should get displayed as "updated successfully"
-    And verify the portal is displayed in the list and shows status as "Enabled"
+    And verify "01_QA_ClientPortalSetup" client portal displays "Enabled" status in the Client Portal List
 
   @mutable
   Scenario Outline: TC003_SuperAdmin_ClientPortalSetup - Verify Actions Enabled/Actions Disabled toggle for the existing portal
     When press "Edit Client" button for the "01_QA_ClientPortalSetup" client portal
-    And click on the "<actionsState>" checkbox
+    And set Actions availability to "<actionsState>" in Client Portal Setup
     And press "Save & Continue" button on the "Client Portal Setup" page
-    And select the Knowledge Modules & Impact Areas using check-box or "Select All"
+    And update the Knowledge Modules & Impact Areas selection
     And press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page
-    And select the Jurisdictions by searching a particular state or using check-box
+    And update the Jurisdictions selection
     And press "Update Portal Now" button
     Then a message should get displayed as "updated successfully"
     When click on "Home" option from the left navigation
@@ -76,7 +77,7 @@ Feature: Client Portal Setup for Super Admin
     And click on the "01_QA_ClientPortalSetup" client portal name in the client portal listing
     When press "Open Dashboard" button
     And press "Actions" button
-    Then verify the "Add Action" button is "<expectedAddActionState>"
+    Then verify the "Add Action" button is "<expectedAddActionState>" on the Actions Dashboard
 
     Examples:
       | actionsState     | expectedAddActionState |

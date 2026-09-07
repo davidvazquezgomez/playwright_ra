@@ -1,4 +1,4 @@
-@DashboardOptions @DashboardOptions_SuperAdmin
+@DashboardOptions @DashboardOptions_TeamMember
 Feature: Dashboard Options for Team Member
 
   Background:
@@ -15,10 +15,10 @@ Feature: Dashboard Options for Team Member
     When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     And verify "Generate Report" is displayed in the Dashboard Options popup
-    When click on "Generate Report" option from the "Dashboard options" popup
+    When click on "Generate Report" option from the "Dashboard Options" popup
     Then verify the dashboard dropdown value is "Updates"
     And verify "Update Title;Jurisdiction;Impact Area;Date Announced;Date Effective;Priority;Status;Last Updated" columns are selected in the Dashboard Options popup
-    And verify "Generate Report;Cancel" buttons are displayed on the "Dashboard options" popup
+    And verify "Generate Report;Cancel" buttons are displayed on the "Dashboard Options" popup
     When press "Generate Report" button
     Then verify "Report generated and downloaded successfully" toast message is displayed in the "01_QA_StageTestPortal  - Updates Dashboard" page
 
@@ -34,19 +34,19 @@ Feature: Dashboard Options for Team Member
     When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     And verify "Generate Report" is displayed in the Dashboard Options popup
-    When click on "Generate Report" option from the "Dashboard options" popup
+    When click on "Generate Report" option from the "Dashboard Options" popup
     Then verify the dashboard dropdown value is "Updates"
     When press "Generate Report" button
     Then verify "Report generated and downloaded successfully" toast message is displayed in the "01_QA_StageTestPortal  - Updates Dashboard" page
-    And verify the downloaded file name format is "01_QA_StageTestPortal _Updates_Report_" with current date and time
+    And verify the downloaded file name format is "01_QA_StageTestPortal_Updates_Report_" with current date and time
 
   @mutable
   Scenario: TC019_03_TeamMember_DashboardOptions - Generate an unfiltered Actions report
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
-    When press "Dashboard options" button
+    When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     And verify "Generate Report" is displayed in the Dashboard Options popup
-    When click on "Generate Report" option from the "Dashboard options" popup
+    When click on "Generate Report" option from the "Dashboard Options" popup
     And select "Actions" from the "Generate report for" dropdown
     Then verify "Update Title;Action;User Assigned;Deadline Date;Update Priority;Action Priority;Action Status" columns are selected in the Dashboard Options popup
     When press "Generate Report" button
@@ -57,14 +57,14 @@ Feature: Dashboard Options for Team Member
   Scenario: TC019_04_TeamMember_DashboardOptions - Generate a filtered Actions report
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
-    And select "Japan" in the "Jurisdiction" filter on the Dashboard filter
+    And select "Canada" in the "Jurisdiction" filter on the Dashboard filter
     And select "Medium" in the "Action Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed
-    When press "Dashboard options" button
+    When press "Dashboard options" button on the Dashboard 
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     And verify "Generate Report" is displayed in the Dashboard Options popup
-    When click on "Generate Report" option from the "Dashboard options" popup
+    When click on "Generate Report" option from the "Dashboard Options" popup
     And select "Actions" from the "Generate report for" dropdown
     When press "Generate Report" button
     Then verify "Report generated and downloaded successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
@@ -74,12 +74,12 @@ Feature: Dashboard Options for Team Member
   Scenario: TC020_01_TeamMember_DashboardOptions - Generate an unfiltered Updates audit trail
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     Then the "Updates Dashboard" page is displayed
-    When press "Dashboard options" button
+    When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     And verify "Generate Audit Trail" is displayed in the Dashboard Options popup
-    When click on "Generate Audit Trail" option from the "Dashboard options" popup
+    When click on "Generate Audit Trail" option from the "Dashboard Options" popup
     Then verify the "Update allocated to responsible person;User added to Update Watchlist;User removed from Update Watchlist;Update status changed;Update priority changed;Action added;User added to Action;User removed from Action;Action status Changed;Action priority Changed" audit trail change area parameters are displayed
-    When select different audit trail parameters
+    When select "Update priority changed" audit trail change area parameter
     And press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     And verify the downloaded file name format is "01_QA_StageTestPortal_AuditTrail_Report_" with current date and time
@@ -91,10 +91,11 @@ Feature: Dashboard Options for Team Member
     And select "Brazil" in the "Jurisdiction" filter on the Dashboard filter
     And select "High" in the "Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
-    Then verify filtered updates are displayed
-    When press "Dashboard options" button
+    Then verify filtered actions are displayed
+    When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
-    When click on "Generate Audit Trail" option from the "Dashboard options" popup
+    When click on "Generate Audit Trail" option from the "Dashboard Options" popup
+    When select "Action added" audit trail change area parameter
     And press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     And verify the downloaded file name format is "01_QA_StageTestPortal_AuditTrail_Report_" with current date and time
@@ -102,13 +103,12 @@ Feature: Dashboard Options for Team Member
   @mutable
   Scenario: TC020_03_TeamMember_DashboardOptions - Generate an unfiltered Actions audit trail
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
-    Then verify for "Dashboard options" button is visible
-    When press "Dashboard options" button
+    When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     And verify "Generate Audit Trail" is displayed in the Dashboard Options popup
-    When click on "Generate Audit Trail" option from the "Dashboard options" popup
+    When click on "Generate Audit Trail" option from the "Dashboard Options" popup
     Then verify the "Update allocated to responsible person;User added to Update Watchlist;User removed from Update Watchlist;Update status changed;Update priority changed;Action added;User added to Action;User removed from Action;Action status Changed;Action priority Changed" audit trail change area parameters are displayed
-    When select different audit trail parameters
+    When select "Action priority Changed" audit trail change area parameter
     And press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     And verify the downloaded file name format is "01_QA_StageTestPortal_AuditTrail_Report_" with current date and time
@@ -121,9 +121,9 @@ Feature: Dashboard Options for Team Member
     And select "Medium" in the "Action Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed
-    And verify for "Dashboard options" button is visible
-    When press "Dashboard options" button
+    When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
+    When select "Action added" audit trail change area parameter
     When press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     And verify the downloaded file name format is "01_QA_StageTestPortal_AuditTrail_Report_" with current date and time

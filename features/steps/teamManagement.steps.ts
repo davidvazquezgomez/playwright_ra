@@ -45,11 +45,17 @@ When('leave the current team from the "Create/Edit Team" page', async ({ teamMan
 });
 
 When('click on {string} button for the {string} team', async ({ teamManagementPage }, buttonName: string, teamName: string) => {
-  if (buttonName !== 'Edit') {
-    throw new Error(`Team Management button "${buttonName}" is not supported.`);
+  if (buttonName === 'Edit') {
+    await teamManagementPage.editTeam(teamName);
+    return;
   }
 
-  await teamManagementPage.editTeam(teamName);
+  if (buttonName === 'Remove') {
+    await teamManagementPage.removeTeam(teamName);
+    return;
+  }
+
+  throw new Error(`Team Management button "${buttonName}" is not supported.`);
 });
 
 When('add {string} in the {string} field', async ({ teamManagementPage }, emailAddress: string, fieldLabel: string) => {

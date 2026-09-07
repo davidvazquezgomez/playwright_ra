@@ -99,7 +99,6 @@ Feature: Dashboard Actions for Deloitte User
 
   @mutable
   Scenario: TC010_04_DeloitteUser_DashboardActions - Verify adding a comment to an action
-  #Nuevo Filtro Añadido
     Given the "Actions Dashboard - QA_Test client3" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
@@ -120,7 +119,6 @@ Feature: Dashboard Actions for Deloitte User
 
   @mutable
   Scenario: TC010_05_DeloitteUser_DashboardActions - Verify uploading an attachment to an action
-    #Nuevo Filtro añadido
     Given the "Actions Dashboard - QA_Test client3" page is open
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter

@@ -206,7 +206,6 @@ Feature: User Management for Super Admin
     And ensure the external user "qa.admin@example.com" exists with first name "QA", last name "Admin", and company "Regulatory Advantage Testing"
     Given the "Team Management - 01_13Jan REG" page is open
     When click on "Edit" button for the "01_QA_UserManagement" team
-    #And register cleanup to restore "sonigour, audit" as Team Leader of "01_QA_UserManagement", remove "qa.admin@example.com", and use portal "01_13Jan REG"
     And remove "sonigour, audit" from the "Team Leader" field if exists
     And add "qa.admin@example.com" in the "Team Leader" field
     And open the Add Team Members dialog

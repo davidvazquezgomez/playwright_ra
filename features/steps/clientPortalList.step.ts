@@ -73,6 +73,24 @@ Then(
     }
 );
 
+Then(
+    'verify {string} client portal displays {string} status in the Client Portal List',
+    async ({ clientPortalListPage }, portalName: string, status: string) => {
+        await clientPortalListPage.verifyClientPortalStatus(portalName, status);
+    },
+);
+
+When(
+    'click on the {string} client portal name in the client portal listing',
+    async ({ clientPortalListPage }, portalName: string) => {
+        await clientPortalListPage.clickClientPortalName(portalName);
+    },
+);
+
+Then('verify an access error is displayed on the client portal listing', async ({ clientPortalListPage }) => {
+    await clientPortalListPage.verifyClientPortalAccessErrorDisplayed();
+});
+
 When(
     'select {string} in the {string} filter on the {string} page',
     async ({ clientPortalListPage }, filterValue: string, filterName: string, pageName: string) => {

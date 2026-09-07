@@ -3,6 +3,8 @@ import { expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class ActionsDashboardPage extends BasePage {
+  private readonly addActionButton = () =>
+    this._page.getByRole('button', { name: 'Add Action', exact: true });
   private readonly addActionDialog = 'div[role="dialog"]:has(.k-dialog-title:text-is("Add Action"))';
   private readonly actionInput = `${this.addActionDialog} input[formcontrolname="action"]`;
   private readonly updateInput = `${this.addActionDialog} kendo-autocomplete[formcontrolname="update"] input[role="combobox"]`;
@@ -97,6 +99,21 @@ export class ActionsDashboardPage extends BasePage {
       Status: this.statusDropdown,
       'Deadline Date': this.deadlineDatePicker,
     });
+  }
+
+  /**
+   * Verifies whether the Add Action control is enabled or disabled on the Actions Dashboard.
+   * @param expectedState Expected enabled state of the Add Action button.
+   */
+  async verifyAddActionButtonState(expectedState: 'enabled' | 'disabled'): Promise<void> {
+    const addActionButton = this.addActionButton();
+
+    if (expectedState === 'enabled') {
+      await expect(addActionButton).toBeEnabled();
+      return;
+    }
+
+    await expect(addActionButton).toBeDisabled();
   }
 
   /**

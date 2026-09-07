@@ -167,7 +167,6 @@ Feature: Dashboard Actions for Client User
   @mutable
   Scenario Outline: TC010_06_ClientUser_DashboardActions - Upload an attachment with unsupported format
     Given the "ClientPortal_20260209133616 - Actions Dashboard" page is open
-    #Diseñados para fallar
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
     And double-click "Test_ClientUser2" option on the Dashboard filter
