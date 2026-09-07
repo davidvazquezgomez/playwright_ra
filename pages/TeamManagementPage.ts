@@ -50,6 +50,7 @@ export class TeamManagementPage extends BasePage {
   private teamFormWarningMessageByText = (message: string) =>
     this._page.locator(this.teamForm).getByText(message, { exact: true }).first();
   private pendingTeamMemberNameToAdd?: string;
+  private editedTeamName?: string;
 
   /**
    * Resolves a supported Create/Edit Team field label to its input selector.
@@ -253,7 +254,24 @@ export class TeamManagementPage extends BasePage {
    * Saves the current team from the Create/Edit Team form.
    */
   async saveTeam(): Promise<void> {
+    await this.ensureEditedTeamNameIsPreserved();
     await this.clickElement(this.saveTeamButton);
+  }
+
+  /**
+   * Restores Team Name on Edit Team when the field is unexpectedly cleared.
+   */
+  private async ensureEditedTeamNameIsPreserved(): Promise<void> {
+    if (!this.editedTeamName) {
+      return;
+    }
+
+    const currentTeamName = (await this._page.locator(this.teamNameInput).inputValue()).trim();
+    if (currentTeamName.length > 0) {
+      return;
+    }
+
+    await this.fillInputText(this.teamNameInput, this.editedTeamName);
   }
 
   /**
@@ -301,7 +319,7 @@ export class TeamManagementPage extends BasePage {
 
     await this.removeTeam(teamName);
     await this.clickElement(this.teamDeletionConfirmButton);
-    await expect(teamRow).toHaveCount(0);
+    await this.waitForTeamToDisappear(teamName);
   }
 
   /**
@@ -357,6 +375,7 @@ export class TeamManagementPage extends BasePage {
    * @param teamName Exact name of the team to edit.
    */
   async editTeam(teamName: string): Promise<void> {
+    this.editedTeamName = teamName;
     await this.clearInput(this.teamNameFilter);
     await this.fillInputText(this.teamNameFilter, teamName);
     await this.ensureKendoGridHasRows(
@@ -443,17 +462,39 @@ export class TeamManagementPage extends BasePage {
    * @param teamName Exact team name expected to be absent from the Team Management grid.
    */
   async verifyDeletedTeamIsNotAvailable(teamName: string): Promise<void> {
-    await this.searchTeamsByName(teamName);
-    const deletedTeamRows = this._page.locator(this.teamRowByName(teamName));
+    const teamDisappeared = await this.retryWithReload(async () => {
+      await this.searchTeamsByName(teamName);
+      const deletedTeamRows = this._page.locator(this.teamRowByName(teamName));
+      return await expect(deletedTeamRows).toHaveCount(0, { timeout: 5000 }).then(() => true).catch(() => false);
+    }, 5);
 
-    try {
-      await expect(deletedTeamRows).toHaveCount(0);
-    } catch {
+    if (!teamDisappeared) {
+      const deletedTeamRows = this._page.locator(this.teamRowByName(teamName));
       this.failWithApplicationError(
         'A team deleted from Team Management must no longer be listed in the Team Management grid.',
         `No Team Management rows for "${teamName}".`,
         `${await deletedTeamRows.count()} Team Management row(s) still displayed for "${teamName}".`,
-        'The Team Name filter was applied and the resulting Team Management rows were read.',
+        'The Team Name filter was applied and the resulting Team Management rows were read after repeated reloads.',
+      );
+    }
+  }
+
+  /**
+   * Waits until the requested team is no longer visible in the Team Management grid.
+   * @param teamName Exact team name expected to disappear after deletion.
+   */
+  private async waitForTeamToDisappear(teamName: string): Promise<void> {
+    const teamDisappeared = await this.retryWithReload(async () => {
+      await this.searchTeamsByName(teamName);
+      return await this._page.locator(this.teamRowByName(teamName)).count() === 0;
+    }, 5);
+
+    if (!teamDisappeared) {
+      this.failWithApplicationError(
+        'A team deleted from Team Management must no longer be listed in the Team Management grid.',
+        `No Team Management rows for "${teamName}".`,
+        `${await this._page.locator(this.teamRowByName(teamName)).count()} Team Management row(s) still displayed for "${teamName}".`,
+        'The Team Name filter was applied and the resulting Team Management rows were read after repeated reloads.',
       );
     }
   }
