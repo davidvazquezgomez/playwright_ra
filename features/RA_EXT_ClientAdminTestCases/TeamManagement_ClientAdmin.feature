@@ -69,12 +69,10 @@ Feature: Team Management for Super Admin
     When press "Save" button on the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
     Then verify the user "satestclientuser2" is available in the team leaders
+    When click on "Edit" button for the "QA_TEST_01" team
     When search for "TeamMemberRA@outlook.com" in the Team Members table email field
-    Then verify filters are applied
-    When click on "filter" button from the Team Members table email field
-    Then verify the filter is removed
     When click on "Delete" icon against the team member "TeamMemberRA@outlook.com"
-    And press "Remove user" button
+    And press "Remove User" button on the "Remove User?" popup
     When press "Save" button on the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
 

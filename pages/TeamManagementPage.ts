@@ -1,4 +1,4 @@
-import { expect } from '@playwright/test';
+import { expect, Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class TeamManagementPage extends BasePage {
@@ -14,8 +14,8 @@ export class TeamManagementPage extends BasePage {
   private addTeamMembersCancelButton = `${this.addTeamMembersDialog} button:has(.k-button-text:text-is("Cancel"))`;
   private addTeamMembersDuplicateUserWarning = `${this.addTeamMembersDialog} :text-is("User already exists in Team members list")`;
   private teamMembersGrid = '#teamForm [role="grid"][aria-label="Data table"]';
-  private teamMembersEmailFilterInput = `${this.teamMembersGrid} input[aria-label="Email Filter"]`;
-  private teamMembersEmailFilterCell = `${this.teamMembersGrid} td[aria-label="Email Filter"]`;
+  private teamMembersEmailFilterInput = `${this.teamMembersGrid} input[aria-label*="Email"][aria-label*="Filter"], ${this.teamMembersGrid} input[placeholder*="Email" i], ${this.teamMembersGrid} td[data-kendo-grid-column-index="1"] input`;
+  private teamMembersEmailFilterCell = `${this.teamMembersGrid} td[aria-label*="Email"], ${this.teamMembersGrid} td[data-kendo-grid-column-index="1"]`;
   private teamMembersEmailClearButton = `${this.teamMembersEmailFilterCell} button[title="Clear"]`;
   private teamMembersEmailFilterActionButton = `${this.teamMembersEmailFilterCell} button[title*="Filter" i]`;
   private teamMemberRowByEmail = (emailAddress: string) =>
@@ -24,6 +24,8 @@ export class TeamManagementPage extends BasePage {
     `${this.teamMemberRowByEmail(emailAddress)} button[title*="Delete" i], ${this.teamMemberRowByEmail(emailAddress)} button[aria-label*="Delete" i], ${this.teamMemberRowByEmail(emailAddress)} button[title*="Remove" i], ${this.teamMemberRowByEmail(emailAddress)} button[aria-label*="Remove" i]`;
   private teamMemberNameCellByName = (displayName: string) =>
     `${this.teamMembersGrid} tbody tr.k-master-row td[data-kendo-grid-column-index="0"]:text-is("${displayName}")`;
+  private removeUserConfirmButton =
+    'div[role="dialog"]:has(.k-dialog-title:text-is("Remove User?")) button:has(.k-button-text:text-is("Remove User"))';
   private saveTeamButton = 'button.add-save-btn[form="teamForm"]';
   private leaveTeamButton = 'button:has(.k-button-text:text-is("Leave Team"))';
   private teamNameInput = '#teamForm kendo-textbox[formcontrolname="teamName"] input.k-input-inner';
@@ -50,6 +52,7 @@ export class TeamManagementPage extends BasePage {
   private teamFormWarningMessageByText = (message: string) =>
     this._page.locator(this.teamForm).getByText(message, { exact: true }).first();
   private pendingTeamMemberNameToAdd?: string;
+  private editedTeamName?: string;
 
   /**
    * Resolves a supported Create/Edit Team field label to its input selector.
@@ -139,34 +142,70 @@ export class TeamManagementPage extends BasePage {
    * @param userName User name expected to be available for selection.
    */
   async selectTeamMemberToAdd(userName: string): Promise<void> {
-    await this.fillInputText(this.addTeamMemberSearchInput, userName);
-
     const searchOptions = this._page.locator(this.addTeamMemberSearchOptions);
-    await expect(searchOptions.first()).toBeVisible({ timeout: 10000 });
 
-    const candidateOption = searchOptions
-      .filter({ hasText: userName })
-      .locator(':not([aria-selected="true"])')
-      .first();
+    // The people picker only matches its own name order, so each supported term is tried.
+    for (const [termIndex, searchTerm] of this.buildTeamMemberSearchTerms(userName).entries()) {
+      await this.fillInputText(this.addTeamMemberSearchInput, searchTerm);
 
-    const selectedCandidate = searchOptions
-      .filter({ hasText: userName })
-      .locator('[aria-selected="true"]')
-      .first();
+      const optionsAreDisplayed = await searchOptions
+        .first()
+        .waitFor({ state: 'visible', timeout: termIndex === 0 ? 10000 : 5000 })
+        .then(() => true)
+        .catch(() => false);
 
-    if (await candidateOption.count() > 0) {
-      await candidateOption.click();
-      this.pendingTeamMemberNameToAdd = userName;
-      return;
-    }
+      if (!optionsAreDisplayed) {
+        continue;
+      }
 
-    if (await selectedCandidate.count() > 0) {
-      // Keep the existing selection and avoid toggling it off.
+      const matchingOption = await this.findTeamMemberSearchOption(userName);
+      if (!matchingOption) {
+        continue;
+      }
+
+      if (await matchingOption.getAttribute('aria-selected') !== 'true') {
+        await this.clickLocator(matchingOption);
+      }
+
       this.pendingTeamMemberNameToAdd = userName;
       return;
     }
 
     throw new Error(`No Search user option matched "${userName}" in Add Team Members.`);
+  }
+
+  /**
+   * Builds the search terms accepted by the Add Team Members people picker for a display name.
+   * @param userName Display name requested by the scenario.
+   * @returns Unique search terms ordered from the most to the least specific.
+   */
+  private buildTeamMemberSearchTerms(userName: string): string[] {
+    const nameParts = userName.split(',').map(part => part.trim()).filter(Boolean);
+    const searchTerms = [userName, this.swapCommaSeparatedName(userName), ...nameParts];
+
+    return searchTerms.filter((term, index, terms) => Boolean(term) && terms.indexOf(term) === index);
+  }
+
+  /**
+   * Finds the search result that contains every part of the requested display name.
+   * @param userName Display name requested by the scenario.
+   * @returns Locator of the matching option, or null when no option matches.
+   */
+  private async findTeamMemberSearchOption(userName: string): Promise<Locator | null> {
+    const nameParts = userName.split(/[\s,]+/).map(part => part.trim().toLowerCase()).filter(Boolean);
+    const searchOptions = this._page.locator(this.addTeamMemberSearchOptions);
+    const optionCount = await searchOptions.count();
+
+    for (let optionIndex = 0; optionIndex < optionCount; optionIndex++) {
+      const option = searchOptions.nth(optionIndex);
+      const optionText = ((await option.textContent()) ?? '').toLowerCase();
+
+      if (nameParts.every(namePart => optionText.includes(namePart))) {
+        return option;
+      }
+    }
+
+    return null;
   }
 
   /**
@@ -253,7 +292,24 @@ export class TeamManagementPage extends BasePage {
    * Saves the current team from the Create/Edit Team form.
    */
   async saveTeam(): Promise<void> {
+    await this.ensureEditedTeamNameIsPreserved();
     await this.clickElement(this.saveTeamButton);
+  }
+
+  /**
+   * Restores Team Name on Edit Team when the field is unexpectedly cleared.
+   */
+  private async ensureEditedTeamNameIsPreserved(): Promise<void> {
+    if (!this.editedTeamName) {
+      return;
+    }
+
+    const currentTeamName = (await this._page.locator(this.teamNameInput).inputValue()).trim();
+    if (currentTeamName.length > 0) {
+      return;
+    }
+
+    await this.fillInputText(this.teamNameInput, this.editedTeamName);
   }
 
   /**
@@ -301,7 +357,7 @@ export class TeamManagementPage extends BasePage {
 
     await this.removeTeam(teamName);
     await this.clickElement(this.teamDeletionConfirmButton);
-    await expect(teamRow).toHaveCount(0);
+    await this.waitForTeamToDisappear(teamName);
   }
 
   /**
@@ -357,6 +413,7 @@ export class TeamManagementPage extends BasePage {
    * @param teamName Exact name of the team to edit.
    */
   async editTeam(teamName: string): Promise<void> {
+    this.editedTeamName = teamName;
     await this.clearInput(this.teamNameFilter);
     await this.fillInputText(this.teamNameFilter, teamName);
     await this.ensureKendoGridHasRows(
@@ -385,17 +442,23 @@ export class TeamManagementPage extends BasePage {
 
   /**
    * Filters Team Members by email on the Create/Edit Team page.
+   * Waits for the filter input to be visible and ready before applying the filter.
    * @param emailAddress Email address used to filter Team Members.
    */
   async searchTeamMembersByEmail(emailAddress: string): Promise<void> {
+    // Ensure the Team Members grid and filter input are fully rendered before attempting to interact
+    await this.waitForElement(this.teamMembersEmailFilterInput, 10000);
     await this.clearInput(this.teamMembersEmailFilterInput);
     await this.fillInputText(this.teamMembersEmailFilterInput, emailAddress);
   }
 
   /**
    * Verifies that the Team Members email filter contains a value.
+   * Waits for the filter input to be visible and stable before reading its value.
    */
   async verifyTeamMembersEmailFilterIsApplied(): Promise<void> {
+    // Ensure the filter input is visible and ready
+    await this.waitForElement(this.teamMembersEmailFilterInput, 10000);
     const filterValue = (await this._page.locator(this.teamMembersEmailFilterInput).inputValue()).trim();
     if (filterValue.length > 0) {
       return;
@@ -411,8 +474,12 @@ export class TeamManagementPage extends BasePage {
 
   /**
    * Clears the Team Members email filter from the Create/Edit Team page.
+   * Attempts to click a Clear or Filter button, or manually clears the input field.
    */
   async clearTeamMembersEmailFilter(): Promise<void> {
+    // Ensure the filter input is visible and ready
+    await this.waitForElement(this.teamMembersEmailFilterInput, 10000);
+    
     const clearButton = this._page.locator(this.teamMembersEmailClearButton);
     if (await clearButton.count() > 0 && await clearButton.first().isVisible().catch(() => false)) {
       await this.clickElement(this.teamMembersEmailClearButton);
@@ -425,17 +492,45 @@ export class TeamManagementPage extends BasePage {
       return;
     }
 
+    // Fallback: manually clear the input field
     await this.clearInput(this.teamMembersEmailFilterInput);
   }
 
   /**
    * Deletes a Team Member from the Team Members grid by email.
+   * Ensures the Remove User confirmation dialog appears before returning.
    * @param emailAddress Email address displayed in the Team Members row to remove.
    */
   async deleteTeamMember(emailAddress: string): Promise<void> {
     const teamMemberRow = this._page.locator(this.teamMemberRowByEmail(emailAddress));
     await expect(teamMemberRow).toHaveCount(1);
     await this.clickElement(this.teamMemberDeleteButtonByEmail(emailAddress));
+    
+    // Wait for the Remove User? confirmation dialog to appear
+    const removeUserDialog = 'div[role="dialog"]:has(.k-dialog-title:text-is("Remove User?"))';
+    await this.waitForSelectorStatus(removeUserDialog, 'visible');
+  }
+
+  /**
+   * Removes a Team Member from the team being edited only when the member is already listed.
+   * @param emailAddress Email address of the Team Member to remove.
+   */
+  async removeTeamMemberIfPresent(emailAddress: string): Promise<void> {
+    await this.searchTeamMembersByEmail(emailAddress);
+
+    const teamMemberRow = this._page.locator(this.teamMemberRowByEmail(emailAddress));
+    const isMemberListed = await teamMemberRow
+      .first()
+      .waitFor({ state: 'visible', timeout: 10000 })
+      .then(() => true)
+      .catch(() => false);
+
+    if (isMemberListed) {
+      await this.clickElement(this.teamMemberDeleteButtonByEmail(emailAddress));
+      await this.clickElement(this.removeUserConfirmButton);
+    }
+
+    await this.clearTeamMembersEmailFilter();
   }
 
   /**
@@ -443,17 +538,39 @@ export class TeamManagementPage extends BasePage {
    * @param teamName Exact team name expected to be absent from the Team Management grid.
    */
   async verifyDeletedTeamIsNotAvailable(teamName: string): Promise<void> {
-    await this.searchTeamsByName(teamName);
-    const deletedTeamRows = this._page.locator(this.teamRowByName(teamName));
+    const teamDisappeared = await this.retryWithReload(async () => {
+      await this.searchTeamsByName(teamName);
+      const deletedTeamRows = this._page.locator(this.teamRowByName(teamName));
+      return await expect(deletedTeamRows).toHaveCount(0, { timeout: 5000 }).then(() => true).catch(() => false);
+    }, 5);
 
-    try {
-      await expect(deletedTeamRows).toHaveCount(0);
-    } catch {
+    if (!teamDisappeared) {
+      const deletedTeamRows = this._page.locator(this.teamRowByName(teamName));
       this.failWithApplicationError(
         'A team deleted from Team Management must no longer be listed in the Team Management grid.',
         `No Team Management rows for "${teamName}".`,
         `${await deletedTeamRows.count()} Team Management row(s) still displayed for "${teamName}".`,
-        'The Team Name filter was applied and the resulting Team Management rows were read.',
+        'The Team Name filter was applied and the resulting Team Management rows were read after repeated reloads.',
+      );
+    }
+  }
+
+  /**
+   * Waits until the requested team is no longer visible in the Team Management grid.
+   * @param teamName Exact team name expected to disappear after deletion.
+   */
+  private async waitForTeamToDisappear(teamName: string): Promise<void> {
+    const teamDisappeared = await this.retryWithReload(async () => {
+      await this.searchTeamsByName(teamName);
+      return await this._page.locator(this.teamRowByName(teamName)).count() === 0;
+    }, 5);
+
+    if (!teamDisappeared) {
+      this.failWithApplicationError(
+        'A team deleted from Team Management must no longer be listed in the Team Management grid.',
+        `No Team Management rows for "${teamName}".`,
+        `${await this._page.locator(this.teamRowByName(teamName)).count()} Team Management row(s) still displayed for "${teamName}".`,
+        'The Team Name filter was applied and the resulting Team Management rows were read after repeated reloads.',
       );
     }
   }

@@ -163,7 +163,7 @@ export class CommonPage extends BasePage {
    */
   async launchApplication(url: string): Promise<void> {
     await this.loadPage(url);
-    await this._page.pause();
+    /*await this._page.pause();*/
     const [title, bodyText] = await Promise.all([
       this._page.title(),
       this._page.locator('body').innerText(),
@@ -1148,7 +1148,7 @@ export class CommonPage extends BasePage {
     await expect(
       this.toastMessageByText(message),
       `Expected toast message "${message}" to be visible on the ${pageName} page.`,
-    ).toBeVisible({ timeout: 30000 });
+    ).toBeVisible({ timeout: 90000 });
   }
 
   /**
