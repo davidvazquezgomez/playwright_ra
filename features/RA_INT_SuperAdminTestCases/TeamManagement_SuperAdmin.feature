@@ -72,7 +72,7 @@ Feature: Team Management for Super Admin
     When click on "Edit" button for the "QA_TEST_01" team
     Then search for "asjad.alam@gmail.com" in the Team Members table email field
     When click on "Delete" icon against the team member "smoke@gmail.com"
-    And press "Remove user" button
+    And press "Remove User" button on the "Remove User?" popup
     When press "Save" button on the "Create/Edit Team" page
     Then verify "Team updated successfully." toast message is displayed in the "Team Management" page
 

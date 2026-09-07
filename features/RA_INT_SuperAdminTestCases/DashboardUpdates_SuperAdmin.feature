@@ -66,7 +66,10 @@ Feature: Dashboard Updates for Super Admin
     And select "ECA, test" in the "Watch List" field on the selected update
     When press "Save" button on the selected update
     Then verify "Regulatory update updated successfully" toast message is displayed in the "Test_11-5_01" page
-    When open the first update in the "1_E2E_Test1 - Updates Dashboard" page
+    When press "Back" button
+    And press "Clear" button in the search field
+    When search for "Test_11-5_01" update from the "1_E2E_Test1 - Updates Dashboard" page
+    And open the first update in the "1_E2E_Test1 - Updates Dashboard" page
     When press "Edit" button on the selected update
     And select "RBT, testclientadmin" in the "User Assigned" field on the selected update
     When select "Low" option in the "Priority" field in the "Update Details" subsection
