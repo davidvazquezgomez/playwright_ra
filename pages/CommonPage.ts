@@ -964,13 +964,28 @@ export class CommonPage extends BasePage {
       case "Delete":
       case "More Filters":
       case "Clear all filters":
-      case "Remove user":
       case "Update Portal Now":
       case "Deactivate Portal":
       case "Yes":
       case "Edit Client":
       case "Reactivate Portal":
         await this.buttonByName(button).click({ noWaitAfter: true });
+        break;
+      case "Remove user":
+        {
+          const buttonTextPattern = new RegExp(`^\\s*${this.escapeRegularExpression(button)}\\s*$`, 'i');
+          const visibleDialogButton = this._page
+            .locator('div[role="dialog"]:visible button')
+            .filter({ hasText: buttonTextPattern })
+            .first();
+
+          if (await visibleDialogButton.isVisible().catch(() => false)) {
+            await this.clickLocator(visibleDialogButton);
+            break;
+          }
+
+          await this.buttonByName(button).click({ noWaitAfter: true });
+        }
         break;
       case "Create anyway":
         await this.confirmDuplicateAutomaticAllocation();
