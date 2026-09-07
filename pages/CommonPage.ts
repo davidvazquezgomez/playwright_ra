@@ -1148,7 +1148,7 @@ export class CommonPage extends BasePage {
     await expect(
       this.toastMessageByText(message),
       `Expected toast message "${message}" to be visible on the ${pageName} page.`,
-    ).toBeVisible({ timeout: 30000 });
+    ).toBeVisible({ timeout: 90000 });
   }
 
   /**

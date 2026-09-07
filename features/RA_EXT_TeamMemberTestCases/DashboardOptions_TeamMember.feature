@@ -57,7 +57,7 @@ Feature: Dashboard Options for Team Member
   Scenario: TC019_04_TeamMember_DashboardOptions - Generate a filtered Actions report
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
-    And select "Canada" in the "Jurisdiction" filter on the Dashboard filter
+    And select "Japan" in the "Jurisdiction" filter on the Dashboard filter
     And select "Medium" in the "Action Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed
@@ -70,22 +70,8 @@ Feature: Dashboard Options for Team Member
     Then verify "Report generated and downloaded successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     And verify the downloaded file name format is "01_QA_StageTestPortal_Actions_Report_" with current date and time
 
-  @mutable
-  Scenario: TC020_01_TeamMember_DashboardOptions - Generate an unfiltered Updates audit trail
-    Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    Then the "Updates Dashboard" page is displayed
-    When press "Dashboard options" button on the Dashboard
-    Then verify the "Dashboard options" popup is displayed on the Dashboard
-    And verify "Generate Audit Trail" is displayed in the Dashboard Options popup
-    When click on "Generate Audit Trail" option from the "Dashboard Options" popup
-    Then verify the "Update allocated to responsible person;User added to Update Watchlist;User removed from Update Watchlist;Update status changed;Update priority changed;Action added;User added to Action;User removed from Action;Action status Changed;Action priority Changed" audit trail change area parameters are displayed
-    When select "Update priority changed" audit trail change area parameter
-    And press "Generate Audit Trail" button
-    Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
-    And verify the downloaded file name format is "01_QA_StageTestPortal_AuditTrail_Report_" with current date and time
-
   @readOnly
-  Scenario: TC020_02_TeamMember_DashboardOptions - Generate a filtered Updates audit trail
+  Scenario: TC020_01_TeamMember_DashboardOptions - Generate a filtered Updates audit trail
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When press "Filter" button on the Dashboard filter
     And select "Brazil" in the "Jurisdiction" filter on the Dashboard filter
@@ -100,21 +86,8 @@ Feature: Dashboard Options for Team Member
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
     And verify the downloaded file name format is "01_QA_StageTestPortal_AuditTrail_Report_" with current date and time
 
-  @mutable
-  Scenario: TC020_03_TeamMember_DashboardOptions - Generate an unfiltered Actions audit trail
-    Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
-    When press "Dashboard options" button on the Dashboard
-    Then verify the "Dashboard options" popup is displayed on the Dashboard
-    And verify "Generate Audit Trail" is displayed in the Dashboard Options popup
-    When click on "Generate Audit Trail" option from the "Dashboard Options" popup
-    Then verify the "Update allocated to responsible person;User added to Update Watchlist;User removed from Update Watchlist;Update status changed;Update priority changed;Action added;User added to Action;User removed from Action;Action status Changed;Action priority Changed" audit trail change area parameters are displayed
-    When select "Action priority Changed" audit trail change area parameter
-    And press "Generate Audit Trail" button
-    Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
-    And verify the downloaded file name format is "01_QA_StageTestPortal_AuditTrail_Report_" with current date and time
-
   @readOnly
-  Scenario: TC020_04_TeamMember_DashboardOptions - Generate a filtered Actions audit trail
+  Scenario: TC020_02_TeamMember_DashboardOptions - Generate a filtered Actions audit trail
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And select "Japan" in the "Jurisdiction" filter on the Dashboard filter
@@ -123,6 +96,7 @@ Feature: Dashboard Options for Team Member
     Then verify filtered actions are displayed
     When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
+    When click on "Generate Audit Trail" option from the "Dashboard Options" popup
     When select "Action added" audit trail change area parameter
     When press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page

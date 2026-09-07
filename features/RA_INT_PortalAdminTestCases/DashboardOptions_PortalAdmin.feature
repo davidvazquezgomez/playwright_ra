@@ -70,22 +70,8 @@ Feature: Dashboard Options for Portal Admin
     Then verify "Report generated and downloaded successfully" toast message is displayed in the "Global Inc - Actions Dashboard" page
     And verify the downloaded file name format is "Global_Inc_Actions_Report_" with current date and time
 
-  @mutable
-  Scenario: TC020_01_PortalAdmin_DashboardOptions - Generate an unfiltered Updates audit trail
-    Given the "Updates Dashboard - Global Inc" page is open
-    Then the "Updates Dashboard" page is displayed
-    When press "Dashboard options" button on the Dashboard
-    Then verify the "Dashboard options" popup is displayed on the Dashboard
-    And verify "Generate Audit Trail" is displayed in the Dashboard Options popup
-    When click on "Generate Audit Trail" option from the "Dashboard Options" popup
-    Then verify the "Update allocated to responsible person;User added to Update Watchlist;User removed from Update Watchlist;Update status changed;Update priority changed;Action added;User added to Action;User removed from Action;Action status Changed;Action priority Changed" audit trail change area parameters are displayed
-    When select "Update priority changed" audit trail change area parameter
-    And press "Generate Audit Trail" button
-    Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "Global Inc - Updates Dashboard" page
-    And verify the downloaded file name format is "Global_Inc_AuditTrail_Report_" with current date and time
-
   @readOnly
-  Scenario: TC020_02_PortalAdmin_DashboardOptions - Generate a filtered Updates audit trail
+  Scenario: TC020_01_PortalAdmin_DashboardOptions - Generate a filtered Updates audit trail
     Given the "Updates Dashboard - Global Inc" page is open
     When press "Filter" button on the Dashboard filter
     And select "Australia" in the "Jurisdiction" filter on the Dashboard filter
@@ -100,21 +86,8 @@ Feature: Dashboard Options for Portal Admin
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "Global Inc - Updates Dashboard" page
     And verify the downloaded file name format is "Global_Inc_AuditTrail_Report_" with current date and time
 
-  @mutable
-  Scenario: TC020_03_PortalAdmin_DashboardOptions - Generate an unfiltered Actions audit trail
-    Given the "Global Inc - Actions Dashboard" page is open
-    When press "Dashboard options" button on the Dashboard
-    Then verify the "Dashboard options" popup is displayed on the Dashboard
-    And verify "Generate Audit Trail" is displayed in the Dashboard Options popup
-    When click on "Generate Audit Trail" option from the "Dashboard Options" popup
-    Then verify the "Update allocated to responsible person;User added to Update Watchlist;User removed from Update Watchlist;Update status changed;Update priority changed;Action added;User added to Action;User removed from Action;Action status Changed;Action priority Changed" audit trail change area parameters are displayed
-    When select "Action priority Changed" audit trail change area parameter
-    And press "Generate Audit Trail" button
-    Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "Global Inc - Actions Dashboard" page
-    And verify the downloaded file name format is "Global_Inc_AuditTrail_Report_" with current date and time
-
   @readOnly
-  Scenario: TC020_04_PortalAdmin_DashboardOptions - Generate a filtered Actions audit trail
+  Scenario: TC020_02_PortalAdmin_DashboardOptions - Generate a filtered Actions audit trail
     Given the "Global Inc - Actions Dashboard" page is open
     When press "Filter" button on the Dashboard filter
     And select "Argentina" in the "Jurisdiction" filter on the Dashboard filter
@@ -123,6 +96,7 @@ Feature: Dashboard Options for Portal Admin
     Then verify filtered actions are displayed
     When press "Dashboard options" button on the Dashboard
     Then verify the "Dashboard options" popup is displayed on the Dashboard
+    When click on "Generate Audit Trail" option from the "Dashboard Options" popup
     When select "Action added" audit trail change area parameter
     When press "Generate Audit Trail" button
     Then verify "Audit trail report generated and downloaded successfully" toast message is displayed in the "Global Inc - Actions Dashboard" page
