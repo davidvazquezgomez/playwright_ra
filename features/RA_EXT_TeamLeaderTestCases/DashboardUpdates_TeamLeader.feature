@@ -66,6 +66,9 @@ Feature: Dashboard page for Team Leader
     And select "satestclientuser3, satestclientuser3" in the "Watch List" field on the selected update
     When press "Save" button on the selected update
     Then verify "Regulatory update updated successfully" toast message is displayed in the "26Updates to 2025 Maximum Annual Earnings for Sickness, Maternity and Family Allowance Contributions" page
+    When press "Back" button
+    When press "Clear" button in the search field
+    When search for "26Updates to 2025 Maximum Annual Earnings for Sickness, Maternity and Family Allowance Contributions" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     When open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     And select "satestclientuser2, satestclientuser2" in the "User Assigned" field on the selected update

@@ -66,6 +66,9 @@ Feature: Dashboard Updates for Deloitte User
     And select "audit, sonigour" in the "Watch List" field on the selected update
     When press "Save" button on the selected update
     Then verify "Regulatory update updated successfully" toast message is displayed in the "Occupational Illness Trust Fund" page
+    When press "Back" button
+    And press "Clear" button in the search field
+    When search for "Occupational Illness Trust Fund" update from the "01_13Jan REG - Updates Dashboard" page
     When open the first update in the "01_13Jan REG - Updates Dashboard" page
     When press "Edit" button on the selected update
     And select "User, TestAP" in the "User Assigned" field on the selected update

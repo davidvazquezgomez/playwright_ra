@@ -61,7 +61,7 @@ Feature: Dashboard Updates for Client User
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Edit" button on the selected update
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
-    And select "ECA, test" in the "Watch List" field on the selected update
+    And select "test, per" in the "Watch List" field on the selected update
     When press "Save" button on the selected update
     Then verify "Regulatory update updated successfully" toast message is displayed in the "Test_11-5_01" page
     When open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page

@@ -63,9 +63,12 @@ Feature: Dashboard Updates for Portal Admin
     And select "User5, External" in the "User Assigned" field on the selected update
     When select "High" option in the "Priority" field in the "Update Details" subsection
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
-    And select "Ben Chris" in the "Watch List" field on the selected update
+    And select "Benz, Chris" in the "Watch List" field on the selected update
     When press "Save" button on the selected update
     Then verify "Regulatory update updated successfully" toast message is displayed in the "Increase to Industrial Accident Insurance Contribution Rate" page
+    When press "Back" button
+    And press "Clear" button in the search field
+    When search for "Increase to Industrial Accident Insurance Contribution Rate" update from the "Global Inc - Updates Dashboard" page
     When open the first update in the "Global Inc - Updates Dashboard" page
     When press "Edit" button on the selected update
     And select "Emea, Celina" in the "User Assigned" field on the selected update
