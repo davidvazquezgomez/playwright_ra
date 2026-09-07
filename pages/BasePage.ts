@@ -9,6 +9,10 @@ import * as allure from 'allure-js-commons';
 export class BasePage {
   protected _page: Page;
   private context: BrowserContext;
+  protected readonly userPickerResultsTimeout = 15000;
+  private readonly visibleUserPickerOptions = 'kendo-popup.k-animation-container-shown:visible li[role="option"]';
+  private readonly visibleUserPickerNoDataMessage =
+    'kendo-popup.k-animation-container-shown:visible .k-no-data';
   // Shared across page objects because every fixture wraps the same browser page.
   private static authenticatedRolesByPage = new WeakMap<Page, string>();
   private static lastDownloadedFileNamesByPage = new WeakMap<Page, string>();
@@ -675,6 +679,67 @@ export class BasePage {
   }
 
   /**
+   * Escapes special characters so a value can be used safely inside a regular expression.
+   * @param value Raw text value.
+   * @returns Escaped text safe for RegExp construction.
+   */
+  protected escapeRegularExpression(value: string): string {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  /**
+   * Builds ordered filter terms for people-picker searches.
+   * @param optionName Exact visible user or team name to select.
+   * @returns Distinct search terms ordered from most specific to broader fragments.
+   */
+  protected buildUserPickerSearchTerms(optionName: string): string[] {
+    const normalizedOptionName = optionName.trim();
+    const fragments = normalizedOptionName
+      .split(/[\s,]+/)
+      .map(value => value.trim())
+      .filter(value => value.length > 1);
+
+    return [...new Set([normalizedOptionName, ...fragments])];
+  }
+
+  /**
+   * Locates the currently visible people-picker option that matches all significant name fragments.
+   * @param optionName Exact visible user or team name to locate.
+   * @returns Locator for the first visible matching option.
+   */
+  protected getVisibleUserPickerOption(optionName: string): Locator {
+    const normalizedOptionName = optionName.trim();
+    const exactPersonName = this._page
+      .locator(this.visibleUserPickerOptions)
+      .filter({
+        has: this._page.locator('.person-name').filter({
+          hasText: new RegExp(`^\\s*${this.escapeRegularExpression(normalizedOptionName)}\\s*$`, 'i'),
+        }),
+      })
+      .first();
+
+    const fragments = normalizedOptionName
+      .split(/[\s,]+/)
+      .map(value => value.trim())
+      .filter(value => value.length > 1);
+
+    if (fragments.length === 0) {
+      return exactPersonName;
+    }
+
+    let optionByFragments = this._page.locator(this.visibleUserPickerOptions);
+    for (const fragment of [...new Set(fragments)]) {
+      optionByFragments = optionByFragments.filter({
+        hasText: new RegExp(this.escapeRegularExpression(fragment), 'i'),
+      });
+    }
+
+    return this._page.locator(this.visibleUserPickerOptions).filter({
+      has: exactPersonName,
+    }).first().or(optionByFragments.first());
+  }
+
+  /**
    * Filters and confirms a user or team from a people-picker popup with Enter.
    * @param controlSelector Selector for the page-specific people-picker control.
    * @param searchInputSelector Selector for the people-picker search input.
@@ -685,14 +750,29 @@ export class BasePage {
     searchInputSelector: string,
     optionName: string,
   ): Promise<void> {
-    const optionSelector =
-      `kendo-popup.k-animation-container-shown:visible li[role="option"]:has(.person-name:text-is("${optionName}"))`;
-
     await this.clickElement(controlSelector);
-    await this.waitForElement(searchInputSelector, 15000);
-    await this.fillInputText(searchInputSelector, optionName);
-    await this.waitForElement(optionSelector, 15000);
-    await this.pressKeyOnElement(searchInputSelector, 'Enter');
+    await this.waitForElement(searchInputSelector, this.userPickerResultsTimeout);
+
+    const matchingOption = this.getVisibleUserPickerOption(optionName);
+    for (const searchTerm of this.buildUserPickerSearchTerms(optionName)) {
+      await this.fillInputText(searchInputSelector, searchTerm);
+
+      try {
+        await expect(matchingOption).toBeVisible({ timeout: 3000 });
+        await this.clickLocator(matchingOption);
+        return;
+      } catch {
+        // Try a broader search fragment before failing the selection.
+      }
+    }
+
+    const noDataMessage = (await this._page.locator(this.visibleUserPickerNoDataMessage).first().textContent())?.trim();
+    throw new Error(
+      `People-picker option "${optionName}" was not found. ` +
+      (noDataMessage
+        ? `Popup message: "${noDataMessage}".`
+        : 'No matching visible option was rendered after filtering.'),
+    );
   }
 
   /**
