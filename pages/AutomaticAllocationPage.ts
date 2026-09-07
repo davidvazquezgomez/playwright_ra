@@ -91,10 +91,6 @@ export class AutomaticAllocationPage extends BasePage {
       'app-auto-allocation-setup app-people-picker[formcontrolname="allocatedWatchList"] .tag-person-name',
   };
 
-  private escapeRegularExpression(value: string): string {
-    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  }
-
   /**
    * Moves through the allocation grid pages until the requested allocation is rendered.
    * @param allocationName Exact allocation name to locate.

@@ -707,8 +707,4 @@ export class ActionsDashboardPage extends BasePage {
     await this.clickElement(this.peoplePickerOptionByName(user));
   }
 
-  private escapeRegularExpression(value: string): string {
-    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  }
-
 }

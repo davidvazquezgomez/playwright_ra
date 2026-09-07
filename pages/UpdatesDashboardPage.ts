@@ -631,13 +631,4 @@ export class UpdatesDashboardPage extends BasePage {
         throw new Error(`Update Details field "${fieldName}" is not supported.`);
     }
   }
-
-  /**
-   * Escapes text before it is used as literal regular-expression content.
-   * @param value Text to escape.
-   * @returns Escaped regular-expression content.
-   */
-  private escapeRegularExpression(value: string): string {
-    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  }
 }
