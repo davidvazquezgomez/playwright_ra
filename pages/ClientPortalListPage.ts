@@ -221,9 +221,10 @@ export class ClientPortalListPage extends BasePage {
    * Verifies that opening an unavailable client portal displays an access error.
    */
   async verifyClientPortalAccessErrorDisplayed(): Promise<void> {
-    await expect(this._page.locator(this.clientPortalAccessError).filter({
-      hasText: /error|disabled|deactivated|inactive/i,
-    })).toBeVisible();
+    const errorAlert = this._page.locator(this.clientPortalAccessError).filter({
+      hasText: /error|disabled|deactivated|inactive|not enabled|ask admin/i,
+    });
+    await errorAlert.waitFor({ state: 'visible', timeout: 15000 });
   }
 
   /**

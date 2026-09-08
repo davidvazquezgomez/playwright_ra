@@ -4,7 +4,7 @@ import { BasePage } from './BasePage';
 
 export class ActionsDashboardPage extends BasePage {
   private readonly addActionButton = () =>
-    this._page.getByRole('button', { name: 'Add Action', exact: true });
+    this._page.getByRole('button', { name: /^\s*(\+\s*)?Add Action\s*$/i });
   private readonly addActionDialog = 'div[role="dialog"]:has(.k-dialog-title:text-is("Add Action"))';
   private readonly actionInput = `${this.addActionDialog} input[formcontrolname="action"]`;
   private readonly updateInput = `${this.addActionDialog} kendo-autocomplete[formcontrolname="update"] input[role="combobox"]`;
@@ -102,18 +102,36 @@ export class ActionsDashboardPage extends BasePage {
   }
 
   /**
-   * Verifies whether the Add Action control is enabled or disabled on the Actions Dashboard.
-   * @param expectedState Expected enabled state of the Add Action button.
+   * Verifies whether the Add Action control is available on the Actions Dashboard.
+   * @param expectedState Expected Add Action availability state.
    */
   async verifyAddActionButtonState(expectedState: 'enabled' | 'disabled'): Promise<void> {
     const addActionButton = this.addActionButton();
 
     if (expectedState === 'enabled') {
+      await expect(addActionButton).toHaveCount(1);
+      await expect(addActionButton).toBeVisible();
       await expect(addActionButton).toBeEnabled();
       return;
     }
 
-    await expect(addActionButton).toBeDisabled();
+    const isButtonHiddenAfterRetries = await this.retryWithReload(async () => {
+      return (await addActionButton.count()) === 0;
+    }, 3);
+
+    if (!isButtonHiddenAfterRetries) {
+      const buttonCount = await addActionButton.count();
+      const visibleButtonText = buttonCount > 0
+        ? (await addActionButton.first().innerText()).trim()
+        : 'N/A';
+
+      this.failWithApplicationError(
+        'When Actions is Disabled, the Add Action control must not be available on the Actions Dashboard.',
+        'Add Action control is not rendered.',
+        `Add Action control is still rendered (${buttonCount} element(s)).`,
+        `Visible Add Action text: "${visibleButtonText}".`,
+      );
+    }
   }
 
   /**

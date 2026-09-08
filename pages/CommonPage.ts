@@ -262,6 +262,7 @@ export class CommonPage extends BasePage {
       'Team Management - QA_Test client3': '/teams/213',
       'Updates Dashboard - QA_Test client3': '/project-dashboard/213/Updates/AllUpdates/All',
       'QA_Test client3 - Analytics Dashboard - Update Analytics': '/project-dashboard/213/Analytics/UpdateAnalytics/All',
+      'QA_Test client3 - Overview - Update Analytics': '/project-dashboard/213/Analytics/UpdateAnalytics/All',
       'QA_Test client3 - Analytics Dashboard - Action Analytics': '/project-dashboard/213/Analytics/ActionsAnalytics/All',
       'Actions Dashboard - QA_Test client3': '/project-dashboard/213/Actions/AllActions/All',
 
@@ -557,17 +558,29 @@ export class CommonPage extends BasePage {
     pageName: string,
   ): Promise<void> {
     const columnHeader = this._page.locator(this.sharedGridColumnHeaderByName(columnName));
+    await expect(columnHeader).toBeVisible();
     const columnIndex = await columnHeader.getAttribute('aria-colindex');
     if (!columnIndex) {
       throw new Error(`Column "${columnName}" is not supported on page "${pageName}".`);
     }
 
-    await expect(columnHeader).toHaveAttribute('aria-sort', order);
     await this.ensureKendoGridHasRows(
       this.sharedKendoGrid,
       `The "${pageName}" grid must contain data before "${columnName}" can be sorted.`,
-      `The "${columnName}" header reports aria-sort="${order}".`,
+      `The "${columnName}" header is visible with aria-colindex="${columnIndex}".`,
     );
+    const actualSortOrder = (await columnHeader.getAttribute('aria-sort'))?.trim().toLowerCase() ?? 'not set';
+    if (actualSortOrder !== order) {
+      this.failWithApplicationError(
+        `The "${columnName}" column in "${pageName}" must display rows in ${order} order.`,
+        `The column is displayed in ${order} order with aria-sort="${order}".`,
+        actualSortOrder === 'not set'
+          ? `The column is not displayed in ${order} order because its header has no aria-sort attribute.`
+          : `The column is not displayed in ${order} order because its header reports aria-sort="${actualSortOrder}".`,
+        `The "${columnName}" header is visible and the grid contains data rows.`,
+      );
+    }
+
     const columnCells = this._page.locator(
       `${this.sharedGridRows} td[data-kendo-grid-column-index="${Number(columnIndex) - 1}"]`,
     );
@@ -957,9 +970,11 @@ export class CommonPage extends BasePage {
       case "Update Portal Now":
       case "Deactivate Portal":
       case "Yes":
-      case "Edit Client":
       case "Reactivate Portal":
         await this.buttonByName(button).click({ noWaitAfter: true });
+        break;
+      case "Edit Client":
+        await this._page.locator(`button[title="Edit Client"]`).first().click({ noWaitAfter: true });
         break;
       case "Remove user":
         {

@@ -7,16 +7,16 @@ Feature: Dashboard Analytics for Deloitte User
 
   @readOnly
   Scenario: TC014_01_DeloitteUser_DashboardAnalytics - Navigate to Update Analytics page
-    When click on "01_QA_ClientPortalSetup" of the portals
-    Then the "01_QA_ClientPortalSetup - Overview" page is displayed
+    When click on "QA_Test client3" of the portals
+    Then the "QA_Test client3 - Overview" page is displayed
     When press "Open Dashboard" button
-    Then the "01_QA_ClientPortalSetup - Updates Dashboard" page is displayed
+    Then the "QA_Test client3 - Updates Dashboard" page is displayed
     When press the "Analytics" section
     Then the "Update Analytics" subsection is displayed
 
   @readOnly
   Scenario: TC014_02_DeloitteUser_DashboardAnalytics - Reset the filter
-    Given the "01_QA_ClientPortalSetup - Analytics Dashboard - Update Analytics" page is open
+    Given the "QA_Test client3 - Analytics Dashboard - Update Analytics" page is open
     Then save the value from the "Outstanding Updates" chart
     And save the value from the "Update Priority" chart
     When press "Filter" button on the Dashboard filter
@@ -33,7 +33,7 @@ Feature: Dashboard Analytics for Deloitte User
 
   @readOnly
   Scenario: TC014_03_DeloitteUser_DashboardAnalytics - Apply a predefined filter
-    Given the "01_QA_ClientPortalSetup - Overview - Update Analytics" page is open
+    Given the "QA_Test client3 - Overview - Update Analytics" page is open
     Then save the value from the "Outstanding Updates" chart
     And save the value from the "Update Priority" chart
     When press "Filter" button on the Dashboard filter
@@ -44,9 +44,9 @@ Feature: Dashboard Analytics for Deloitte User
 
   @mutable @cleanup
   Scenario: TC014_04_DeloitteUser_DashboardAnalytics - Create, save and delete a custom filter
-    Given the "01_QA_ClientPortalSetup - Overview - Update Analytics" page is open
+    Given the "QA_Test client3 - Overview - Update Analytics" page is open
     When remove saved filter "QaTest" if it exists on the Dashboard filter
-    And register cleanup to remove saved filter "QaTest" from "01_QA_ClientPortalSetup - Overview - Update Analytics"
+    And register cleanup to remove saved filter "QaTest" from "QA_Test client3 - Overview - Update Analytics"
     When press "Filter" button on the Dashboard filter
     When select "Awaiting Allocation" in the "Status" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
@@ -59,18 +59,18 @@ Feature: Dashboard Analytics for Deloitte User
 
   @readOnly
   Scenario: TC014_05_DeloitteUser_DashboardAnalytics - Apply a customized filter
-    Given the "01_QA_ClientPortalSetup - Overview - Update Analytics" page is open
+    Given the "QA_Test client3 - Overview - Update Analytics" page is open
     Then save the value from the "Outstanding Updates" chart
     And save the value from the "Update Priority" chart
     When press "Filter" button on the Dashboard filter
-    When select "TestDashboardQa" located in the "Saved Filters" section on the Dashboard filter
+    When select "Test_Analytics" located in the "Saved Filters" section on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify the "Outstanding Updates" chart value is not the same
     And verify the "Update Priority" chart value is not the same
 
   @readOnly
   Scenario: TC014_06_DeloitteUser_DashboardAnalytics - Verify Outstanding Updates chart is updated after filtering
-    Given the "01_QA_ClientPortalSetup - Overview - Update Analytics" page is open
+    Given the "QA_Test client3 - Overview - Update Analytics" page is open
     Then verify the "Outstanding Updates" chart is displayed
     And verify the "Outstanding Updates" chart contains the "UPDATE OVERDUE;< 30 DAYS TO EFFECTIVE DATE;> 30 DAYS TO EFFECTIVE DATE" elements
     And save the value from the "Outstanding Updates" chart
@@ -94,7 +94,7 @@ Feature: Dashboard Analytics for Deloitte User
 
   @mutable
   Scenario: TC014_09_DeloitteUser_DashboardAnalytics - Verify Update Priority chart is updated after filtering
-    Given the "01_QA_ClientPortalSetup - Overview - Update Analytics" page is open
+    Given the "QA_Test client3 - Overview - Update Analytics" page is open
     Then verify the "Update Priority" chart is displayed
     And verify the "Update Priority" chart contains the "HIGH PRIORITY UPDATES;MEDIUM PRIORITY UPDATES;LOW PRIORITY UPDATES" elements
     And save the value from the "Update Priority" chart
@@ -105,7 +105,7 @@ Feature: Dashboard Analytics for Deloitte User
 
   @mutable
   Scenario: TC015_01_DeloitteUser_DashboardAnalytics - Verify data consistency between Update Analytics Data and All Updates section
-    Given the "01_QA_ClientPortalSetup - Overview - Update Analytics" page is open
+    Given the "QA_Test client3 - Overview - Update Analytics" page is open
     Then verify the "Update Analytics Data" chart is displayed
     And verify "Update Title;Jurisdiction;Impact Area;Date Announced;Date Effective;Priority;Status;Last Updated" column header is displayed in the "01_QA_ClientPortalSetup - Overview - Update Analytics" page
     Then save the "Update Analytics Data" items
@@ -114,7 +114,7 @@ Feature: Dashboard Analytics for Deloitte User
 
   @mutable
   Scenario: TC015_02_DeloitteUser_DashboardAnalytics - Compare Update Analytics Data and Updates Dashboard pages for a selected result
-    Given the "01_QA_ClientPortalSetup - Overview - Update Analytics" page is open
+    Given the "QA_Test client3 - Overview - Update Analytics" page is open
     When search for "StageUpload11Aug2026" update in the Analytics Dashboard
     Then verify the "Update Analytics Data" chart is displayed
     When open the first filtered update result in the "Update Analytics Data" table
@@ -127,7 +127,7 @@ Feature: Dashboard Analytics for Deloitte User
 
   @mutable
   Scenario: TC015_03_DeloitteUser_DashboardAnalytics - Verify Update Analytics Data chart is updated after filtering
-    Given the "01_QA_ClientPortalSetup - Overview - Update Analytics" page is open
+    Given the "QA_Test client3 - Overview - Update Analytics" page is open
     Then verify the "Update Analytics Data" chart is displayed
     When press "Filter" button on the Dashboard filter
     And select "High" in the "Priority" filter on the Dashboard filter
@@ -139,16 +139,16 @@ Feature: Dashboard Analytics for Deloitte User
 
   @readOnly
   Scenario Outline: TC015_04_DeloitteUser_DashboardAnalytics - Verify sort order is retained after navigating away
-    Given the "01_QA_ClientPortalSetup - Overview - Update Analytics" page is open
+    Given the "QA_Test client3 - Overview - Update Analytics" page is open
     Then verify the "Update Analytics Data" chart is displayed
-    Then verify "<column>" column header is displayed in the "01_QA_ClientPortalSetup - Overview - Update Analytics" page
-    When click on "<column>" column header in the "01_QA_ClientPortalSetup - Overview - Update Analytics" page
+    Then verify "<column>" column header is displayed in the "QA_Test client3 - Overview - Update Analytics" page
+    When click on "<column>" column header in the "QA_Test client3 - Overview - Update Analytics" page
     Then verify items are sorted in "ascending" order by "<column>" in the "" page
-    When click on "<column>" column header in the "01_QA_ClientPortalSetup - Overview - Update Analytics" page
-    Then verify items are sorted in "descending" order by "<column>" in the "01_QA_ClientPortalSetup - Overview - Update Analytics" page
+    When click on "<column>" column header in the "QA_Test client3 - Overview - Update Analytics" page
+    Then verify items are sorted in "descending" order by "<column>" in the "QA_Test client3 - Overview - Update Analytics" page
     When press the "Updates" section
     And press the "Analytics" section
-    Then verify items are sorted in "descending" order by "<column>" in the "01_QA_ClientPortalSetup - Overview - Update Analytics" page
+    Then verify items are sorted in "descending" order by "<column>" in the "QA_Test client3 - Overview - Update Analytics" page
 
     Examples:
       | column         |
@@ -163,13 +163,13 @@ Feature: Dashboard Analytics for Deloitte User
 
   @readOnly
   Scenario: TC015_05_DeloitteUser_DashboardAnalytics - Verify Update Analytics Data table pagination and update details navigation
-    Given the "01_QA_ClientPortalSetup - Overview - Update Analytics" page is open
+    Given the "QA_Test client3 - Overview - Update Analytics" page is open
     Then verify the "Update Analytics Data" chart is displayed
-    When navigate to page "4" in the "Update Analytics Data" table
-    Then verify that the first result that appears is number "31"
+    When navigate to page "3" in the "Update Analytics Data" table
+    Then verify that the first result that appears is number "24"
     When press the "Updates" section
     And press the "Analytics" section
-    Then verify that the first result that appears is number "31"
+    Then verify that the first result that appears is number "24"
 
   @readOnly
   Scenario: TC016_01_DeloitteUser_DashboardAnalytics - Navigate to Action Analytics page

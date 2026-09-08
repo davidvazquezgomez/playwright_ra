@@ -597,20 +597,46 @@ export class TeamManagementPage extends BasePage {
       return;
     }
 
-    const filteredTeamRows = this._page.locator(this.teamGridRows);
-    await expect(filteredTeamRows).toHaveCount(1);
+    const filteredTeamRows = this.editedTeamName
+      ? this._page.locator(this.teamRowByName(this.editedTeamName))
+      : this._page.locator(this.teamGridRows);
 
-    const teamLeadersCell = filteredTeamRows.locator(this.teamLeadersCell);
-    try {
-      await expect(teamLeadersCell).not.toContainText(userName);
-    } catch {
-      this.failWithApplicationError(
-        'A removed Team Leader must no longer be displayed for the filtered team.',
-        `Team Leaders that do not contain "${userName}".`,
-        (await teamLeadersCell.textContent())?.trim() ?? '',
-        `The Team Leaders cell was displayed for the filtered team and still contains "${userName}".`,
+    if (this.editedTeamName) {
+      await expect(filteredTeamRows).toHaveCount(1);
+    } else {
+      await this.ensureKendoGridHasRows(
+        '[role="grid"][aria-label="Data table"]',
+        'Team Management must display at least one team before Team Leader availability can be verified.',
+        'The Team Management grid was displayed before checking Team Leaders.',
       );
     }
+
+    const rowCount = await filteredTeamRows.count();
+    const matchingLeaderValues: string[] = [];
+    const renderedLeaderValues: string[] = [];
+
+    for (let index = 0; index < rowCount; index += 1) {
+      const leaderValue = ((await filteredTeamRows.nth(index).locator(this.teamLeadersCell).textContent()) ?? '').trim();
+      if (!leaderValue) {
+        continue;
+      }
+
+      renderedLeaderValues.push(leaderValue);
+      if (this.doesTeamLeaderChipMatch(userName, leaderValue)) {
+        matchingLeaderValues.push(leaderValue);
+      }
+    }
+
+    if (matchingLeaderValues.length === 0) {
+      return;
+    }
+
+    this.failWithApplicationError(
+      'A removed Team Leader must no longer be displayed for the filtered team.',
+      `Team Leaders that do not contain "${userName}".`,
+      matchingLeaderValues.join(' | '),
+      `Team Leaders values read from Team Management: ${renderedLeaderValues.join(' | ') || '(no Team Leaders values read from the grid)'}.`,
+    );
   }
 
   /**
