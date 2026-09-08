@@ -168,6 +168,7 @@ export class DashboardPage extends BasePage {
      */
     async openFilterPanel(): Promise<void> {
         await this.clickElement(this.dashboardFilterButton);
+        await expect(this._page.locator(this.filterDialog)).toBeVisible();
     }
 
     /**
@@ -410,7 +411,9 @@ export class DashboardPage extends BasePage {
      * @param optionName Exact label of the saved filter option.
      */
     async doubleClickFilterOption(optionName: string): Promise<void> {
-        await this._page.locator(this.filterOptionByName(optionName)).dblclick();
+        const savedFilterItem = this.savedFilterItemByName(optionName);
+        await savedFilterItem.dblclick();
+        await expect(savedFilterItem).toHaveClass(/(?:^|\s)local-selection(?:\s|$)/);
     }
 
     /**
