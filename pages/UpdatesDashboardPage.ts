@@ -424,7 +424,13 @@ export class UpdatesDashboardPage extends BasePage {
    */
   async verifyUpdateDetailsFieldDoesNotDisplayValue(fieldName: string, unexpectedValue: string): Promise<void> {
     if (fieldName === 'User Assigned' || fieldName === 'Watch List') {
-      await expect(this.updateDetailsSelectedPersonByField(fieldName)).not.toContainText(unexpectedValue);
+      const locator = this.updateDetailsSelectedPersonByField(fieldName);
+      const count = await locator.count();
+      if (count === 0) {
+        // No elements means the value is not displayed
+        return;
+      }
+      await expect(locator).not.toContainText(unexpectedValue);
       return;
     }
 

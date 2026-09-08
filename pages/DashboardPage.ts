@@ -116,6 +116,12 @@ export class DashboardPage extends BasePage {
             })
             .locator('input[type="checkbox"]')
             .first();
+    private readonly dashboardDateFieldPickerByLabel = (fieldLabel: string) =>
+        this._page.locator(this.filterDialog).locator('.date-field').filter({
+            has: this._page.locator('label.date-label', {
+                hasText: new RegExp(`^\\s*${this.sectionNamePattern(fieldLabel)}\\s*$`, 'i'),
+            }),
+        }).locator('kendo-datepicker').first();
     private readonly selectableFilterOptionLabels = (sectionName: string) =>
         this.filterOptionLabels(sectionName).filter({ hasNotText: /^\s*Select All\s*$/ });
     private readonly selectAllOptionLabel = (sectionName: string) =>
@@ -555,11 +561,17 @@ export class DashboardPage extends BasePage {
     }
 
     /**
-     * Selects a checkbox option within a Dashboard filter section.
-     * @param optionName Exact visible text of the checkbox option.
-     * @param sectionName Exact visible name of the filter section.
+     * Selects a value within a Dashboard filter section.
+     * Uses checkbox selection for standard sections and Kendo DatePicker selection for Start/End date fields.
+     * @param optionName Exact visible value to select.
+     * @param sectionName Exact visible name of the filter section or date field.
      */
     async selectDashboardCheckboxFilterOption(optionName: string, sectionName: string): Promise<void> {
+        if (this.isDashboardDateField(sectionName)) {
+            await this.selectDashboardDateFilterValue(sectionName, optionName);
+            return;
+        }
+
         await this.setDashboardCheckboxFilterOptionSelected(optionName, sectionName, true);
     }
 
@@ -639,10 +651,19 @@ export class DashboardPage extends BasePage {
         await expect(filterDialog).toBeVisible();
 
         for (const sectionName of sectionNames) {
+            const sectionPattern = new RegExp(`^\\s*${this.sectionNamePattern(sectionName)}\\s*$`, 'i');
+            const topLevelSection = filterDialog.getByRole('treeitem', { name: sectionPattern }).first();
+
+            if (await topLevelSection.count()) {
+                await expect(
+                    topLevelSection,
+                    `Expected filter section "${sectionName}" to be visible.`,
+                ).toBeVisible();
+                continue;
+            }
+
             await expect(
-                filterDialog.locator('.filter-section-title').getByText(
-                    new RegExp(`^\\s*${this.sectionNamePattern(sectionName)}\\s*$`, 'i'),
-                ),
+                filterDialog.getByText(sectionPattern).first(),
                 `Expected filter section "${sectionName}" to be visible.`,
             ).toBeVisible();
         }
@@ -662,12 +683,17 @@ export class DashboardPage extends BasePage {
         await expect(filterDialog).toBeVisible();
 
         for (const sectionName of sectionNames) {
+            const sectionPattern = new RegExp(`^\\s*${this.sectionNamePattern(sectionName)}\\s*$`, 'i');
+
             await expect(
-                filterDialog.locator('.filter-section-title').getByText(
-                    new RegExp(`^\\s*${this.sectionNamePattern(sectionName)}\\s*$`, 'i'),
-                ),
+                filterDialog.getByRole('treeitem', { name: sectionPattern }),
                 `Expected filter section "${sectionName}" not to be visible.`,
-            ).not.toBeVisible();
+            ).toHaveCount(0);
+
+            await expect(
+                filterDialog.getByText(sectionPattern),
+                `Expected filter section "${sectionName}" not to be visible.`,
+            ).toHaveCount(0);
         }
     }
 
@@ -1013,6 +1039,52 @@ export class DashboardPage extends BasePage {
             throw new Error('At least one value must be provided.');
         }
         return parsedValues;
+    }
+
+    private isDashboardDateField(sectionName: string): boolean {
+        const normalizedSectionName = sectionName.trim().toLowerCase();
+        return normalizedSectionName === 'start date' || normalizedSectionName === 'end date';
+    }
+
+    private async selectDashboardDateFilterValue(fieldLabel: string, dateValue: string): Promise<void> {
+        const datePicker = this.dashboardDateFieldPickerByLabel(fieldLabel);
+        await expect(
+            datePicker,
+            `Expected "${fieldLabel}" date picker to be visible in the Dashboard filter.`,
+        ).toBeVisible();
+        await this.selectDateFromKendoDatePicker(datePicker, this.normalizeDashboardFilterDateValue(dateValue));
+    }
+
+    private normalizeDashboardFilterDateValue(dateValue: string): string {
+        const trimmedDateValue = dateValue.trim();
+        const ddMmYyyyMatch = trimmedDateValue.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+        if (ddMmYyyyMatch) {
+            const day = ddMmYyyyMatch[1].padStart(2, '0');
+            const month = ddMmYyyyMatch[2].padStart(2, '0');
+            const normalizedDate = `${day}/${month}/${ddMmYyyyMatch[3]}`;
+            this.parseDate(normalizedDate);
+            return normalizedDate;
+        }
+
+        const dayMonthYearMatch = trimmedDateValue.match(/^(\d{1,2})\s+([A-Za-z]{3})\s+(\d{4})$/);
+        if (!dayMonthYearMatch) {
+            throw new Error(`Date "${dateValue}" must use DD/MM/YYYY or D MMM YYYY format.`);
+        }
+
+        const monthAbbreviations = [
+            'jan', 'feb', 'mar', 'apr', 'may', 'jun',
+            'jul', 'aug', 'sep', 'oct', 'nov', 'dec',
+        ];
+        const monthIndex = monthAbbreviations.indexOf(dayMonthYearMatch[2].toLowerCase());
+        if (monthIndex < 0) {
+            throw new Error(`Date "${dateValue}" uses an unknown month abbreviation.`);
+        }
+
+        const day = dayMonthYearMatch[1].padStart(2, '0');
+        const month = String(monthIndex + 1).padStart(2, '0');
+        const normalizedDate = `${day}/${month}/${dayMonthYearMatch[3]}`;
+        this.parseDate(normalizedDate);
+        return normalizedDate;
     }
 
     private sectionNamePattern(sectionName: string): string {
