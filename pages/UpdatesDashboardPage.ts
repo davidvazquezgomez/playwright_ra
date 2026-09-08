@@ -225,7 +225,14 @@ export class UpdatesDashboardPage extends BasePage {
    * Opens the edit view for the update currently selected in Update Details.
    */
   async editSelectedUpdate(): Promise<void> {
-    await this.clickElement(this.updateDetailsEditButton);
+    const editButton = this._page.locator(this.updateDetailsEditButton);
+    const saveButton = this._page.locator(this.updateDetailsSaveButton);
+
+    // The Edit button becomes visible before the update details finish loading, so an early click is ignored.
+    await expect(async () => {
+      await this.clickLocator(editButton, 5000);
+      await expect(saveButton).toBeVisible({ timeout: 5000 });
+    }).toPass({ timeout: 30000 });
   }
 
   /**
