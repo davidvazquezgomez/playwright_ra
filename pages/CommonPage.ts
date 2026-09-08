@@ -957,9 +957,11 @@ export class CommonPage extends BasePage {
       case "Update Portal Now":
       case "Deactivate Portal":
       case "Yes":
-      case "Edit Client":
       case "Reactivate Portal":
         await this.buttonByName(button).click({ noWaitAfter: true });
+        break;
+      case "Edit Client":
+        await this._page.locator(`button[title="Edit Client"]`).first().click({ noWaitAfter: true });
         break;
       case "Remove user":
         {

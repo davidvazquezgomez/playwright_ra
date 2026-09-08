@@ -145,3 +145,15 @@ Then(
     }
 );
 
+When(
+    'search for {string} client portal in the {string} page',
+    async ({ clientPortalListPage }, portalName: string, pageName: string) => {
+        if (pageName !== 'Client Portal List') {
+            throw new Error(`Page "${pageName}" is not supported.`);
+        }
+
+        await clientPortalListPage.filterByClientPortalName(portalName);
+        await clientPortalListPage.verifyClientPortalDisplayed(portalName);
+    }
+);
+

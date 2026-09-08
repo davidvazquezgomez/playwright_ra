@@ -50,9 +50,7 @@ Feature: Client Portal Setup for Super Admin
     When press "Deactivate Portal" button
     And press "Yes" button
     Then a message should get displayed as "updated successfully"
-    When click on "Home" option from the left navigation
-    And press "Last Page" pagination button in the "Client Portal List" page
-    Then verify the current page is "last" in the "Client Portal List" page
+    And search for "01_QA_ClientPortalSetup" client portal in the "Client Portal List" page
     And verify "01_QA_ClientPortalSetup" client portal displays "Disabled" status in the Client Portal List
     When click on the "01_QA_ClientPortalSetup" client portal name in the client portal listing
     Then verify an access error is displayed on the client portal listing
