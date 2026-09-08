@@ -80,7 +80,7 @@ Then('verify the {string} item count is not the same', async ({ analyticsDashboa
     }
 
     const currentItemCount = isUpdatesDashboardTable(tableTitle)
-        ? await updatesDashboardPage.getAllUpdatesItemCountIncludingZero()
+        ? await updatesDashboardPage.waitForAllUpdatesItemCountToDiffer(savedItemCount)
         : await analyticsDashboardPage.getDataTableItemCount(tableTitle);
     if (currentItemCount === savedItemCount) {
         throw new Error(`Expected "${tableTitle}" item count to differ from ${savedItemCount}, but it remained ${currentItemCount}.`);

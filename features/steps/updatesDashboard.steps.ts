@@ -6,6 +6,12 @@ When('search for {string} update from the {string} page', async ({ updatesDashbo
 When('search for {string} update in the Updates Dashboard', async ({ updatesDashboardPage }, updateTitle: string) => {
   await updatesDashboardPage.searchUpdatesDashboard(updateTitle);
 });
+When(
+  'search for {string} update and verify all visible suggestions contain it in the Updates Dashboard',
+  async ({ updatesDashboardPage }, updateTitle: string) => {
+    await updatesDashboardPage.searchAndVerifyVisibleSuggestionsContain(updateTitle);
+  },
+);
 
 Then('verify {string} update is displayed from the {string} page', async ({ updatesDashboardPage }, updateTitle: string, _pageName: string) => {
   await updatesDashboardPage.verifyUpdateIsDisplayed(updateTitle);

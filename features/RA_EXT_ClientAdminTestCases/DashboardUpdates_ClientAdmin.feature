@@ -65,10 +65,13 @@ Feature: Dashboard Updates for Client Admin
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
     And select "satestclientuser4, satestclientuser4" in the "Watch List" field on the selected update
     When press "Save" button on the selected update
+    When press "Back" button
+    And press "Clear" button in the search field
+    When search for "32Increase of maximum meal voucher vaalue" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     Then verify "Regulatory update updated successfully" toast message is displayed in the "32Increase of maximum meal voucher vaalue" page
     When open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
-    And select "RBT, testclientadmin" in the "User Assigned" field on the selected update
+    And select "satestclientuser3, satestclientuser3" in the "User Assigned" field on the selected update
     When select "Low" option in the "Priority" field in the "Update Details" subsection
     And select "Update Allocated" option in the "Status" field in the "Update Details" subsection
     And press "clear" in the "Watch List" field
@@ -168,8 +171,8 @@ Feature: Dashboard Updates for Client Admin
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When press "Clear all filters" section on the Dashboard filter if available
     And save the "01_QA_StageTestPortal - Updates Dashboard" items
-    When search for "Income" update from the "01_QA_StageTestPortal - Updates Dashboard" page
-    Then verify only updates that contain "Income" in the title are displayed
+    Then search for "Income" update and verify all visible suggestions contain it in the Updates Dashboard
+    When search for "03May 2026 Employment Income Brackets" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     Then verify the "01_QA_StageTestPortal - Updates Dashboard" item count is not the same
 
   @readOnly

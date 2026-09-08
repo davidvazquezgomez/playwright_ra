@@ -41,7 +41,7 @@ export class CommonPage extends BasePage {
     `${this.sideNavigation} [aria-label="Menu"], ` +
     `${this.sideNavigation} :text-is("Menu")`;
 
-  private continueButton = 'button.k-button-primary:has-text("Continue")';
+  private continueButton = 'role=button[name="Continue"]';
   private nextButton = 'button.k-button-primary:has(.k-button-text:text-is("Next"))';
   private reassignButton = 'button.k-button-primary:has(.k-button-text:text-is("Reassign"))';
   private confirmButton = 'button[aria-label="Confirm"]';
@@ -162,7 +162,7 @@ export class CommonPage extends BasePage {
    */
   async launchApplication(url: string): Promise<void> {
     await this.loadPage(url);
-    /*await this._page.pause();*/
+    // await this._page.pause();
     const [title, bodyText] = await Promise.all([
       this._page.title(),
       this._page.locator('body').innerText(),
