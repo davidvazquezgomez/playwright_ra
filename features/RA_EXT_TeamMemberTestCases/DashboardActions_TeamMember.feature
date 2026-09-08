@@ -50,7 +50,7 @@ Feature: Dashboard Actions for Team Member
     And verify attachments section is not displayed in the "Add Action" popup
     When press "Save" button
     Then verify "Update title is required.;Action is required.;Assigned User is required;Priority is required.;Status is required.;Deadline is required." validation messages are displayed in the "Add Action" popup
-    When fill the "Update" field with "32Increase of maximum meal voucher vaalue" value in the "Add Action" popup
+    When fill the "Update" field with "31Change in the applicability of SZEP card" value in the "Add Action" popup
     And fill the "Action" field with "Test Action" value in the "Add Action" popup
     And select "satestclientuser3, satestclientuser3" options in the "User Assigned" field in the "Add Action" popup
     And select "Medium" option in the "Priority" field in the "Add Action" popup
@@ -60,7 +60,7 @@ Feature: Dashboard Actions for Team Member
     Then the "Unsaved Changes" popup is displayed
     And verify "Continue;Cancel" buttons are displayed on the "Unsaved Changes" popup
     When press "Cancel" button on the "Unsaved Changes" popup
-    Then verify "32Increase of maximum meal voucher vaalue" value is displayed in the "Update" field on the "Add Action" popup
+    Then verify "31Change in the applicability of SZEP card" value is displayed in the "Update" field on the "Add Action" popup
     And verify "Test Action" value is displayed in the "Action" field on the "Add Action" popup
     And verify "satestclientuser3, satestclientuser3" options are selected in the "User Assigned" field on the "Add Action" popup
     And verify "Medium" option is selected in the "Priority" field on the "Add Action" popup

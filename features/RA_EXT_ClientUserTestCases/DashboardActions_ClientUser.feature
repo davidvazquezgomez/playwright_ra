@@ -192,6 +192,7 @@ Feature: Dashboard Actions for Client User
   Scenario: TC011_01_ClientUser_DashboardActions - Verify adding an action from the update details page
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
+    And click on "Update Title" column header in the "ClientPortal_20260209133616 - Updates Dashboard" page
     Then verify "People Law" update is displayed from the "ClientPortal_20260209133616 - Updates Dashboard" page
     When open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     Then the "Update Details" page is displayed from the Updates Dashboard
@@ -222,6 +223,7 @@ Feature: Dashboard Actions for Client User
   Scenario: TC011_02_ClientUser_DashboardActions - Verify editing an action from the update details page
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
+    And click on "Update Title" column header in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
@@ -245,6 +247,7 @@ Feature: Dashboard Actions for Client User
   Scenario: TC011_03_ClientUser_DashboardActions - Verify the private action toggle from the update details page
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
+    And click on "Update Title" column header in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
@@ -275,6 +278,7 @@ Feature: Dashboard Actions for Client User
   Scenario: TC011_04_ClientUser_DashboardActions - Verify adding a comment to an action from the update details page
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
+    And click on "Update Title" column header in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
@@ -294,6 +298,7 @@ Feature: Dashboard Actions for Client User
   Scenario: TC011_05_ClientUser_DashboardActions - Verify uploading an attachment to an action from the update details page
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
+    And click on "Update Title" column header in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
@@ -319,6 +324,7 @@ Feature: Dashboard Actions for Client User
   Scenario Outline: TC011_06_ClientUser_DashboardActions - Upload an attachment with unsupported format from the update details page
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
+    And click on "Update Title" column header in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the "Update Actions" tab on the selected update
     And press "Action Status" header on the selected update
