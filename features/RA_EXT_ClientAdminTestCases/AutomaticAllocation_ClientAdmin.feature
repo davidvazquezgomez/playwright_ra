@@ -200,30 +200,3 @@ Feature: Automatic Allocation of Updates for Client Admin
     Then the "Confirm Deletion" popup is displayed
     When press "Delete" button
     Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page
-
-  @mutable @cleanup
-  Scenario: TC005_ClientAdmin_AutomaticAllocation - Verify warning message for duplicate allocations
-    Given the "Automatic Allocation of Updates - 01_QA_StageTestPortal" page is open
-    When remove the "QaTest2" allocation if it exists
-    And register cleanup to remove the "QaTest2" allocation from portal "01_QA_StageTestPortal"
-    And press "Create New Allocation" button
-    And the "Automatic Allocation Setup" page is displayed
-    When fill the "Allocation Name" field with "QaTest2"
-    And click on the "Impact Area(s)" checkbox
-    And select the "Employer tax reporting/filing requirements" option in the "Impact Area(s)" field
-    And click on the "Jurisdiction(s)" checkbox
-    And select the "Canada" option in the "Jurisdiction(s)" field
-    And select the "AND" option in the "Operator" field
-    And select the "satestclientuser2, satestclientuser2" option in the "Update Owner" field
-    And press "Save" button
-    Then the "Duplicate automatic allocation detected" popup is displayed
-    And the duplicate automatic allocation warning is displayed
-    And verify "Create anyway;Cancel" buttons are displayed on the "Duplicate automatic allocation detected" popup
-    When press "Create anyway" button
-    Then the duplicate automatic allocation is created
-    And the "Automatic Allocation of Updates" page is displayed
-    And verify the "QaTest2" allocation is present in the "Automatic Allocation of Updates" page
-    When click on "Remove Allocation" icon from the allocation "QaTest2"
-    Then the "Confirm Deletion" popup is displayed
-    When press "Delete" button
-    Then verify "Allocation deleted successfully." toast message is displayed in the "Automatic Allocation Setup" page

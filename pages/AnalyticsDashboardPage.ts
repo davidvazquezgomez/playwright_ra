@@ -17,8 +17,14 @@ export class AnalyticsDashboardPage extends BasePage {
         });
     private readonly dataTablePagerInfoByTitle = (chartTitle: string) =>
         this.dataTableSectionByTitle(chartTitle).locator('app-table .k-pager-info');
-    private readonly dataTablePagerPageByTitle = (tableTitle: string, pageNumber: string) =>
-        this.dataTableSectionByTitle(tableTitle).getByRole('button', { name: `Page ${pageNumber}`, exact: true });
+    private readonly dataTablePagerByTitle = (tableTitle: string) =>
+        this.dataTableSectionByTitle(tableTitle).locator('app-table kendo-pager');
+    private readonly dataTableCurrentPagerPageByTitle = (tableTitle: string) =>
+        this.dataTablePagerByTitle(tableTitle).locator('kendo-pager-numeric-buttons button[aria-current="page"]');
+    private readonly dataTableNextPagerPageByTitle = (tableTitle: string) =>
+        this.dataTablePagerByTitle(tableTitle).locator('button[title="Go to the next page"]');
+    private readonly dataTablePreviousPagerPageByTitle = (tableTitle: string) =>
+        this.dataTablePagerByTitle(tableTitle).locator('button[title="Go to the previous page"]');
     private readonly visibleDataTablePagerInfo = this._page.locator('app-table .k-pager-info:visible');
     private readonly firstFilteredUpdateCellByTableTitle = (tableTitle: string) =>
         this.dataTableSectionByTitle(tableTitle)
@@ -77,14 +83,59 @@ export class AnalyticsDashboardPage extends BasePage {
      * @param tableTitle Visible title of the data table.
      */
     async navigateDataTableToPage(pageNumber: string, tableTitle: string): Promise<void> {
-        const pagerPage = this.dataTablePagerPageByTitle(tableTitle, pageNumber);
-        await expect(pagerPage).toBeVisible();
-
-        if (await pagerPage.getAttribute('aria-current') !== 'page') {
-            await pagerPage.click();
+        const requestedPageNumber = Number(pageNumber);
+        if (!Number.isInteger(requestedPageNumber) || requestedPageNumber < 1) {
+            throw new Error(`The requested page number "${pageNumber}" must be a positive integer.`);
         }
 
-        await expect(pagerPage).toHaveAttribute('aria-current', 'page');
+        const pagerInfo = this.dataTablePagerInfoByTitle(tableTitle);
+        const currentPage = this.dataTableCurrentPagerPageByTitle(tableTitle);
+        const nextPage = this.dataTableNextPagerPageByTitle(tableTitle);
+        const previousPage = this.dataTablePreviousPagerPageByTitle(tableTitle);
+
+        await expect(pagerInfo).toBeVisible();
+        const pagerText = (await pagerInfo.textContent())?.trim() ?? '';
+        const pageSize = /^(\d+)\s*-\s*(\d+)\s+of\s+\d+\s+items$/i.exec(pagerText);
+        if (!pageSize) {
+            throw new Error(`Unable to read the data table pager text "${pagerText}".`);
+        }
+
+        const itemsPerPage = Number(pageSize[2]) - Number(pageSize[1]) + 1;
+        const requiredFirstItemNumber = (requestedPageNumber - 1) * itemsPerPage + 1;
+        await expect.poll(
+            async () => this.getKendoPagerItemCount(pagerInfo),
+            {
+                message: `Waiting for "${tableTitle}" to load enough items for page ${pageNumber}.`,
+                timeout: this.chartRefreshTimeout,
+                intervals: [250, 500, 1000],
+            },
+        ).toBeGreaterThanOrEqual(requiredFirstItemNumber);
+
+        await expect(currentPage).toBeVisible();
+        let currentPageNumber = Number((await currentPage.getAttribute('aria-label'))?.replace('Page ', ''));
+        if (!Number.isInteger(currentPageNumber)) {
+            throw new Error(`Unable to read the current page from the "${tableTitle}" data table pager.`);
+        }
+
+        while (currentPageNumber < requestedPageNumber) {
+            await expect(nextPage).toBeEnabled();
+            await nextPage.click();
+            await expect.poll(
+                async () => Number((await currentPage.getAttribute('aria-label'))?.replace('Page ', '')),
+            ).toBeGreaterThan(currentPageNumber);
+            currentPageNumber = Number((await currentPage.getAttribute('aria-label'))?.replace('Page ', ''));
+        }
+
+        while (currentPageNumber > requestedPageNumber) {
+            await expect(previousPage).toBeEnabled();
+            await previousPage.click();
+            await expect.poll(
+                async () => Number((await currentPage.getAttribute('aria-label'))?.replace('Page ', '')),
+            ).toBeLessThan(currentPageNumber);
+            currentPageNumber = Number((await currentPage.getAttribute('aria-label'))?.replace('Page ', ''));
+        }
+
+        await expect(currentPage).toHaveAttribute('aria-label', `Page ${pageNumber}`);
     }
 
     /**
@@ -211,14 +262,27 @@ export class AnalyticsDashboardPage extends BasePage {
         shouldMatch: boolean,
     ): Promise<void> {
         if (!shouldMatch) {
-            await expect.poll(
-                async () => JSON.stringify(await this.getChartValues(chartTitle)),
-                {
-                    message: `Waiting for chart "${chartTitle}" to refresh after applying the filter.`,
-                    timeout: this.chartRefreshTimeout,
-                    intervals: [250, 500, 1000],
-                },
-            ).not.toBe(JSON.stringify(expectedValues));
+            try {
+                await expect.poll(
+                    async () => JSON.stringify(await this.getChartValues(chartTitle)),
+                    {
+                        message: `Waiting for chart "${chartTitle}" to refresh after applying the filter.`,
+                        timeout: this.chartRefreshTimeout,
+                        intervals: [250, 500, 1000],
+                    },
+                ).not.toBe(JSON.stringify(expectedValues));
+            } catch (error) {
+                const currentValues = await this.getChartValues(chartTitle);
+                if (JSON.stringify(currentValues) === JSON.stringify(expectedValues)) {
+                    this.failWithApplicationError(
+                        `Chart "${chartTitle}" values must differ from the saved values after applying the selected filter.`,
+                        'A value set different from the saved values.',
+                        JSON.stringify(currentValues),
+                        `Saved values: ${JSON.stringify(expectedValues)}. The chart remained visible and readable after the Dashboard filter dialog closed.`,
+                    );
+                }
+                throw error;
+            }
             return;
         }
 

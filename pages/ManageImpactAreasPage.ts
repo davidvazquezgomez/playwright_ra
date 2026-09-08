@@ -32,14 +32,6 @@ export class ManageImpactAreasPage extends BasePage {
     }
 
     /**
-     * Escapes an Impact Area Name for use as a literal regular-expression value.
-     * @param value Text to escape.
-     */
-    private escapeRegularExpression(value: string): string {
-        return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-
-    /**
      * Opens the editor for the requested impact area.
      * @param impactAreaName Exact name of the impact area to edit.
      */

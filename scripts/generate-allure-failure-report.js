@@ -19,9 +19,7 @@ const files = listFiles(inputDirectory);
 const attachmentFiles = new Map(
     files.map(file => [path.basename(file), file]),
 );
-const finalResults = getFinalResults(files
-    .filter(file => file.endsWith('-result.json'))
-    .map(file => JSON.parse(fs.readFileSync(file, 'utf8'))));
+const finalResults = getFinalResults(loadResults(inputDirectory, files));
 const failures = finalResults
     .map(result => buildFailure(result, attachmentFiles, outputDirectory))
     .filter(Boolean)
@@ -68,6 +66,53 @@ function listFiles(directory) {
         }
     }
     return files;
+}
+
+function loadResults(directory, files) {
+    const rawResultFiles = files.filter(file => file.endsWith('-result.json'));
+    if (rawResultFiles.length) {
+        return rawResultFiles.map(file => JSON.parse(fs.readFileSync(file, 'utf8')));
+    }
+
+    const testCasesDirectory = path.join(directory, 'data', 'test-cases');
+    if (!fs.existsSync(testCasesDirectory)) {
+        throw new Error(`No Allure result data found in: ${directory}`);
+    }
+
+    return listFiles(testCasesDirectory)
+        .filter(file => file.endsWith('.json'))
+        .map(file => normalizePublishedTestCase(JSON.parse(fs.readFileSync(file, 'utf8'))));
+}
+
+function normalizePublishedTestCase(testCase) {
+    return {
+        uuid: testCase.uid,
+        historyId: testCase.historyId,
+        name: testCase.name,
+        fullName: testCase.fullName,
+        labels: testCase.labels,
+        status: testCase.status,
+        stop: testCase.time?.stop,
+        statusDetails: {
+            message: testCase.statusMessage,
+            trace: testCase.statusTrace,
+        },
+        attachments: testCase.testStage?.attachments || [],
+        steps: (testCase.testStage?.steps || []).map(normalizePublishedStep),
+    };
+}
+
+function normalizePublishedStep(step) {
+    return {
+        name: step.name,
+        status: step.status,
+        statusDetails: {
+            message: step.statusMessage,
+            trace: step.statusTrace,
+        },
+        attachments: step.attachments || [],
+        steps: (step.steps || []).map(normalizePublishedStep),
+    };
 }
 
 function getFinalResults(results) {

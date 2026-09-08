@@ -51,6 +51,14 @@ export class PrivacyNoticePage extends BasePage {
     const opensNewTab = (await link.getAttribute('target')) === '_blank';
     const isMailToDestination = destination.startsWith('mailto:');
 
+    if (isMailToDestination) {
+      await link.click({
+        timeout: this.publishedLinkActionTimeout,
+        noWaitAfter: true,
+      });
+      return;
+    }
+
     if (opensNewTab) {
       const popupPromise = this._page.waitForEvent('popup');
       await link.click({
@@ -62,10 +70,7 @@ export class PrivacyNoticePage extends BasePage {
       return;
     }
 
-    await link.click({
-      timeout: this.publishedLinkActionTimeout,
-      noWaitAfter: isMailToDestination,
-    });
+    await link.click({ timeout: this.publishedLinkActionTimeout });
   }
 
   /**

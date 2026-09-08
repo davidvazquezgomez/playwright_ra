@@ -4,8 +4,13 @@ import { BasePage } from './BasePage';
 
 export class UpdatesDashboardPage extends BasePage {
   private postedUpdateDetailsComment?: string;
+  private readonly updateDetailsContainer = () => this._page.locator('app-update-details').first();
   private readonly updateSearchInput =
     'input[placeholder="Select or type update title"][role="combobox"]';
+  private readonly updateSearchSuggestions = () =>
+    this._page
+      .locator('div.k-popup.k-list-container.k-autocomplete-popup:visible li[role="option"]')
+      .or(this._page.locator('kendo-popup.k-animation-container-shown:visible li[role="option"]'));
   private readonly updateSearchResultByTitle = (title: string) =>
     this._page.getByRole('option', { name: title, exact: true }).first();
   private readonly updatesGrid = () =>
@@ -47,21 +52,21 @@ export class UpdatesDashboardPage extends BasePage {
   private readonly updateDetailsSaveButton = 'button[title="Save"]';
   private readonly updateDetailsPeoplePickerControlByFieldName: Record<'User Assigned' | 'Watch List', string> = {
     'User Assigned':
-      'kendo-tabstrip > [role="tabpanel"][aria-hidden="false"] app-people-picker[formcontrolname="userAssigned"] kendo-dropdownlist[role="combobox"]',
+      'app-update-details app-people-picker[formcontrolname="userAssigned"] kendo-dropdownlist[role="combobox"]',
     'Watch List':
-      'kendo-tabstrip > [role="tabpanel"][aria-hidden="false"] app-people-picker[formcontrolname="watchList"] kendo-multiselect input[role="combobox"]',
+      'app-update-details app-people-picker[formcontrolname="watchList"] kendo-multiselect input[role="combobox"]',
   };
   private readonly updateDetailsPeoplePickerSearchInputByFieldName: Record<'User Assigned' | 'Watch List', string> = {
     'User Assigned':
       'kendo-popup.k-animation-container-shown:visible .k-dropdownlist-popup.custom-people-picker input[role="searchbox"][aria-label="Filter"]',
     'Watch List':
-      'kendo-tabstrip > [role="tabpanel"][aria-hidden="false"] app-people-picker[formcontrolname="watchList"] kendo-multiselect input[role="combobox"]',
+      'app-update-details app-people-picker[formcontrolname="watchList"] kendo-multiselect input[role="combobox"]',
   };
   private readonly updateDetailsPeoplePickerContainerByFieldName: Record<'User Assigned' | 'Watch List', string> = {
     'User Assigned':
-      'kendo-tabstrip > [role="tabpanel"][aria-hidden="false"] app-people-picker[formcontrolname="userAssigned"]',
+      'app-update-details app-people-picker[formcontrolname="userAssigned"]',
     'Watch List':
-      'kendo-tabstrip > [role="tabpanel"][aria-hidden="false"] app-people-picker[formcontrolname="watchList"]',
+      'app-update-details app-people-picker[formcontrolname="watchList"]',
   };
   private readonly updateDetailsPeoplePickerByField = (fieldName: 'User Assigned' | 'Watch List') =>
     this._page.locator(this.updateDetailsPeoplePickerControlByFieldName[fieldName]);
@@ -86,6 +91,10 @@ export class UpdatesDashboardPage extends BasePage {
     this.activeUpdateDetailsPanel().locator(
       `app-comments .comment-item:has(.comment-body:text-is("${comment}"))`,
     ).first();
+  private readonly updateDetailsReadOnlyFieldValueByName = (fieldName: string) =>
+    this.updateDetailsContainer().locator(
+      `xpath=.//label[contains(concat(' ', normalize-space(@class), ' '), ' form-label ') and normalize-space(text()[1]) = "${fieldName}"]/following-sibling::div[contains(concat(' ', normalize-space(@class), ' '), ' read-only-control ') or contains(concat(' ', normalize-space(@class), ' '), ' form-control-plaintext ')][1]`,
+    ).first();
 
   /**
    * Searches the Updates Dashboard for an update title.
@@ -102,6 +111,45 @@ export class UpdatesDashboardPage extends BasePage {
   async searchUpdatesDashboard(updateTitle: string): Promise<void> {
     await this.fillInputText(this.updateSearchInput, updateTitle);
     await this.pressKeyOnElement(this.updateSearchInput, 'Enter');
+  }
+
+  /**
+   * Types an update title and verifies that every visible autocomplete suggestion contains it.
+   * @param updateTitle Update title fragment used for searching suggestions.
+   */
+  async searchAndVerifyVisibleSuggestionsContain(updateTitle: string): Promise<void> {
+    const normalizedQuery = updateTitle.trim().toLowerCase();
+    if (!normalizedQuery) {
+      throw new Error('Update search text must not be empty when validating autocomplete suggestions.');
+    }
+
+    await this.fillInputText(this.updateSearchInput, updateTitle);
+
+    const waitTimeout = process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000;
+    const suggestions = this.updateSearchSuggestions();
+    await expect.poll(
+      async () => await suggestions.count(),
+      {
+        message: `Waiting for visible update search suggestions after typing "${updateTitle}".`,
+        timeout: waitTimeout,
+      },
+    ).toBeGreaterThan(0);
+
+    const suggestionTexts = (await suggestions.allInnerTexts())
+      .map((value) => value.trim())
+      .filter(Boolean);
+    const nonMatchingSuggestions = suggestionTexts.filter(
+      (value) => !value.toLowerCase().includes(normalizedQuery),
+    );
+
+    if (nonMatchingSuggestions.length > 0) {
+      this.failWithApplicationError(
+        `The update autocomplete dropdown must only show suggestions containing "${updateTitle}".`,
+        `Every visible suggestion contains "${updateTitle}".`,
+        `Found suggestion(s) without "${updateTitle}": ${nonMatchingSuggestions.join(', ')}.`,
+        `${suggestionTexts.length} visible suggestion(s): ${suggestionTexts.join(' | ')}.`,
+      );
+    }
   }
 
   /**
@@ -207,6 +255,25 @@ export class UpdatesDashboardPage extends BasePage {
   async getAllUpdatesItemCountIncludingZero(): Promise<number> {
     await expect(this._page.locator(this.updatesPagerInfo)).toBeVisible();
     return this.getKendoPagerItemCount(this.updatesPagerInfo);
+  }
+
+  /**
+   * Waits for the Updates Dashboard item count to differ from a previously saved value.
+   * @param previousItemCount Previously saved item count.
+   * @returns Updated item count once it differs from the saved value.
+   */
+  async waitForAllUpdatesItemCountToDiffer(previousItemCount: number): Promise<number> {
+    const waitTimeout = process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000;
+
+    await expect.poll(
+      async () => this.getAllUpdatesItemCountIncludingZero(),
+      {
+        message: `Waiting for the Updates Dashboard item count to differ from ${previousItemCount}.`,
+        timeout: waitTimeout,
+      },
+    ).not.toBe(previousItemCount);
+
+    return this.getAllUpdatesItemCountIncludingZero();
   }
 
   /**
@@ -341,8 +408,13 @@ export class UpdatesDashboardPage extends BasePage {
       return;
     }
 
-    const dropdown = this.getUpdateDetailsDropdown(fieldName);
-    await expect(dropdown.locator('.k-input-value-text')).toHaveText(expectedValue);
+    const dropdownValue = this.getUpdateDetailsDropdown(fieldName).locator('.k-input-value-text').first();
+    if (await dropdownValue.count() > 0) {
+      await expect(dropdownValue).toHaveText(expectedValue);
+      return;
+    }
+
+    await expect(this.updateDetailsReadOnlyFieldValueByName(fieldName)).toContainText(expectedValue);
   }
 
   /**
@@ -356,8 +428,13 @@ export class UpdatesDashboardPage extends BasePage {
       return;
     }
 
-    const dropdown = this.getUpdateDetailsDropdown(fieldName);
-    await expect(dropdown.locator('.k-input-value-text')).not.toHaveText(unexpectedValue);
+    const dropdownValue = this.getUpdateDetailsDropdown(fieldName).locator('.k-input-value-text').first();
+    if (await dropdownValue.count() > 0) {
+      await expect(dropdownValue).not.toHaveText(unexpectedValue);
+      return;
+    }
+
+    await expect(this.updateDetailsReadOnlyFieldValueByName(fieldName)).not.toContainText(unexpectedValue);
   }
 
   /**
@@ -427,7 +504,7 @@ export class UpdatesDashboardPage extends BasePage {
     const peoplePicker = this.updateDetailsPeoplePickerByField(fieldName);
     const searchInputSelector = this.updateDetailsPeoplePickerSearchInputByFieldName[fieldName];
     const userOptionSelector = this.updateDetailsPeoplePickerOptionByName(userName);
-
+    // await this._page.pause();
     await this.clickLocator(peoplePicker);
     await this.waitForElement(searchInputSelector);
     await this.fillInputText(searchInputSelector, userName);
@@ -627,24 +704,15 @@ export class UpdatesDashboardPage extends BasePage {
   private getUpdateDetailsDropdown(fieldName: string) {
     switch (fieldName) {
       case 'Priority':
-        return this.activeUpdateDetailsPanel().locator(
+        return this.updateDetailsContainer().locator(
           'kendo-dropdownlist[formcontrolname="priority"]',
         );
       case 'Status':
-        return this.activeUpdateDetailsPanel().locator(
+        return this.updateDetailsContainer().locator(
           'kendo-dropdownlist[formcontrolname="status"]',
         );
       default:
         throw new Error(`Update Details field "${fieldName}" is not supported.`);
     }
-  }
-
-  /**
-   * Escapes text before it is used as literal regular-expression content.
-   * @param value Text to escape.
-   * @returns Escaped regular-expression content.
-   */
-  private escapeRegularExpression(value: string): string {
-    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 }
