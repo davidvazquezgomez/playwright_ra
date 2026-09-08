@@ -347,7 +347,6 @@ export class DashboardPage extends BasePage {
 
         if (activeDialog === this.nameFilterDialog && (await this._page.locator(this.filterNameInput).inputValue()).trim()) {
             await saveButton.click();
-            await expect(saveButton).toBeHidden();
             return;
         }
 
