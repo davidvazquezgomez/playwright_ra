@@ -262,14 +262,27 @@ export class AnalyticsDashboardPage extends BasePage {
         shouldMatch: boolean,
     ): Promise<void> {
         if (!shouldMatch) {
-            await expect.poll(
-                async () => JSON.stringify(await this.getChartValues(chartTitle)),
-                {
-                    message: `Waiting for chart "${chartTitle}" to refresh after applying the filter.`,
-                    timeout: this.chartRefreshTimeout,
-                    intervals: [250, 500, 1000],
-                },
-            ).not.toBe(JSON.stringify(expectedValues));
+            try {
+                await expect.poll(
+                    async () => JSON.stringify(await this.getChartValues(chartTitle)),
+                    {
+                        message: `Waiting for chart "${chartTitle}" to refresh after applying the filter.`,
+                        timeout: this.chartRefreshTimeout,
+                        intervals: [250, 500, 1000],
+                    },
+                ).not.toBe(JSON.stringify(expectedValues));
+            } catch (error) {
+                const currentValues = await this.getChartValues(chartTitle);
+                if (JSON.stringify(currentValues) === JSON.stringify(expectedValues)) {
+                    this.failWithApplicationError(
+                        `Chart "${chartTitle}" values must differ from the saved values after applying the selected filter.`,
+                        'A value set different from the saved values.',
+                        JSON.stringify(currentValues),
+                        `Saved values: ${JSON.stringify(expectedValues)}. The chart remained visible and readable after the Dashboard filter dialog closed.`,
+                    );
+                }
+                throw error;
+            }
             return;
         }
 

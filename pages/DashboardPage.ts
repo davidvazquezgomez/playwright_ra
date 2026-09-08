@@ -69,6 +69,7 @@ export class DashboardPage extends BasePage {
         this._page.getByRole('button', { name: 'Clear all filters', exact: true });
     private readonly viewResultsButton = () =>
         this._page.locator(this.filterDialog).getByRole('button', { name: 'View results', exact: true });
+    private readonly blockingSpinner = 'app-spinner .cssload-container';
     private readonly filterOptionByName = (optionName: string) =>
         `${this.filterDialog} .saved-filter-name:text-is("${optionName}")`;
     private readonly dateAnnouncedFilterOption = () =>
@@ -440,6 +441,7 @@ export class DashboardPage extends BasePage {
     async viewFilteredResults(): Promise<void> {
         await this.viewResultsButton().click();
         await this.waitForSelectorStatus(this.filterDialog, 'hidden');
+        await this.waitForSelectorStatus(this.blockingSpinner, 'hidden');
     }
 
     /**

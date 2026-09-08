@@ -165,7 +165,7 @@ Feature: Dashboard Analytics for Deloitte User
   Scenario: TC015_05_DeloitteUser_DashboardAnalytics - Verify Update Analytics Data table pagination and update details navigation
     Given the "QA_Test client3 - Overview - Update Analytics" page is open
     Then verify the "Update Analytics Data" chart is displayed
-    When navigate to page "4" in the "Update Analytics Data" table
+    When navigate to page "3" in the "Update Analytics Data" table
     Then verify that the first result that appears is number "24"
     When press the "Updates" section
     And press the "Analytics" section
