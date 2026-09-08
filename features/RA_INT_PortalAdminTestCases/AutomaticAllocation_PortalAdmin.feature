@@ -64,8 +64,8 @@ Feature: Automatic Allocation of Updates for Portal Admin
     And click on the "Jurisdiction(s)" checkbox
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
-    And select the "Admin, QA" option in the "Update Owner" field
-    When select the "Admin, QA" option in the "Update Watchlist" field
+    And select the "audit, sonigour" option in the "Update Owner" field
+    When select the "Benz, Chris" option in the "Update Watchlist" field
     And press "Cancel" button
     Then the "Unsaved Changes" popup is displayed
     And the popup message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
@@ -74,8 +74,8 @@ Feature: Automatic Allocation of Updates for Portal Admin
     Then verify the "Impact Area(s)" checkbox is still selected
     And verify the "Jurisdiction(s)" checkbox is still selected
     And verify "AND" is still selected in the "Operator" field
-    And verify "Admin, QA" is still selected in the "Update Owner" field
-    And verify "Admin, QA" is still selected in the "Update Watchlist" field
+    And verify "audit, sonigour" is still selected in the "Update Owner" field
+    And verify "Benz, Chris" is still selected in the "Update Watchlist" field
     When press "Save" button
     And confirm the duplicate automatic allocation if displayed
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation of Updates" page
@@ -95,7 +95,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
     And click on the "Jurisdiction(s)" checkbox
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
-    And select the "Admin, QA" option in the "Update Owner" field
+    And select the "audit, sonigour" option in the "Update Owner" field
     When press "Cancel" button
     Then the "Unsaved Changes" popup is displayed
     When press "Continue" button on the "Unsaved Changes" popup
@@ -111,7 +111,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
     And click on the "Jurisdiction(s)" checkbox
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
-    And select the "Admin, QA" option in the "Update Owner" field
+    And select the "audit, sonigour" option in the "Update Owner" field
     When press "Back" button
     Then the "Unsaved Changes" popup is displayed
     And the popup message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
@@ -132,8 +132,8 @@ Feature: Automatic Allocation of Updates for Portal Admin
     And click on the "Jurisdiction(s)" checkbox
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
-    And select the "Admin, QA" option in the "Update Owner" field
-    And select the "Admin, QA" option in the "Update Watchlist" field
+    And select the "audit, sonigour" option in the "Update Owner" field
+    And select the "Benz, Chris" option in the "Update Watchlist" field
     And press "Back" button
     Then the "Unsaved Changes" popup is displayed
     And verify "Continue;Cancel" buttons are displayed on the "Unsaved Changes" popup
@@ -141,8 +141,8 @@ Feature: Automatic Allocation of Updates for Portal Admin
     Then verify the "Impact Area(s)" checkbox is still selected
     And verify the "Jurisdiction(s)" checkbox is still selected
     And verify "AND" is still selected in the "Operator" field
-    And verify "Admin, QA" is still selected in the "Update Owner" field
-    And verify "Admin, QA" is still selected in the "Update Watchlist" field
+    And verify "audit, sonigour" is still selected in the "Update Owner" field
+    And verify "Benz, Chris" is still selected in the "Update Watchlist" field
     When press "Save" button
     And confirm the duplicate automatic allocation if displayed
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation Setup" page
@@ -166,7 +166,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
     When click on the "Jurisdiction(s)" checkbox
     And select the "Select All" option in the "Jurisdiction(s)" field
     When select the "AND" option in the "Operator" field
-    And select the "Admin, QA" option in the "Update Owner" field
+    And select the "audit, sonigour" option in the "Update Owner" field
     And press "Save" button
     And confirm the duplicate automatic allocation if displayed
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation Setup" page
@@ -190,9 +190,9 @@ Feature: Automatic Allocation of Updates for Portal Admin
     And click on the "Jurisdiction(s)" checkbox
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
-    And select the "Admin, QA" option in the "Update Owner" field
-    Then verify "Admin, QA" is still selected in the "Update Owner" field
-    When select the "Admin, QA" option in the "Update Owner" field
+    And select the "audit, sonigour" option in the "Update Owner" field
+    Then verify "audit, sonigour" is still selected in the "Update Owner" field
+    When select the "audit, sonigour" option in the "Update Owner" field
     And press "Save" button
     And confirm the duplicate automatic allocation if displayed
     Then verify "Allocation created successfully." toast message is displayed in the "Automatic Allocation Setup" page
@@ -216,7 +216,7 @@ Feature: Automatic Allocation of Updates for Portal Admin
     And click on the "Jurisdiction(s)" checkbox
     And select the "Canada" option in the "Jurisdiction(s)" field
     And select the "AND" option in the "Operator" field
-    And select the "Admin, QA" option in the "Update Owner" field
+    And select the "audit, sonigour" option in the "Update Owner" field
     And press "Save" button
     Then the "Duplicate automatic allocation detected" popup is displayed
     And the duplicate automatic allocation warning is displayed
