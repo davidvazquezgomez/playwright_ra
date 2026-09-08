@@ -87,7 +87,7 @@ Feature: Dashboard Updates for Portal Admin
     And select "User5, External" in the "User Assigned" field on the selected update
     When select "High" option in the "Priority" field in the "Update Details" subsection
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
-    And select "Ben Chris" in the "Watch List" field on the selected update
+    And select "Benz, Chris" in the "Watch List" field on the selected update
     When press "Back" button
     Then the "Unsaved Changes" popup is displayed
     And the popup message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
@@ -96,7 +96,7 @@ Feature: Dashboard Updates for Portal Admin
     Then verify "User5, External" value is displayed in the "User Assigned" field
     Then verify "High" value is displayed in the "Priority" field
     And verify "Update Closed" value is displayed in the "Status" field
-    And verify "Ben Chris" value is displayed in the "Watch List" field
+    And verify "Benz, Chris" value is displayed in the "Watch List" field
 
   @mutable
   Scenario: TC003_03_PortalAdmin_DashboardUpdates - Cancel a modification of an update
@@ -107,7 +107,7 @@ Feature: Dashboard Updates for Portal Admin
     And select "User5, External" in the "User Assigned" field on the selected update
     When select "High" option in the "Priority" field in the "Update Details" subsection
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
-    And select "Ben Chris" in the "Watch List" field on the selected update
+    And select "Benz, Chris" in the "Watch List" field on the selected update
     When press "Back" button
     Then the "Unsaved Changes" popup is displayed
     When press "Continue" button
@@ -116,7 +116,7 @@ Feature: Dashboard Updates for Portal Admin
     Then verify the "User Assigned" field does not display "User5, External"
     And verify the "Priority" field does not display "High"
     And verify the "Status" field does not display "Update Closed"
-    And verify the "Watch List" field does not display "Ben Chris"
+    And verify the "Watch List" field does not display "Benz, Chris"
 
   @mutable
   Scenario: TC003_04_PortalAdmin_DashboardUpdates - Create and delete a comment
