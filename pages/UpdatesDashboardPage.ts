@@ -517,7 +517,6 @@ export class UpdatesDashboardPage extends BasePage {
     userName: string,
     fieldName: 'User Assigned' | 'Watch List',
   ): Promise<void> {
-    // await this._page.pause();
     const peoplePicker = this.updateDetailsPeoplePickerByField(fieldName);
     const searchInputSelector = this.updateDetailsPeoplePickerSearchInputByFieldName[fieldName];
     const userOptionSelector = this.updateDetailsPeoplePickerOptionByName(userName);
