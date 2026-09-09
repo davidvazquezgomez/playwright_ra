@@ -392,6 +392,9 @@ export class UpdatesDashboardPage extends BasePage {
   async selectUpdateDetailsOption(optionName: string, fieldName: string): Promise<void> {
     const dropdown = this.getUpdateDetailsDropdown(fieldName);
     const option = this._page.getByRole('option', { name: optionName, exact: true }).first();
+
+    // The Update Details panel keeps its dropdowns disabled while it finishes loading related data.
+    await expect(dropdown).toBeEnabled({ timeout: 30000 });
     await this.clickLocator(dropdown);
     await this.clickLocator(option);
     await expect(dropdown.locator('.k-input-value-text')).toHaveText(optionName);
