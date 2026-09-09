@@ -108,7 +108,7 @@ export class DashboardPage extends BasePage {
                 hasText: new RegExp(`^\\s*${this.sectionNamePattern(sectionName)}\\s*$`, 'i'),
             }),
         }).first();
-    private readonly dashboardCheckboxByValue = (sectionName: string, value: string) =>
+    private readonly dashboardCheckboxLabelByValue = (sectionName: string, value: string) =>
         this.dashboardCheckboxFilterSectionByName(sectionName)
             .locator('label.filter-option-label')
             .filter({
@@ -116,8 +116,9 @@ export class DashboardPage extends BasePage {
                     new RegExp(`^\\s*${this.escapeRegularExpression(value)}\\s*$`, 'i'),
                 ),
             })
-            .locator('input[type="checkbox"]')
             .first();
+    private readonly dashboardCheckboxByValue = (sectionName: string, value: string) =>
+        this.dashboardCheckboxLabelByValue(sectionName, value).locator('input[type="checkbox"]');
     private readonly dashboardDateFieldPickerByLabel = (fieldLabel: string) =>
         this._page.locator(this.filterDialog).locator('.date-field').filter({
             has: this._page.locator('label.date-label', {
@@ -630,14 +631,15 @@ export class DashboardPage extends BasePage {
             await filterSection.locator(':scope > .k-link').click();
         }
 
+        const optionLabel = this.dashboardCheckboxLabelByValue(sectionName, optionName);
         const optionCheckbox = this.dashboardCheckboxByValue(sectionName, optionName);
         await expect(
-            optionCheckbox,
+            optionLabel,
             `Expected checkbox option "${optionName}" to be available in the "${sectionName}" filter.`,
         ).toBeVisible({ timeout: 30_000 });
 
         if (await optionCheckbox.isChecked() !== selected) {
-            await optionCheckbox.setChecked(selected);
+            await optionLabel.click();
         }
 
         await expect(optionCheckbox).toBeChecked({ checked: selected });
