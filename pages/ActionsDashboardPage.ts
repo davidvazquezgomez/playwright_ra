@@ -493,21 +493,12 @@ export class ActionsDashboardPage extends BasePage {
   async updateAction(): Promise<void> {
     const dialog = this._page.locator(this.updateActionDialog);
     const updateButton = this.updateActionButton();
-    const attempts = 2;
+    await expect(updateButton).toBeEnabled({ timeout: 15000 });
 
-    for (let attempt = 1; attempt <= attempts; attempt++) {
-      await expect(updateButton).toBeEnabled({ timeout: 15000 });
-      await this.clickLocator(updateButton);
-
-      try {
-        await expect(dialog).toBeHidden({ timeout: 15000 });
-        return;
-      } catch (error) {
-        if (attempt === attempts) {
-          throw error;
-        }
-      }
-    }
+    await Promise.all([
+      expect(dialog).toBeHidden({ timeout: 15000 }),
+      this.clickLocator(updateButton),
+    ]);
   }
 
   /**
@@ -594,7 +585,13 @@ export class ActionsDashboardPage extends BasePage {
    * Posts the text entered in the action comment editor.
    */
   async postComment(): Promise<void> {
-    await this.submitCommentButton().click();
+    const commentEntries = this._page.locator(
+      `${this.updateActionDialog} app-comments .comment-item`,
+    );
+    const commentCountBeforePosting = await commentEntries.count();
+
+    await this.clickLocator(this.submitCommentButton());
+    await expect(commentEntries).toHaveCount(commentCountBeforePosting + 1);
   }
 
   /**

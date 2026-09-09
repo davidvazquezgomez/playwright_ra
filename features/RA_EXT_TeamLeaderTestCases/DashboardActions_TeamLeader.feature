@@ -352,6 +352,7 @@ Feature: Dashboard Actions for Team Leader
     When select "Low" in the "Action Priority" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify the "Name Filter" modal is displayed on the Dashboard filter
+    When clear the "Filter Name" field on the Dashboard filter
     When press "Save filter" button on the Dashboard filter
     Then verify "Filter Name is required." error message appears on the Dashboard filter
     When fill "Test DashboardAction" in the "Filter Name" field on the Dashboard filter

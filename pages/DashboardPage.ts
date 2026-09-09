@@ -369,7 +369,10 @@ export class DashboardPage extends BasePage {
         const saveButton = this.saveFilterButton(activeDialog);
 
         if (activeDialog === this.nameFilterDialog && (await this._page.locator(this.filterNameInput).inputValue()).trim()) {
-            await saveButton.click();
+            await Promise.all([
+                expect(this.filterSavedToast).toBeVisible({ timeout: 30_000 }),
+                this.clickLocator(saveButton),
+            ]);
             return;
         }
 
@@ -408,6 +411,13 @@ export class DashboardPage extends BasePage {
      */
     async fillFilterName(filterName: string): Promise<void> {
         await this.fillInputText(this.filterNameInput, filterName);
+    }
+
+    /**
+     * Clears the name in the save-filter dialog.
+     */
+    async clearFilterName(): Promise<void> {
+        await this.clearInput(this.filterNameInput);
     }
 
     /**
