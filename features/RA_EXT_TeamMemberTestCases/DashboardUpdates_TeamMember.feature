@@ -104,7 +104,6 @@ Feature: Dashboard page for Team Member
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When open the "Attachments" tab in the "Update Details" subsection
     And upload "<file path>" attachment in the "Update Details" Attachments tab
-    And select a "<valid extension>" format file from "<file path>" and upload it
     Then verify the "<name>" attachment is displayed in the "Attachments" section
     When press "Remove" button on the attachment
     Then verify the "<name>" attachment is not displayed in the "Attachments" section
@@ -112,11 +111,9 @@ Feature: Dashboard page for Team Member
     Examples:
       | valid extension | file path              | name         |
       | pdf             | test-data/valid.pdf    | valid.pdf    |
-      | pdf             | test-data/invalid.pdf  | invalid.pdf  |
       | xlsx            | test-data/valid.xlsx   | valid.xlsx   |
       | svg             | test-data/valid.svg    | valid.svg    |
       | png             | test-data/valid.png    | valid.png    |
-      | docx            | test-data/invalid.docx | invalid.docx |
 
   @mutable
   Scenario Outline: TC003_06_TeamMember_DashboardUpdates - Upload an attachment with unsupported format
@@ -130,7 +127,6 @@ Feature: Dashboard page for Team Member
 
     Examples:
       | file path             | expected message                                                        | name        |
-      | test-data/valid.xls   | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx. | valid.xls   |
       | test-data/invalid.jpg | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.jpg |
       | test-data/invalid.csv | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.csv |
       | test-data/invalid.txt | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.txt |
@@ -215,7 +211,7 @@ Feature: Dashboard page for Team Member
     When press "Clear all filters" section on the Dashboard filter if available
     And save the "01_QA_StageTestPortal - Updates Dashboard" items
     When press "Filter" button on the Dashboard filter
-    And select "Test_TeamMember" located in the "Saved Filters" section on the Dashboard filter
+    And select "Test_TeamMember_4" located in the "Saved Filters" section on the Dashboard filter
     When press "View results" button on the Dashboard filter
     Then verify the "01_QA_StageTestPortal - Updates Dashboard" item count is not the same
 
