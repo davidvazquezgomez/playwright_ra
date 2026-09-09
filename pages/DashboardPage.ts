@@ -628,6 +628,7 @@ export class DashboardPage extends BasePage {
 
         if (await filterSection.getAttribute('aria-expanded') !== 'true') {
             await filterSection.locator(':scope > .k-link').click();
+            await expect(filterSection).toHaveAttribute('aria-expanded', 'true');
         }
 
         const optionCheckbox = this.dashboardCheckboxByValue(sectionName, optionName);

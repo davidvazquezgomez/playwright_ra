@@ -222,7 +222,7 @@ Feature: Dashboard Updates for Portal Admin
     Given the "Global Inc - Updates Dashboard - All Updates" page is open
     Then save the "Global Inc - Updates Dashboard" items
     When press "Filter" button on the Dashboard filter
-    And select "SelectAll_Test_1784117406226" located in the "Saved Filters" section on the Dashboard filter
+    And select "Test_Analytics" located in the "Saved Filters" section on the Dashboard filter
     When press "View results" button on the Dashboard filter
     Then verify the "Global Inc - Updates Dashboard" item count is not the same
 
