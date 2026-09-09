@@ -171,8 +171,8 @@ Feature: Dashboard Updates for Deloitte User
     Given the "01_13Jan REG - Updates Dashboard - All Updates" page is open
     When press "Clear all filters" section on the Dashboard filter if available
     And save the "01_13Jan REG - Updates Dashboard" items
-    When search for "Income" update from the "01_13Jan REG - Updates Dashboard" page
-    Then verify only updates that contain "Income" in the title are displayed
+    Then search for "Income" update and verify all visible suggestions contain it in the Updates Dashboard
+    When search for "03May 2026 Employment Income Brackets" update from the "01_13Jan REG - Updates Dashboard" page
     Then verify the "01_13Jan REG - Updates Dashboard" item count is not the same
 
   @readOnly

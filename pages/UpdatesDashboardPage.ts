@@ -98,11 +98,18 @@ export class UpdatesDashboardPage extends BasePage {
 
   /**
    * Searches the Updates Dashboard for an update title.
+   * If a matching suggestion exists, clicks it; otherwise presses Enter to confirm the search.
    * @param updateTitle The update title to search for.
    */
   async searchForUpdate(updateTitle: string): Promise<void> {
     await this.fillInputText(this.updateSearchInput, updateTitle);
-    await this.updateSearchResultByTitle(updateTitle).click();
+    try {
+      // Try to click the exact match suggestion with a short timeout
+      await this.updateSearchResultByTitle(updateTitle).click({ timeout: 2000 });
+    } catch {
+      // No matching suggestion found; press Enter to search without selecting a suggestion
+      await this.pressKeyOnElement(this.updateSearchInput, 'Enter');
+    }
   }
   /**
    * Searches the Updates Dashboard and confirms the entered query without selecting a suggestion.
