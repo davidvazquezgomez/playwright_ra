@@ -41,9 +41,9 @@ Feature: Dashboard Updates for Client Admin
   @mutable
   Scenario: TC002_01_ClientAdmin_DashboardUpdates - Verify read/unread functionality on the "Unread Updates" tab
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "32Increase of maximum meal voucher vaalue" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    When search for "04May 2026 Employment Income Brackets test stage" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
-    Then the "32Increase of maximum meal voucher vaalue" page is displayed
+    Then the "04May 2026 Employment Income Brackets test stage" page is displayed
     When press "Mark as Unread" button on the selected update
     Then verify the "Mark as Unread" button is disabled on the selected update
     When press "Back" button
@@ -52,7 +52,7 @@ Feature: Dashboard Updates for Client Admin
     And press "Clear" button in the search field
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Back" button
-    Then verify the "32Increase of maximum meal voucher vaalue" update is not displayed
+    Then verify the "04May 2026 Employment Income Brackets test stage" update is not displayed
 
   @mutable
   Scenario: TC003_01_ClientAdmin_DashboardUpdates - Create and revert a modification of an update
@@ -224,7 +224,7 @@ Feature: Dashboard Updates for Client Admin
     And register cleanup to remove saved filter "QaTest" from "01_QA_StageTestPortal - Updates Dashboard - All Updates"
     When press "Filter" button on the Dashboard filter
     And remove saved filter "QaTest" if it exists on the Dashboard filter
-    When select "Awaiting Allocation" in the "Status" filter on the Dashboard filter
+    When select "Update Allocated" in the "Status" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify the "Name Filter" modal is displayed on the Dashboard filter
     When press "Save filter" button on the Dashboard filter
@@ -258,12 +258,14 @@ Feature: Dashboard Updates for Client Admin
     When press "Filter" button on the Dashboard filter
     And press "Save as favourite" button for "Test_ClientAdmin" on the Dashboard filter
     Then verify "Filter updated successfully." toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
+    And press "Close" button on the Dashboard filter
     And logout from the application
     When launch Regulatory Advantage application URL and login as "deloitte" user "SUPERADMIN"
     Then the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     Then verify the "01_QA_StageTestPortal - Updates Dashboard" item count is not the same
     When press "Remove as favourite" button for "Test_ClientAdmin" on the Dashboard filter
     Then verify "Filter updated successfully." toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
+    And press "Close" button on the Dashboard filter
     And logout from the application
 
   @readOnly
@@ -281,6 +283,7 @@ Feature: Dashboard Updates for Client Admin
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When press "Clear all filters" section on the Dashboard filter if available
     And save the "01_QA_StageTestPortal - Updates Dashboard" items
+    When press "Filter" button on the Dashboard filter
     When select "Medium" in the "Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify the "01_QA_StageTestPortal - Updates Dashboard" item count is not the same
@@ -322,8 +325,8 @@ Feature: Dashboard Updates for Client Admin
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     Then verify the "Updates Dashboard" tab is selected in the Dashboard Options popup
     And verify "Edit Updates Dashboard" is displayed in the Dashboard Options popup
-    And verify "Update Title;Action;User Assigned;Deadline Date;Update Priority;Action Priority;Action Status" columns are displayed in the Dashboard Options popup
-    And verify "Update Title;Action;User Assigned;Deadline Date;Update Priority;Action Priority;Action Status" columns are selected in the Dashboard Options popup
+    And verify "Update Title;Jurisdiction;Impact Area;Date Announced;Date Effective;Priority;Status;Last Updated" columns are displayed in the Dashboard Options popup
+    And verify "Update Title;Jurisdiction;Impact Area;Date Announced;Date Effective;Priority;Status;Last Updated" columns are selected in the Dashboard Options popup
     When deselect "Status" column in the Dashboard Options popup
     Then verify "Status" column is not selected in the Dashboard Options popup
     When press "Save" button in the Dashboard Options popup

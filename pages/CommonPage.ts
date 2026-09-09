@@ -85,6 +85,7 @@ export class CommonPage extends BasePage {
   private favouriteIcon = '.view-toggle > span:not(.d-none) i[title="Save as favourite"]';
   private openDashboardButton = 'role=button[name="Open Dashboard"]';
   private dashboardFilterButton = 'button[title="Filter"]';
+  private clearAllFiltersButton = 'button[title="Clear all filters"]';
   private downloadUpdatesTemplateLink = 'a.download-template:has-text("Download Updates Template")';
   private updatesDashboardSearchInput = 'input[placeholder="Select or type update title"][role="combobox"]';
   private exportUsersButton = 'button:has(.k-button-text:text-is("EXPORT USERS"))';
@@ -948,6 +949,7 @@ export class CommonPage extends BasePage {
         break;
       case "Back":
         await this.clickElement(this.backButton);
+        await this._page.waitForLoadState('load', { timeout: 5000 }).catch(() => {});
         break;
       case "favorite icon":
         await this.clickElement(this.favouriteIcon);
@@ -966,12 +968,14 @@ export class CommonPage extends BasePage {
       case "Comment":
       case "Delete":
       case "More Filters":
-      case "Clear all filters":
       case "Update Portal Now":
       case "Deactivate Portal":
       case "Yes":
       case "Reactivate Portal":
         await this.buttonByName(button).click({ noWaitAfter: true });
+        break;
+      case "Clear all filters":
+        await this.clickElement(this.clearAllFiltersButton);
         break;
       case "Edit Client":
         await this._page.locator(`button[title="Edit Client"]`).first().click({ noWaitAfter: true });

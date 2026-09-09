@@ -533,8 +533,23 @@ export class BasePage {
    * @param selector Element identification
    */
   async clickElement(selector: string, timeout?: number) {
-    const element = await this.waitForElement(selector, timeout);
-    await element.click({ noWaitAfter: true });
+    const waitTimeout = timeout ?? (process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000);
+    const element = this._page.locator(selector).first();
+
+    for (let attempt = 1; attempt <= 3; attempt += 1) {
+      try {
+        await element.waitFor({ state: 'visible', timeout: waitTimeout });
+        await element.click({ timeout: waitTimeout, noWaitAfter: true });
+        return;
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        const isDetached = /not attached to the dom|element is not attached/i.test(message);
+
+        if (!isDetached || attempt === 3) {
+          throw error;
+        }
+      }
+    }
   }
 
   /**
