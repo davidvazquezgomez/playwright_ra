@@ -949,6 +949,7 @@ export class CommonPage extends BasePage {
         break;
       case "Back":
         await this.clickElement(this.backButton);
+        await this._page.waitForLoadState('load', { timeout: 5000 }).catch(() => {});
         break;
       case "favorite icon":
         await this.clickElement(this.favouriteIcon);

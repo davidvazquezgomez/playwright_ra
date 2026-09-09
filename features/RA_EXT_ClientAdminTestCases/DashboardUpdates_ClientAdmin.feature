@@ -41,9 +41,9 @@ Feature: Dashboard Updates for Client Admin
   @mutable
   Scenario: TC002_01_ClientAdmin_DashboardUpdates - Verify read/unread functionality on the "Unread Updates" tab
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "32Increase of maximum meal voucher vaalue" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    When search for "04May 2026 Employment Income Brackets test stage" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
-    Then the "32Increase of maximum meal voucher vaalue" page is displayed
+    Then the "04May 2026 Employment Income Brackets test stage" page is displayed
     When press "Mark as Unread" button on the selected update
     Then verify the "Mark as Unread" button is disabled on the selected update
     When press "Back" button
@@ -52,7 +52,7 @@ Feature: Dashboard Updates for Client Admin
     And press "Clear" button in the search field
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Back" button
-    Then verify the "32Increase of maximum meal voucher vaalue" update is not displayed
+    Then verify the "04May 2026 Employment Income Brackets test stage" update is not displayed
 
   @mutable
   Scenario: TC003_01_ClientAdmin_DashboardUpdates - Create and revert a modification of an update
@@ -224,7 +224,7 @@ Feature: Dashboard Updates for Client Admin
     And register cleanup to remove saved filter "QaTest" from "01_QA_StageTestPortal - Updates Dashboard - All Updates"
     When press "Filter" button on the Dashboard filter
     And remove saved filter "QaTest" if it exists on the Dashboard filter
-    When select "Awaiting Allocation" in the "Status" filter on the Dashboard filter
+    When select "Update Allocated" in the "Status" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify the "Name Filter" modal is displayed on the Dashboard filter
     When press "Save filter" button on the Dashboard filter
