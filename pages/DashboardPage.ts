@@ -128,6 +128,10 @@ export class DashboardPage extends BasePage {
         this.filterOptionLabels(sectionName).filter({ hasNotText: /^\s*Select All\s*$/ });
     private readonly selectAllOptionLabel = (sectionName: string) =>
         this.filterOptionLabels(sectionName).filter({ hasText: /^\s*Select All\s*$/ }).first();
+    private readonly savedFilterItemsByName = (filterName: string, sectionName: string) =>
+        this.filterSectionByName(sectionName).locator('.saved-filter-item').filter({
+            has: this._page.locator('.saved-filter-name').getByText(filterName, { exact: true }),
+        });
     private readonly savedFilterByName = (filterName: string, sectionName: string) =>
         this.filterSectionByName(sectionName).locator('.saved-filter-name').getByText(filterName, { exact: true });
     private readonly savedFilterItemByName = (filterName: string) =>
@@ -365,7 +369,10 @@ export class DashboardPage extends BasePage {
         const saveButton = this.saveFilterButton(activeDialog);
 
         if (activeDialog === this.nameFilterDialog && (await this._page.locator(this.filterNameInput).inputValue()).trim()) {
-            await saveButton.click();
+            await Promise.all([
+                expect(this.filterSavedToast).toBeVisible({ timeout: 30_000 }),
+                this.clickLocator(saveButton),
+            ]);
             return;
         }
 
@@ -404,6 +411,13 @@ export class DashboardPage extends BasePage {
      */
     async fillFilterName(filterName: string): Promise<void> {
         await this.fillInputText(this.filterNameInput, filterName);
+    }
+
+    /**
+     * Clears the name in the save-filter dialog.
+     */
+    async clearFilterName(): Promise<void> {
+        await this.clearInput(this.filterNameInput);
     }
 
     /**
@@ -642,7 +656,31 @@ export class DashboardPage extends BasePage {
             await filterSection.click();
         }
 
-        await this.savedFilterByName(filterName, sectionName).dblclick();
+        const matchingSavedFilters = this.savedFilterItemsByName(filterName, sectionName);
+        const matchingSavedFilterCount = await matchingSavedFilters.count();
+
+        if (matchingSavedFilterCount === 0) {
+            throw new Error(
+                `Saved filter "${filterName}" was not found in section "${sectionName}".`,
+            );
+        }
+
+        let savedFilterToOpen = matchingSavedFilters;
+        if (matchingSavedFilterCount > 1) {
+            const savedFiltersWithCriteria = matchingSavedFilters.filter({ hasNotText: /No filters applied/i });
+            const savedFiltersWithCriteriaCount = await savedFiltersWithCriteria.count();
+
+            if (savedFiltersWithCriteriaCount === 1) {
+                savedFilterToOpen = savedFiltersWithCriteria;
+            } else {
+                throw new Error(
+                    `Saved filter "${filterName}" is ambiguous in section "${sectionName}" (${matchingSavedFilterCount} matches). ` +
+                    'Use a unique saved filter name or remove duplicate entries.',
+                );
+            }
+        }
+
+        await savedFilterToOpen.first().locator('.saved-filter-name').dblclick();
     }
 
     /**

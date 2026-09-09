@@ -97,6 +97,10 @@ When('fill {string} in the "Filter Name" field on the Dashboard filter', async (
     await dashboardPage.fillFilterName(filterName);
 });
 
+When('clear the "Filter Name" field on the Dashboard filter', async ({ dashboardPage }) => {
+    await dashboardPage.clearFilterName();
+});
+
 Then('press "Reset Filters" button on the Dashboard filter', async ({ dashboardPage }) => {
     await dashboardPage.resetFilters();
 });

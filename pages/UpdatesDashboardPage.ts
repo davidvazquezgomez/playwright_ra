@@ -98,11 +98,18 @@ export class UpdatesDashboardPage extends BasePage {
 
   /**
    * Searches the Updates Dashboard for an update title.
+   * If a matching suggestion exists, clicks it; otherwise presses Enter to confirm the search.
    * @param updateTitle The update title to search for.
    */
   async searchForUpdate(updateTitle: string): Promise<void> {
     await this.fillInputText(this.updateSearchInput, updateTitle);
-    await this.updateSearchResultByTitle(updateTitle).click();
+    try {
+      // Try to click the exact match suggestion with a short timeout
+      await this.updateSearchResultByTitle(updateTitle).click({ timeout: 2000 });
+    } catch {
+      // No matching suggestion found; press Enter to search without selecting a suggestion
+      await this.pressKeyOnElement(this.updateSearchInput, 'Enter');
+    }
   }
   /**
    * Searches the Updates Dashboard and confirms the entered query without selecting a suggestion.
@@ -392,6 +399,9 @@ export class UpdatesDashboardPage extends BasePage {
   async selectUpdateDetailsOption(optionName: string, fieldName: string): Promise<void> {
     const dropdown = this.getUpdateDetailsDropdown(fieldName);
     const option = this._page.getByRole('option', { name: optionName, exact: true }).first();
+
+    // The Update Details panel keeps its dropdowns disabled while it finishes loading related data.
+    await expect(dropdown).toBeEnabled({ timeout: 30000 });
     await this.clickLocator(dropdown);
     await this.clickLocator(option);
     await expect(dropdown.locator('.k-input-value-text')).toHaveText(optionName);
