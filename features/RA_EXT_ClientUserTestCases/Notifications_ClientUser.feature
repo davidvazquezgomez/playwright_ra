@@ -99,7 +99,7 @@ Feature: Notifications for Client User
     When select "Not Started" option in the "Status" field in the "Update Action" popup
     And toggle the selected action priority between "High" and "Medium"
     And press "Update" button in the "Update Action" popup
-    Then verify "Regulatory updated updated successfully" toast message is displayed in the "ClientPortal_20260209133616 - Actions Dashboard" page
+    Then verify "Regulatory updated updated successfully" toast message is displayed in the "Employment Taxes_1" page
     When press "Notifications" button
     Then the "Notifications" popup is displayed
     When press "View All" button
@@ -123,11 +123,10 @@ Feature: Notifications for Client User
     And press "Edit" button on the selected update
     And change the selected update status to a different value
     When press "Save" button on the selected update
-    Then verify "Action updated successfully" toast message is displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page
+    Then verify "Regulatory update updated successfully" toast message is displayed in the "Employment Taxes_1" page
     When press "Notifications" button
     Then the "Notifications" popup is displayed
     When press "View All" button
     Then the "Notification Listing" page is displayed
     And verify there are no system notifications
 
-   # Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
