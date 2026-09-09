@@ -243,12 +243,14 @@ Feature: Dashboard Updates for Client User
     When press "Filter" button on the Dashboard filter
     And press "Save as favourite" button for "Test_ClientUser" on the Dashboard filter
     Then verify "Filter updated successfully." toast message is displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page
+    And press "Close" button on the Dashboard filter
     And logout from the application
     When launch Regulatory Advantage application URL and login as "external" user "CLIENTUSER"
     Then the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     Then verify the "ClientPortal_20260209133616 - Updates Dashboard" item count is not the same
     When press "Remove as favourite" button for "Test_ClientUser" on the Dashboard filter
     Then verify "Filter updated successfully." toast message is displayed in the "ClientPortal_20260209133616 - Updates Dashboard" page
+    And press "Close" button on the Dashboard filter
     And logout from the application
 
   @readOnly
@@ -266,6 +268,7 @@ Feature: Dashboard Updates for Client User
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When press "Clear all filters" section on the Dashboard filter if available
     And save the "ClientPortal_20260209133616 - Updates Dashboard" items
+    When press "Filter" button on the Dashboard filter
     When select "Medium" in the "Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify the "ClientPortal_20260209133616 - Updates Dashboard" item count is not the same
@@ -307,8 +310,8 @@ Feature: Dashboard Updates for Client User
     Then verify the "Dashboard options" popup is displayed on the Dashboard
     Then verify the "Updates Dashboard" tab is selected in the Dashboard Options popup
     And verify "Edit Updates Dashboard" is displayed in the Dashboard Options popup
-    And verify "Update Title;Action;User Assigned;Deadline Date;Update Priority;Action Priority;Action Status" columns are displayed in the Dashboard Options popup
-    And verify "Update Title;Action;User Assigned;Deadline Date;Update Priority;Action Priority;Action Status" columns are selected in the Dashboard Options popup
+    And verify "Update Title;Jurisdiction;Impact Area;Date Announced;Date Effective;Priority;Status;Last Updated" columns are displayed in the Dashboard Options popup
+    And verify "Update Title;Jurisdiction;Impact Area;Date Announced;Date Effective;Priority;Status;Last Updated" columns are selected in the Dashboard Options popup
     When deselect "Status" column in the Dashboard Options popup
     Then verify "Status" column is not selected in the Dashboard Options popup
     When press "Save" button in the Dashboard Options popup

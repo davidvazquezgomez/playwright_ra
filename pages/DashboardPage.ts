@@ -66,7 +66,9 @@ export class DashboardPage extends BasePage {
         .filter({ hasText: 'Filter updated successfully.' });
     private readonly resetFiltersButton = `${this.filterDialog} button.reset`;
     private readonly clearAllFiltersButton = () =>
-        this._page.getByRole('button', { name: 'Clear all filters', exact: true });
+        this._page
+            .locator('button[title="Clear all filters"], button[aria-label="Clear all filters"]')
+            .first();
     private readonly viewResultsButton = () =>
         this._page.locator(this.filterDialog).getByRole('button', { name: 'View results', exact: true });
     private readonly blockingSpinner = 'app-spinner .cssload-container';
@@ -133,7 +135,11 @@ export class DashboardPage extends BasePage {
             has: this._page.locator('.saved-filter-name').getByText(filterName, { exact: true }),
         }).first();
     private readonly savedFilterFavouriteControlByName = (filterName: string) =>
-        this.savedFilterItemByName(filterName).locator(':scope > *').last();
+        this.savedFilterItemByName(filterName)
+            .locator(
+                '.remove-bookmark, [data-title="Remove as favourite"], img[aria-label="Remove as favourite"], i[title="Save as favourite"]',
+            )
+            .first();
     private readonly savedFilterDeleteButtonByName = (filterName: string) =>
         this._page.locator(this.filterDialog).locator('.saved-filter-item', {
             has: this._page.locator('.saved-filter-name').getByText(filterName, { exact: true }),
@@ -173,8 +179,13 @@ export class DashboardPage extends BasePage {
      * Opens the Dashboard filter panel.
      */
     async openFilterPanel(): Promise<void> {
+        const filterDialog = this._page.locator(this.filterDialog);
+        if (await filterDialog.isVisible()) {
+            return;
+        }
+
         await this.clickElement(this.dashboardFilterButton);
-        await expect(this._page.locator(this.filterDialog)).toBeVisible();
+        await expect(filterDialog).toBeVisible();
     }
 
     /**
@@ -440,8 +451,12 @@ export class DashboardPage extends BasePage {
 
         const savedFilterItem = this.savedFilterItemByName(filterName);
         await expect(savedFilterItem).toBeVisible();
-        await this.clickLocator(this.savedFilterFavouriteControlByName(filterName));
-        await expect(this.filterUpdatedToast).toBeVisible({ timeout: 30_000 });
+        const favouriteControl = this.savedFilterFavouriteControlByName(filterName);
+        await expect(favouriteControl).toBeVisible();
+        await Promise.all([
+            expect(this.filterUpdatedToast).toBeVisible({ timeout: 30_000 }),
+            this.clickLocator(favouriteControl),
+        ]);
     }
 
     /**
@@ -496,7 +511,13 @@ export class DashboardPage extends BasePage {
      * @param filterName Exact saved-filter name to remove.
      */
     async removeSavedFilterIfExists(filterName: string): Promise<void> {
-        await this.openFilterPanel();
+        const filterDialog = this._page.locator(this.filterDialog);
+        const openedByThisMethod = !await filterDialog.isVisible();
+
+        if (openedByThisMethod) {
+            await this.openFilterPanel();
+        }
+
         await this.editDashboardFilters();
 
         const deleteButton = this.savedFilterDeleteButtonByName(filterName);
@@ -508,7 +529,9 @@ export class DashboardPage extends BasePage {
             await expect(deleteButton).toHaveCount(0);
         }
 
-        await this.closeFilterPanel();
+        if (openedByThisMethod) {
+            await this.closeFilterPanel();
+        }
     }
 
     /**
