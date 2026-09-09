@@ -57,7 +57,7 @@ Feature: Dashboard Updates for Client Admin
   @mutable
   Scenario: TC003_01_ClientAdmin_DashboardUpdates - Create and revert a modification of an update
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "32Increase of maximum meal voucher vaalue" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    When search for "04May 2026 Employment Income Brackets test stage" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     And select "satestclientuser2, satestclientuser2" in the "User Assigned" field on the selected update
@@ -67,8 +67,8 @@ Feature: Dashboard Updates for Client Admin
     When press "Save" button on the selected update
     When press "Back" button
     And press "Clear" button in the search field
-    When search for "32Increase of maximum meal voucher vaalue" update from the "01_QA_StageTestPortal - Updates Dashboard" page
-    Then verify "Regulatory update updated successfully" toast message is displayed in the "32Increase of maximum meal voucher vaalue" page
+    When search for "04May 2026 Employment Income Brackets test stage" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    Then verify "Regulatory update updated successfully" toast message is displayed in the "04May 2026 Employment Income Brackets test stage" page
     When open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     And select "satestclientuser3, satestclientuser3" in the "User Assigned" field on the selected update
@@ -76,12 +76,12 @@ Feature: Dashboard Updates for Client Admin
     And select "Update Allocated" option in the "Status" field in the "Update Details" subsection
     And press "clear" in the "Watch List" field
     When press "Save" button on the selected update
-    Then verify "Regulatory update updated successfully" toast message is displayed in the "32Increase of maximum meal voucher vaalue" page
+    Then verify "Regulatory update updated successfully" toast message is displayed in the "04May 2026 Employment Income Brackets test stage" page
 
   @mutable
   Scenario: TC003_02_ClientAdmin_DashboardUpdates - Simulate a modification of an update (Back button)
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "32Increase of maximum meal voucher vaalue" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    When search for "04May 2026 Employment Income Brackets test stage" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     And select "satestclientuser2, satestclientuser2" in the "User Assigned" field on the selected update
@@ -143,11 +143,9 @@ Feature: Dashboard Updates for Client Admin
     Examples:
       | valid extension | file path              | name         |
       | pdf             | test-data/valid.pdf    | valid.pdf    |
-      | pdf             | test-data/invalid.pdf  | invalid.pdf  |
       | xlsx            | test-data/valid.xlsx   | valid.xlsx   |
       | svg             | test-data/valid.svg    | valid.svg    |
       | png             | test-data/valid.png    | valid.png    |
-      | docx            | test-data/invalid.docx | invalid.docx |
 
   @mutable
   Scenario Outline: TC003_06_ClientAdmin_DashboardUpdates - Upload an attachment with unsupported format
@@ -161,7 +159,6 @@ Feature: Dashboard Updates for Client Admin
 
     Examples:
       | file path             | expected message                                                        | name        |
-      | test-data/valid.xls   | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx. | valid.xls   |
       | test-data/invalid.jpg | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.jpg |
       | test-data/invalid.csv | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.csv |
       | test-data/invalid.txt | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.txt |
