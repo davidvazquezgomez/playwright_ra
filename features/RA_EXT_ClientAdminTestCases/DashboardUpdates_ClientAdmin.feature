@@ -243,7 +243,7 @@ Feature: Dashboard Updates for Client Admin
     When press "Clear all filters" section on the Dashboard filter if available
     And save the "01_QA_StageTestPortal - Updates Dashboard" items
     When press "Filter" button on the Dashboard filter
-    And select "Test_ClientAdmin" located in the "Saved Filters" section on the Dashboard filter
+    And select "Test_filter" located in the "Saved Filters" section on the Dashboard filter
     When press "View results" button on the Dashboard filter
     Then verify the "01_QA_StageTestPortal - Updates Dashboard" item count is not the same
 
