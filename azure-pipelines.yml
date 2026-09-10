@@ -283,6 +283,10 @@ jobs:
         displayName: 'Detect read-only Allure results'
         condition: always()
 
+      - script: npm run junit:sanitize
+        displayName: 'Remove JUnit attachment directives'
+        condition: always()
+
       - task: PublishTestResults@2
         displayName: 'Publish Playwright test results'
         condition: always()
@@ -460,6 +464,10 @@ jobs:
           fi
         name: DetectAllureResults
         displayName: 'Detect mutable $(MUTABLE_SUITE) Allure results'
+        condition: always()
+
+      - script: npm run junit:sanitize
+        displayName: 'Remove JUnit attachment directives'
         condition: always()
 
       - task: PublishTestResults@2

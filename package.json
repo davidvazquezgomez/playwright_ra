@@ -10,6 +10,7 @@
     "bdd:validate-contracts": "node scripts/validate-bdd-contracts.js",
     "bdd:generate": "npm run bdd:classify && npm run bdd:validate-contracts && npx bddgen --config playwright.bdd.config.ts",
     "diagnostics:prepare": "node scripts/prepare-diagnostics.js",
+    "junit:sanitize": "node scripts/sanitize-junit-results.js",
     "test:bdd:diagnostic": "npm run bdd:generate && node scripts/run-bdd-diagnostic.js",
     "test:bdd:readonly": "npm run bdd:generate && npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @readOnly --workers=4",
     "test:bdd:mutable": "npm run bdd:generate && npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @mutable --workers=1",

@@ -41,6 +41,7 @@ Feature: Dashboard Updates for Deloitte User
   @mutable
   Scenario: TC002_01_DeloitteUser_DashboardUpdates - Verify read/unread functionality on the "Unread Updates" tab
     Given the "01_13Jan REG - Updates Dashboard - All Updates" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     When search for "Occupational Illness Trust Fund" update from the "01_13Jan REG - Updates Dashboard" page
     And open the first update in the "01_13Jan REG - Updates Dashboard" page
     Then the "Occupational Illness Trust Fund" page is displayed
@@ -57,6 +58,7 @@ Feature: Dashboard Updates for Deloitte User
   @mutable
   Scenario: TC003_01_DeloitteUser_DashboardUpdates - Create and revert a modification of an update
     Given the "01_13Jan REG - Updates Dashboard - All Updates" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     When search for "Occupational Illness Trust Fund" update from the "01_13Jan REG - Updates Dashboard" page
     And open the first update in the "01_13Jan REG - Updates Dashboard" page
     When press "Edit" button on the selected update
@@ -81,6 +83,7 @@ Feature: Dashboard Updates for Deloitte User
   @mutable
   Scenario: TC003_02_DeloitteUser_DashboardUpdates - Simulate a modification of an update (Back button)
     Given the "01_13Jan REG - Updates Dashboard - All Updates" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     When search for "Test_11-5_01" update from the "01_13Jan REG - Updates Dashboard" page
     And open the first update in the "01_13Jan REG - Updates Dashboard" page
     When press "Edit" button on the selected update
@@ -101,6 +104,7 @@ Feature: Dashboard Updates for Deloitte User
   @mutable
   Scenario: TC003_03_DeloitteUser_DashboardUpdates - Cancel a modification of an update
     Given the "01_13Jan REG - Updates Dashboard - All Updates" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     When search for "Test_11-5_01" update from the "01_13Jan REG - Updates Dashboard" page
     And open the first update in the "01_13Jan REG - Updates Dashboard" page
     When press "Edit" button on the selected update
@@ -121,6 +125,7 @@ Feature: Dashboard Updates for Deloitte User
   @mutable
   Scenario: TC003_04_DeloitteUser_DashboardUpdates - Create and delete a comment
     Given the "01_13Jan REG - Updates Dashboard - All Updates" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     When search for "Test_11-5_01" update from the "01_13Jan REG - Updates Dashboard" page
     And open the first update in the "01_13Jan REG - Updates Dashboard" page
     When enter "QaTest comment" comment on the selected update
@@ -132,6 +137,7 @@ Feature: Dashboard Updates for Deloitte User
   @mutable
   Scenario Outline: TC003_05_DeloitteUser_DashboardUpdates - Upload and delete a valid attachment
     Given the "01_13Jan REG - Updates Dashboard - All Updates" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     When search for "Occupational Illness Trust Fund" update from the "01_13Jan REG - Updates Dashboard" page
     And open the first update in the "01_13Jan REG - Updates Dashboard" page
     When open the "Attachments" tab in the "Update Details" subsection
@@ -150,6 +156,7 @@ Feature: Dashboard Updates for Deloitte User
   @mutable
   Scenario Outline: TC003_06_DeloitteUser_DashboardUpdates - Upload an attachment with unsupported format
     Given the "01_13Jan REG - Updates Dashboard - All Updates" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     When search for "Occupational Illness Trust Fund" update from the "01_13Jan REG - Updates Dashboard" page
     And open the first update in the "01_13Jan REG - Updates Dashboard" page
     When press "Attachments" button
@@ -188,6 +195,7 @@ Feature: Dashboard Updates for Deloitte User
   @readOnly
   Scenario: TC006_01_DeloitteUser_DashboardUpdates - Reset the filter
     Given the "01_13Jan REG - Updates Dashboard - All Updates" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     Then save the "01_13Jan REG - Updates Dashboard" items
     When press "Filter" button on the Dashboard filter
     Then verify the "Saved Filters;My Updates;Knowledge Module;Jurisdiction;Impact Areas;Priority;Status" option is displayed in the Dashboard filter
@@ -218,6 +226,7 @@ Feature: Dashboard Updates for Deloitte User
   @mutable @cleanup
   Scenario: TC006_03_DeloitteUser_DashboardUpdates - Create, save and delete a custom filter
     Given the "01_13Jan REG - Updates Dashboard - All Updates" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     And register cleanup to remove saved filter "QaTest" from "01_13Jan REG - Updates Dashboard - All Updates"
     When press "Filter" button on the Dashboard filter
     And remove saved filter "QaTest" if it exists on the Dashboard filter
@@ -292,6 +301,7 @@ Feature: Dashboard Updates for Deloitte User
   @readOnly
   Scenario: TC007_02_DeloitteUser_DashboardUpdates - Verify actions dashboard select all filter after applying two filters
     Given the "01_13Jan REG - Updates Dashboard - All Updates" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     When press "Filter" button on the Dashboard filter
     When expand the "Jurisdiction" filter on the Dashboard filter
     Then verify "Select All" is "unchecked" in the "Jurisdiction" filter on the Dashboard filter

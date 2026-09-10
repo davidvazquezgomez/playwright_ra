@@ -41,6 +41,7 @@ Feature: Dashboard page for Team Member
   @mutable
   Scenario: TC002_01_TeamMember_DashboardUpdates - Verify read/unread functionality on the "Unread Updates" tab
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     When search for "32Increase of maximum meal voucher vaalue" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     Then the "32Increase of maximum meal voucher vaalue" page is displayed
@@ -57,6 +58,7 @@ Feature: Dashboard page for Team Member
   @mutable
   Scenario: TC003_01_TeamMember_DashboardUpdates - Simulate a modification of an update with the Back button
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     When search for "32Increase of maximum meal voucher vaalue" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
@@ -73,6 +75,7 @@ Feature: Dashboard page for Team Member
   @mutable
   Scenario: TC003_02_TeamMember_DashboardUpdates - Cancel a modification of an update
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     When search for "32Increase of maximum meal voucher vaalue" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
@@ -89,6 +92,7 @@ Feature: Dashboard page for Team Member
   @mutable
   Scenario: TC003_03_TeamMember_DashboardUpdates - Create and delete a comment
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     When search for "32Increase of maximum meal voucher vaalue" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When enter "QaTest comment" comment on the selected update
@@ -118,6 +122,7 @@ Feature: Dashboard page for Team Member
   @mutable
   Scenario Outline: TC003_06_TeamMember_DashboardUpdates - Upload an attachment with unsupported format
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     When search for "32Increase of maximum meal voucher vaalue" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Attachments" button
@@ -156,6 +161,7 @@ Feature: Dashboard page for Team Member
   @readOnly
   Scenario: TC006_01_TeamMember_DashboardUpdates - Reset the filter
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     Then save the "01_QA_StageTestPortal - Updates Dashboard" items
     When press "Filter" button on the Dashboard filter
     Then verify the "Saved Filters;My Updates;Knowledge Module;Jurisdiction;Impact Areas;Priority;Status" option is displayed in the Dashboard filter
@@ -186,6 +192,7 @@ Feature: Dashboard page for Team Member
   @mutable @cleanup
   Scenario: TC006_03_TeamMember_DashboardUpdates - Create, save and delete a custom filter
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     And register cleanup to remove saved filter "QaTest" from "01_QA_StageTestPortal - Updates Dashboard - All Updates"
     When press "Filter" button on the Dashboard filter
     And remove saved filter "QaTest" if it exists on the Dashboard filter
@@ -260,6 +267,7 @@ Feature: Dashboard page for Team Member
   @readOnly
   Scenario: TC007_02_TeamMember_DashboardUpdates - Verify actions dashboard select all filter after applying two filters
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     When press "Filter" button on the Dashboard filter
     When expand the "Jurisdiction" filter on the Dashboard filter
     Then verify "Select All" is "unchecked" in the "Jurisdiction" filter on the Dashboard filter
