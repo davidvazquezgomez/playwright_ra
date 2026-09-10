@@ -266,21 +266,43 @@ export class UpdatesDashboardPage extends BasePage {
 
   /**
    * Waits for the Updates Dashboard item count to differ from a previously saved value.
+   * Retries with a page reload, since a newly applied favourite filter can require a refresh to take effect.
    * @param previousItemCount Previously saved item count.
    * @returns Updated item count once it differs from the saved value.
    */
   async waitForAllUpdatesItemCountToDiffer(previousItemCount: number): Promise<number> {
     const waitTimeout = process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000;
+    let currentItemCount = previousItemCount;
 
-    await expect.poll(
-      async () => this.getAllUpdatesItemCountIncludingZero(),
-      {
-        message: `Waiting for the Updates Dashboard item count to differ from ${previousItemCount}.`,
-        timeout: waitTimeout,
-      },
-    ).not.toBe(previousItemCount);
+    const hasCountChanged = await this.retryWithReload(async () => {
+      try {
+        await expect.poll(
+          async () => {
+            currentItemCount = await this.getAllUpdatesItemCountIncludingZero();
+            return currentItemCount;
+          },
+          {
+            message: `Waiting for the Updates Dashboard item count to differ from ${previousItemCount}.`,
+            timeout: waitTimeout,
+          },
+        ).not.toBe(previousItemCount);
+        return true;
+      } catch {
+        // The count never changed within the timeout on this attempt; retry with a reload.
+        return false;
+      }
+    }, 3);
 
-    return this.getAllUpdatesItemCountIncludingZero();
+    if (!hasCountChanged) {
+      this.failWithApplicationError(
+        'A saved Dashboard filter marked as favourite must be applied automatically the next time the Updates Dashboard loads.',
+        `The Updates Dashboard item count differs from ${previousItemCount} after reloading.`,
+        `The item count remained ${currentItemCount} across 3 attempt(s), including page reloads.`,
+        `Updates Dashboard pager reported ${currentItemCount} items with no visible active filter after login.`,
+      );
+    }
+
+    return currentItemCount;
   }
 
   /**
@@ -414,7 +436,8 @@ export class UpdatesDashboardPage extends BasePage {
    */
   async verifyUpdateDetailsFieldValue(expectedValue: string, fieldName: string): Promise<void> {
     if (fieldName === 'User Assigned' || fieldName === 'Watch List') {
-      await expect(this.updateDetailsSelectedPersonByField(fieldName)).toContainText(expectedValue);
+      // Watch List can hold multiple tags, so match the specific tag instead of the whole multi-element locator.
+      await expect(this.updateDetailsSelectedPersonByField(fieldName).filter({ hasText: expectedValue })).not.toHaveCount(0);
       return;
     }
 
@@ -440,7 +463,8 @@ export class UpdatesDashboardPage extends BasePage {
         // No elements means the value is not displayed
         return;
       }
-      await expect(locator).not.toContainText(unexpectedValue);
+      // Watch List can hold multiple tags, so match the specific tag instead of the whole multi-element locator.
+      await expect(locator.filter({ hasText: unexpectedValue })).toHaveCount(0);
       return;
     }
 
@@ -526,7 +550,8 @@ export class UpdatesDashboardPage extends BasePage {
     await this.fillInputText(searchInputSelector, userName);
     await this.waitForElement(userOptionSelector);
     await this.pressKeyOnElement(searchInputSelector, 'Enter');
-    await expect(this.updateDetailsSelectedPersonByField(fieldName)).toContainText(userName);
+    // Watch List can hold multiple tags, so match the specific tag instead of the whole multi-element locator.
+    await expect(this.updateDetailsSelectedPersonByField(fieldName).filter({ hasText: userName })).not.toHaveCount(0);
   }
 
   /**

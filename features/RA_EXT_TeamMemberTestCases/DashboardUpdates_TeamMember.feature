@@ -59,7 +59,7 @@ Feature: Dashboard page for Team Member
   Scenario: TC003_01_TeamMember_DashboardUpdates - Simulate a modification of an update with the Back button
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When press "Clear all filters" section on the Dashboard filter if available
-    When search for "32Increase of maximum meal voucher vaalue" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    When search for "StageUpdate02_30-04" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
@@ -76,7 +76,7 @@ Feature: Dashboard page for Team Member
   Scenario: TC003_02_TeamMember_DashboardUpdates - Cancel a modification of an update
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When press "Clear all filters" section on the Dashboard filter if available
-    When search for "32Increase of maximum meal voucher vaalue" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    When search for "StageUpdate02_30-04" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
@@ -93,7 +93,7 @@ Feature: Dashboard page for Team Member
   Scenario: TC003_03_TeamMember_DashboardUpdates - Create and delete a comment
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When press "Clear all filters" section on the Dashboard filter if available
-    When search for "32Increase of maximum meal voucher vaalue" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    When search for "StageUpdate02_30-04" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When enter "QaTest comment" comment on the selected update
     When post the comment on the selected update
@@ -104,7 +104,7 @@ Feature: Dashboard page for Team Member
   @mutable
   Scenario Outline: TC003_04_TeamMember_DashboardUpdates - Upload and delete a valid attachment
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "32Increase of maximum meal voucher vaalue" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    When search for "StageUpdate02_30-04" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When open the "Attachments" tab in the "Update Details" subsection
     And upload "<file path>" attachment in the "Update Details" Attachments tab
@@ -123,7 +123,7 @@ Feature: Dashboard page for Team Member
   Scenario Outline: TC003_06_TeamMember_DashboardUpdates - Upload an attachment with unsupported format
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When press "Clear all filters" section on the Dashboard filter if available
-    When search for "32Increase of maximum meal voucher vaalue" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    When search for "StageUpdate02_30-04" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Attachments" button
     And upload "<file path>" attachment in the "Update Details" Attachments tab

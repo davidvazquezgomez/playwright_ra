@@ -466,6 +466,12 @@ export class DashboardPage extends BasePage {
             await this.openFilterPanel();
         }
 
+        const filterSection = this.filterSectionByName('Saved Filters');
+        await expect(filterSection).toBeVisible();
+        if (await filterSection.getAttribute('aria-expanded') !== 'true') {
+            await filterSection.click();
+        }
+
         const savedFilterItem = this.savedFilterItemByName(filterName);
         await expect(savedFilterItem).toBeVisible();
         const favouriteControl = this.savedFilterFavouriteControlByName(filterName);
