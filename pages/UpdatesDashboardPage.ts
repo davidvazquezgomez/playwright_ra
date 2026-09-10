@@ -266,21 +266,43 @@ export class UpdatesDashboardPage extends BasePage {
 
   /**
    * Waits for the Updates Dashboard item count to differ from a previously saved value.
+   * Retries with a page reload, since a newly applied favourite filter can require a refresh to take effect.
    * @param previousItemCount Previously saved item count.
    * @returns Updated item count once it differs from the saved value.
    */
   async waitForAllUpdatesItemCountToDiffer(previousItemCount: number): Promise<number> {
     const waitTimeout = process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000;
+    let currentItemCount = previousItemCount;
 
-    await expect.poll(
-      async () => this.getAllUpdatesItemCountIncludingZero(),
-      {
-        message: `Waiting for the Updates Dashboard item count to differ from ${previousItemCount}.`,
-        timeout: waitTimeout,
-      },
-    ).not.toBe(previousItemCount);
+    const hasCountChanged = await this.retryWithReload(async () => {
+      try {
+        await expect.poll(
+          async () => {
+            currentItemCount = await this.getAllUpdatesItemCountIncludingZero();
+            return currentItemCount;
+          },
+          {
+            message: `Waiting for the Updates Dashboard item count to differ from ${previousItemCount}.`,
+            timeout: waitTimeout,
+          },
+        ).not.toBe(previousItemCount);
+        return true;
+      } catch {
+        // The count never changed within the timeout on this attempt; retry with a reload.
+        return false;
+      }
+    }, 3);
 
-    return this.getAllUpdatesItemCountIncludingZero();
+    if (!hasCountChanged) {
+      this.failWithApplicationError(
+        'A saved Dashboard filter marked as favourite must be applied automatically the next time the Updates Dashboard loads.',
+        `The Updates Dashboard item count differs from ${previousItemCount} after reloading.`,
+        `The item count remained ${currentItemCount} across 3 attempt(s), including page reloads.`,
+        `Updates Dashboard pager reported ${currentItemCount} items with no visible active filter after login.`,
+      );
+    }
+
+    return currentItemCount;
   }
 
   /**
