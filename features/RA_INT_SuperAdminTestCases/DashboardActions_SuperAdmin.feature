@@ -375,6 +375,7 @@ Feature: Dashboard Actions for Super Admin
     And register cleanup to remove saved filter "Test DashboardAction" from "Actions Dashboard - 01_13Jan REG"
     And register cleanup to remove saved filter "Test DashboardAction update" from "Actions Dashboard - 01_13Jan REG"
     When press "Filter" button on the Dashboard filter
+    And press "Reset Filters" button on the Dashboard filter
     When select "Low" in the "Action Priority" filter on the Dashboard filter
     And press "Save filter" button on the Dashboard filter
     Then verify the "Name Filter" modal is displayed on the Dashboard filter

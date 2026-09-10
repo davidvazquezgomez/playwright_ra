@@ -1,4 +1,4 @@
-import { expect } from '@playwright/test';
+import { expect, Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class DashboardPage extends BasePage {
@@ -371,7 +371,7 @@ export class DashboardPage extends BasePage {
 
         if (activeDialog === this.nameFilterDialog && (await this._page.locator(this.filterNameInput).inputValue()).trim()) {
             await Promise.all([
-                expect(this.filterSavedToast).toBeVisible({ timeout: 30_000 }),
+                expect(this.filterSavedToast.or(this.filterUpdatedToast)).toBeVisible({ timeout: 30_000 }),
                 this.clickLocator(saveButton),
             ]);
             return;
@@ -629,10 +629,7 @@ export class DashboardPage extends BasePage {
         const filterSection = this.dashboardCheckboxFilterSectionByName(sectionName);
         await expect(filterSection).toBeVisible();
 
-        if (await filterSection.getAttribute('aria-expanded') !== 'true') {
-            await filterSection.locator(':scope > .k-link').click();
-            await expect(filterSection).toHaveAttribute('aria-expanded', 'true');
-        }
+        await this.ensureDashboardCheckboxFilterSectionIsExpanded(filterSection, sectionName);
 
         const optionLabel = this.dashboardCheckboxLabelByValue(sectionName, optionName);
         const optionCheckbox = this.dashboardCheckboxByValue(sectionName, optionName);
@@ -800,6 +797,31 @@ export class DashboardPage extends BasePage {
             await filterSection.locator(':scope > .k-link').click();
         }
         await expect(filterSection).toHaveAttribute('aria-expanded', String(expanded));
+    }
+
+    /**
+     * Expands a Dashboard checkbox filter section, retrying when Kendo re-renders its panelbar header.
+     * @param filterSection Locator for the Dashboard filter section.
+     * @param sectionName Visible name of the filter section used in the failure message.
+     */
+    private async ensureDashboardCheckboxFilterSectionIsExpanded(filterSection: Locator, sectionName: string): Promise<void> {
+        const waitTimeout = process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000;
+
+        await expect.poll(
+            async () => {
+                if (await filterSection.getAttribute('aria-expanded') === 'true') {
+                    return true;
+                }
+
+                await this.clickLocator(filterSection.locator(':scope > .k-link'));
+                return (await filterSection.getAttribute('aria-expanded')) === 'true';
+            },
+            {
+                message: `Waiting for the "${sectionName}" Dashboard filter to expand.`,
+                timeout: waitTimeout,
+                intervals: [200, 500, 1000],
+            },
+        ).toBe(true);
     }
 
     /**

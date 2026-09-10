@@ -588,9 +588,10 @@ export class ActionsDashboardPage extends BasePage {
     const commentEntries = this._page.locator(
       `${this.updateActionDialog} app-comments .comment-item`,
     );
-    const commentCountBeforePosting = await commentEntries.count();
+    const commentCountBeforePosting = await this.waitForCommentHistoryToStabilize(commentEntries);
 
     await this.clickLocator(this.submitCommentButton());
+    await expect(this._page.locator(this.commentEditor)).toHaveText('');
     await expect(commentEntries).toHaveCount(commentCountBeforePosting + 1);
   }
 
@@ -700,6 +701,36 @@ export class ActionsDashboardPage extends BasePage {
       default:
         throw new Error(`Dropdown field "${fieldName}" is not supported in the Update Action dialog.`);
     }
+  }
+
+  /**
+   * Waits until the asynchronously loaded action comment history has a stable item count.
+   * @param commentEntries Locator for the action comment entries.
+   * @returns The stable number of existing comment entries.
+   */
+  private async waitForCommentHistoryToStabilize(commentEntries: ReturnType<typeof this._page.locator>): Promise<number> {
+    const waitTimeout = process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 15000;
+    let lastCount: number | undefined;
+    let stableSince: number | undefined;
+
+    await expect.poll(
+      async () => {
+        const currentCount = await commentEntries.count();
+        if (currentCount !== lastCount) {
+          lastCount = currentCount;
+          stableSince = Date.now();
+        }
+
+        return Date.now() - (stableSince ?? Date.now()) >= 1000;
+      },
+      {
+        message: 'Waiting for the Update Action comment history to finish loading.',
+        timeout: waitTimeout,
+        intervals: [200],
+      },
+    ).toBe(true);
+
+    return lastCount ?? 0;
   }
 
   /**
