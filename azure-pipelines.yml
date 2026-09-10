@@ -151,7 +151,7 @@ jobs:
   # concurrently because they use separate application users and portals.
   - job: RegressionTestsReadOnly
     displayName: 'RA Regression - Read-only (5 workers)'
-    dependsOn: PrewarmAuthStates
+    dependsOn: RegressionTestsMutable
     timeoutInMinutes: '300'
     pool:
       vmImage: 'ubuntu-latest'
@@ -225,12 +225,15 @@ jobs:
           CI=true npm run bdd:generate
 
           set +e
-          CI=true RETRIES=1 PARALLEL_RUN=true WORKERS=5 RESULTS_GROUP=readonly PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @readOnly --workers=5
+          CI=true RETRIES=1 PARALLEL_RUN=true WORKERS=5 RESULTS_GROUP=readonly PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @readOnly --grep-invert @serialAuthFlow --workers=5
           readonly_exit=$?
 
-          if [ "$readonly_exit" -ne 0 ]; then
+          CI=true RETRIES=1 PARALLEL_RUN=false WORKERS=1 RESULTS_GROUP=serial-auth-flow PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @serialAuthFlow --workers=1
+          serial_auth_flow_exit=$?
+
+          if [ "$readonly_exit" -ne 0 ] || [ "$serial_auth_flow_exit" -ne 0 ]; then
             echo "##vso[task.setvariable variable=bddTestsFailed]true"
-            echo "Read-only BDD tests reported failures (exit: $readonly_exit). Review the Allure report and the Tests tab."
+            echo "Read-only or serial authentication-flow BDD tests reported failures (read-only: $readonly_exit; serial auth flow: $serial_auth_flow_exit). Review the Allure report and the Tests tab."
           fi
 
           # The build must stay green even when tests fail; results are reported in the Tests tab and Allure.
@@ -407,7 +410,7 @@ jobs:
 
           set +e
           # Each data domain is serial. INT and EXT execute in separate matrix legs.
-          CI=true RETRIES=0 PARALLEL_RUN=false WORKERS=1 RESULTS_GROUP=mutable-$(MUTABLE_SUITE) PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @mutable --workers=1
+          CI=true RETRIES=1 PARALLEL_RUN=false WORKERS=1 RESULTS_GROUP=mutable-$(MUTABLE_SUITE) PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @mutable --grep-invert @serialAuthFlow --workers=1
           mutable_exit=$?
 
           if [ "$mutable_exit" -ne 0 ]; then

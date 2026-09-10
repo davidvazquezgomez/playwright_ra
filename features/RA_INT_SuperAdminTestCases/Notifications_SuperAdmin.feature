@@ -1,4 +1,4 @@
-@Notifications @Notifications_SuperAdmin
+@Notifications @Notifications_SuperAdmin @serialAuthFlow
 Feature: Notifications for Super Admin
 
   Background:
@@ -88,7 +88,6 @@ Feature: Notifications for Super Admin
     And select "Update Allocated" option in the "Status" field in the "Update Details" subsection
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
-    And logout from the application
 
   @readOnly
   Scenario: TC003_2_SuperAdmin_Notifications - Verify triggered notifications for updates
@@ -99,11 +98,12 @@ Feature: Notifications for Super Admin
     When press "View All" button
     Then the "Notification Listing" page is displayed
     And verify the Systems notifications triggered
+    And logout from the application
 
   @mutable
   Scenario: TC003_3_SuperAdmin_Notifications - Verify disabled Notifications Preferences for Updates
-   And logout from the application
-    When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"    
+    And logout from the application
+    When launch Regulatory Advantage application URL and login as "external" user "CLIENTADMIN"
     Given the "Notification Preferences" page is open
     Then the "Notification Preferences" page is displayed
     When check "Select All" Check box under "System" option from "Updates" section if it is "checked"
@@ -123,7 +123,6 @@ Feature: Notifications for Super Admin
     And change the selected update status to a different value
     When press "Save" button on the selected update
     Then verify "Regulatory Update Updated successfully" toast message is displayed in the "01_QA_StageTestPortal - Updates Dashboard" page
-  
 
   @readOnly
   Scenario: TC003_4_SuperAdmin_Notifications - Verify triggered notifications for updates
@@ -134,6 +133,7 @@ Feature: Notifications for Super Admin
     When press "View All" button
     Then the "Notification Listing" page is displayed
     And verify there are no system notifications
+    And logout from the application
 
   @mutable
   Scenario: TC004_1_SuperAdmin_Notifications - Verify enable Notifications Preferences for actions
@@ -154,7 +154,6 @@ Feature: Notifications for Super Admin
     When toggle the selected action priority between "High" and "Medium"
     And select "In Progress" option in the "Status" field in the "Update Action" popup
     Then press "Update" button in the "Update Action" popup
-    
 
   @readOnly
   Scenario: TC004_2_SuperAdmin_Notifications - Verify triggered notifications for actions
@@ -165,8 +164,7 @@ Feature: Notifications for Super Admin
     When press "View All" button
     Then the "Notification Listing" page is displayed
     And verify the Systems notifications triggered
-
-
+    And logout from the application
 
   @mutable
   Scenario: TC004_3_SuperAdmin_Notifications - Verify disabled Notifications Preferences for Actions
@@ -187,7 +185,6 @@ Feature: Notifications for Super Admin
     When toggle the selected action priority between "High" and "Medium"
     And select "Not Started" option in the "Status" field in the "Update Action" popup
     When press "Update" button in the "Update Action" popup
-       
 
   @readOnly
   Scenario: TC004_4_SuperAdmin_Notifications - Verify triggered notifications for updates
@@ -198,6 +195,7 @@ Feature: Notifications for Super Admin
     When press "View All" button
     Then the "Notification Listing" page is displayed
     And verify there are no system notifications
+    And logout from the application
 
   @mutable
   Scenario: TC005_1_SuperAdmin_Notifications - Verify enable Notifications Preferences for teams
@@ -214,7 +212,6 @@ Feature: Notifications for Super Admin
     Then the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When click on "Team Management" option from the left navigation
     Then the "Team Management" page is displayed
-    #primero se limpia el usuario por si quedó de una ejecución anterior
     When press "Edit" button for the first team in the "Team Management" page
     Then the "Create/Edit Team" page is displayed
     When remove the team member "asjad.alam@gmail.com" from the current team if exists
@@ -238,6 +235,7 @@ Feature: Notifications for Super Admin
     When press "View All" button
     Then the "Notification Listing" page is displayed
     And verify the Systems notifications triggered
+    And logout from the application
 
   @mutable
   Scenario: TC005_3_SuperAdmin_Notifications - Verify disabled Notifications Preferences for Teams
@@ -260,15 +258,13 @@ Feature: Notifications for Super Admin
     Then the "Add Team Members" popup is displayed
     When select "satestclientuser4, satestclientuser4" option in the "Search user" field
     And press "Add User" button in the "Add Team Members" popup
-    Then press "Save" button on the "Create/Edit Team" page    
+    Then press "Save" button on the "Create/Edit Team" page
     And the "Team Management" page is displayed
-    #esta parte es para eliminar y que no falle en el siguiente test
-    When press "Edit" button for the first team in the "Team Management" page   
+    When press "Edit" button for the first team in the "Team Management" page
     Then search for "satestclientuser4@yopmail.com" in the Team Members table email field
     When click on "Delete" icon against the team member "satestclientuser4@yopmail.com"
     Then press "Remove User" button on the "Remove User?" popup
     When press "Save" button on the "Create/Edit Team" page
-   
 
   @readOnly
   Scenario: TC005_4_SuperAdmin_Notifications - Verify triggered notifications for teams
@@ -278,5 +274,5 @@ Feature: Notifications for Super Admin
     Then the "Notifications" popup is displayed
     When press "View All" button
     Then the "Notification Listing" page is displayed
-     #debería estar vavío las notification listing?
     And verify there are no system notifications
+    And logout from the application

@@ -38,7 +38,7 @@ Feature: Notifications for Client User
     When select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Disabled"
     And select the frequency option "Daily" located under "Periodic Summary of Updates and Actions via email?" section
     When press "Save Settings" button
-     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
+    Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
 
   @mutable
   Scenario: TC003_2_ClientUser_Notifications - Verify triggered notifications for updates
@@ -62,7 +62,7 @@ Feature: Notifications for Client User
     When check "Select All" Check box under "System" option from "Updates" section if it is "checked"
     And check "Select All" Check box under "Email" option from "Updates" section if it is "checked"
     And select "Periodic summary of Updates and Actions via email?" located under "Periodic Summary Emails" section if it is "Enabled"
-    And press "Save Settings" button    
+    And press "Save Settings" button
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
 
   @mutable
@@ -116,7 +116,6 @@ Feature: Notifications for Client User
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
 
   @mutable
-  #meter un usuario válido con superadmin
   Scenario: TC004_4_ClientUser_Notifications - Verify triggered notifications for Actions
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "Employment Taxes_1" update from the "Updates Dashboard - ClientPortal_20260209133616" page
@@ -130,4 +129,3 @@ Feature: Notifications for Client User
     When press "View All" button
     Then the "Notification Listing" page is displayed
     And verify there are no system notifications
-
