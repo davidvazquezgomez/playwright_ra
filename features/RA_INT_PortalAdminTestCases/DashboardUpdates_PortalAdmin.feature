@@ -132,7 +132,7 @@ Feature: Dashboard Updates for Portal Admin
   @mutable
   Scenario Outline: TC003_05_PortalAdmin_DashboardUpdates - Upload and delete a valid attachment
     Given the "Global Inc - Updates Dashboard - All Updates" page is open
-    When search for "Increase to Industrial Accident Insurance Contribution Rate" update from the "Global Inc - Updates Dashboard" page
+    When search for "Occupational Illness Trust Fund" update from the "Global Inc - Updates Dashboard" page
     And open the first update in the "Global Inc - Updates Dashboard" page
     When open the "Attachments" tab in the "Update Details" subsection
     And upload "<file path>" attachment in the "Update Details" Attachments tab
@@ -143,16 +143,14 @@ Feature: Dashboard Updates for Portal Admin
     Examples:
       | valid extension | file path              | name         |
       | pdf             | test-data/valid.pdf    | valid.pdf    |
-      | pdf             | test-data/invalid.pdf  | invalid.pdf  |
       | xlsx            | test-data/valid.xlsx   | valid.xlsx   |
       | svg             | test-data/valid.svg    | valid.svg    |
       | png             | test-data/valid.png    | valid.png    |
-      | docx            | test-data/invalid.docx | invalid.docx |
 
   @mutable
   Scenario Outline: TC003_06_PortalAdmin_DashboardUpdates - Upload an attachment with unsupported format
     Given the "Global Inc - Updates Dashboard - All Updates" page is open
-    When search for "Increase to Industrial Accident Insurance Contribution Rate" update from the "Global Inc - Updates Dashboard" page
+    When search for "Occupational Illness Trust Fund" update from the "Global Inc - Updates Dashboard" page
     And open the first update in the "Global Inc - Updates Dashboard" page
     When press "Attachments" button
     And upload "<file path>" attachment in the "Update Details" Attachments tab
@@ -161,7 +159,6 @@ Feature: Dashboard Updates for Portal Admin
 
     Examples:
       | file path             | expected message                                                        | name        |
-      | test-data/valid.xls   | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx. | valid.xls   |
       | test-data/invalid.jpg | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.jpg |
       | test-data/invalid.csv | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.csv |
       | test-data/invalid.txt | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.txt |

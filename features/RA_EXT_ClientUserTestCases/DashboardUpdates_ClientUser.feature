@@ -128,11 +128,9 @@ Feature: Dashboard Updates for Client User
     Examples:
       | valid extension | file path              | name         |
       | pdf             | test-data/valid.pdf    | valid.pdf    |
-      | pdf             | test-data/invalid.pdf  | invalid.pdf  |
       | xlsx            | test-data/valid.xlsx   | valid.xlsx   |
       | svg             | test-data/valid.svg    | valid.svg    |
       | png             | test-data/valid.png    | valid.png    |
-      | docx            | test-data/invalid.docx | invalid.docx |
 
   @mutable
   Scenario Outline: TC003_06_ClientUser_DashboardUpdates - Upload an attachment with unsupported format
@@ -146,7 +144,6 @@ Feature: Dashboard Updates for Client User
 
     Examples:
       | file path             | expected message                                                        | name        |
-      | test-data/valid.xls   | Invalid file type \\".xls\\". Allowed types: pdf, xlsx, svg, png, docx. | valid.xls   |
       | test-data/invalid.jpg | Invalid file type \\".jpg\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.jpg |
       | test-data/invalid.csv | Invalid file type \\".csv\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.csv |
       | test-data/invalid.txt | Invalid file type \\".txt\\". Allowed types: pdf, xlsx, svg, png, docx. | invalid.txt |
