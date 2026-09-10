@@ -92,6 +92,8 @@ jobs:
 
       - task: Cache@2
         displayName: 'Cache Playwright browsers'
+        retryCountOnTaskFailure: 2
+        continueOnError: true
         inputs:
           key: 'playwright | "$(Agent.OS)" | package-lock.json'
           path: '$(Pipeline.Workspace)/.cache/ms-playwright'
@@ -202,6 +204,8 @@ jobs:
 
       - task: Cache@2
         displayName: 'Cache Playwright browsers'
+        retryCountOnTaskFailure: 2
+        continueOnError: true
         inputs:
           key: 'playwright | "$(Agent.OS)" | package-lock.json'
           path: '$(Pipeline.Workspace)/.cache/ms-playwright'
@@ -277,6 +281,10 @@ jobs:
           fi
         name: DetectAllureResults
         displayName: 'Detect read-only Allure results'
+        condition: always()
+
+      - script: npm run junit:sanitize
+        displayName: 'Remove JUnit attachment directives'
         condition: always()
 
       - task: PublishTestResults@2
@@ -377,6 +385,8 @@ jobs:
 
       - task: Cache@2
         displayName: 'Cache Playwright browsers'
+        retryCountOnTaskFailure: 2
+        continueOnError: true
         inputs:
           key: 'playwright | "$(Agent.OS)" | package-lock.json'
           path: '$(Pipeline.Workspace)/.cache/ms-playwright'
@@ -454,6 +464,10 @@ jobs:
           fi
         name: DetectAllureResults
         displayName: 'Detect mutable $(MUTABLE_SUITE) Allure results'
+        condition: always()
+
+      - script: npm run junit:sanitize
+        displayName: 'Remove JUnit attachment directives'
         condition: always()
 
       - task: PublishTestResults@2
