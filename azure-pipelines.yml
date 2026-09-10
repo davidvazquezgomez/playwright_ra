@@ -508,9 +508,10 @@ jobs:
     displayName: 'Merge Allure results and publish report'
     dependsOn:
       - ValidateContracts
+      - PrewarmAuthStates
       - RegressionTestsReadOnly
       - RegressionTestsMutable
-    condition: and(succeeded('ValidateContracts'), always())
+    condition: and(succeeded('ValidateContracts'), succeeded('PrewarmAuthStates'), succeeded('RegressionTestsReadOnly'), succeeded('RegressionTestsMutable'))
     timeoutInMinutes: '30'
     pool:
       vmImage: 'ubuntu-latest'
