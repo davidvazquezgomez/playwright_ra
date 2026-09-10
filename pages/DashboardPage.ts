@@ -432,9 +432,11 @@ export class DashboardPage extends BasePage {
      * Clears applied Dashboard filters when the global clear action is available.
      */
     async clearAllFiltersIfAvailable(): Promise<void> {
+        await this.waitForSelectorStatus(this.blockingSpinner, 'hidden');
         const clearAllFiltersButton = this.clearAllFiltersButton();
         if (await clearAllFiltersButton.isVisible()) {
-            await clearAllFiltersButton.click();
+            await this.clickLocator(clearAllFiltersButton);
+            await this.waitForSelectorStatus(this.blockingSpinner, 'hidden');
         }
     }
 
