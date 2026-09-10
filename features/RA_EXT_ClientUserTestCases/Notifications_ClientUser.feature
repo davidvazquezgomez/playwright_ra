@@ -99,7 +99,7 @@ Feature: Notifications for Client User
     When select "Not Started" option in the "Status" field in the "Update Action" popup
     And toggle the selected action priority between "High" and "Medium"
     And press "Update" button in the "Update Action" popup
-    Then verify "Regulatory updated updated successfully" toast message is displayed in the "Employment Taxes_1" page
+    Then verify "Action updated successfully" toast message is displayed in the "ClientPortal_20260209133616 - Actions Dashboard" page
     When press "Notifications" button
     Then the "Notifications" popup is displayed
     When press "View All" button
@@ -116,6 +116,7 @@ Feature: Notifications for Client User
     Then verify "Notification settings updated successfully." toast message is displayed in the "Client Portal List" page
 
   @mutable
+  #meter un usuario válido con superadmin
   Scenario: TC004_4_ClientUser_Notifications - Verify triggered notifications for Actions
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
     When search for "Employment Taxes_1" update from the "Updates Dashboard - ClientPortal_20260209133616" page
