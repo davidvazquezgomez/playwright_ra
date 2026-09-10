@@ -436,7 +436,8 @@ export class UpdatesDashboardPage extends BasePage {
    */
   async verifyUpdateDetailsFieldValue(expectedValue: string, fieldName: string): Promise<void> {
     if (fieldName === 'User Assigned' || fieldName === 'Watch List') {
-      await expect(this.updateDetailsSelectedPersonByField(fieldName)).toContainText(expectedValue);
+      // Watch List can hold multiple tags, so match the specific tag instead of the whole multi-element locator.
+      await expect(this.updateDetailsSelectedPersonByField(fieldName).filter({ hasText: expectedValue })).not.toHaveCount(0);
       return;
     }
 
@@ -462,7 +463,8 @@ export class UpdatesDashboardPage extends BasePage {
         // No elements means the value is not displayed
         return;
       }
-      await expect(locator).not.toContainText(unexpectedValue);
+      // Watch List can hold multiple tags, so match the specific tag instead of the whole multi-element locator.
+      await expect(locator.filter({ hasText: unexpectedValue })).toHaveCount(0);
       return;
     }
 
@@ -548,7 +550,8 @@ export class UpdatesDashboardPage extends BasePage {
     await this.fillInputText(searchInputSelector, userName);
     await this.waitForElement(userOptionSelector);
     await this.pressKeyOnElement(searchInputSelector, 'Enter');
-    await expect(this.updateDetailsSelectedPersonByField(fieldName)).toContainText(userName);
+    // Watch List can hold multiple tags, so match the specific tag instead of the whole multi-element locator.
+    await expect(this.updateDetailsSelectedPersonByField(fieldName).filter({ hasText: userName })).not.toHaveCount(0);
   }
 
   /**
