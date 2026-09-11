@@ -21,8 +21,12 @@ const attachmentFiles = new Map(
 );
 const finalResults = getFinalResults(loadResults(inputDirectory, files));
 const failures = finalResults
-    .map(result => buildFailure(result, attachmentFiles, outputDirectory))
+    .map(buildFailure)
     .filter(Boolean)
+    .map(failure => ({
+        ...failure,
+        screenshots: copyScreenshots(failure.result, attachmentFiles, outputDirectory),
+    }))
     .sort((first, second) => first.feature.localeCompare(second.feature)
         || first.role.localeCompare(second.role)
         || first.name.localeCompare(second.name));
@@ -30,7 +34,7 @@ const failures = finalResults
 fs.writeFileSync(path.join(outputDirectory, 'index.html'), renderHtml(failures));
 console.log(`Wrote ${failures.length} technical failures to ${path.relative(process.cwd(), outputDirectory)}.`);
 
-function buildFailure(result, attachmentFiles, outputDirectory) {
+function buildFailure(result) {
     if (!failedStatuses.has(result.status)) {
         return undefined;
     }
@@ -42,16 +46,15 @@ function buildFailure(result, attachmentFiles, outputDirectory) {
 
     const failedStep = findFailedStep(result.steps);
     const message = failedStep?.statusDetails?.message || result.statusDetails?.message || 'No error message was recorded by Allure.';
-    const screenshots = copyScreenshots(result, attachmentFiles, outputDirectory);
     const { feature, role } = getFeatureAndRole(result);
 
     return {
+        result,
         feature,
         role,
         name: result.name || 'Unnamed scenario',
         failedStep: failedStep?.name,
         message: sanitizeMessage(message),
-        screenshots,
     };
 }
 
@@ -149,6 +152,7 @@ function copyScreenshots(result, attachmentFiles, outputDirectory) {
     const attachments = collectAttachments(result);
     const screenshotAttachments = attachments.filter(attachment => attachment.type?.startsWith('image/'));
     return [...new Map(screenshotAttachments.map(attachment => [attachment.source, attachment])).values()]
+        .slice(0, 1)
         .flatMap((attachment, index) => {
             const source = attachmentFiles.get(attachment.source);
             if (!source) {

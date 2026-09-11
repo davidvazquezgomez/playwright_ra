@@ -243,7 +243,7 @@ Feature: Dashboard Updates for Client Admin
     When press "Clear all filters" section on the Dashboard filter if available
     And save the "01_QA_StageTestPortal - Updates Dashboard" items
     When press "Filter" button on the Dashboard filter
-    And select "Test_ClientAdmin" located in the "Saved Filters" section on the Dashboard filter
+    And select "Test_filter" located in the "Saved Filters" section on the Dashboard filter
     When press "View results" button on the Dashboard filter
     Then verify the "01_QA_StageTestPortal - Updates Dashboard" item count is not the same
 
@@ -269,7 +269,7 @@ Feature: Dashboard Updates for Client Admin
   Scenario: TC006_06_ClientAdmin_DashboardUpdates - Clear all filters
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When press "Filter" button on the Dashboard filter
-    And select "Awaiting Allocation" in the "Status" filter on the Dashboard filter
+    And select "Update Allocated" in the "Status" filter on the Dashboard filter
     When press "View results" button on the Dashboard filter
     Then save the "01_QA_StageTestPortal - Updates Dashboard" items
     When press "Clear all filters" button
@@ -285,7 +285,7 @@ Feature: Dashboard Updates for Client Admin
     And press "View results" button on the Dashboard filter
     Then verify the "01_QA_StageTestPortal - Updates Dashboard" item count is not the same
     When press "Filter" button on the Dashboard filter
-    And select "Romania" in the "Jurisdiction" filter on the Dashboard filter
+    And select "Argentina" in the "Jurisdiction" filter on the Dashboard filter
     When press "View results" button on the Dashboard filter
     Then verify the "01_QA_StageTestPortal - Updates Dashboard" item count is not the same
 
