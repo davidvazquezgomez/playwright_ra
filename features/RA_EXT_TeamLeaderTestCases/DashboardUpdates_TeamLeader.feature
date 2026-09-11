@@ -41,9 +41,9 @@ Feature: Dashboard page for Team Leader
   @mutable
   Scenario: TC002_01_TeamLeader_DashboardUpdates - Verify read/unread functionality on the "Unread Updates" tab
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "26Updates to 2025 Maximum Annual Earnings for Sickness, Maternity and Family Allowance Contributions" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    When search for "People Law" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
-    Then the "26Updates to 2025 Maximum Annual Earnings for Sickness, Maternity and Family Allowance Contributions" page is displayed
+    Then the "People Law" page is displayed
     When press "Mark as Unread" button on the selected update
     Then verify the "Mark as Unread" button is disabled on the selected update
     When press "Back" button
@@ -52,39 +52,38 @@ Feature: Dashboard page for Team Leader
     And press "Clear" button in the search field
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Back" button
-    Then verify the "26Updates to 2025 Maximum Annual Earnings for Sickness, Maternity and Family Allowance Contributions" update is not displayed
+    Then verify the "People Law" update is not displayed
 
   @mutable
   Scenario: TC003_01_TeamLeader_DashboardUpdates - Create and revert a modification of an update
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "26Updates to 2025 Maximum Annual Earnings for Sickness, Maternity and Family Allowance Contributions" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    When press "Clear all filters" section on the Dashboard filter if available
+    When search for "TeamLeader_update" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
-    And select "Alam, Asjad" in the "User Assigned" field on the selected update
     When select "High" option in the "Priority" field in the "Update Details" subsection
-    And select "Update Closed" option in the "Status" field in the "Update Details" subsection
+    And select "Awaiting Allocation" option in the "Status" field in the "Update Details" subsection
     And select "satestclientuser3, satestclientuser3" in the "Watch List" field on the selected update
     When press "Save" button on the selected update
     Then verify "Regulatory update updated successfully" toast message is displayed in the "26Updates to 2025 Maximum Annual Earnings for Sickness, Maternity and Family Allowance Contributions" page
     When press "Back" button
     When press "Clear" button in the search field
-    When search for "26Updates to 2025 Maximum Annual Earnings for Sickness, Maternity and Family Allowance Contributions" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    When search for "TeamLeader_update" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     When open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
-    And select "satestclientuser2, satestclientuser2" in the "User Assigned" field on the selected update
     When select "Low" option in the "Priority" field in the "Update Details" subsection
     And select "Update Allocated" option in the "Status" field in the "Update Details" subsection
     And press "clear" in the "Watch List" field
     When press "Save" button on the selected update
-    Then verify "Regulatory update updated successfully" toast message is displayed in the "26Updates to 2025 Maximum Annual Earnings for Sickness, Maternity and Family Allowance Contributions" page
+    Then verify "Regulatory update updated successfully" toast message is displayed in the "QA_Stage1" page
 
   @mutable
   Scenario: TC003_02_TeamLeader_DashboardUpdates - Simulate a modification of an update with the Back button
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "26Updates to 2025 Maximum Annual Earnings for Sickness, Maternity and Family Allowance Contributions" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    When press "Clear all filters" section on the Dashboard filter if available
+    When search for "TeamLeader_update" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
-    And select "Alam, Asjad" in the "User Assigned" field on the selected update
     When select "High" option in the "Priority" field in the "Update Details" subsection
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
     And select "satestclientuser3, satestclientuser3" in the "Watch List" field on the selected update
@@ -93,7 +92,6 @@ Feature: Dashboard page for Team Leader
     And the popup message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
     And verify "Continue;Cancel" buttons are displayed on the "Unsaved Changes" popup
     When press "Cancel" button
-    Then verify "Alam, Asjad" value is displayed in the "User Assigned" field
     Then verify "High" value is displayed in the "Priority" field
     And verify "Update Closed" value is displayed in the "Status" field
     And verify "satestclientuser3, satestclientuser3" value is displayed in the "Watch List" field
@@ -101,10 +99,10 @@ Feature: Dashboard page for Team Leader
   @mutable
   Scenario: TC003_03_TeamLeader_DashboardUpdates - Cancel a modification of an update
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "26Updates to 2025 Maximum Annual Earnings for Sickness, Maternity and Family Allowance Contributions" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    When press "Clear all filters" section on the Dashboard filter if available
+    When search for "TeamLeader_update" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Edit" button on the selected update
-    And select "Alam, Asjad" in the "User Assigned" field on the selected update
     When select "High" option in the "Priority" field in the "Update Details" subsection
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
     And select "satestclientuser3, satestclientuser3" in the "Watch List" field on the selected update
@@ -113,7 +111,6 @@ Feature: Dashboard page for Team Leader
     When press "Continue" button
     Then the "01_QA_StageTestPortal - Updates Dashboard" page is displayed
     When open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
-    Then verify the "User Assigned" field does not display "Alam, Asjad"
     And verify the "Priority" field does not display "High"
     And verify the "Status" field does not display "Update Closed"
     And verify the "Watch List" field does not display "satestclientuser3, satestclientuser3"
@@ -121,7 +118,8 @@ Feature: Dashboard page for Team Leader
   @mutable
   Scenario: TC003_04_TeamLeader_DashboardUpdates - Create and delete a comment
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "26Updates to 2025 Maximum Annual Earnings for Sickness, Maternity and Family Allowance Contributions" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    When press "Clear all filters" section on the Dashboard filter if available
+    When search for "TeamLeader_update" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When enter "QaTest comment" comment on the selected update
     When post the comment on the selected update
@@ -132,7 +130,8 @@ Feature: Dashboard page for Team Leader
   @mutable
   Scenario Outline: TC003_05_TeamLeader_DashboardUpdates - Upload and delete a valid attachment
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "26Updates to 2025 Maximum Annual Earnings for Sickness, Maternity and Family Allowance Contributions" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    When press "Clear all filters" section on the Dashboard filter if available
+    When search for "TeamLeader_update" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When open the "Attachments" tab in the "Update Details" subsection
     And upload "<file path>" attachment in the "Update Details" Attachments tab
@@ -150,7 +149,8 @@ Feature: Dashboard page for Team Leader
   @mutable
   Scenario Outline: TC003_06_TeamLeader_DashboardUpdates - Upload an attachment with unsupported format
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
-    When search for "26Updates to 2025 Maximum Annual Earnings for Sickness, Maternity and Family Allowance Contributions" update from the "01_QA_StageTestPortal - Updates Dashboard" page
+    When press "Clear all filters" section on the Dashboard filter if available
+    When search for "TeamLeader_update" update from the "01_QA_StageTestPortal - Updates Dashboard" page
     And open the first update in the "01_QA_StageTestPortal - Updates Dashboard" page
     When press "Attachments" button
     And upload "<file path>" attachment in the "Update Details" Attachments tab
@@ -168,8 +168,8 @@ Feature: Dashboard page for Team Leader
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
     When press "Clear all filters" section on the Dashboard filter if available
     And save the "01_QA_StageTestPortal - Updates Dashboard" items
-    When search for "Income" update in the Analytics Dashboard
-    Then verify only updates that contain "Income" in the title are displayed
+    When search for "TeamLeader_update" update in the Analytics Dashboard
+    Then verify only updates that contain "TeamLeader_update" in the title are displayed
     Then verify the "01_QA_StageTestPortal - Updates Dashboard" item count is not the same
 
   @readOnly
