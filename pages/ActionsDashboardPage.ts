@@ -496,7 +496,8 @@ export class ActionsDashboardPage extends BasePage {
     await expect(updateButton).toBeEnabled({ timeout: 15000 });
 
     await Promise.all([
-      expect(dialog).toBeHidden({ timeout: 15000 }),
+      // Pipeline environments can take longer than 15s to process the save request.
+      expect(dialog).toBeHidden({ timeout: 30_000 }),
       this.clickLocator(updateButton),
     ]);
   }
