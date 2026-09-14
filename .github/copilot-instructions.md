@@ -58,6 +58,18 @@ Shared-step ownership is explicit:
 - Do not catch all exceptions and rethrow them as application defects. Preserve native errors for unexpected technical failures so Allure can classify locator, timeout, configuration, and BDD-contract issues accurately.
 - When adding a new application-level assertion, design it to first validate that the UI interaction and relevant state are available, then use `failWithApplicationError` only for the verified business-rule mismatch.
 
+## Allure Technical Failure Reports
+
+- When updating `allure-pipeline/failure-report/index.html`, treat the Allure Report tab for the requested pipeline execution as the source of truth. Use its category totals or the matching consolidated `allure-results` directory; do not infer the final total from an old local `allure-report` directory.
+- The pipeline publishes independent artifacts named `allure-results-readonly`, `allure-results-mutable-int`, and `allure-results-mutable-ext`. The final report job merges the contents of all three artifacts into one flat `allure-results` directory before publishing Allure. Inspect every artifact when the requested execution includes all three jobs.
+- Job artifacts can contain individual attempts and do not always expose a usable `retry` property. Do not discard results merely because they share `historyId` or `fullName`: both approaches can remove valid Scenario Outline examples or failure evidence.
+- When raw job artifacts and the Allure Report tab disagree, obtain the consolidated final-job `allure-results` data or the published report data for that exact execution. Do not invent a deduplication rule or claim that a generated report matches Allure without proving the count.
+- Known incident: an earlier generator grouped every result by `historyId` and produced only 5 technical entries. Reading the three job artifacts without that loss exposed 100 technical entries under a candidate recovery filter, while the published Allure categories for that execution reported 94 technical failures: 1 assertion mismatch, 43 locator/UI synchronization failures, and 50 unclassified failures. Treat the published total of 94 as authoritative for that execution; neither 5 nor 100 may be reused as a general rule.
+- Exclude only entries classified as `APPLICATION DEFECT DETECTED` from the technical failure report. All other failed or broken results, including assertion, locator/synchronization, and unclassified failures, are technical failures unless the matching Allure data proves otherwise.
+- Before overwriting `allure-pipeline/failure-report/index.html`, calculate the expected technical total as the sum of the non-application-defect categories in the target Allure report. After generation, verify that the HTML total and number of rendered failure entries match that expected total exactly.
+- Every rendered technical failure must include the failed Gherkin step, recorded error message, and the first available image attachment. Copy image attachments into `allure-pipeline/failure-report/images` and preserve their relative links from `index.html`.
+- If the exact expected total cannot be reproduced from the supplied artifacts, report the discrepancy and the missing final-job artifact instead of replacing a correct report with a differently counted one.
+
 ## Change Workflow
 
 1. Find the feature phrase or failing behavior that controls the requested change.

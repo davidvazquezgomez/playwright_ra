@@ -119,15 +119,19 @@ function normalizePublishedStep(step) {
 }
 
 function getFinalResults(results) {
-    const latestByHistoryId = new Map();
+    const attemptsByHistoryId = new Map();
     for (const result of results) {
         const key = result.historyId || result.uuid;
-        const previous = latestByHistoryId.get(key);
-        if (!previous || (result.stop || 0) >= (previous.stop || 0)) {
-            latestByHistoryId.set(key, result);
-        }
+        const attempts = attemptsByHistoryId.get(key) || [];
+        attempts.push(result);
+        attemptsByHistoryId.set(key, attempts);
     }
-    return [...latestByHistoryId.values()];
+
+    return results.filter(result => {
+        const attempts = attemptsByHistoryId.get(result.historyId || result.uuid) || [];
+        return !attempts.some(attempt => attempt.status === 'passed'
+            && (attempt.stop || 0) >= (result.stop || 0));
+    });
 }
 
 function collectStatusText(container) {

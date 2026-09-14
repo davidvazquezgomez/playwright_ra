@@ -54,6 +54,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries,
   workers: process.env.WORKERS ? Number(process.env.WORKERS) : undefined,
+  outputDir: `test-results/playwright-${resultsGroup}`,
 
   reporter: [
     ['list'],
