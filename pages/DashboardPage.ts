@@ -644,9 +644,49 @@ export class DashboardPage extends BasePage {
             `Expected checkbox option "${optionName}" to be available in the "${sectionName}" filter.`,
         ).toBeVisible({ timeout: 30_000 });
 
-        if (await optionCheckbox.isChecked() !== selected) {
-            await optionLabel.click();
-        }
+        // Kendo re-renders the option list, so reads and clicks are retried while the element is detached.
+        const readOptionState = async (): Promise<boolean | undefined> => {
+            try {
+                return await optionCheckbox.isChecked({ timeout: 5000 });
+            } catch {
+                return undefined;
+            }
+        };
+
+        let attempt = 0;
+
+        await expect.poll(
+            async () => {
+                const currentState = await readOptionState();
+                if (currentState === selected) {
+                    return true;
+                }
+
+                if (currentState === undefined) {
+                    return false;
+                }
+
+                // The input is nested in the label, so clicking the label can toggle the value twice; alternate targets.
+                const clickTarget = attempt % 2 === 0 ? optionCheckbox : optionLabel;
+                attempt += 1;
+
+                try {
+                    await clickTarget.click({ timeout: 5000 });
+                } catch (error) {
+                    const message = error instanceof Error ? error.message : String(error);
+                    if (!/not attached to the dom|element is not attached|detached|Timeout .* exceeded/i.test(message)) {
+                        throw error;
+                    }
+                }
+
+                return await readOptionState() === selected;
+            },
+            {
+                message: `Waiting for checkbox option "${optionName}" in the "${sectionName}" Dashboard filter to become ${selected ? 'selected' : 'unselected'}.`,
+                timeout: 60_000,
+                intervals: [200, 500, 1000],
+            },
+        ).toBe(true);
 
         await expect(optionCheckbox).toBeChecked({ checked: selected });
     }
