@@ -244,26 +244,24 @@ Feature: User Management for Super Admin
     And press the "Non-Deloitte Users" section
     And ensure the external user "qa.allocation@example.com" exists with first name "QA", last name "Allocation", and company "Regulatory Advantage Testing"
     Given the "Automatic Allocation of Updates - 01_13Jan REG" page is open
-    When click on "Edit Allocation" icon for the "tEST_ALLOCATION_INT" allocation
-    And register cleanup to restore the recipient of the "tEST_ALLOCATION_INT" allocation, remove "qa.allocation@example.com", and use portal "01_13Jan REG"
-    And add the user "qa.allocation@example.com" in the "Search for Teams and Users" field
+    When click on "Edit Allocation" icon for the "User Management Test" allocation
+    And add the user "UserManagement@gmail.com" in the "Search for Teams and Users" field
     And press "Save" button
-    And press "Update anyway" button
     Given the "User Management - 01_13Jan REG" page is open
     Then the "User Management" page is displayed
     When press the "Non-Deloitte Users" section
-    And select the user "qa.allocation@example.com" from the table
+    And select the user "UserManagement@gmail.com" from the table
     When press "Delete Selected Users" button
     Then the "Delete User" pop up is displayed with the title "Delete User"
     When press "Cancel" button
-    And search for "qa.allocation@example.com" in the User Management table "Email" field
-    Then verify the user "qa.allocation@example.com" is displayed in the table
-    When select the user "qa.allocation@example.com" from the table
+    And search for "UserManagement@gmail.com" in the User Management table "Email" field
+    Then verify the user "UserManagement@gmail.com" is displayed in the table
+    When select the user "UserManagement@gmail.com" from the table
     When press "Delete Selected Users" button
-    And select "satestclientuser4, satestclientuser4" as the replacement user
+    And select "sonigour, audit" as the replacement user
     And press "Next" button
     And press "Reassign" button
     And press "Confirm Deletion" button
     Then verify "Selected user deleted successfully" toast message is displayed in the "User Management" page
-    When search for "qa.allocation@example.com" in the User Management table "Email" field
-    Then verify the user "qa.allocation@example.com" is not displayed in the table
+    When search for "UserManagement@gmail.com" in the User Management table "Email" field
+    Then verify the user "UserManagement@gmail.com" is not displayed in the table

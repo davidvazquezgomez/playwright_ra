@@ -107,29 +107,16 @@ export class ActionsDashboardPage extends BasePage {
    */
   async verifyAddActionButtonState(expectedState: 'enabled' | 'disabled'): Promise<void> {
     const addActionButton = this.addActionButton();
+    await expect(addActionButton).toHaveCount(1);
+    await expect(addActionButton).toBeVisible();
 
-    if (expectedState === 'enabled') {
-      await expect(addActionButton).toHaveCount(1);
-      await expect(addActionButton).toBeVisible();
-      await expect(addActionButton).toBeEnabled();
-      return;
-    }
-
-    const isButtonHiddenAfterRetries = await this.retryWithReload(async () => {
-      return (await addActionButton.count()) === 0;
-    }, 3);
-
-    if (!isButtonHiddenAfterRetries) {
-      const buttonCount = await addActionButton.count();
-      const visibleButtonText = buttonCount > 0
-        ? (await addActionButton.first().innerText()).trim()
-        : 'N/A';
-
+    const actualState = await addActionButton.isEnabled() ? 'enabled' : 'disabled';
+    if (actualState !== expectedState) {
       this.failWithApplicationError(
-        'When Actions is Disabled, the Add Action control must not be available on the Actions Dashboard.',
-        'Add Action control is not rendered.',
-        `Add Action control is still rendered (${buttonCount} element(s)).`,
-        `Visible Add Action text: "${visibleButtonText}".`,
+        `The Add Action button must be ${expectedState} when the portal Actions availability is configured accordingly.`,
+        `Add Action button is ${expectedState}.`,
+        `Add Action button is ${actualState}.`,
+        `Disabled attribute: ${await addActionButton.getAttribute('disabled') ?? 'not present'}.`,
       );
     }
   }

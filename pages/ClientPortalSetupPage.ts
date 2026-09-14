@@ -27,11 +27,6 @@ export class ClientPortalSetupPage extends BasePage {
     private jurisdictionsSelectAllCheckbox = this.jurisdictionsSelectAllRow.locator('input[type="checkbox"]').first();
     private actionsAvailabilityButtonByState = (actionsState: 'Actions Enabled' | 'Actions Disabled') =>
         this._page.getByRole('button', { name: actionsState, exact: true });
-    private selectedActionsAvailabilityButton = () =>
-        this._page
-            .locator('kendo-buttongroup button.k-button-solid-primary')
-            .filter({ hasText: /^\s*Actions (Enabled|Disabled)\s*$/i })
-            .first();
 
     /**
      * Verifies that the requested Client Portal Setup fields are visible.
@@ -160,32 +155,67 @@ export class ClientPortalSetupPage extends BasePage {
     }
 
     /**
-     * Sets whether the client portal exposes Actions in its dashboard.
-     * @param actionsState Expected availability button label, Actions Enabled or Actions Disabled.
+     * Selects Actions Enabled only when it is not already selected.
      */
-    async setActionsAvailability(actionsState: string): Promise<void> {
-        const normalizedState = actionsState.trim() as 'Actions Enabled' | 'Actions Disabled';
+    async ensureActionsEnabledIsSelected(): Promise<void> {
+        if (!await this.isActionsAvailabilitySelected('Actions Enabled')) {
+            await this.clickLocator(this.actionsAvailabilityButtonByState('Actions Enabled'));
+        }
 
+        await expect.poll(
+            async () => this.isActionsAvailabilitySelected('Actions Enabled'),
+            { message: 'Expected Actions Enabled to be selected before continuing.' },
+        ).toBe(true);
+    }
+
+    /**
+     * Verifies that the requested Actions availability option is selected without changing the current selection.
+     * @param actionsState Option expected to be selected.
+     */
+    async verifyActionsAvailabilityIsSelected(actionsState: string): Promise<void> {
+        const normalizedState = actionsState.trim() as 'Actions Enabled' | 'Actions Disabled';
         if (!['Actions Enabled', 'Actions Disabled'].includes(normalizedState)) {
             throw new Error(`Actions availability "${actionsState}" is not supported.`);
         }
 
-        const targetButton = this.actionsAvailabilityButtonByState(normalizedState);
-        await expect(targetButton).toBeVisible();
+        await expect.poll(
+            async () => this.isActionsAvailabilitySelected(normalizedState),
+            { message: `Expected ${normalizedState} to be selected in Client Portal Setup.` },
+        ).toBe(true);
+    }
 
-        const selectedAvailabilityButton = this.selectedActionsAvailabilityButton();
-        const selectedButtonText = (await selectedAvailabilityButton.count()) > 0
-            ? (await selectedAvailabilityButton.textContent())?.trim()
-            : undefined;
+    /**
+     * Selects Actions Disabled after verifying that Actions Enabled is the current selection.
+     */
+    async selectActionsDisabled(): Promise<void> {
+        await expect.poll(
+            async () => this.isActionsAvailabilitySelected('Actions Enabled'),
+            { message: 'Expected Actions Enabled to be selected before selecting Actions Disabled.' },
+        ).toBe(true);
 
-        if (selectedButtonText !== normalizedState) {
-            await this.clickLocator(targetButton);
+        const actionsDisabledButton = this.actionsAvailabilityButtonByState('Actions Disabled');
+        await this.clickLocator(actionsDisabledButton);
+        await expect.poll(
+            async () => this.isActionsAvailabilitySelected('Actions Disabled'),
+            { message: 'Expected Actions Disabled to be selected after clicking it.' },
+        ).toBe(true);
+    }
+
+    /**
+     * Determines whether an Actions availability option is visually selected.
+     * @param actionsState Option whose selected state is read.
+     * @returns Whether the requested option is selected.
+     */
+    private async isActionsAvailabilitySelected(
+        actionsState: 'Actions Enabled' | 'Actions Disabled',
+    ): Promise<boolean> {
+        const targetButton = this.actionsAvailabilityButtonByState(actionsState);
+
+        if (!await targetButton.isVisible()) {
+            return false;
         }
 
-        await expect(targetButton).toHaveClass(/\bk-button-solid-primary\b/);
-        await expect(this.selectedActionsAvailabilityButton()).toHaveText(
-            new RegExp(`^\\s*${this.escapeRegularExpression(normalizedState)}\\s*$`, 'i'),
-        );
+        return targetButton.evaluate((button) => button.classList.contains('k-button-solid-primary'));
     }
 
     /**
