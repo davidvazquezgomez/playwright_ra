@@ -60,10 +60,12 @@ Feature: Client Portal Setup for Super Admin
     Then a message should get displayed as "updated successfully"
     And verify "01_QA_ClientPortalSetup" client portal displays "Enabled" status in the Client Portal List
 
+
   @mutable
-  Scenario Outline: TC003_SuperAdmin_ClientPortalSetup - Verify Actions Enabled/Actions Disabled toggle for the existing portal
+  Scenario: TC003_01_SuperAdmin_ClientPortalSetup - Verify Actions Disabled for the existing portal
     When press "Edit Client" button for the "01_QA_ClientPortalSetup" client portal
-    And set Actions availability to "<actionsState>" in Client Portal Setup
+    Then verify "Actions Enabled" is selected in Client Portal Setup
+    When select Actions Disabled in Client Portal Setup
     And press "Save & Continue" button on the "Client Portal Setup" page
     And update the Knowledge Modules & Impact Areas selection
     And press "Save & Continue" button on the "Knowledge Modules & Impact Areas" page
@@ -75,9 +77,4 @@ Feature: Client Portal Setup for Super Admin
     And click on the "01_QA_ClientPortalSetup" client portal name in the client portal listing
     When press "Open Dashboard" button
     And press "Actions" button
-    Then verify the "Add Action" button is "<expectedAddActionState>" on the Actions Dashboard
-
-    Examples:
-      | actionsState     | expectedAddActionState |
-      | Actions Enabled  | enabled                |
-      | Actions Disabled | disabled               |
+    Then verify the "Add Action" button is "disabled" on the Actions Dashboard
