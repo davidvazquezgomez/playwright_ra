@@ -191,6 +191,7 @@ export class DashboardPage extends BasePage {
 
         await this.clickElement(this.dashboardFilterButton);
         await expect(filterDialog).toBeVisible();
+        // await this._page.pause();
     }
 
     /**
@@ -619,6 +620,7 @@ export class DashboardPage extends BasePage {
         }
 
         await this.setDashboardCheckboxFilterOptionSelected(optionName, sectionName, true);
+        // await this._page.pause();
     }
 
     /**

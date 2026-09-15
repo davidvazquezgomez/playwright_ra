@@ -56,9 +56,10 @@ Feature: Dashboard Options for Team Member
   @readOnly
   Scenario: TC019_04_TeamMember_DashboardOptions - Generate a filtered Actions report
     Given the "01_QA_StageTestPortal - Actions Dashboard" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     When press "Filter" button on the Dashboard filter
     And select "Japan" in the "Jurisdiction" filter on the Dashboard filter
-    And select "Medium" in the "Action Priority" filter on the Dashboard filter
+    And select "Low" in the "Action Priority" filter on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify filtered actions are displayed
     When press "Dashboard options" button on the Dashboard 
