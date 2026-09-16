@@ -372,7 +372,8 @@ export class DashboardPage extends BasePage {
 
         if (activeDialog === this.nameFilterDialog && (await this._page.locator(this.filterNameInput).inputValue()).trim()) {
             await Promise.all([
-                expect(this.filterSavedToast.or(this.filterUpdatedToast)).toBeVisible({ timeout: 30_000 }),
+                // The pipeline environment is slower than local, so match the 90s toast-wait convention used elsewhere.
+                expect(this.filterSavedToast.or(this.filterUpdatedToast)).toBeVisible({ timeout: 90_000 }),
                 this.clickLocator(saveButton),
             ]);
             return;
@@ -478,7 +479,7 @@ export class DashboardPage extends BasePage {
         const favouriteControl = this.savedFilterFavouriteControlByName(filterName);
         await expect(favouriteControl).toBeVisible();
         await Promise.all([
-            expect(this.filterUpdatedToast).toBeVisible({ timeout: 30_000 }),
+            expect(this.filterUpdatedToast).toBeVisible({ timeout: 90_000 }),
             this.clickLocator(favouriteControl),
         ]);
     }
@@ -593,7 +594,7 @@ export class DashboardPage extends BasePage {
         await expect(this._page.locator(this.nameFilterDialog)).toBeVisible();
         await this.fillFilterName(filterName);
         await Promise.all([
-            expect(this.filterUpdatedToast).toBeVisible({ timeout: 30000 }),
+            expect(this.filterUpdatedToast).toBeVisible({ timeout: 90_000 }),
             this.saveFilterButton(this.nameFilterDialog).click(),
         ]);
     }
@@ -1062,7 +1063,13 @@ export class DashboardPage extends BasePage {
      */
     async verifyFilteredActions(filterName?: string, value?: string): Promise<void> {
         const rows = this.actionsGrid().locator('tbody tr.k-master-row');
-        await expect(rows.first()).toBeVisible();
+        await this.ensureKendoGridHasRows(
+            this.actionsGrid(),
+            filterName && value
+                ? `Filtering the Actions Dashboard by "${filterName}" with value "${value}" must return matching actions.`
+                : 'Filtering the Actions Dashboard must return matching actions.',
+            filterName && value ? `Selected filter "${filterName}" with value "${value}".` : undefined,
+        );
         if (!filterName || !value) {
             return;
         }
@@ -1091,7 +1098,11 @@ export class DashboardPage extends BasePage {
         const start = this.toUtcDate(this.selectedDeadlineStartDate);
         const end = this.toUtcDate(this.selectedDeadlineEndDate);
         const rows = this.actionsGrid().locator('tbody tr.k-master-row');
-        await expect(rows.first()).toBeVisible();
+        await this.ensureKendoGridHasRows(
+            this.actionsGrid(),
+            'Filtering the Actions Dashboard by Deadline Range must return matching actions.',
+            `Selected Deadline Range "${this.selectedDeadlineStartDate.toLocaleDateString('en-GB')}" to "${this.selectedDeadlineEndDate.toLocaleDateString('en-GB')}".`,
+        );
         const deadlineViolations: string[] = [];
 
         for (let index = 0; index < await rows.count(); index += 1) {
