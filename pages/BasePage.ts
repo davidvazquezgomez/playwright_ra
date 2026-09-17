@@ -755,7 +755,7 @@ export class BasePage {
   }
 
   /**
-   * Filters and confirms a user or team from a people-picker popup with Enter.
+   * Filters and selects a user or team from a people-picker popup.
    * @param controlSelector Selector for the page-specific people-picker control.
    * @param searchInputSelector Selector for the people-picker search input.
    * @param optionName Exact visible user or team name to select.

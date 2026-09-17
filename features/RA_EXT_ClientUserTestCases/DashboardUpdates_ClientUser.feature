@@ -57,19 +57,21 @@ Feature: Dashboard Updates for Client User
   @mutable
   Scenario: TC003_01_ClientUser_DashboardUpdates - Create and revert a modification of an update
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
-    When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
+    When search for "ClientUser_Test_011" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Edit" button on the selected update
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
     And select "test, per" in the "Watch List" field on the selected update
     When press "Save" button on the selected update
-    Then verify "Regulatory update updated successfully" toast message is displayed in the "Test_11-5_01" page
-    When open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
+    Then verify "Regulatory update updated successfully" toast message is displayed in the "ClientUser_Test_011" page
+    When press "Back" button
+    Then search for "ClientUser_Test_011" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
+    And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Edit" button on the selected update
-    And select "Update Allocated" option in the "Status" field in the "Update Details" subsection
+    And select "Awaiting Allocation" option in the "Status" field in the "Update Details" subsection
     When press "clear" in the "Watch List" field
     When press "Save" button on the selected update
-    Then verify "Regulatory update updated successfully" toast message is displayed in the "Test_11-5_01" page
+    Then verify "Regulatory update updated successfully" toast message is displayed in the "ClientUser_Test_011" page
 
   @mutable
   Scenario: TC003_02_ClientUser_DashboardUpdates - Simulate a modification of an update (Back button)
@@ -90,23 +92,23 @@ Feature: Dashboard Updates for Client User
   @mutable
   Scenario: TC003_03_ClientUser_DashboardUpdates - Cancel a modification of an update
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
-    When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
+    When search for "ClientUser_Test_011" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Edit" button on the selected update
     And select "Update Closed" option in the "Status" field in the "Update Details" subsection
-    And select "ECA, test" in the "Watch List" field on the selected update
+    And select "test, per" in the "Watch List" field on the selected update
     When press "Back" button
     Then the "Unsaved Changes" popup is displayed
     When press "Continue" button
     Then the "ClientPortal_20260209133616 - Updates Dashboard" page is displayed
     When open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     Then verify the "Status" field does not display "Update Closed"
-    And verify the "Watch List" field does not display "ECA, test"
+    And verify the "Watch List" field does not display "test, per"
 
   @mutable
   Scenario: TC003_04_ClientUser_DashboardUpdates - Create and delete a comment
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
-    When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
+    When search for "ClientUser_Test_011" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When enter "QaTest comment" comment on the selected update
     When post the comment on the selected update
@@ -117,7 +119,7 @@ Feature: Dashboard Updates for Client User
   @mutable
   Scenario Outline: TC003_05_ClientUser_DashboardUpdates - Upload and delete a valid attachment
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
-    When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
+    When search for "ClientUser_Test_011" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When open the "Attachments" tab in the "Update Details" subsection
     And upload "<file path>" attachment in the "Update Details" Attachments tab
@@ -135,7 +137,7 @@ Feature: Dashboard Updates for Client User
   @mutable
   Scenario Outline: TC003_06_ClientUser_DashboardUpdates - Upload an attachment with unsupported format
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
-    When search for "People Law" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
+    When search for "ClientUser_Test_011" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Attachments" button
     And upload "<file path>" attachment in the "Update Details" Attachments tab

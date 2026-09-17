@@ -72,12 +72,11 @@ export class UpdatesDashboardPage extends BasePage {
     this._page.locator(this.updateDetailsPeoplePickerControlByFieldName[fieldName]);
   private readonly updateDetailsPeoplePickerContainerByField = (fieldName: 'User Assigned' | 'Watch List') =>
     this._page.locator(this.updateDetailsPeoplePickerContainerByFieldName[fieldName]);
-  private readonly updateDetailsPeoplePickerOptionByName = (name: string) =>
-    `kendo-popup.k-animation-container-shown:visible li[role="option"]:has(.person-name:text-is("${name}")), ` +
-    `kendo-popup.k-animation-container-shown:visible li[role="option"]:text-is("${name}")`;
   private readonly updateDetailsSelectedPersonByField = (fieldName: 'User Assigned' | 'Watch List') =>
     fieldName === 'Watch List'
-      ? this.updateDetailsPeoplePickerContainerByField(fieldName).locator('.tag-person-name')
+      ? this.updateDetailsPeoplePickerContainerByField(fieldName).locator(
+        'kendo-taglist[role="listbox"] .k-chip[role="option"]',
+      )
       : this.updateDetailsPeoplePickerByField(fieldName).locator('.selected-person-name');
   private readonly updateDetailsPeoplePickerClearButton = (fieldName: 'User Assigned' | 'Watch List') =>
     this.updateDetailsPeoplePickerContainerByField(fieldName).locator(
@@ -541,17 +540,17 @@ export class UpdatesDashboardPage extends BasePage {
     userName: string,
     fieldName: 'User Assigned' | 'Watch List',
   ): Promise<void> {
-    const peoplePicker = this.updateDetailsPeoplePickerByField(fieldName);
+    const selectedPerson = this.updateDetailsSelectedPersonByField(fieldName).filter({ hasText: userName });
+    if (await selectedPerson.count() > 0) {
+      await expect(selectedPerson).toBeVisible();
+      return;
+    }
+
+    const peoplePickerSelector = this.updateDetailsPeoplePickerControlByFieldName[fieldName];
     const searchInputSelector = this.updateDetailsPeoplePickerSearchInputByFieldName[fieldName];
-    const userOptionSelector = this.updateDetailsPeoplePickerOptionByName(userName);
-    // await this._page.pause();
-    await this.clickLocator(peoplePicker);
-    await this.waitForElement(searchInputSelector);
-    await this.fillInputText(searchInputSelector, userName);
-    await this.waitForElement(userOptionSelector);
-    await this.pressKeyOnElement(searchInputSelector, 'Enter');
-    // Watch List can hold multiple tags, so match the specific tag instead of the whole multi-element locator.
-    await expect(this.updateDetailsSelectedPersonByField(fieldName).filter({ hasText: userName })).not.toHaveCount(0);
+
+    await this.selectUserPickerOption(peoplePickerSelector, searchInputSelector, userName);
+    await expect(selectedPerson).toBeVisible();
   }
 
   /**
