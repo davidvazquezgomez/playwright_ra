@@ -2,7 +2,11 @@ import { expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class AnalyticsDashboardPage extends BasePage {
-    private readonly chartRefreshTimeout = 150000;
+    // Stays below the global test timeout (e.g. pipeline TEST_TIMEOUT=120000) so this poll fails on its own message
+    // instead of being cut short by the outer test timeout, leaving room for the scenario's other steps.
+    private readonly chartRefreshTimeout = process.env.TEST_TIMEOUT
+        ? Math.min(150000, Number(process.env.TEST_TIMEOUT) - 30000)
+        : 150000;
     private readonly chartPanelByTitle = (chartTitle: string) =>
         this._page.locator('.stats-panel').filter({
             has: this._page.locator('.donut-header').getByText(chartTitle, { exact: true }),

@@ -58,9 +58,6 @@ export class DashboardPage extends BasePage {
         `${this.filterDialog} .filters-toggle-btn:text-is("${buttonText}")`;
     private readonly saveFilterButton = (dialogSelector: string) =>
         this._page.locator(dialogSelector).getByRole('button', { name: 'Save filter', exact: true });
-    private readonly filterSavedToast = this._page
-        .locator('.k-notification-content')
-        .filter({ hasText: 'Filter saved successfully.' });
     private readonly filterUpdatedToast = this._page
         .locator('.k-notification-content')
         .filter({ hasText: 'Filter updated successfully.' });
@@ -370,16 +367,11 @@ export class DashboardPage extends BasePage {
             : this.filterDialog;
         const saveButton = this.saveFilterButton(activeDialog);
 
-        if (activeDialog === this.nameFilterDialog && (await this._page.locator(this.filterNameInput).inputValue()).trim()) {
-            await Promise.all([
-                // The pipeline environment is slower than local, so match the 90s toast-wait convention used elsewhere.
-                expect(this.filterSavedToast.or(this.filterUpdatedToast)).toBeVisible({ timeout: 90_000 }),
-                this.clickLocator(saveButton),
-            ]);
-            return;
-        }
-
-        await saveButton.click();
+        // Do not wait for the toast here: the Kendo notification auto-dismisses, and the
+        // following "Then verify toast message is displayed" step performs the sole, fresh
+        // wait for it. Waiting for it twice risks the toast already being gone by the second
+        // check on slower environments such as the pipeline.
+        await this.clickLocator(saveButton);
     }
 
     /**
@@ -542,7 +534,7 @@ export class DashboardPage extends BasePage {
         if (openedByThisMethod) {
             await this.openFilterPanel();
         }
-
+        // await this._page.pause();
         await this.editDashboardFilters();
 
         const deleteButton = this.savedFilterDeleteButtonByName(filterName);
