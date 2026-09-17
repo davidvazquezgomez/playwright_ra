@@ -576,12 +576,23 @@ export class TeamManagementPage extends BasePage {
   }
 
   /**
+   * Determines whether the Create/Edit Team page is displayed.
+   * Waits briefly for the heading instead of an instantaneous check, tolerating the
+   * navigation latency observed after clicking Edit/Add Team Members in slower environments.
+   */
+  private async isOnCreateEditTeamPage(): Promise<boolean> {
+    return this._page.getByRole('heading', { name: 'Create/Edit Team' })
+      .waitFor({ state: 'visible', timeout: 10000 })
+      .then(() => true)
+      .catch(() => false);
+  }
+
+  /**
    * Verifies that the filtered team's Team Leaders cell does not contain a user.
    * @param userName Display name that must not appear among the team's leaders.
    */
   async verifyUserIsNotAvailableInTeamLeaders(userName: string): Promise<void> {
-    const onCreateEditTeamPage = await this._page.getByRole('heading', { name: 'Create/Edit Team' }).isVisible()
-      .catch(() => false);
+    const onCreateEditTeamPage = await this.isOnCreateEditTeamPage();
 
     if (onCreateEditTeamPage) {
       if (await this.isTeamLeaderPresent(userName)) {
@@ -644,8 +655,7 @@ export class TeamManagementPage extends BasePage {
    * @param userName Display name that must appear among the team's leaders.
    */
   async verifyUserIsAvailableInTeamLeaders(userName: string): Promise<void> {
-    const onCreateEditTeamPage = await this._page.getByRole('heading', { name: 'Create/Edit Team' }).isVisible()
-      .catch(() => false);
+    const onCreateEditTeamPage = await this.isOnCreateEditTeamPage();
 
     if (onCreateEditTeamPage) {
       if (!await this.isTeamLeaderPresent(userName)) {

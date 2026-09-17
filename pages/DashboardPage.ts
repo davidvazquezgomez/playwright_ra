@@ -71,8 +71,6 @@ export class DashboardPage extends BasePage {
     private readonly blockingSpinner = 'app-spinner .cssload-container';
     private readonly filterOptionByName = (optionName: string) =>
         `${this.filterDialog} .saved-filter-name:text-is("${optionName}")`;
-    private readonly dateAnnouncedFilterOption = () =>
-        this._page.locator(this.filterDialog).getByText('Date Announced', { exact: true });
     private readonly activeFilterDialog = () =>
         this._page.getByRole('dialog').filter({
             has: this._page.locator('.k-dialog-title').getByText('Filter', { exact: true }),
@@ -448,7 +446,10 @@ export class DashboardPage extends BasePage {
      * Adds the Date Announced date-range filter to the Dashboard filter panel.
      */
     async selectDateAnnouncedFilter(): Promise<void> {
-        await this.clickLocator(this.dateAnnouncedFilterOption());
+        await this.ensureDashboardCheckboxFilterSectionIsExpanded(
+            this.filterSectionByName('Date Announced'),
+            'Date Announced',
+        );
     }
 
     /**
@@ -634,10 +635,20 @@ export class DashboardPage extends BasePage {
 
         const optionLabel = this.dashboardCheckboxLabelByValue(sectionName, optionName);
         const optionCheckbox = this.dashboardCheckboxByValue(sectionName, optionName);
-        await expect(
-            optionLabel,
-            `Expected checkbox option "${optionName}" to be available in the "${sectionName}" filter.`,
-        ).toBeVisible({ timeout: 30_000 });
+        await expect.poll(
+            async () => {
+                if (await filterSection.getAttribute('aria-expanded') !== 'true') {
+                    await this.ensureDashboardCheckboxFilterSectionIsExpanded(filterSection, sectionName);
+                }
+
+                return optionLabel.isVisible();
+            },
+            {
+                message: `Expected checkbox option "${optionName}" to be available in the "${sectionName}" filter.`,
+                timeout: 60_000,
+                intervals: [200, 500, 1000],
+            },
+        ).toBe(true);
 
         // Kendo re-renders the option list, so reads and clicks are retried while the element is detached.
         const readOptionState = async (): Promise<boolean | undefined> => {
@@ -658,6 +669,10 @@ export class DashboardPage extends BasePage {
                 }
 
                 if (currentState === undefined) {
+                    // Kendo re-renders the panel (e.g. option counts refresh) and can collapse the section again.
+                    if (await filterSection.getAttribute('aria-expanded') !== 'true') {
+                        await this.ensureDashboardCheckboxFilterSectionIsExpanded(filterSection, sectionName);
+                    }
                     return false;
                 }
 
@@ -1186,6 +1201,10 @@ export class DashboardPage extends BasePage {
     }
 
     private async selectDashboardDateFilterValue(fieldLabel: string, dateValue: string): Promise<void> {
+        await this.ensureDashboardCheckboxFilterSectionIsExpanded(
+            this.filterSectionByName('Date Announced'),
+            'Date Announced',
+        );
         const datePicker = this.dashboardDateFieldPickerByLabel(fieldLabel);
         await expect(
             datePicker,

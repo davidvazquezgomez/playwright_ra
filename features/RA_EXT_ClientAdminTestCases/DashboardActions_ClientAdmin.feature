@@ -168,6 +168,7 @@ Feature: Dashboard Actions for Client Admin
   @mutable
   Scenario: TC011_01_ClientAdmin_DashboardActions - Verify adding an action from the update details page
     Given the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page is open
+    When press "Clear all filters" section on the Dashboard filter if available
     When search for "24Maximum social security contributions have been proposed" update from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     Then verify "24Maximum social security contributions have been proposed" update is displayed from the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page
     When open the first update in the "01_QA_StageTestPortal - Updates Dashboard - All Updates" page

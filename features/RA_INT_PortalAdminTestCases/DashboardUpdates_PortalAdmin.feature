@@ -228,14 +228,14 @@ Feature: Dashboard Updates for Portal Admin
     Given the "Global Inc - Updates Dashboard - All Updates" page is open
     Then save the "Global Inc - Updates Dashboard" items
     When press "Filter" button on the Dashboard filter
-    And press "Save as favourite" button for "TestFilter_1784117178383" on the Dashboard filter
+    And press "Save as favourite" button for "TestFilter_1785107780183" on the Dashboard filter
     Then verify "Filter updated successfully." toast message is displayed in the "Global Inc - Updates Dashboard" page
     And press "Close" button on the Dashboard filter
     And logout from the application
     When launch Regulatory Advantage application URL and login as "deloitte" user "SUPERADMIN"
     Then the "Global Inc - Updates Dashboard - All Updates" page is open
     Then verify the "Global Inc - Updates Dashboard" item count is not the same
-    When press "Remove as favourite" button for "TestFilter_1784117178383" on the Dashboard filter
+    When press "Remove as favourite" button for "TestFilter_1785107780183" on the Dashboard filter
     Then verify "Filter updated successfully." toast message is displayed in the "Global Inc - Updates Dashboard" page
     And press "Close" button on the Dashboard filter
     And logout from the application
