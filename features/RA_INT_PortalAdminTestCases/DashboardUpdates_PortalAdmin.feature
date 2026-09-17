@@ -228,20 +228,20 @@ Feature: Dashboard Updates for Portal Admin
     Given the "Global Inc - Updates Dashboard - All Updates" page is open
     Then save the "Global Inc - Updates Dashboard" items
     When press "Filter" button on the Dashboard filter
-    And press "Save as favourite" button for "TestFilter_1784117178383" on the Dashboard filter
+    And press "Save as favourite" button for "Test_PortalAdmin1" on the Dashboard filter
     Then verify "Filter updated successfully." toast message is displayed in the "Global Inc - Updates Dashboard" page
     And press "Close" button on the Dashboard filter
     And logout from the application
-    When launch Regulatory Advantage application URL and login as "deloitte" user "SUPERADMIN"
+    When launch Regulatory Advantage application URL and login as "deloitte" user "PORTALADMIN"
     Then the "Global Inc - Updates Dashboard - All Updates" page is open
     Then verify the "Global Inc - Updates Dashboard" item count is not the same
-    When press "Remove as favourite" button for "TestFilter_1784117178383" on the Dashboard filter
+    When press "Remove as favourite" button for "Test_PortalAdmin1" on the Dashboard filter
     Then verify "Filter updated successfully." toast message is displayed in the "Global Inc - Updates Dashboard" page
     And press "Close" button on the Dashboard filter
     And logout from the application
 
   @readOnly
-  Scenario: TC006_05_PortalAdmin_DashboardUpdates - Clear all filters
+  Scenario: TC006_06_PortalAdmin_DashboardUpdates - Clear all filters
     Given the "Global Inc - Updates Dashboard - All Updates" page is open
     When press "Filter" button on the Dashboard filter
     And select "Awaiting Allocation" in the "Status" filter on the Dashboard filter
