@@ -70,7 +70,7 @@ Feature: Dashboard Actions for Client Admin
     Then verify "Action added successfully" toast message is displayed in the "01_QA_StageTestPortal - Actions Dashboard" page
     When press "Filter" button on the Dashboard filter
     And press "Reset Filters" button on the Dashboard filter
-    And double-click "Test_filter" option on the Dashboard filter
+    And double-click "Test_ClientAdmin" option on the Dashboard filter
     And press "View results" button on the Dashboard filter
     And click on "Deadline Date" column header in the "01_QA_StageTestPortal - Actions Dashboard" page
     And click on "Deadline Date" column header in the "01_QA_StageTestPortal - Actions Dashboard" page
