@@ -115,12 +115,12 @@ Feature: Dashboard Analytics for Deloitte User
   @mutable
   Scenario: TC015_02_DeloitteUser_DashboardAnalytics - Compare Update Analytics Data and Updates Dashboard pages for a selected result
     Given the "QA_Test client3 - Overview - Update Analytics" page is open
-    When search for "StageUpload11Aug2026" update in the Analytics Dashboard
+    When search for "StageUpdate02_30-04" update in the Analytics Dashboard
     Then verify the "Update Analytics Data" chart is displayed
     When open the first filtered update result in the "Update Analytics Data" table
-    Then the "StageUpload11Aug2026" page is displayed
+    Then the "StageUpdate02_30-04" page is displayed
     And verify the "Update Details" subsection displays the "User Assigned; Priority; Status;Summary; Deloitte View; Supporting References; Tags; Related updates; Watch List; Discussion; Jurisdiction; Impact Area; Date Announced; Date Effective;Regulator;Level of Authority;Status of Change" sections
-    And verify the "Update Details" subsection displays the "satestclientuser, satestclientuser;Not Set;Update Allocated;The National Revenue Agency (NRA) uses a series of podcast episodes to explain the adoption of the euro as Bulgaria's official currency;The National Revenue Agency (NRA) uses a series of podcast episodes to explain the adoption of the euro as Bulgaria's official currency;1;1;0;1;0;0;Mexico;Employer tax reporting/filing requirements;11 Aug 2026;11 Aug 2026;National Revenue Agency (NRA);Non-Binding;Draft" values
+    And verify the "Update Details" subsection displays the ";Not Set;Awaiting Allocation;Test Update - Summary of Update;Test Update - Deloitte View;4;1;0;0;0;Brazil;International/expat tax arrangements;TBD;N/A;Test Update - Regulator,R1,R2;Non-Binding;Draft" values
     And verify the "Update Details" subsection displays the "Mark as Unread;Edit;Comment" buttons
     When open the "Attachments" tab in the "Update Details" subsection
     Then verify the "Upload files" button is displayed in the "Update Details" Attachments tab
