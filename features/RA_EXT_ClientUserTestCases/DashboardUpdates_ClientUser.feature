@@ -76,18 +76,18 @@ Feature: Dashboard Updates for Client User
   @mutable
   Scenario: TC003_02_ClientUser_DashboardUpdates - Simulate a modification of an update (Back button)
     Given the "ClientPortal_20260209133616 - Updates Dashboard - All Updates" page is open
-    When search for "Test_11-5_01" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
+    When search for "ClientUser_Test_011" update from the "ClientPortal_20260209133616 - Updates Dashboard" page
     And open the first update in the "ClientPortal_20260209133616 - Updates Dashboard" page
     When press "Edit" button on the selected update
-    And select "Update Closed" option in the "Status" field in the "Update Details" subsection
-    And select "ECA, test" in the "Watch List" field on the selected update
+    And select "Update in Progress" option in the "Status" field in the "Update Details" subsection
+    And select "Member, Team" in the "Watch List" field on the selected update
     When press "Back" button
     Then the "Unsaved Changes" popup is displayed
     And the popup message is "If you leave this page, your changes will be lost. Do you want to continue without saving?"
     And verify "Continue;Cancel" buttons are displayed on the "Unsaved Changes" popup
     When press "Cancel" button
-    Then verify "Update Closed" value is displayed in the "Status" field
-    And verify "ECA, test" value is displayed in the "Watch List" field
+    Then verify "Update in Progress" value is displayed in the "Status" field
+    And verify "Member, Team" value is displayed in the "Watch List" field
 
   @mutable
   Scenario: TC003_03_ClientUser_DashboardUpdates - Cancel a modification of an update
