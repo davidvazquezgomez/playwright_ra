@@ -67,7 +67,7 @@ Feature: Dashboard Analytics for Client Admin
     Then save the value from the "Outstanding Updates" chart
     And save the value from the "Update Priority" chart
     When press "Filter" button on the Dashboard filter
-    When select "Test_filter" located in the "Saved Filters" section on the Dashboard filter
+    When select "Test_ClientAdmin" located in the "Saved Filters" section on the Dashboard filter
     And press "View results" button on the Dashboard filter
     Then verify the "Outstanding Updates" chart value is not the same
     And verify the "Update Priority" chart value is not the same
