@@ -9,13 +9,13 @@ E2E testing framework based on **Playwright** with a **BDD/Gherkin** approach, *
 | ---------- | ------------------ | -------------------------------------------------- |
 | Node.js    | ≥ 20.x             | Recommended: 22.x                                  |
 | Java (JDK) | ≥ 11               | Required for Allure CLI (e.g., Amazon Corretto 21) |
-| npm        | included with Node |                                                    |
+| pnpm       | v9+                 |                                                    |
 
 ## Installation
 
 ```bash
-npm ci
-npx playwright install --with-deps chromium
+pnpm install --frozen-lockfile
+pnpm exec playwright install --with-deps chromium
 ```
 
 Create or update the local `.env` file. It is ignored by Git and must never be committed with credentials.
@@ -28,41 +28,41 @@ All BDD test commands generate tests first, then invoke the `desktop` Playwright
 
 | Command                                     | Description                                        |
 | ------------------------------------------- | -------------------------------------------------- |
-| `npm run test:bdd`                          | Runs BDD tests (default)                           |
-| `npm run test:bdd:tags -- "@UploadUpdates"` | Runs only tests with the `@UploadUpdates`          |
-| `npm run test:bdd:smoke`                    | Runs only tests with the `@smoke`                  |
-| `npm run test:bdd:ui`                       | Opens BDD tests in Playwright UI Mode              |
-| `npm run test:bdd:debug`                    | Runs BDD tests with the Playwright Inspector       |
-| `npm run test:bdd:regression`               | Runs tests tagged with `@regression`               |
-| `npm run test:bdd:readonly`                 | Runs `@readOnly` tests with up to four workers     |
-| `npm run test:bdd:mutable`                  | Runs `@mutable` tests serially                     |
-| `npm run test:bdd:diagnostic`               | Runs the diagnostic flow, defaulting to `@mutable` |
-| `npm run tsc`                               | Type-checks TypeScript without emitting files      |
-| `npm run bdd:classify`                      | Reports scenario classification                    |
-| `npm run bdd:classify:write`                | Writes scenario classification changes             |
-| `npm run bdd:validate-contracts`            | Validates feature and step contracts               |
-| `npm run diagnostics:prepare`               | Prepares sanitized Playwright diagnostics          |
-| `npm run allure:enhance`                    | Enhances Allure results with unexecuted BDD steps  |
-| `npm run allure:report`                     | Generates and opens the Allure report              |
-| `npm run allure:generate`                   | Generates the report only (does not open it)       |
-| `npm run allure:open`                       | Opens an already generated report only             |
-| `npm run bdd:generate`                      | Generates `.spec.js` files from `.feature` files   |
+| `pnpm run test:bdd`                          | Runs BDD tests (default)                           |
+| `pnpm run test:bdd:tags -- "@UploadUpdates"` | Runs only tests with the `@UploadUpdates`          |
+| `pnpm run test:bdd:smoke`                    | Runs only tests with the `@smoke`                  |
+| `pnpm run test:bdd:ui`                       | Opens BDD tests in Playwright UI Mode              |
+| `pnpm run test:bdd:debug`                    | Runs BDD tests with the Playwright Inspector       |
+| `pnpm run test:bdd:regression`               | Runs tests tagged with `@regression`               |
+| `pnpm run test:bdd:readonly`                 | Runs `@readOnly` tests with up to four workers     |
+| `pnpm run test:bdd:mutable`                  | Runs `@mutable` tests serially                     |
+| `pnpm run test:bdd:diagnostic`               | Runs the diagnostic flow, defaulting to `@mutable` |
+| `pnpm run tsc`                               | Type-checks TypeScript without emitting files      |
+| `pnpm run bdd:classify`                      | Reports scenario classification                    |
+| `pnpm run bdd:classify:write`                | Writes scenario classification changes             |
+| `pnpm run bdd:validate-contracts`            | Validates feature and step contracts               |
+| `pnpm run diagnostics:prepare`               | Prepares sanitized Playwright diagnostics          |
+| `pnpm run allure:enhance`                    | Enhances Allure results with unexecuted BDD steps  |
+| `pnpm run allure:report`                     | Generates and opens the Allure report              |
+| `pnpm run allure:generate`                   | Generates the report only (does not open it)       |
+| `pnpm run allure:open`                       | Opens an already generated report only             |
+| `pnpm run bdd:generate`                      | Generates `.spec.js` files from `.feature` files   |
 
 ### Quick Example
 
 ```bash
 # Run on desktop and view the report
-npm run test:bdd
-npm run allure:report
+pnpm run test:bdd
+pnpm run allure:report
 
-npm run test:bdd:tags -- @Notifications
-npm run test:bdd:readonly
+pnpm run test:bdd:tags -- @Notifications
+pnpm run test:bdd:readonly
 ```
 
 On Windows PowerShell, set a variable for one command with `$env:NAME='value'`:
 
 ```powershell
-$env:ENV='DEV'; npm.cmd run test:bdd:smoke
+$env:ENV='DEV'; pnpm run test:bdd:smoke
 ```
 
 ### UI Mode and Debugging
@@ -70,13 +70,13 @@ $env:ENV='DEV'; npm.cmd run test:bdd:smoke
 Use Playwright UI Mode to select, run, and inspect BDD scenarios from a graphical interface:
 
 ```bash
-npm run test:bdd:ui
+pnpm run test:bdd:ui
 ```
 
 Use the Playwright Inspector to pause execution, step through the scenario, and inspect the active page. In the Inspector, use **Pick Locator** to capture a locator, XPath, or the element's HTML from the browser state at the pause point:
 
 ```bash
-npm run test:bdd:debug
+pnpm run test:bdd:debug
 ```
 
 The debug command pauses before executing the first test action. Add `await this.page.pause()` temporarily inside a page-object method to pause on a specific automation line, then remove it before committing.
@@ -119,7 +119,7 @@ Existing steps (login, navigation) are reused automatically.
 **3. Run:**
 
 ```bash
-npm run test:bdd
+pnpm run test:bdd
 ```
 
 ### Allure Tags
@@ -186,7 +186,7 @@ Automation health counts a confirmed application defect as a correct automation 
 
 ```bash
 # Generate and open
-npm run allure:report
+pnpm run allure:report
 ```
 
 

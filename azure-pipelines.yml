@@ -1,4 +1,4 @@
-﻿# Azure Pipelines - BDD/Gherkin + Playwright + Allure (STAGE / Desktop)
+# Azure Pipelines - BDD/Gherkin + Playwright + Allure (STAGE / Desktop)
 # Runs BDD tests written in Gherkin using playwright-bdd
 # Credentials are configured in the variable group using the same names as .env
 
@@ -25,34 +25,40 @@ jobs:
         inputs:
           version: '22.x'
 
-      - task: Cache@2
-        displayName: 'Cache npm packages'
-        inputs:
-          key: 'npm | "$(Agent.OS)" | package-lock.json'
-          path: '$(HOME)/.npm'
+      - script: |
+          corepack enable
+          corepack prepare pnpm@12.6.0 --activate
+          pnpm config set store-dir $(HOME)/.pnpm-store
+        displayName: 'Install pnpm'
 
       - task: Cache@2
-        displayName: 'Cache installed npm dependencies'
+        displayName: 'Cache pnpm store'
         inputs:
-          key: 'node_modules | "$(Agent.OS)" | "22.x" | package-lock.json'
+          key: 'pnpm-store | "$(Agent.OS)" | pnpm-lock.yaml'
+          path: '$(HOME)/.pnpm-store'
+
+      - task: Cache@2
+        displayName: 'Cache installed dependencies'
+        inputs:
+          key: 'node_modules | "$(Agent.OS)" | "22.x" | pnpm-lock.yaml'
           path: '$(System.DefaultWorkingDirectory)/node_modules'
           cacheHitVar: 'NPM_MODULES_CACHE_RESTORED'
 
       - script: |
           if [ "$(NPM_MODULES_CACHE_RESTORED)" != "true" ]; then
-            npm ci --prefer-offline --no-audit --fund=false
+            pnpm install --frozen-lockfile
           else
-            echo "Using cached npm dependencies."
+            echo "Using cached dependencies."
           fi
         displayName: 'Install dependencies'
 
-      - script: npm run tsc -- --noEmit
+      - script: pnpm run tsc -- --noEmit
         displayName: 'Validate TypeScript'
 
-      - script: npm audit --audit-level=moderate
+      - script: pnpm audit --audit-level=moderate
         displayName: 'Audit dependencies'
 
-      - script: CI=true npm run bdd:generate
+      - script: CI=true pnpm run bdd:generate
         displayName: 'Validate BDD contracts'
         env:
           STAGE_URL: $(STAGE_URL)
@@ -69,24 +75,30 @@ jobs:
         inputs:
           version: '22.x'
 
-      - task: Cache@2
-        displayName: 'Cache npm packages'
-        inputs:
-          key: 'npm | "$(Agent.OS)" | package-lock.json'
-          path: '$(HOME)/.npm'
+      - script: |
+          corepack enable
+          corepack prepare pnpm@12.6.0 --activate
+          pnpm config set store-dir $(HOME)/.pnpm-store
+        displayName: 'Install pnpm'
 
       - task: Cache@2
-        displayName: 'Cache installed npm dependencies'
+        displayName: 'Cache pnpm store'
         inputs:
-          key: 'node_modules | "$(Agent.OS)" | "22.x" | package-lock.json'
+          key: 'pnpm-store | "$(Agent.OS)" | pnpm-lock.yaml'
+          path: '$(HOME)/.pnpm-store'
+
+      - task: Cache@2
+        displayName: 'Cache installed dependencies'
+        inputs:
+          key: 'node_modules | "$(Agent.OS)" | "22.x" | pnpm-lock.yaml'
           path: '$(System.DefaultWorkingDirectory)/node_modules'
           cacheHitVar: 'NPM_MODULES_CACHE_RESTORED'
 
       - script: |
           if [ "$(NPM_MODULES_CACHE_RESTORED)" != "true" ]; then
-            npm ci --prefer-offline --no-audit --fund=false
+            pnpm install --frozen-lockfile
           else
-            echo "Using cached npm dependencies."
+            echo "Using cached dependencies."
           fi
         displayName: 'Install dependencies'
 
@@ -95,21 +107,21 @@ jobs:
         retryCountOnTaskFailure: 2
         continueOnError: true
         inputs:
-          key: 'playwright | "$(Agent.OS)" | package-lock.json'
+          key: 'playwright | "$(Agent.OS)" | pnpm-lock.yaml'
           path: '$(Pipeline.Workspace)/.cache/ms-playwright'
           cacheHitVar: 'PLAYWRIGHT_CACHE_RESTORED'
 
       - script: |
           if [ "$(PLAYWRIGHT_CACHE_RESTORED)" != "true" ]; then
-            PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright install --with-deps chromium
+            PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" pnpm exec playwright install --with-deps chromium
           else
             echo "Using cached Playwright Chromium binaries."
           fi
         displayName: 'Install Playwright browsers'
 
       - script: |
-          npx rimraf .auth-state
-          CI=true REUSE_AUTH_STATE=true AUTH_STATE_PREWARM_ONLY=true PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop
+          pnpm exec rimraf .auth-state
+          CI=true REUSE_AUTH_STATE=true AUTH_STATE_PREWARM_ONLY=true PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" pnpm exec playwright test --config playwright.bdd.config.ts --project=desktop
         displayName: 'Create shared authentication states'
         env:
           HEADLESS: $(HEADLESS)
@@ -161,24 +173,30 @@ jobs:
         inputs:
           version: '22.x'
 
-      - task: Cache@2
-        displayName: 'Cache npm packages'
-        inputs:
-          key: 'npm | "$(Agent.OS)" | package-lock.json'
-          path: '$(HOME)/.npm'
+      - script: |
+          corepack enable
+          corepack prepare pnpm@12.6.0 --activate
+          pnpm config set store-dir $(HOME)/.pnpm-store
+        displayName: 'Install pnpm'
 
       - task: Cache@2
-        displayName: 'Cache installed npm dependencies'
+        displayName: 'Cache pnpm store'
         inputs:
-          key: 'node_modules | "$(Agent.OS)" | "22.x" | package-lock.json'
+          key: 'pnpm-store | "$(Agent.OS)" | pnpm-lock.yaml'
+          path: '$(HOME)/.pnpm-store'
+
+      - task: Cache@2
+        displayName: 'Cache installed dependencies'
+        inputs:
+          key: 'node_modules | "$(Agent.OS)" | "22.x" | pnpm-lock.yaml'
           path: '$(System.DefaultWorkingDirectory)/node_modules'
           cacheHitVar: 'NPM_MODULES_CACHE_RESTORED'
 
       - script: |
           if [ "$(NPM_MODULES_CACHE_RESTORED)" != "true" ]; then
-            npm ci --prefer-offline --no-audit --fund=false
+            pnpm install --frozen-lockfile
           else
-            echo "Using cached npm dependencies."
+            echo "Using cached dependencies."
           fi
         displayName: 'Install dependencies'
 
@@ -207,28 +225,28 @@ jobs:
         retryCountOnTaskFailure: 2
         continueOnError: true
         inputs:
-          key: 'playwright | "$(Agent.OS)" | package-lock.json'
+          key: 'playwright | "$(Agent.OS)" | pnpm-lock.yaml'
           path: '$(Pipeline.Workspace)/.cache/ms-playwright'
           cacheHitVar: 'PLAYWRIGHT_CACHE_RESTORED'
 
       - script: |
           if [ "$(PLAYWRIGHT_CACHE_RESTORED)" != "true" ]; then
-            PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright install --with-deps chromium
+            PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" pnpm exec playwright install --with-deps chromium
           else
             echo "Using cached Playwright Chromium binaries."
           fi
         displayName: 'Install Playwright browsers'
 
       - script: |
-          npx rimraf allure-results
+          pnpm exec rimraf allure-results
           mkdir -p test-results/custom-screenshots
-          CI=true npm run bdd:generate
+          CI=true pnpm run bdd:generate
 
           set +e
-          CI=true RETRIES=1 PARALLEL_RUN=true WORKERS=5 RESULTS_GROUP=readonly PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @readOnly --grep-invert @serialAuthFlow --workers=5
+          CI=true RETRIES=1 PARALLEL_RUN=true WORKERS=5 RESULTS_GROUP=readonly PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" pnpm exec playwright test --config playwright.bdd.config.ts --project=desktop --grep @readOnly --grep-invert @serialAuthFlow --workers=5
           readonly_exit=$?
 
-          CI=true RETRIES=1 PARALLEL_RUN=false WORKERS=1 RESULTS_GROUP=serial-auth-flow PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @serialAuthFlow --workers=1
+          CI=true RETRIES=1 PARALLEL_RUN=false WORKERS=1 RESULTS_GROUP=serial-auth-flow PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" pnpm exec playwright test --config playwright.bdd.config.ts --project=desktop --grep @serialAuthFlow --workers=1
           serial_auth_flow_exit=$?
 
           if [ "$readonly_exit" -ne 0 ] || [ "$serial_auth_flow_exit" -ne 0 ]; then
@@ -286,7 +304,7 @@ jobs:
         displayName: 'Detect read-only Allure results'
         condition: always()
 
-      - script: npm run junit:sanitize
+      - script: pnpm run junit:sanitize
         displayName: 'Remove JUnit attachment directives'
         condition: always()
 
@@ -303,7 +321,7 @@ jobs:
           publishRunAttachments: false
           testRunTitle: 'Playwright BDD - STAGE / Desktop - Read-only'
 
-      - script: npm run diagnostics:prepare
+      - script: pnpm run diagnostics:prepare
         displayName: 'Prepare sanitized Playwright diagnostics'
         condition: always()
 
@@ -345,24 +363,30 @@ jobs:
         inputs:
           version: '22.x'
 
-      - task: Cache@2
-        displayName: 'Cache npm packages'
-        inputs:
-          key: 'npm | "$(Agent.OS)" | package-lock.json'
-          path: '$(HOME)/.npm'
+      - script: |
+          corepack enable
+          corepack prepare pnpm@12.6.0 --activate
+          pnpm config set store-dir $(HOME)/.pnpm-store
+        displayName: 'Install pnpm'
 
       - task: Cache@2
-        displayName: 'Cache installed npm dependencies'
+        displayName: 'Cache pnpm store'
         inputs:
-          key: 'node_modules | "$(Agent.OS)" | "22.x" | package-lock.json'
+          key: 'pnpm-store | "$(Agent.OS)" | pnpm-lock.yaml'
+          path: '$(HOME)/.pnpm-store'
+
+      - task: Cache@2
+        displayName: 'Cache installed dependencies'
+        inputs:
+          key: 'node_modules | "$(Agent.OS)" | "22.x" | pnpm-lock.yaml'
           path: '$(System.DefaultWorkingDirectory)/node_modules'
           cacheHitVar: 'NPM_MODULES_CACHE_RESTORED'
 
       - script: |
           if [ "$(NPM_MODULES_CACHE_RESTORED)" != "true" ]; then
-            npm ci --prefer-offline --no-audit --fund=false
+            pnpm install --frozen-lockfile
           else
-            echo "Using cached npm dependencies."
+            echo "Using cached dependencies."
           fi
         displayName: 'Install dependencies'
 
@@ -391,26 +415,26 @@ jobs:
         retryCountOnTaskFailure: 2
         continueOnError: true
         inputs:
-          key: 'playwright | "$(Agent.OS)" | package-lock.json'
+          key: 'playwright | "$(Agent.OS)" | pnpm-lock.yaml'
           path: '$(Pipeline.Workspace)/.cache/ms-playwright'
           cacheHitVar: 'PLAYWRIGHT_CACHE_RESTORED'
 
       - script: |
           if [ "$(PLAYWRIGHT_CACHE_RESTORED)" != "true" ]; then
-            PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright install --with-deps chromium
+            PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" pnpm exec playwright install --with-deps chromium
           else
             echo "Using cached Playwright Chromium binaries."
           fi
         displayName: 'Install Playwright browsers'
 
       - script: |
-          npx rimraf allure-results
+          pnpm exec rimraf allure-results
           mkdir -p test-results/custom-screenshots
-          CI=true npm run bdd:generate
+          CI=true pnpm run bdd:generate
 
           set +e
           # Each data domain is serial. INT and EXT execute in separate matrix legs.
-          CI=true RETRIES=1 PARALLEL_RUN=false WORKERS=1 RESULTS_GROUP=mutable-$(MUTABLE_SUITE) PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" npx playwright test --config playwright.bdd.config.ts --project=desktop --grep @mutable --grep-invert @serialAuthFlow --workers=1
+          CI=true RETRIES=1 PARALLEL_RUN=false WORKERS=1 RESULTS_GROUP=mutable-$(MUTABLE_SUITE) PLAYWRIGHT_BROWSERS_PATH="$(Pipeline.Workspace)/.cache/ms-playwright" pnpm exec playwright test --config playwright.bdd.config.ts --project=desktop --grep @mutable --grep-invert @serialAuthFlow --workers=1
           mutable_exit=$?
 
           if [ "$mutable_exit" -ne 0 ]; then
@@ -469,7 +493,7 @@ jobs:
         displayName: 'Detect mutable $(MUTABLE_SUITE) Allure results'
         condition: always()
 
-      - script: npm run junit:sanitize
+      - script: pnpm run junit:sanitize
         displayName: 'Remove JUnit attachment directives'
         condition: always()
 
@@ -486,7 +510,7 @@ jobs:
           publishRunAttachments: false
           testRunTitle: 'Playwright BDD - STAGE / Desktop - Mutable $(MUTABLE_SUITE)'
 
-      - script: npm run diagnostics:prepare
+      - script: pnpm run diagnostics:prepare
         displayName: 'Prepare sanitized Playwright diagnostics'
         condition: always()
 
@@ -524,11 +548,17 @@ jobs:
         inputs:
           version: '22.x'
 
+      - script: |
+          corepack enable
+          corepack prepare pnpm@12.6.0 --activate
+          pnpm config set store-dir $(HOME)/.pnpm-store
+        displayName: 'Install pnpm'
+
       - task: Cache@2
-        displayName: 'Cache npm packages'
+        displayName: 'Cache pnpm store'
         inputs:
-          key: 'npm | "$(Agent.OS)" | package-lock.json'
-          path: '$(HOME)/.npm'
+          key: 'pnpm-store | "$(Agent.OS)" | pnpm-lock.yaml'
+          path: '$(HOME)/.pnpm-store'
 
       - task: JavaToolInstaller@0
         displayName: 'Install Java 21'
@@ -538,17 +568,17 @@ jobs:
           jdkSourceOption: 'PreInstalled'
 
       - task: Cache@2
-        displayName: 'Cache installed npm dependencies'
+        displayName: 'Cache installed dependencies'
         inputs:
-          key: 'node_modules | "$(Agent.OS)" | "22.x" | package-lock.json'
+          key: 'node_modules | "$(Agent.OS)" | "22.x" | pnpm-lock.yaml'
           path: '$(System.DefaultWorkingDirectory)/node_modules'
           cacheHitVar: 'NPM_MODULES_CACHE_RESTORED'
 
       - script: |
           if [ "$(NPM_MODULES_CACHE_RESTORED)" != "true" ]; then
-            npm ci --prefer-offline --no-audit --fund=false
+            pnpm install --frozen-lockfile
           else
-            echo "Using cached npm dependencies."
+            echo "Using cached dependencies."
           fi
         displayName: 'Install dependencies'
 
@@ -668,7 +698,7 @@ jobs:
         displayName: 'Restore Allure history into test results'
         condition: always()
 
-      - script: npm run allure:generate
+      - script: pnpm run allure:generate
         displayName: 'Generate Allure report and history'
         condition: always()
         env:
